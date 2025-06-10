@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - MediCare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .tab-active {
+      background-color: white;
+      color: black;
+    }
+    .tab-inactive {
+      background-color: #e5e7eb;
+      color: gray;
+    }
+.doctor-row {
+  cursor: pointer;
+  background-color: white; 
+  color: gray;
+  border-bottom: 1px solid #d1d5db; 
+}
+.doctor-row.active {
+  background-color: gray-100;
+  color: black;
+}
+
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<nav class="bg-white shadow pl-[120px] py-2">
+  <div class="text-blue-600 font-bold text-xl">MediCare</div>
+</nav>
+
+<div class="p-8">
+  <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+    <div>
+      <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
+      <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="relative">
+        <img src="/download.png" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 pointer-events-none" />
+        <input type="text" placeholder="Search..." class="pl-8 pr-2 py-0 border border-gray-300 w-48" />
+      </div>
+      <input type="date" id="datePicker" class="px-2 py-0 border border-gray-300 " />
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex justify-center mt-6 mb-6">
+    <button class="tab px-[190px] py-1 font-semibold tab-active" data-tab="appointmentsTab">Appointments</button>
+    <button class="tab px-[180px] py-1 font-semibold tab-inactive" data-tab="doctorsTab">Doctors</button>
+    <button class="tab px-[180px] py-1 font-semibold tab-inactive" data-tab="patientsTab">Patients</button>
+  </div>
+
+  <!-- Appointments Tab -->
+  <div id="appointmentsTab" class="tab-content px-20">
+    <div class="bg-white p-6 rounded-lg shadow relative">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h3 class="text-xl font-semibold">Today's Appointments</h3>
+          <p class="text-gray-500" id="selectedDate">No date selected</p>
+        </div>
+      
+  <a href="appointment.html"><button id="addBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Appointment</button></a>
+</div>
+      <div id="appointmentsList">
+        <p class=" flex justify-center ">No appointments found</p>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctors Tab -->
+  <div id="doctorsTab" class="tab-content px-20 hidden">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h3 class="text-xl font-semibold">Doctors</h3>
+          <p class="text-gray-500">Manage doctor profiles and schedules</p>
+        </div>
+        <button class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
+      </div>
+      <table class="w-full table-auto text-left">
+        <thead>
+          <tr class="bg-gray-0">
+            <th class="px-4 py-2">Doctor</th>
+            <th class="px-4 py-2">Specialty</th>
+            <th class="px-4 py-2">Today's Appointments</th>
+            <th class="px-4 py-2">Availability</th>
+            <th class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">Dr. Sarah Johnson</td>
+            <td class="px-6 py-2">Cardiology</td>
+            <td class="px-6 py-2">8</td>
+            <td class="px-6 py-2">10:00 AM - 5:00 PM</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+            </td>
+          </tr>
+           <tr>
+              <td class="px-6 py-2 font-medium">Dr.Kiran</td>
+              <td class="px-6 py-2">Pediatrics</td>
+              <td class="px-6 py-2">5</td>
+              <td class="px-6 py-2">8:30 AM - 4:30 PM</td>
+               <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+               <tr>
+              <td class="px-6 py-2 font-medium">Dr.Akhila</td>
+              <td class="px-6 py-2">Neurology</td>
+              <td class="px-6 py-2">3</td>
+              <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
+           <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+              <tr>
+              <td class="px-6 py-2 font-medium">Dr.Vinod</td>
+              <td class="px-6 py-2">Orthopedics</td>
+              <td class="px-6 py-2">4</td>
+              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+              <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+              <tr>
+              <td class="px-6 py-2 font-medium">Dr.Srivani</td>
+              <td class="px-6 py-2">Gynecologist</td>
+              <td class="px-6 py-2">4</td>
+              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+              <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+  <!-- Patients Tab -->
+  <div id="patientsTab" class="tab-content px-20 hidden">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h3 class="text-xl font-semibold">Patients</h3>
+          <p class="text-gray-500">View and Manage patient profiles</p>
+        </div>
+      
+      </div>
+       <table class="w-full table-auto text-left">
+        <thead>
+          <tr class="bg-gray-0">
+            <th class="px-4 py-2">Patient</th>
+            <th class="px-4 py-2">Age/Gender</th>
+            <th class="px-4 py-2">Blood Group</th>
+            <th class="px-4 py-2">Contact</th>
+            <th class="px-4 py-2">Last Visit</th>
+            <th class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">Aswini</td>
+            <td class="px-6 py-2">Female</td>
+            <td class="px-6 py-2">O+</td>
+            <td class="px-6 py-2">9573406678</td>
+            <td class="px-6 py-2">6/05/2025</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
+              <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
+                
+              </div>
+            </td>
+          </tr>
+         
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">Srivani</td>
+            <td class="px-6 py-2">Female</td>
+            <td class="px-6 py-2">O+</td>
+            <td class="px-6 py-2">8522972230</td>
+            <td class="px-6 py-2">8/05/2025</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
+                <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
+                
+              </div>
+            </td>
+          </tr>
+         
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">Akhila</td>
+            <td class="px-6 py-2">Female</td>
+            <td class="px-6 py-2">O+</td>
+            <td class="px-6 py-2"> 7672029035</td>
+            <td class="px-6 py-2">11/05/2025</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
+                <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">vinod</td>
+            <td class="px-6 py-2">Male</td>
+            <td class="px-6 py-2">B+</td>
+            <td class="px-6 py-2">6281716332</td>
+            <td class="px-6 py-2">10/05/2025</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
+                <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
+                
+              </div>
+            </td>
+          </tr>
+          
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">Kiran</td>
+            <td class="px-6 py-2">Male</td>
+            <td class="px-6 py-2">O+</td>
+            <td class="px-6 py-2">9701495633</td>
+            <td class="px-6 py-2">13/05/2025</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
+                <a href="appointment.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
+                
+              </div>
+            </td>
+          </tr>
+
+<script>
+  const appointments = {};
+  const datePicker = document.getElementById("datePicker");
+  const selectedDate = document.getElementById("selectedDate");
+  const appointmentsList = document.getElementById("appointmentsList");
+  const addBtn = document.getElementById("addBtn");
+  const form = document.getElementById("form");
+  const searchInput = document.querySelector("input[type='text']");
+
+  function renderAppointmentsList(date, filterDoctor = "") {
+    const appts = appointments[date] || [];
+    const filtered = appts.filter(app => app.doctor.toLowerCase().includes(filterDoctor.toLowerCase()));
+
+    appointmentsList.innerHTML = filtered.length > 0
+      ? filtered.map(app => `
+        <div class="p-4 mb-2 border rounded bg-gray-50">
+          <p><strong>Patient:</strong> ${app.name}</p>
+          <p><strong>Doctor:</strong> ${app.doctor}</p>
+          <p><strong>Time:</strong> ${app.time}</p>
+        </div>
+      `).join('')
+      : `<p class="text-gray-500">No appointments found</p>`;
+  }
+
+  datePicker.addEventListener("change", () => {
+    const date = new Date(datePicker.value);
+    const formatted = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    selectedDate.textContent = formatted;
+    renderAppointmentsList(datePicker.value, searchInput.value);
+  });
+
+  searchInput.addEventListener("input", () => {
+    if (datePicker.value) renderAppointmentsList(datePicker.value, searchInput.value);
+  });
+
+  
+
+  // Tab switch logic
+  const tabs = document.querySelectorAll(".tab");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("tab-active", "tab-inactive"));
+      tabs.forEach(t => t.classList.add("tab-inactive"));
+      tab.classList.remove("tab-inactive");
+      tab.classList.add("tab-active");
+
+      const targetId = tab.getAttribute("data-tab");
+      tabContents.forEach(c => c.classList.add("hidden"));
+      document.getElementById(targetId).classList.remove("hidden");
+    });
+  });
+
+  // Action menu logic
+  document.addEventListener("click", (e) => {
+    const isButton = e.target.classList.contains("action-btn");
+    const menus = document.querySelectorAll(".action-menu");
+    menus.forEach(menu => menu.classList.add("hidden"));
+
+    if (isButton) {
+      const menu = e.target.nextElementSibling;
+      menu.classList.toggle("hidden");
+    }
+  });
+  const tabButtons = document.querySelectorAll(".tab");
+const tabPanels = document.querySelectorAll(".tab-content");
+
+tabButtons.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabButtons.forEach(t => {
+      t.classList.remove("tab-active");
+      t.classList.add("tab-inactive");
+    });
+    tabPanels.forEach(panel => panel.classList.add("hidden"));
+
+    tab.classList.remove("tab-inactive");
+    tab.classList.add("tab-active");
+
+    const selected = tab.getAttribute("data-tab");
+    document.getElementById(selected).classList.remove("hidden");
+  });
+});
+
+// Doctor row highlight 
+const doctorRows = document.querySelectorAll('#doctorsTab tbody tr');
+doctorRows.forEach(row => {
+  row.classList.add('doctor-row');
+  const doctorNameCell = row.querySelector('td.font-semibold, td.font-medium');
+  if (!doctorNameCell) return;
+  doctorNameCell.style.cursor = 'pointer'; 
+  doctorNameCell.addEventListener('click', () => {
+    doctorRows.forEach(r => r.classList.remove('active'));
+    row.classList.add('active');
+  });
+});
+// Handle anchor tags: only preventDefault for in-page/tab links (href="#...")
+document.querySelectorAll('a').forEach(link => {
+  const href = link.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Optional: handle in-page anchor navigation if you want
+    });
+  }
+  // For normal links (like book-appointment.html), do NOT preventDefault!
+});
+
+
+</script>
+
+</body>
+</html>
