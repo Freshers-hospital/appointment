@@ -236,8 +236,8 @@
               name="name" 
               placeholder="Enter full name" 
               required 
-              pattern="[A-Za-z]+(\s+[A-Za-z]+)*"
-              title="Enter name with letters and spaces between words"/>
+              pattern="[A-Za-z][A-Za-z\s]*"
+              title="Enter name using only letters and spaces"/>
           </div>
 
           <div class="form-group">
@@ -836,35 +836,21 @@
         input.addEventListener('change', checkPatientForm);
       });
 
-      // Allow letters and spaces in name field
+      // Simple validation for letters and spaces in name field
       document.getElementById('patient-name').addEventListener('input', function(e) {
         let value = e.target.value;
         
-        // Only allow letters and spaces
+        // Remove any characters that aren't letters or spaces
         value = value.replace(/[^A-Za-z\s]/g, '');
         
-        // Ensure at least one letter is entered before allowing spaces
-        if (value.length > 0 && /[A-Za-z]/.test(value[0])) {
-          // Allow multiple spaces between words but trim leading/trailing spaces
-          value = value.replace(/\s+/g, ' ').trim();
-        } else {
-          // If no letters yet, remove all spaces
-          value = value.replace(/\s/g, '');
-        }
+        // Remove extra spaces
+        value = value.replace(/\s+/g, ' ');
+        
+        // Remove leading space
+        value = value.replace(/^\s/, '');
         
         e.target.value = value;
         checkPatientForm();
-      });
-
-      // Add keypress event to handle space key
-      document.getElementById('patient-name').addEventListener('keypress', function(e) {
-        // If space key is pressed
-        if (e.key === ' ') {
-          // Only allow space if there's at least one letter before it
-          if (this.value.length === 0 || !/[A-Za-z]/.test(this.value[this.value.length - 1])) {
-            e.preventDefault();
-          }
-        }
       });
 
       // Only allow numbers in contact field
