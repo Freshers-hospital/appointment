@@ -1453,7 +1453,117 @@
       }
     }
 
-    
+    function goBackToDateTime() {
+      showSection('dateTimeSection');
+      updateStepper(3);
+      
+      // Restore the previously selected date and time
+      const appointmentData = JSON.parse(localStorage.getItem('appointmentData') || '{}');
+      if (appointmentData.date && appointmentData.time) {
+        selectedDate = appointmentData.date;
+        selectedTime = appointmentData.time;
+        
+        // Re-render the calendar with the selected date
+        const [month, day, year] = selectedDate.split('/');
+        currentDate = new Date(year, month - 1, day);
+        renderCalendar(currentDate);
+        updateMonthNavigation();
+        
+        // Update time slots to show the selected time
+        updateTimeSlots();
+      }
+    }
+
+    async function confirmBooking() {
+      try {
+        const patientData = JSON.parse(localStorage.getItem('patientData'));
+        const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
+        const appointmentData = JSON.parse(localStorage.getItem('appointmentData'));
+
+        if (!patientData || !doctorData || !appointmentData) {
+          throw new Error('Missing required appointment information');
+        }
+
+        const confirmationData = {
+          patientData: {
+            name: patientData.name,
+            age: patientData.age,
+            gender: patientData.gender,
+            blood: patientData.blood,
+            contact: patientData.contact
+          },
+          doctorData: {
+            name: doctorData.name,
+            specialty: doctorData.specialty
+          },
+          dateData: {
+            date: appointmentData.date,
+            time: appointmentData.time
+          }
+        };
+
+        // Disable the confirm button to prevent double submission
+        const confirmButton = document.getElementById('confirmBookingBtn');
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Confirming...';
+        confirmButton.classList.add('opacity-75');
+
+        const response = await fetch('http://localhost:3022/api/confirmations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(confirmationData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to book appointment');
+        }
+
+        // Update step 4 to show checkmark
+        document.getElementById('step4').innerHTML = '✓';
+        
+        // Show success message with blur effect
+        showAlert('Appointment booked successfully!');
+      } catch (error) {
+        // Re-enable the confirm button if there's an error
+        const confirmButton = document.getElementById('confirmBookingBtn');
+        confirmButton.disabled = false;
+        confirmButton.textContent = 'Confirm Appointment';
+        confirmButton.classList.remove('opacity-75');
+        
+        showAlert(error.message || 'Failed to book appointment. Please try again.');
+      }
+    }
+
+    function initializeConfirmation() {
+      const patientData = JSON.parse(localStorage.getItem('patientData'));
+      const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
+      const appointmentData = JSON.parse(localStorage.getItem('appointmentData'));
+
+      document.getElementById('confirmDoctor').textContent = doctorData.name;
+      document.getElementById('confirmSpecialty').textContent = doctorData.specialty;
+      document.getElementById('confirmExperience').textContent = doctorData.experience.split(' ')[0];
+      
+      
+      const dateObj = new Date(appointmentData.date);
+      const formattedDate = dateObj.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      document.getElementById('confirmDate').textContent = formattedDate;
+      
+      document.getElementById('confirmTime').textContent = appointmentData.time;
+      document.getElementById('confirmPatientName').textContent = patientData.name;
+      document.getElementById('confirmPatientAge').textContent = patientData.ageDisplay;
+      document.getElementById('confirmPatientGender').textContent = patientData.gender;
+      document.getElementById('confirmPatientBlood').textContent = patientData.blood;
+      document.getElementById('confirmPatientContact').textContent = patientData.contact;
+    }
+
     const allTimeSlots = [
       "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
       "12:00 PM", "12:30 PM", "1:00 PM - 2:00 PM", "2:30 PM", 
@@ -1513,80 +1623,6 @@
         
      
         window.location.reload();
-      }
-    }
-
-    function initializeConfirmation() {
-      const patientData = JSON.parse(localStorage.getItem('patientData'));
-      const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
-      const appointmentData = JSON.parse(localStorage.getItem('appointmentData'));
-
-      document.getElementById('confirmDoctor').textContent = doctorData.name;
-      document.getElementById('confirmSpecialty').textContent = doctorData.specialty;
-      document.getElementById('confirmExperience').textContent = doctorData.experience.split(' ')[0];
-      
-      
-      const dateObj = new Date(appointmentData.date);
-      const formattedDate = dateObj.toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      });
-      document.getElementById('confirmDate').textContent = formattedDate;
-      
-      document.getElementById('confirmTime').textContent = appointmentData.time;
-      document.getElementById('confirmPatientName').textContent = patientData.name;
-      document.getElementById('confirmPatientAge').textContent = patientData.ageDisplay;
-      document.getElementById('confirmPatientGender').textContent = patientData.gender;
-      document.getElementById('confirmPatientBlood').textContent = patientData.blood;
-      document.getElementById('confirmPatientContact').textContent = patientData.contact;
-    }
-
-    async function confirmBooking() {
-      try {
-        const patientData = JSON.parse(localStorage.getItem('patientData'));
-        const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
-        const appointmentData = JSON.parse(localStorage.getItem('appointmentData'));
-
-        const confirmationData = {
-          patientData: {
-            name: patientData.name,
-            age: patientData.age,
-            gender: patientData.gender,
-            blood: patientData.blood,
-            contact: patientData.contact
-          },
-          doctorData: {
-            name: doctorData.name,
-            specialty: doctorData.specialty
-          },
-          dateData: {
-            date: appointmentData.date,
-            time: appointmentData.time
-          }
-        };
-
-        const response = await fetch('http://localhost:3022/api/confirmations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(confirmationData)
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to book appointment');
-        }
-
-       
-        document.getElementById('step4').innerHTML = '✓';
-        
-       
-        showAlert('Appointment booked successfully!');
-      } catch (error) {
-        showAlert(error.message || 'Failed to book appointment. Please try again.');
       }
     }
   </script>
