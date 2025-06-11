@@ -139,19 +139,19 @@
   </style>
 </head>
 <body class="bg-blue-50 font-sans">
-  <!-- Overlay for Alert -->
+  
   <div id="overlay" class="overlay">
     <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
       <div class="text-center">
-        <!-- Success Icon Circle -->
+       
         <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
           <svg class="h-10 w-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
-        <!-- Success Message -->
+       
         <h3 class="text-lg font-medium text-gray-900 mb-4" id="alertMessage">Appointment booked successfully!</h3>
-        <!-- OK Button -->
+        
         <button onclick="hideAlert()" class="w-full inline-flex justify-center px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm transition-colors duration-200">
           OK
         </button>
@@ -159,7 +159,7 @@
     </div>
   </div>
 
-  <!-- Header -->
+  
   <div class="p-4 flex justify-between items-center bg-white shadow">
     <div class="flex items-center">
       <svg class="w-6 h-6 text-blue-600 mr-2 ml-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,16 +173,16 @@
     </button>
   </div>
 
-  <!-- Book an Appointment Title -->
+  
   <div class="max-w-4xl mx-auto mt-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Book an Appointment</h2>
   </div>
 
-  <!-- Progress Steps -->
+  
   <div class="max-w-4xl mx-auto mt-8">
     <div class="flex items-center justify-between relative">
       <div class="relative flex justify-between w-full">
-        <!-- Step 1 -->
+        
         <div class="flex-1 text-center">
           <div class="relative">
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
@@ -191,7 +191,7 @@
           <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient details</p>
         </div>
 
-        <!-- Step 2 -->
+       
         <div class="flex-1 text-center">
           <div class="relative">
             <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line2Left"></div>
@@ -201,7 +201,7 @@
           <p class="mt-2 text-sm text-gray-400" id="step2Text">Select doctor</p>
         </div>
 
-        <!-- Step 3 -->
+       
         <div class="flex-1 text-center">
           <div class="relative">
             <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line3Left"></div>
@@ -210,8 +210,6 @@
           </div>
           <p class="mt-2 text-sm text-gray-400" id="step3Text">Choose Date & Time</p>
         </div>
-
-        <!-- Step 4 -->
         <div class="flex-1 text-center">
           <div class="relative">
             <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4"></div>
@@ -223,7 +221,6 @@
     </div>
   </div>
 
-  <!-- Patient Details Section -->
   <section id="patientSection" class="section active">
     <div class="form-section">
       <h2>Patient Details</h2>
@@ -289,12 +286,12 @@
     </div>
   </section>
 
-  <!-- Doctor Selection Section -->
+
   <section id="doctorSection" class="section">
     <div class="max-w-4xl mx-auto bg-white p-6 mt-8 rounded shadow">
       <h2 class="text-xl font-semibold mb-4">Select a Doctor</h2>
       
-      <!-- Search and Filter -->
+      
       <div class="flex justify-between items-center mb-6">
         <input type="text" id="searchInput" placeholder="Search doctors or specialties..." 
           class="w-2/3 p-2 border rounded-md" onkeyup="filterDoctors()">
@@ -316,12 +313,9 @@
         </select>
       </div>
 
-      <!-- Doctors List -->
+      
       <div id="doctorList" class="space-y-4">
-        <!-- Doctor cards will be dynamically populated here -->
-      </div>
-
-      <!-- Pagination -->
+       </div>
       <div id="pagination" class="flex justify-between items-center mt-6">
         <button onclick="goBack()" class="bg-gray-500 text-white px-6 py-2 rounded bg-gray-600">
           Back
@@ -348,7 +342,7 @@
     </div>
   </section>
 
-  <!-- Date Time Selection Section -->
+ 
   <section id="dateTimeSection" class="section">
     <div class="max-w-4xl mx-auto bg-white p-6 mt-8 rounded shadow">
       <h2 class="text-xl font-semibold mb-4">Choose Date & Time</h2>
@@ -405,7 +399,6 @@
               <h4 class="font-medium text-lg text-gray-800">Select Time</h4>
             </div>
             <div class="grid grid-cols-3 gap-4 p-2">
-              <!-- Time slots will be dynamically populated -->
             </div>
           </div>
         </div>
@@ -431,7 +424,7 @@
               <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p class="text-black-500 text-bold text-sm">Doctor Information</p>
+              <p class="text-black text-bold text-lg">Doctor Information</p>
             </div>
             <div class="space-y-2">
               <div>
@@ -456,7 +449,7 @@
               <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p class="text-gray-500 text-sm">Date</p>
+              <p class="text-black text-lg">Date</p>
             </div>
             <p class="text-gray-800" id="confirmDate">Saturday, June 14, 2025</p>
           </div>
@@ -465,38 +458,47 @@
               <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p class="text-gray-500 text-sm">Time</p>
+              <p class="text-black text-lg">Time</p>
             </div>
             <p class="text-gray-800" id="confirmTime">4:30 PM</p>
           </div>
         </div>
 
         <!-- Patient Information -->
-        <div class="border rounded-lg p-4 mb-4 bg-gray-50">
-          <p class="text-gray-500 text-bold text-sm mb-2">Patient Information</p>
-          <div class="grid grid-cols-2 gap-x-4 gap-y-2">
-            <div>
-              <span class="text-gray-500">Name:</span>
-              <span class="text-gray-800 ml-1" id="confirmPatientName"></span>
-            </div>
-            <div>
-              <span class="text-gray-500">Age:</span>
-              <span class="text-gray-800 ml-1" id="confirmPatientAge"></span>
-            </div>
-            <div>
-              <span class="text-gray-500">Gender:</span>
-              <span class="text-gray-800 ml-1" id="confirmPatientGender"></span>
-            </div>
-            <div>
-              <span class="text-gray-500">Blood Group:</span>
-              <span class="text-gray-800 ml-1" id="confirmPatientBlood"></span>
+        
+ <div class="grid grid-cols-2 gap-4 mb-4">
+         
+          <div class="border rounded-lg p-4 bg-gray-50">
+            <p class="text-black text-bold text-lg mb-2">Personal Details</p>
+            <div class="space-y-2">
+              <div>
+                <span class="text-gray-500">Name:</span>
+                <span class="text-gray-800 ml-1" id="confirmPatientName"></span>
+              </div>
+              <div>
+                <span class="text-gray-500">Age:</span>
+                <span class="text-gray-800 ml-1" id="confirmPatientAge"></span>
+              </div>
             </div>
           </div>
-        </div>
-
+          <div class="border rounded-lg p-4 bg-gray-50">
+           
+            <div class="space-y-4 mt-4">
+              <div>
+                <span class="text-gray-500">Blood Group:</span>
+                <span class="text-gray-800 ml-1" id="confirmPatientBlood"></span>
+              </div>
+              <div>
+                <span class="text-gray-500">Gender:</span>
+                <span class="text-gray-800 ml-1" id="confirmPatientGender"></span>
+              </div>
+            </div>
+          </div>
+        </div> 
+         
         <!-- Contact Information -->
         <div class="border rounded-lg p-4 mb-4 bg-gray-50">
-          <p class="text-gray-500 text-sm mb-2">Contact Information</p>
+          <p class="text-black text-lg mb-2">Contact Information</p>
           <div>
             <span class="text-gray-500">Phone:</span>
             <span class="text-gray-800 ml-1" id="confirmPatientContact"></span>
@@ -504,7 +506,7 @@
         </div>
 
         <!-- Appointment Policy -->
-        <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-4">
+        <!-- <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-4">
           <div class="flex gap-2">
             <svg class="w-5 h-5 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -519,7 +521,7 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Action Buttons -->
         <div class="flex justify-between mt-6">
@@ -535,9 +537,9 @@
   </section>
 
   <script>
-    // Initialize the page
+ 
     document.addEventListener('DOMContentLoaded', () => {
-      // Populate age options
+    
       const ageSelect = document.getElementById('age');
       for (let i = 1; i <= 100; i++) {
         const option = document.createElement('option');
@@ -557,19 +559,13 @@
         input.addEventListener('input', checkPatientForm);
         input.addEventListener('change', checkPatientForm);
       });
-
-      // Name input validation
       const nameInput = document.getElementById('patient-name');
-      
-      // Prevent typing of invalid characters
       nameInput.addEventListener('keypress', function(e) {
         const char = String.fromCharCode(e.keyCode || e.which);
         if (!/^[A-Za-z\s]$/.test(char)) {
           e.preventDefault();
         }
       });
-      
-      // Clean input on any change
       nameInput.addEventListener('input', function() {
         let value = this.value;
         value = value.replace(/[^A-Za-z\s]/g, '');
@@ -578,8 +574,6 @@
         this.value = value;
         checkPatientForm();
       });
-      
-      // Handle paste events for name
       nameInput.addEventListener('paste', function(e) {
         e.preventDefault();
         const text = (e.originalEvent || e).clipboardData.getData('text/plain');
@@ -587,19 +581,13 @@
         this.value = cleanedText;
         checkPatientForm();
       });
-
-      // Contact number validation
       const contactInput = document.getElementById('contact-number');
-        
-      // Prevent typing non-numeric characters
       contactInput.addEventListener('keypress', function(e) {
         const char = String.fromCharCode(e.keyCode || e.which);
         if (!/^[0-9]$/.test(char) || this.value.length >= 10) {
           e.preventDefault();
         }
       });
-      
-      // Clean input on any change
       contactInput.addEventListener('input', function() {
         let value = this.value;
         value = value.replace(/[^0-9]/g, '');
@@ -609,8 +597,6 @@
         this.value = value;
         checkPatientForm();
       });
-      
-      // Handle paste events for contact
       contactInput.addEventListener('paste', function(e) {
         e.preventDefault();
         const text = (e.originalEvent || e).clipboardData.getData('text/plain');
@@ -619,8 +605,6 @@
         checkPatientForm();
       });
     });
-
-    // Doctor data
     const doctors = [
       { name: "Dr. Sarah Johnson", specialty: "Cardiology", experience: "15 years" },
       { name: "Dr. Michael Chen", specialty: "Dermatology", experience: "10 years" },
@@ -663,7 +647,6 @@
       const end = start + doctorsPerPage;
       const paginatedDoctors = filteredDoctors.slice(start, end);
       
-      // Get the previously selected doctor from localStorage
       const selectedDoctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
       
       doctorList.innerHTML = paginatedDoctors.map(doctor => {
@@ -689,8 +672,6 @@
       }).join('');
       
       updatePagination(filteredDoctors.length);
-
-      // If there was a selected doctor, enable the next button
       if (selectedDoctorData) {
         document.getElementById('doctorNextBtn').disabled = false;
         document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
@@ -735,7 +716,7 @@
     }
 
     function selectDoctor(name, specialty, experience) {
-      // Store selected doctor data
+      
       const doctorData = {
         name: name,
         specialty: specialty,
@@ -743,12 +724,12 @@
       };
       localStorage.setItem('selectedDoctor', JSON.stringify(doctorData));
       
-      // Enable the next button when a doctor is selected
+    
       document.getElementById('doctorNextBtn').disabled = false;
       document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
       document.getElementById('doctorNextBtn').classList.add('bg-blue-600');
       
-      // Update all select buttons - reset to black first, then set selected to blue
+     
       const selectButtons = document.querySelectorAll('.select-btn');
       selectButtons.forEach(button => {
         button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
@@ -761,19 +742,18 @@
       });
     }
 
-    // Navigation functions
+   
     function showSection(sectionId) {
-      // Hide all sections
-      document.querySelectorAll('.section').forEach(section => {
+       document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
       });
       
-      // Show the target section
+     
       document.getElementById(sectionId).classList.add('active');
     }
 
     function updateStepper(activeStep) {
-      // Logic for circles and labels
+     
       for (let i = 1; i <= 4; i++) {
         const circle = document.getElementById(`step${i}`);
         const label = document.getElementById(`step${i}Text`);
@@ -799,7 +779,7 @@
         }
       }
 
-      // Logic for lines (explicitly set each segment)
+      
       const line1_2_part1 = document.getElementById('line1');
       const line1_2_part2 = document.getElementById('line2Left');
 
@@ -809,7 +789,7 @@
       const line3_4_part1 = document.getElementById('line3Right');
       const line3_4_part2 = document.getElementById('line4');
 
-      // Reset all lines to gray first to ensure consistent state
+    
       [line1_2_part1, line1_2_part2, line2_3_part1, line2_3_part2, line3_4_part1, line3_4_part2].forEach(line => {
         if (line) {
           line.classList.remove('bg-blue-600');
@@ -817,7 +797,7 @@
         }
       });
 
-      // Fill lines based on activeStep
+      
       if (activeStep >= 2) {
         if (line1_2_part1) { line1_2_part1.classList.remove('bg-gray-200'); line1_2_part1.classList.add('bg-blue-600'); }
         if (line1_2_part2) { line1_2_part2.classList.remove('bg-gray-200'); line1_2_part2.classList.add('bg-blue-600'); }
@@ -832,7 +812,7 @@
       }
     }
 
-    // Patient form handling
+    
     document.getElementById('patientForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const formData = new FormData(this);
@@ -853,12 +833,12 @@
       document.getElementById('patientForm').dispatchEvent(new Event('submit'));
     });
 
-    // Navigation functions
+   
     function goToDoctorSection() {
       showSection('doctorSection');
       updateStepper(2);
       
-      // Update the line between step 1 and 2 to blue
+     
       const line1 = document.getElementById('line1');
       if (line1) {
         line1.className = 'absolute top-5 left-1/2 w-full h-1 bg-blue-600';
@@ -873,7 +853,7 @@
         showSection('patientSection');
         updateStepper(1);
         
-        // Preserve the form data
+       
         const patientData = JSON.parse(localStorage.getItem('patientData') || '{}');
         if (patientData) {
           document.getElementById('patient-name').value = patientData.name || '';
@@ -882,7 +862,7 @@
           document.getElementById('blood-group').value = patientData.blood || '';
           document.getElementById('contact-number').value = patientData.contact || '';
           
-          // Re-enable the next button if form is complete
+          
           checkPatientForm();
         }
       }
@@ -894,153 +874,183 @@
       initializeDateTime();
     }
 
-    // Form validation
+    
     function checkPatientForm() {
-      const name = document.getElementById('patient-name').value;
+      const name = document.getElementById('patient-name').value.trim();
       const age = document.getElementById('age').value;
       const gender = document.getElementById('patient-gender').value;
       const blood = document.getElementById('blood-group').value;
       const contact = document.getElementById('contact-number').value;
 
+      const nextButton = document.getElementById('patientNextBtn');
+
+      // Check if all fields are filled
       if (name && age && gender && blood && contact.length === 10) {
-        document.getElementById('patientNextBtn').classList.remove('bg-gray-400');
-        document.getElementById('patientNextBtn').classList.add('bg-blue-600');
+        nextButton.disabled = false;
+        nextButton.classList.remove('bg-gray-400');
+        nextButton.classList.add('bg-blue-600');
         return true;
       } else {
-        document.getElementById('patientNextBtn').classList.add('bg-gray-400');
-        document.getElementById('patientNextBtn').classList.remove('bg-blue-600');
+        nextButton.disabled = true;
+        nextButton.classList.add('bg-gray-400');
+        nextButton.classList.remove('bg-blue-600');
         return false;
       }
     }
 
-    // Name input validation
-    const nameInput = document.getElementById('patient-name');
-    
-    // Prevent typing of invalid characters
-    nameInput.addEventListener('keypress', function(e) {
-      const char = String.fromCharCode(e.keyCode || e.which);
-      if (!/^[A-Za-z\s]$/.test(char)) {
-        e.preventDefault();
-      }
-    });
-    
-    // Clean input on any change
-    nameInput.addEventListener('input', function() {
-      let value = this.value;
-      value = value.replace(/[^A-Za-z\s]/g, '');
-      value = value.replace(/\s+/g, ' ');
-      value = value.trim();
-      this.value = value;
-      checkPatientForm();
-    });
-    
-    // Handle paste events for name
-    nameInput.addEventListener('paste', function(e) {
-      e.preventDefault();
-      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-      const cleanedText = text.replace(/[^A-Za-z\s]/g, '').replace(/\s+/g, ' ').trim();
-      this.value = cleanedText;
-      checkPatientForm();
+    // Initialize form validation on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Disable next button initially
+      const nextButton = document.getElementById('patientNextBtn');
+      nextButton.disabled = true;
+      nextButton.classList.add('bg-gray-400');
+      nextButton.classList.remove('bg-blue-600');
+
+      // Add required attribute to all form fields
+      document.getElementById('patient-name').required = true;
+      document.getElementById('age').required = true;
+      document.getElementById('patient-gender').required = true;
+      document.getElementById('blood-group').required = true;
+      document.getElementById('contact-number').required = true;
+
+      // Add validation on input and change events
+      const formInputs = [
+        'patient-name',
+        'age',
+        'patient-gender',
+        'blood-group',
+        'contact-number'
+      ];
+
+      formInputs.forEach(inputId => {
+        const element = document.getElementById(inputId);
+        ['input', 'change', 'blur'].forEach(eventType => {
+          element.addEventListener(eventType, () => {
+            checkPatientForm();
+            
+            // Add visual feedback for invalid fields
+            if (!element.value) {
+              element.classList.add('border-red-500');
+              
+              // Show error message if field is empty after interaction
+              let errorDiv = element.nextElementSibling;
+              if (!errorDiv || !errorDiv.classList.contains('error-message')) {
+                errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+                element.parentNode.insertBefore(errorDiv, element.nextSibling);
+              }
+              errorDiv.textContent = 'This field is required';
+            } else {
+              element.classList.remove('border-red-500');
+              
+              // Remove error message if field is filled
+              const errorDiv = element.nextElementSibling;
+              if (errorDiv && errorDiv.classList.contains('error-message')) {
+                errorDiv.remove();
+              }
+            }
+          });
+        });
+      });
+
+      // Special validation for contact number
+      const contactInput = document.getElementById('contact-number');
+      contactInput.addEventListener('blur', () => {
+        if (contactInput.value && contactInput.value.length !== 10) {
+          contactInput.classList.add('border-red-500');
+          let errorDiv = contactInput.nextElementSibling;
+          if (!errorDiv || !errorDiv.classList.contains('error-message')) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+            contactInput.parentNode.insertBefore(errorDiv, contactInput.nextSibling);
+          }
+          errorDiv.textContent = 'Contact number must be 10 digits';
+        }
+      });
+
+      // Special validation for name (only letters and spaces)
+      const nameInput = document.getElementById('patient-name');
+      nameInput.addEventListener('blur', () => {
+        const nameValue = nameInput.value.trim();
+        if (nameValue && !/^[A-Za-z\s]+$/.test(nameValue)) {
+          nameInput.classList.add('border-red-500');
+          let errorDiv = nameInput.nextElementSibling;
+          if (!errorDiv || !errorDiv.classList.contains('error-message')) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+            nameInput.parentNode.insertBefore(errorDiv, nameInput.nextSibling);
+          }
+          errorDiv.textContent = 'Name should contain only letters and spaces';
+        }
+      });
     });
 
-    // Contact number validation
-    const contactInput = document.getElementById('contact-number');
-      
-    // Prevent typing non-numeric characters
-    contactInput.addEventListener('keypress', function(e) {
-      const char = String.fromCharCode(e.keyCode || e.which);
-      if (!/^[0-9]$/.test(char) || this.value.length >= 10) {
-        e.preventDefault();
-      }
-    });
-    
-    // Clean input on any change
-    contactInput.addEventListener('input', function() {
-      let value = this.value;
-      value = value.replace(/[^0-9]/g, '');
-      if (value.length > 10) {
-        value = value.slice(0, 10);
-      }
-      this.value = value;
-      checkPatientForm();
-    });
-    
-    // Handle paste events for contact
-    contactInput.addEventListener('paste', function(e) {
-      e.preventDefault();
-      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-      const cleanedText = text.replace(/[^0-9]/g, '').slice(0, 10);
-      this.value = cleanedText;
-      checkPatientForm();
-    });
-
-    // Doctor time slots
+   
     const doctorTimeSlots = {
       "Dr. Sarah Johnson": [
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
         "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", 
-        "3:00 PM"  
+        "3:00 PM", "3:30 PM", "4:00 PM"  
       ],
       "Dr. Michael Chen": [
-        "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", 
-        "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", 
-        "5:00 PM"  
+        "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", 
+        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", 
+        "4:30 PM", "5:00 PM"  
       ],
       "Dr. Emily Rodriguez": [
-        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
-        "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", 
-        "5:00 PM"  
+        "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+        "12:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ],
       "Dr. James Wilson": [
-        "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM",
-        "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"  
+        "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM",
+        "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"  
       ],
       "Dr. Srivani": [
-        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "2:00 PM",
-        "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
+        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
+        "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM"
       ],
       "Dr. Aswini": [
-        "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM",
-        "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
+        "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM",
+        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ],
       "Dr. Akhila": [
-        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
-        "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM"
+        "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+        "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"
       ],
       "Dr. Vinod": [
         "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
-        "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
+        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ],
       "Dr. Kiran": [
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
-        "2:00 PM", "2:30 PM", "3:00 PM", "4:30 PM", "5:00 PM"
+        "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"
       ],
       "Dr. keerthi": [
-        "9:30 AM", "10:00 AM", "11:00 AM", "11:30 AM", "12:00 PM",
-        "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
+        "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM",
+        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ],
       "Dr. Vedanshi": [
-        "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:30 PM",
-        "2:00 PM", "2:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
+        "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+        "12:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ],
       "Dr. Vivek": [
-        "9:00 AM", "9:30 AM", "10:00 AM", "12:00 PM", "12:30 PM",
-        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"
+        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
+        "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"
       ],
       "Dr. Om": [
-        "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM",
-        "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM"
+        "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
+        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ]
     };
 
-    // Doctor unavailable dates
+    
     const doctorUnavailableDates = {
       "Dr. Sarah Johnson": ["5/26/2025"],
       "Dr. Michael Chen": ["5/28/2025"],
       "Dr. Srivani": ["5/29/2025"]
     };
 
-    // Doctor specific restrictions with their lunch breaks
+   
     const doctorRestrictions = {
       "Dr. Sarah Johnson": { lunchBreak: "1:00-2:00 PM" },
       "Dr. Michael Chen": { lunchBreak: "1:00-2:00 PM" },
@@ -1091,12 +1101,12 @@
     function isTimeSlotAvailable(doctor, time) {
       const restrictions = doctorRestrictions[doctor.name];
       if (restrictions) {
-        // Check if time is within lunch break
+       
         const lunchBreakSlots = getLunchBreakSlots(restrictions.lunchBreak);
         if (lunchBreakSlots.includes(time)) {
           return false;
         }
-        // Check unavailable times
+      
         if (restrictions.unavailableTimes && restrictions.unavailableTimes.includes(time)) {
           return false;
         }
@@ -1109,39 +1119,35 @@
       const daysContainer = document.getElementById('daysContainer');
       const dayNames = document.getElementById('dayNames');
       
-      // Set up day names
+
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       dayNames.innerHTML = days.map(d => `<div class="text-center font-medium">${d}</div>`).join('');
       
-      // Clear previous calendar
+    
       daysContainer.innerHTML = '';
       
       const year = date.getFullYear();
       const month = date.getMonth();
       
-      // Always show month and year
       const monthName = date.toLocaleString('default', { month: 'long' });
       monthLabel.textContent = `${monthName} ${year}`;
       
-      // Get first day and days in month
+      
       const firstDay = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
       
-      // Add empty cells for days before the first day of the month
       for (let i = 0; i < firstDay; i++) {
         const emptyDay = document.createElement('div');
         emptyDay.className = 'h-10';
         daysContainer.appendChild(emptyDay);
       }
       
-      // Add days of the month
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      // Calculate the last available month (current month + 2)
+      
       const lastAvailableMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
       
-      // Check if this month is within the available range
       const isAvailableMonth = (thisDate) => {
         return thisDate >= today && thisDate <= lastAvailableMonth;
       };
@@ -1154,7 +1160,6 @@
         thisDate.setHours(0, 0, 0, 0);
         const dateString = formatDateString(thisDate);
         
-        // Check if date is in the past or unavailable
         const isPast = thisDate < today;
         const isUnavailable = selectedDoctor && 
           doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
@@ -1187,7 +1192,7 @@
       }
     }
 
-    // Add caching for booked slots
+ 
     const bookedSlotsCache = new Map();
 
     async function getBookedSlots(doctorName, date) {
@@ -1305,7 +1310,7 @@
         timeSlotsContainer.appendChild(timeSlot);
       });
 
-      // Add the lunch break slot
+  
       const lunchSlot = document.createElement('div');
       lunchSlot.className = 'time-slot p-2 text-center border rounded bg-gray-100 text-gray-600 cursor-not-allowed col-span-3';
       lunchSlot.innerHTML = `1:00 PM - 2:00 PM<br><span class="text-sm">Lunch Break</span>`;
@@ -1448,7 +1453,7 @@
       }
     }
 
-    // All possible time slots for display
+    
     const allTimeSlots = [
       "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
       "12:00 PM", "12:30 PM", "1:00 PM - 2:00 PM", "2:30 PM", 
@@ -1463,17 +1468,17 @@
     function hideAlert() {
       document.getElementById('overlay').style.display = 'none';
       if (document.getElementById('alertMessage').textContent.includes('successfully')) {
-        // Clear all stored data
+        
         localStorage.removeItem('appointmentData');
         localStorage.removeItem('selectedDoctor');
         localStorage.removeItem('patientData');
         localStorage.removeItem('lastBookedPatient');
         
-        // Reset to patient details page
+        
         showSection('patientSection');
         updateStepper(1);
         
-        // Reset all form fields
+        
         document.getElementById('patientForm').reset();
         document.getElementById('patient-name').value = '';
         document.getElementById('age').value = '';
@@ -1481,19 +1486,19 @@
         document.getElementById('blood-group').value = '';
         document.getElementById('contact-number').value = '';
         
-        // Reset doctor selection
+        
         const doctorButtons = document.querySelectorAll('.select-btn');
         doctorButtons.forEach(button => {
           button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
           button.classList.add('bg-black', 'hover:bg-gray-800');
         });
         
-        // Reset date and time selection
+        
         selectedDate = null;
         selectedTime = null;
         currentDate = new Date();
         
-        // Disable next buttons
+        
         document.getElementById('patientNextBtn').classList.add('bg-gray-400');
         document.getElementById('patientNextBtn').classList.remove('bg-blue-600');
         document.getElementById('patientNextBtn').disabled = true;
@@ -1506,7 +1511,7 @@
         document.getElementById('dateTimeNextBtn').classList.add('bg-gray-400');
         document.getElementById('dateTimeNextBtn').classList.remove('bg-blue-600');
         
-        // Refresh the page
+     
         window.location.reload();
       }
     }
@@ -1520,7 +1525,7 @@
       document.getElementById('confirmSpecialty').textContent = doctorData.specialty;
       document.getElementById('confirmExperience').textContent = doctorData.experience.split(' ')[0];
       
-      // Format the date
+      
       const dateObj = new Date(appointmentData.date);
       const formattedDate = dateObj.toLocaleDateString('en-US', {
         weekday: 'long',
@@ -1575,10 +1580,10 @@
           throw new Error(errorData.error || 'Failed to book appointment');
         }
 
-        // Update step 4 to show checkmark
+       
         document.getElementById('step4').innerHTML = '✓';
         
-        // Show success message with blur effect
+       
         showAlert('Appointment booked successfully!');
       } catch (error) {
         showAlert(error.message || 'Failed to book appointment. Please try again.');
