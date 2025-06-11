@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'appointment.html'));
 });
 
-// Start server forbackend
+// Start server   
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
