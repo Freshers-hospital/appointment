@@ -236,8 +236,9 @@
               name="name" 
               placeholder="Enter full name" 
               required 
-              pattern="[A-Za-z][A-Za-z\s]*"
-              title="Enter name using only letters and spaces"/>
+              pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+              title="Enter name using only letters and spaces"
+              maxlength="50"/>
           </div>
 
           <div class="form-group">
@@ -276,7 +277,7 @@
 
           <div class="form-group">
             <label for="contact-number">Contact Number<span class="text-red-500">*</span></label>
-            <input type="tel" id="contact-number" name="contact" placeholder="Enter 10-digit number" pattern="\d{10}" inputmode="numeric" maxlength="10" required title="Please enter a valid 10-digit phone number"/>
+            <input type="tel" id="contact-number" name="contact" placeholder="Enter 10-digit number" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" required title="Please enter a valid 10-digit phone number" autocomplete="off"/>
           </div>
         </div>
         <div class="text-right mt-6">
@@ -548,6 +549,75 @@
       above100.value = '101';
       above100.textContent = 'Above 100 years';
       ageSelect.appendChild(above100);
+
+      updateStepper(1);
+
+      const inputs = document.querySelectorAll('#patientForm input, #patientForm select');
+      inputs.forEach(input => {
+        input.addEventListener('input', checkPatientForm);
+        input.addEventListener('change', checkPatientForm);
+      });
+
+      // Name input validation
+      const nameInput = document.getElementById('patient-name');
+      
+      // Prevent typing of invalid characters
+      nameInput.addEventListener('keypress', function(e) {
+        const char = String.fromCharCode(e.keyCode || e.which);
+        if (!/^[A-Za-z\s]$/.test(char)) {
+          e.preventDefault();
+        }
+      });
+      
+      // Clean input on any change
+      nameInput.addEventListener('input', function() {
+        let value = this.value;
+        value = value.replace(/[^A-Za-z\s]/g, '');
+        value = value.replace(/\s+/g, ' ');
+        value = value.trim();
+        this.value = value;
+        checkPatientForm();
+      });
+      
+      // Handle paste events for name
+      nameInput.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        const cleanedText = text.replace(/[^A-Za-z\s]/g, '').replace(/\s+/g, ' ').trim();
+        this.value = cleanedText;
+        checkPatientForm();
+      });
+
+      // Contact number validation
+      const contactInput = document.getElementById('contact-number');
+        
+      // Prevent typing non-numeric characters
+      contactInput.addEventListener('keypress', function(e) {
+        const char = String.fromCharCode(e.keyCode || e.which);
+        if (!/^[0-9]$/.test(char) || this.value.length >= 10) {
+          e.preventDefault();
+        }
+      });
+      
+      // Clean input on any change
+      contactInput.addEventListener('input', function() {
+        let value = this.value;
+        value = value.replace(/[^0-9]/g, '');
+        if (value.length > 10) {
+          value = value.slice(0, 10);
+        }
+        this.value = value;
+        checkPatientForm();
+      });
+      
+      // Handle paste events for contact
+      contactInput.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        const cleanedText = text.replace(/[^0-9]/g, '').slice(0, 10);
+        this.value = cleanedText;
+        checkPatientForm();
+      });
     });
 
     // Doctor data
@@ -843,42 +913,65 @@
       }
     }
 
-    // Add input validation listeners
-    document.addEventListener('DOMContentLoaded', () => {
-      populateAgeOptions();
-      updateStepper(1);
+    // Name input validation
+    const nameInput = document.getElementById('patient-name');
+    
+    // Prevent typing of invalid characters
+    nameInput.addEventListener('keypress', function(e) {
+      const char = String.fromCharCode(e.keyCode || e.which);
+      if (!/^[A-Za-z\s]$/.test(char)) {
+        e.preventDefault();
+      }
+    });
+    
+    // Clean input on any change
+    nameInput.addEventListener('input', function() {
+      let value = this.value;
+      value = value.replace(/[^A-Za-z\s]/g, '');
+      value = value.replace(/\s+/g, ' ');
+      value = value.trim();
+      this.value = value;
+      checkPatientForm();
+    });
+    
+    // Handle paste events for name
+    nameInput.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      const cleanedText = text.replace(/[^A-Za-z\s]/g, '').replace(/\s+/g, ' ').trim();
+      this.value = cleanedText;
+      checkPatientForm();
+    });
 
-      const inputs = document.querySelectorAll('#patientForm input, #patientForm select');
-      inputs.forEach(input => {
-        input.addEventListener('input', checkPatientForm);
-        input.addEventListener('change', checkPatientForm);
-      });
-
-      // Simple validation for letters and spaces in name field
-      document.getElementById('patient-name').addEventListener('input', function(e) {
-        let value = e.target.value;
-        
-        // Remove any characters that aren't letters or spaces
-        value = value.replace(/[^A-Za-z\s]/g, '');
-        
-        // Remove extra spaces
-        value = value.replace(/\s+/g, ' ');
-        
-        // Remove leading space
-        value = value.replace(/^\s/, '');
-        
-        e.target.value = value;
-        checkPatientForm();
-      });
-
-      // Only allow numbers in contact field
-      document.getElementById('contact-number').addEventListener('input', (e) => {
-        e.target.value = e.target.value.replace(/[^0-9]/g, '');
-        if (e.target.value.length > 10) {
-          e.target.value = e.target.value.slice(0, 10);
-        }
-        checkPatientForm();
-      });
+    // Contact number validation
+    const contactInput = document.getElementById('contact-number');
+      
+    // Prevent typing non-numeric characters
+    contactInput.addEventListener('keypress', function(e) {
+      const char = String.fromCharCode(e.keyCode || e.which);
+      if (!/^[0-9]$/.test(char) || this.value.length >= 10) {
+        e.preventDefault();
+      }
+    });
+    
+    // Clean input on any change
+    contactInput.addEventListener('input', function() {
+      let value = this.value;
+      value = value.replace(/[^0-9]/g, '');
+      if (value.length > 10) {
+        value = value.slice(0, 10);
+      }
+      this.value = value;
+      checkPatientForm();
+    });
+    
+    // Handle paste events for contact
+    contactInput.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      const cleanedText = text.replace(/[^0-9]/g, '').slice(0, 10);
+      this.value = cleanedText;
+      checkPatientForm();
     });
 
     // Doctor time slots
