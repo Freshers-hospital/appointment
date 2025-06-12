@@ -16,7 +16,11 @@ const confirmationRoutes = require('./routes/confirmations');
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+<<<<<<< HEAD
 app.use(express.static(path.join(__dirname, 'public')));
+=======
+app.use(express.static(path.join(__dirname, 'public'))); // 
+>>>>>>> 0e95b787619a959dc12a2411da15952d54c283fd
 
 // MongoDB connection
 const mongoURI = 'mongodb+srv://ashuaswini517:ashuaswini517@aswini.z12qrkv.mongodb.net/employee_db';
@@ -42,3 +46,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+// modified
