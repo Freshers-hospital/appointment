@@ -228,12 +228,13 @@
         <div class="form-grid">
           <div class="form-group">
             <label for="patient-name">Patient Name<span class="text-red-500">*</span></label>
+            <div id="patient-name-error" class="text-red-500 text-sm mt-1"></div>
             <input type="text" 
               id="patient-name" 
               name="name" 
               placeholder="Enter full name" 
               required 
-              pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+            
               title="Enter name using only letters and spaces"
               maxlength="50"/>
           </div>
@@ -469,6 +470,7 @@
  <div class="grid grid-cols-2 gap-4 mb-4">
          
           <div class="border rounded-lg p-4 bg-gray-50">
+            
             <p class="text-black text-bold text-lg mb-2">Personal Details</p>
             <div class="space-y-2">
               <div>
@@ -559,28 +561,58 @@
         input.addEventListener('input', checkPatientForm);
         input.addEventListener('change', checkPatientForm);
       });
-      const nameInput = document.getElementById('patient-name');
-      nameInput.addEventListener('keypress', function(e) {
-        const char = String.fromCharCode(e.keyCode || e.which);
-        if (!/^[A-Za-z\s]$/.test(char)) {
-          e.preventDefault();
-        }
-      });
-      nameInput.addEventListener('input', function() {
-        let value = this.value;
-        value = value.replace(/[^A-Za-z\s]/g, '');
-        value = value.replace(/\s+/g, ' ');
-        value = value.trim();
-        this.value = value;
-        checkPatientForm();
-      });
+    const nameInput = document.getElementById('patient-name');
+nameInput.addEventListener('input', function () {
+  let value = this.value;
+  value = value.replace(/[^A-Za-z.\s]/g, '');
+  value = value.replace(/\s{2,}/g, ' ');
+  value = value.replace(/\.{2,}/g, '.');
+  value = value.replace(/^[.\s]+/, '');
+
+  this.value = value;
+
+  validateNameInput();
+  checkPatientForm();
+});
+nameInput.addEventListener('blur', validateNameInput);
+function validateNameInput() {
+  const errorDiv = document.getElementById('patient-name-error');
+  const name = nameInput.value.trim();
+  const nameRegex = /^[A-Za-z]+([ .][A-Za-z]+)*$/;
+
+  if (!nameRegex.test(name)) {
+    nameInput.classList.add('border-red-500');
+    if (!errorDiv) {
+      const newError = document.createElement('div');
+      newError.id = 'patient-name-error';
+      newError.className = 'text-red-500 text-sm mt-1';
+      newError.textContent = 'Please enter a valid name (letters, dot, space allowed after letters)';
+      nameInput.parentNode.appendChild(newError);
+    } else {
+      errorDiv.textContent = 'Please enter a valid name (letters, dot, space allowed after letters)';
+    }
+  } else {
+    nameInput.classList.remove('border-red-500');
+    if (errorDiv) errorDiv.remove();
+  }
+}
+
+
       nameInput.addEventListener('paste', function(e) {
-        e.preventDefault();
-        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-        const cleanedText = text.replace(/[^A-Za-z\s]/g, '').replace(/\s+/g, ' ').trim();
-        this.value = cleanedText;
-        checkPatientForm();
-      });
+  e.preventDefault();
+  const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+  const cleanedText = text
+    .replace(/[^A-Za-z.\s]/g, '')   
+    .replace(/\s{2,}/g, ' ')
+    .replace(/\.{2,}/g, '.')
+    .replace(/^[.\s]+/, '')
+    .trim();
+
+  this.value = cleanedText;
+  validateNameInput();  
+  checkPatientForm();
+});
+
       const contactInput = document.getElementById('contact-number');
       contactInput.addEventListener('keypress', function(e) {
         const char = String.fromCharCode(e.keyCode || e.which);
@@ -970,19 +1002,7 @@
 
       // Special validation for name (only letters and spaces)
       const nameInput = document.getElementById('patient-name');
-      nameInput.addEventListener('blur', () => {
-        const nameValue = nameInput.value.trim();
-        if (nameValue && !/^[A-Za-z\s]+$/.test(nameValue)) {
-          nameInput.classList.add('border-red-500');
-          let errorDiv = nameInput.nextElementSibling;
-          if (!errorDiv || !errorDiv.classList.contains('error-message')) {
-            errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message text-red-500 text-sm mt-1';
-            nameInput.parentNode.insertBefore(errorDiv, nameInput.nextSibling);
-          }
-          errorDiv.textContent = 'Name should contain only letters and spaces';
-        }
-      });
+      
     });
 
    
@@ -1045,9 +1065,9 @@
 
     
     const doctorUnavailableDates = {
-      "Dr. Sarah Johnson": ["5/26/2025"],
-      "Dr. Michael Chen": ["5/28/2025"],
-      "Dr. Srivani": ["5/29/2025"]
+      "Dr. Sarah Johnson": ["6/26/2025"],
+      "Dr. Michael Chen": ["6/28/2025"],
+      "Dr. Srivani": ["6/29/2025"]
     };
 
    
