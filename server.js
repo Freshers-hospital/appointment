@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'))); 
 
 // MongoDB connection
-const mongoURI = 'mongodb+srv://ashuaswini517:ashuaswini517@aswini.z12qrkv.mongodb.net/employee_db';
+const mongoURI = 'mongodb+srv://vinodkumar07:vinod07@cluster0.fxhf4wc.mongodb.net/hp';
 mongoose.connect(mongoURI);
 mongoose.connection.once('open', () => console.log('MongoDB connected'));
 mongoose.connection.on('error', (err) => console.error('MongoDB connection error:', err));
