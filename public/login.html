@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex flex-col">
+
+ 
+  <nav class="bg-white shadow-md p-4 flex items-center justify-between">
+    <div class="flex items-center">
+      <svg class="w-6 h-6 text-blue-600 mr-2 ml-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+      <h1 class="text-2xl font-bold   text-blue-600">MediCare</h1>
+    </div>
+    <span class="text-gray-600 mr-20 font-medium">Admin Login</span>
+  </nav>
+
+\
+  <div class="flex-grow flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm mt-4">
+      <div class="flex justify-center mb-4">
+        <div class="bg-blue-500 p-4 rounded-full">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M5.121 17.804A13.937 13.937 0 0112 15c2.185 0 4.23.523 6.122 1.452M15 10a3 3 0 11-6 0 3 3 0 016 0z">
+            </path>
+          </svg>
+        </div>
+      </div>
+
+      <h2 class="text-center text-xl font-semibold mb-6">Admin Login</h2>
+
+      <div class="mb-4">
+        <input type="text" id="username"
+          class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="User ID">
+      </div>
+
+      <div class="mb-4">
+        <input type="password" id="password"
+          class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Password">
+      </div>
+
+      <button onclick="login()"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md">
+        LOGIN
+      </button>
+
+      <p id="error-msg" class="text-red-500 text-sm mt-2 text-center"></p>
+
+      <div class="text-center mt-4">
+        <a href="#" class="text-blue-500 hover:underline text-sm">Forgot Password?</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('username').addEventListener('keypress', handleEnter);
+      document.getElementById('password').addEventListener('keypress', handleEnter);
+      document.getElementById('username').addEventListener('input', clearError);
+      document.getElementById('password').addEventListener('input', clearError);
+    });
+
+    function handleEnter(e) {
+      if (e.key === 'Enter') {
+        login();
+      }
+    }
+
+    function clearError() {
+      document.getElementById('error-msg').innerText = '';
+    }
+
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('error-msg');
+
+      errorMsg.innerText = '';
+
+      if (!username || !password) {
+        errorMsg.innerText = "Please enter both username and password.";
+        return;
+      }
+
+      if (username.toLowerCase() === "admin" && password === "admin123") {
+        const loginButton = document.querySelector('button');
+        loginButton.disabled = true;
+        loginButton.textContent = 'Logging in...';
+        loginButton.classList.add('opacity-75');
+
+        setTimeout(() => {
+          window.location.href = "admindasboard.html";
+        }, 500);
+      } else {
+        errorMsg.innerText = "Invalid username or password.";
+        errorMsg.classList.add('shake');
+        setTimeout(() => errorMsg.classList.remove('shake'), 500);
+      }
+    }
+  </script>
+
+  <style>
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .shake {
+      animation: shake 0.2s ease-in-out 0s 2;
+    }
+  </style>
+
+</body>
+</html>
