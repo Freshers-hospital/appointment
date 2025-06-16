@@ -24,7 +24,11 @@
   background-color: gray-100;
   color: black;
 }
-
+.blurred-bg > *:not(#availabilityModalOverlay) {
+  filter: blur(4px) !important;
+  pointer-events: none;
+  user-select: none;
+}
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -42,7 +46,7 @@
     <div class="flex items-center gap-4 px-20">
       <div class="relative">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
-        <input type="text" placeholder="Search..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
+        <input type="text" id="searchInput" placeholder="Search..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
       <input type="date" id="datePicker" class="px-8 py-0 border border-gray-300 " />
     </div>
@@ -172,9 +176,8 @@
       <div class="flex justify-between items-center mb-4">
         <div>
           <h3 class="text-xl font-semibold">Patients</h3>
-          <p class="text-gray-500">View and Manage patient profiles</p>
+          <p class="text-gray-500">View patient appointment details</p>
         </div>
-      
       </div>
        <table class="w-full table-auto text-left">
         <thead>
@@ -183,132 +186,212 @@
             <th class="px-4 py-2">Age/Gender</th>
             <th class="px-4 py-2">Blood Group</th>
             <th class="px-4 py-2">Contact</th>
-            <th class="px-4 py-2">Last Visit</th>
-            <th class="px-4 py-2">Actions</th>
+            <th class="px-4 py-2">Appointment Date</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">Aswini</td>
-            <td class="px-6 py-2">Female</td>
-            <td class="px-6 py-2">O+</td>
-            <td class="px-6 py-2">9573406678</td>
-            <td class="px-6 py-2">6/05/2025</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
-              <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
-                
-              </div>
-            </td>
-          </tr>
-         
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">Srivani</td>
-            <td class="px-6 py-2">Female</td>
-            <td class="px-6 py-2">O+</td>
-            <td class="px-6 py-2">8522972230</td>
-            <td class="px-6 py-2">8/05/2025</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
-                <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
-                
-              </div>
-            </td>
-          </tr>
-         
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">Akhila</td>
-            <td class="px-6 py-2">Female</td>
-            <td class="px-6 py-2">O+</td>
-            <td class="px-6 py-2"> 7672029035</td>
-            <td class="px-6 py-2">11/05/2025</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
-                <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
-                
-              </div>
-            </td>
-          </tr>
-          
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">vinod</td>
-            <td class="px-6 py-2">Male</td>
-            <td class="px-6 py-2">B+</td>
-            <td class="px-6 py-2">6281716332</td>
-            <td class="px-6 py-2">10/05/2025</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
-                <a href="book appointment.HTML" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
-                
-              </div>
-            </td>
-          </tr>
-          
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">Kiran</td>
-            <td class="px-6 py-2">Male</td>
-            <td class="px-6 py-2">O+</td>
-            <td class="px-6 py-2">9701495633</td>
-            <td class="px-6 py-2">13/05/2025</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View medical history</a>
-                <a href="appointment.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" id="bookAppointmentLink">Book Appointment</a>
-                
-              </div>
-            </td>
-          </tr>
+        <tbody id="patientsList">
+          <!-- Patient data will be populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Manage Availability Modal -->
+<div id="availabilityModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div id="availabilityModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <h2 class="text-2xl font-bold mb-4">Manage Availability</h2>
+    <form id="availabilityForm">
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Date</label>
+        <input type="date" id="availabilityDate" name="date" class="w-full border border-gray-300 rounded px-3 py-2" required />
+      </div>
+      <div class="mb-4 flex gap-2 items-center">
+        <div class="flex-1">
+          <label class="block text-gray-700 mb-2">Time</label>
+          <input type="time" id="availabilityStart" name="start" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+        <span class="mx-2">-</span>
+        <div class="flex-1">
+          <label class="block text-gray-700 mb-2 invisible">End</label>
+          <input type="time" id="availabilityEnd" name="end" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 mt-6">
+        <button type="button" id="cancelAvailability" class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
+        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Save</button>
+      </div>
+    </form>
+    <button id="closeAvailabilityModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+  </div>
+</div>
 
 <script>
-  const appointments = {};
   const datePicker = document.getElementById("datePicker");
   const selectedDate = document.getElementById("selectedDate");
   const appointmentsList = document.getElementById("appointmentsList");
   const addBtn = document.getElementById("addBtn");
-  const form = document.getElementById("form");
-  const searchInput = document.querySelector("input[type='text']");
+  const searchInput = document.getElementById("searchInput");
 
-  function renderAppointmentsList(date, filterDoctor = "") {
-    const appts = appointments[date] || [];
-    const filtered = appts.filter(app => app.doctor.toLowerCase().includes(filterDoctor.toLowerCase()));
+  // Set today's date as default
+  const today = new Date().toISOString().split('T')[0];
+  datePicker.value = today;
+  selectedDate.textContent = new Date(today).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    appointmentsList.innerHTML = filtered.length > 0
-      ? filtered.map(app => `
-        <div class="p-4 mb-2 border rounded bg-gray-50">
-          <p><strong>Patient:</strong> ${app.name}</p>
-          <p><strong>Doctor:</strong> ${app.doctor}</p>
-          <p><strong>Time:</strong> ${app.time}</p>
-        </div>
-      `).join('')
-      : `<p class="text-gray-500">No appointments found</p>`;
+  async function fetchAppointments(date, doctorName = '') {
+    try {
+      // Format the date to match the API's expected format (MM/DD/YYYY)
+      const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      console.log('Fetching appointments for:', { date: formattedDate, doctorName });
+      const url = `/api/confirmations`;
+      console.log('Making request to:', url);
+
+      const response = await fetch(url);
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch appointments: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Raw API Response:', data);
+
+      // Filter appointments to ensure they match the exact date and doctor name
+      const filteredAppointments = data.filter(app => {
+        if (!app.dateData?.date) {
+          console.log('Skipping appointment with invalid date:', app);
+          return false;
+        }
+        
+        // Normalize both dates to ensure exact match
+        const appointmentDate = app.dateData.date.trim();
+        const matchesDate = appointmentDate === formattedDate;
+        const matchesDoctor = !doctorName || 
+          (app.doctorData?.name && app.doctorData.name.toLowerCase().includes(doctorName.toLowerCase()));
+        
+        console.log('Comparing dates:', {
+          appointmentDate,
+          formattedDate,
+          matchesDate,
+          doctorName: app.doctorData?.name,
+          searchTerm: doctorName,
+          matchesDoctor
+        });
+        
+        return matchesDate && matchesDoctor;
+      });
+
+      console.log('Filtered appointments:', filteredAppointments);
+      return filteredAppointments;
+    } catch (error) {
+      console.error('Error in fetchAppointments:', error);
+      throw error;
+    }
   }
 
+  async function renderAppointmentsList(date, filterDoctor = "") {
+    try {
+      appointmentsList.innerHTML = `
+        <div class="flex justify-center items-center p-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span class="ml-2 text-gray-600">Loading appointments...</span>
+        </div>
+      `;
+
+      const appointments = await fetchAppointments(date, filterDoctor);
+      
+      if (!appointments || appointments.length === 0) {
+        const formattedDate = new Date(date).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        appointmentsList.innerHTML = `
+          <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">
+              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p class="text-lg font-medium mb-2">No appointments found</p>
+            <p class="text-sm">${formattedDate}</p>
+            ${filterDoctor ? `<p class="text-sm mt-1">for Dr. ${filterDoctor}</p>` : ''}
+          </div>
+        `;
+        return;
+      }
+
+      appointmentsList.innerHTML = appointments.map(app => `
+        <div class="p-4 mb-2 border rounded bg-gray-50 hover:bg-gray-100 transition-colors">
+          <div class="flex justify-between items-center">
+            <div class="flex-1">
+              <div class="mb-2">
+                <p class="text-lg font-semibold text-blue-600">${app.doctorData?.name || 'N/A'}</p>
+                <p class="text-sm text-gray-500">${app.doctorData?.specialty || 'N/A'}</p>
+              </div>
+              <div class="mb-2">
+                <p class="font-medium">${app.patientData?.name || 'N/A'}</p>
+                <p class="text-sm text-gray-600">${app.patientData?.age || 'N/A'} years, ${app.patientData?.gender || 'N/A'}</p>
+                <p class="text-sm text-gray-600">Blood Group: ${app.patientData?.blood || 'N/A'}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">📞 ${app.patientData?.contact || 'N/A'}</p>
+              </div>
+            </div>
+            <div class="text-right ml-4">
+              <p class="text-lg font-semibold text-blue-600">${app.dateData?.time || 'N/A'}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      console.error('Error in renderAppointmentsList:', error);
+      appointmentsList.innerHTML = `
+        <div class="p-4 text-center text-red-500">
+          <p class="font-semibold">Error loading appointments</p>
+          <p class="text-sm mt-2">${error.message || 'Please try again later'}</p>
+          <button onclick="renderAppointmentsList('${date}', '${filterDoctor}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Retry
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  // Handle date picker changes
   datePicker.addEventListener("change", () => {
-    const date = new Date(datePicker.value);
-    const formatted = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const date = datePicker.value;
+    const formatted = new Date(date).toLocaleDateString('en-US', { 
+      weekday: 'long',
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
     selectedDate.textContent = formatted;
-    renderAppointmentsList(datePicker.value, searchInput.value);
+    renderAppointmentsList(date, searchInput.value.trim());
   });
 
+  // Handle search input changes with debounce
+  let searchTimeout;
   searchInput.addEventListener("input", () => {
-    if (datePicker.value) renderAppointmentsList(datePicker.value, searchInput.value);
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      const currentDate = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+      console.log('Search term changed:', searchTerm);
+      renderAppointmentsList(currentDate, searchTerm);
+    }, 300); // 300ms debounce
   });
 
-  
+  // Initial render
+  renderAppointmentsList(today);
 
   // Tab switch logic
   const tabs = document.querySelectorAll(".tab");
@@ -324,6 +407,17 @@
       const targetId = tab.getAttribute("data-tab");
       tabContents.forEach(c => c.classList.add("hidden"));
       document.getElementById(targetId).classList.remove("hidden");
+
+      // Get current date and search term
+      const date = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+
+      // Update content based on active tab
+      if (targetId === 'appointmentsTab') {
+        renderAppointmentsList(date, searchTerm);
+      } else if (targetId === 'patientsTab') {
+        fetchAndDisplayPatients(date, searchTerm);
+      }
     });
   });
 
@@ -381,7 +475,176 @@ document.querySelectorAll('a').forEach(link => {
   // For normal links (like book-appointment.html), do NOT preventDefault!
 });
 
+// Update the fetchAndDisplayPatients function to handle date filtering
+async function fetchAndDisplayPatients(date = null, searchTerm = '') {
+  try {
+    const response = await fetch('/api/confirmations');
+    if (!response.ok) {
+      throw new Error('Failed to fetch patient data');
+    }
+    
+    const appointments = await response.json();
+    const patientsList = document.getElementById('patientsList');
+    
+    // Format the date to match the API's expected format (MM/DD/YYYY)
+    const formattedDate = date ? new Date(date).toLocaleDateString('en-US', {
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric'
+    }) : null;
 
+    // Filter appointments based on date and search term
+    const filteredAppointments = appointments.filter(app => {
+      const matchesDate = !formattedDate || app.dateData?.date === formattedDate;
+      const matchesSearch = !searchTerm || 
+        (app.patientData?.name && app.patientData.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      return matchesDate && matchesSearch;
+    });
+    
+    if (!filteredAppointments || filteredAppointments.length === 0) {
+      patientsList.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+            ${formattedDate ? `No appointments found for ${formattedDate}` : 'No patient appointments found'}
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    patientsList.innerHTML = filteredAppointments.map(app => `
+      <tr class="border-t hover:bg-gray-50">
+        <td class="px-6 py-2 font-semibold">${app.patientData?.name || 'N/A'}</td>
+        <td class="px-6 py-2">${app.patientData?.age || 'N/A'} / ${app.patientData?.gender || 'N/A'}</td>
+        <td class="px-6 py-2">${app.patientData?.blood || 'N/A'}</td>
+        <td class="px-6 py-2">${app.patientData?.contact || 'N/A'}</td>
+        <td class="px-6 py-2">${app.dateData?.date || 'N/A'}</td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    console.error('Error fetching patient data:', error);
+    const patientsList = document.getElementById('patientsList');
+    patientsList.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-6 py-4 text-center text-red-500">
+          Error loading patient data. Please try again later.
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// Update the event listeners to handle both tabs
+document.addEventListener('DOMContentLoaded', () => {
+  const datePicker = document.getElementById("datePicker");
+  const searchInput = document.getElementById("searchInput");
+  
+  // Set today's date as default
+  const today = new Date().toISOString().split('T')[0];
+  datePicker.value = today;
+
+  // Handle date picker changes for both tabs
+  datePicker.addEventListener("change", () => {
+    const date = datePicker.value;
+    const searchTerm = searchInput.value.trim();
+    const activeTab = document.querySelector('.tab-active').getAttribute('data-tab');
+    
+    if (activeTab === 'appointmentsTab') {
+      renderAppointmentsList(date, searchTerm);
+    } else if (activeTab === 'patientsTab') {
+      fetchAndDisplayPatients(date, searchTerm);
+    }
+  });
+
+  // Handle search input changes with debounce for both tabs
+  let searchTimeout;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      const date = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+      const activeTab = document.querySelector('.tab-active').getAttribute('data-tab');
+      
+      if (activeTab === 'appointmentsTab') {
+        renderAppointmentsList(date, searchTerm);
+      } else if (activeTab === 'patientsTab') {
+        fetchAndDisplayPatients(date, searchTerm);
+      }
+    }, 300);
+  });
+});
+
+// Manage Availability Modal Logic
+let currentDoctor = null;
+
+// Open modal and blur background
+function openAvailabilityModal(doctorName) {
+  currentDoctor = doctorName;
+  document.getElementById('availabilityModalOverlay').classList.remove('hidden');
+  document.body.classList.add('blurred-bg');
+  // Optionally set default values
+  document.getElementById('availabilityForm').reset();
+}
+
+// Close modal and remove blur
+function closeAvailabilityModal() {
+  document.getElementById('availabilityModalOverlay').classList.add('hidden');
+  document.body.classList.remove('blurred-bg');
+  currentDoctor = null;
+}
+
+document.getElementById('cancelAvailability').onclick = closeAvailabilityModal;
+document.getElementById('closeAvailabilityModal').onclick = closeAvailabilityModal;
+document.getElementById('availabilityModalOverlay').onclick = function(e) {
+  if (e.target === this) closeAvailabilityModal();
+};
+
+document.getElementById('availabilityForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const date = document.getElementById('availabilityDate').value;
+  const start = document.getElementById('availabilityStart').value;
+  const end = document.getElementById('availabilityEnd').value;
+  if (!currentDoctor) return;
+  // Example payload
+  const payload = {
+    doctor: currentDoctor,
+    date,
+    start,
+    end
+  };
+  try {
+    // TODO: Replace with your actual API endpoint
+    const response = await fetch('/api/doctor-availability', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error('Failed to save availability');
+    // Optionally refresh doctor data here
+    closeAvailabilityModal();
+    // Optionally show a success message
+  } catch (err) {
+    alert('Error saving availability: ' + err.message);
+  }
+};
+
+// Attach event listeners to all Manage Availability links/buttons
+function attachManageAvailabilityListeners() {
+  document.querySelectorAll('.action-menu a').forEach(link => {
+    if (link.textContent.trim() === 'Manage Availability') {
+      link.onclick = function(e) {
+        e.preventDefault();
+        // Find doctor name from the row
+        const row = link.closest('tr');
+        let doctorName = row ? row.querySelector('td.font-semibold, td.font-medium')?.textContent.trim() : '';
+        openAvailabilityModal(doctorName);
+      };
+    }
+  });
+}
+// Call after DOM is ready and after any dynamic table updates
+attachManageAvailabilityListeners();
+// If you update the doctors table dynamically, call attachManageAvailabilityListeners() again.
 </script>
 
 </body>

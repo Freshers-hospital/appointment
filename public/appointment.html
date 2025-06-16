@@ -1223,7 +1223,7 @@ function validateNameInput() {
       }
 
       try {
-        const response = await fetch(`http://localhost:3022/api/confirmations/booked-slots?doctorName=${encodeURIComponent(doctorName)}&date=${encodeURIComponent(date)}`);
+        const response = await fetch(`/api/confirmations/booked-slots?doctorName=${encodeURIComponent(doctorName)}&date=${encodeURIComponent(date)}`);
         if (!response.ok) {
           throw new Error('Failed to fetch booked slots');
         }
@@ -1528,7 +1528,7 @@ function validateNameInput() {
         confirmButton.textContent = 'Confirming...';
         confirmButton.classList.add('opacity-75');
 
-        const response = await fetch('http://localhost:3022/api/confirmations', {
+        const response = await fetch('/api/confirmations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
