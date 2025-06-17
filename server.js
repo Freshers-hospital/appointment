@@ -25,7 +25,7 @@ mongoose.connect(mongoURI);
 mongoose.connection.once('open', () => console.log('MongoDB connected'));
 mongoose.connection.on('error', (err) => console.error('MongoDB connection error:', err));
 
-// API Routes
+// API Routes for purpose
 app.use('/api/confirmations', confirmationRoutes);
 app.use("/api/doctors", doctorRoutes);
 
