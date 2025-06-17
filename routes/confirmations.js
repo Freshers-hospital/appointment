@@ -61,12 +61,54 @@ if (slotTaken) {
 // GET - Retrieve all confirmations with populated references
 router.get('/', async (req, res) => {
   try {
-    const confirmations = await Confirmation.find()
+    const { date, doctorName } = req.query;
+    let query = {};
+
+    // If date is provided, find the date document first
+    if (date) {
+      const dateDoc = await DateModel.findOne({ date });
+      if (dateDoc) {
+        query.date = dateDoc._id;
+      } else {
+        return res.json([]); // Return empty array if no date found
+      }
+    }
+
+    // If doctor name is provided, find the doctor document first
+    if (doctorName) {
+      const doctor = await Doctor.findOne({ name: doctorName });
+      if (doctor) {
+        query.doctor = doctor._id;
+      } else {
+        return res.json([]); // Return empty array if no doctor found
+      }
+    }
+
+    const confirmations = await Confirmation.find(query)
       .populate('patient')
       .populate('doctor')
       .populate('date');
 
-    res.status(200).json(confirmations);
+    // Format the response
+    const formattedConfirmations = confirmations.map(conf => ({
+      patientData: {
+        name: conf.patient.name,
+        age: conf.patient.age,
+        gender: conf.patient.gender,
+        blood: conf.patient.blood,
+        contact: conf.patient.contact
+      },
+      doctorData: {
+        name: conf.doctor.name,
+        specialty: conf.doctor.specialty
+      },
+      dateData: {
+        date: conf.date.date,
+        time: conf.date.time
+      }
+    }));
+
+    res.status(200).json(formattedConfirmations);
   } catch (error) {
     console.error('Failed to fetch confirmations:', error);
     res.status(500).json({ error: 'Server error' });

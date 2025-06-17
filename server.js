@@ -35,7 +35,7 @@ app.use('/api/confirmations', confirmationRoutes);
 
 // Serve main HTML
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'appointment.html'));
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Start server
