@@ -6,6 +6,7 @@ const port = 3022;
 
 // Routes
 const confirmationRoutes = require('./routes/confirmations');
+const doctorRoutes = require("./routes/doctors");
 
 // const patientRoutes = require('./routes/patients');
 // const confirmationRoutes = require('./routes/confirmations');
@@ -26,6 +27,7 @@ mongoose.connection.on('error', (err) => console.error('MongoDB connection error
 
 // API Routes
 app.use('/api/confirmations', confirmationRoutes);
+app.use("/api/doctors", doctorRoutes);
 
 // app.use('/api/patients', patientRoutes);
 // app.use('/api/confirmations', confirmationRoutes);
@@ -35,7 +37,7 @@ app.use('/api/confirmations', confirmationRoutes);
 
 // Serve main HTML
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'appointment.html'));
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Start server for backend  
