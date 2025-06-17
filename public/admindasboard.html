@@ -29,7 +29,7 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
-<nav class="bg-white shadow pl-[120px] py-2">
+<nav class="bg-white shadow pl-[120px] py-4">
   <div class="text-blue-600 font-bold text-xl">MediCare</div>
 </nav>
 
@@ -39,20 +39,20 @@
       <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
       <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
     </div>
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 px-20">
       <div class="relative">
-        <img src="/download.png" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 pointer-events-none" />
-        <input type="text" placeholder="Search..." class="pl-8 pr-2 py-0 border border-gray-300 w-48" />
+        <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
+        <input type="text" id="searchInput" placeholder="Search..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
-      <input type="date" id="datePicker" class="px-2 py-0 border border-gray-300 " />
+      <input type="date" id="datePicker" class="px-8 py-0 border border-gray-300 " />
     </div>
   </div>
 
   <!-- Tabs -->
   <div class="flex justify-center mt-6 mb-6">
-    <button class="tab px-[190px] py-1 font-semibold tab-active" data-tab="appointmentsTab">Appointments</button>
-    <button class="tab px-[180px] py-1 font-semibold tab-inactive" data-tab="doctorsTab">Doctors</button>
-    <button class="tab px-[180px] py-1 font-semibold tab-inactive" data-tab="patientsTab">Patients</button>
+    <button class="tab px-[245px] py-2 font-semibold tab-active" data-tab="appointmentsTab">Appointments</button>
+    <button class="tab px-[245px] py-2 font-semibold tab-inactive" data-tab="doctorsTab">Doctors</button>
+    <button class="tab px-[245px] py-2 font-semibold tab-inactive" data-tab="patientsTab">Patients</button>
   </div>
 
   <!-- Appointments Tab -->
@@ -73,99 +73,237 @@
     </div>
   </div>
 
-  <!-- Doctors Tab -->
-  <div id="doctorsTab" class="tab-content px-20 hidden">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <div class="flex justify-between items-center mb-4">
-        <div>
-          <h3 class="text-xl font-semibold">Doctors</h3>
-          <p class="text-gray-500">Manage doctor profiles and schedules</p>
-        </div>
-        <button class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
+
+<!-- Doctors Tab -->
+<div id="doctorsTab" class="tab-content px-20 hidden">
+  <div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <h3 class="text-xl font-semibold">Doctors</h3>
+        <p class="text-gray-500">Manage doctor profiles and schedules</p>
       </div>
-      <table class="w-full table-auto text-left">
-        <thead>
-          <tr class="bg-gray-0">
-            <th class="px-4 py-2">Doctor</th>
-            <th class="px-4 py-2">Specialty</th>
-            <th class="px-4 py-2">Today's Appointments</th>
-            <th class="px-4 py-2">Availability</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">Dr. Sarah Johnson</td>
-            <td class="px-6 py-2">Cardiology</td>
-            <td class="px-6 py-2">8</td>
-            <td class="px-6 py-2">10:00 AM - 5:00 PM</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </td>
-          </tr>
-           <tr>
-              <td class="px-6 py-2 font-medium">Dr.Kiran</td>
-              <td class="px-6 py-2">Pediatrics</td>
-              <td class="px-6 py-2">5</td>
-              <td class="px-6 py-2">8:30 AM - 4:30 PM</td>
-               <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-               <tr>
-              <td class="px-6 py-2 font-medium">Dr.Akhila</td>
-              <td class="px-6 py-2">Neurology</td>
-              <td class="px-6 py-2">3</td>
-              <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
-           <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-              <tr>
-              <td class="px-6 py-2 font-medium">Dr.Vinod</td>
-              <td class="px-6 py-2">Orthopedics</td>
-              <td class="px-6 py-2">4</td>
-              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
-              <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-              <tr>
-              <td class="px-6 py-2 font-medium">Dr.Srivani</td>
-              <td class="px-6 py-2">Gynecologist</td>
-              <td class="px-6 py-2">4</td>
-              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
-              <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-        </tbody>
-      </table>
+      <button class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
     </div>
+    <table class="w-full table-auto text-left">
+      <thead>
+        <tr class="bg-gray-0">
+          <th class="px-4 py-2">Doctor</th>
+          <th class="px-4 py-2">Specialty</th>
+          <th class="px-4 py-2">Today's Appointments</th>
+          <th class="px-4 py-2">Availability</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <!-- <tbody >
+        <tr class="border-t">
+          <td class="px-6 py-2 font-semibold">Dr. Sarah Johnson</td>
+          <td class="px-6 py-2">Cardiology</td>
+          <td class="px-6 py-2">8</td>
+          <td class="px-6 py-2">10:00 AM - 5:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Michael Chen</td>
+          <td class="px-6 py-2">Dermatology</td>
+          <td class="px-6 py-2">5</td>
+          <td class="px-6 py-2">9:00 AM - 4:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Emily Rodriguez</td>
+          <td class="px-6 py-2">Neurology</td>
+          <td class="px-6 py-2">3</td>
+          <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. James Wilson</td>
+          <td class="px-6 py-2">Orthopedics</td>
+          <td class="px-6 py-2">4</td>
+          <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Srivani</td>
+          <td class="px-6 py-2">ENT</td>
+          <td class="px-6 py-2">6</td>
+          <td class="px-6 py-2">9:30 AM - 5:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Aswini</td>
+          <td class="px-6 py-2">General Surgery</td>
+          <td class="px-6 py-2">7</td>
+          <td class="px-6 py-2">8:00 AM - 3:30 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Akhila</td>
+          <td class="px-6 py-2">Gynecologist</td>
+          <td class="px-6 py-2">4</td>
+          <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Vinod</td>
+          <td class="px-6 py-2">Pediatrics</td>
+          <td class="px-6 py-2">5</td>
+          <td class="px-6 py-2">8:30 AM - 4:30 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Kiran</td>
+          <td class="px-6 py-2">Radiology</td>
+          <td class="px-6 py-2">4</td>
+          <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. keerthi</td>
+          <td class="px-6 py-2">Oncologist</td>
+          <td class="px-6 py-2">6</td>
+          <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Vedanshi</td>
+          <td class="px-6 py-2">Gastroenterologist</td>
+          <td class="px-6 py-2">5</td>
+          <td class="px-6 py-2">10:00 AM - 6:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Vivek</td>
+          <td class="px-6 py-2">Dentist</td>
+          <td class="px-6 py-2">7</td>
+          <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-t">
+          <td class="px-6 py-2 font-medium">Dr. Om</td>
+          <td class="px-6 py-2">Andrologist</td>
+          <td class="px-6 py-2">3</td>
+          <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
+          <td class="px-4 py-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>  -->
+
+<tbody id="doctorTableBody">
+  Dynamic doctor rows will be inserted here
+</tbody>
+
+
+
+     </table>
   </div>
 </div>
+
+               
+     
   <!-- Patients Tab -->
   <div id="patientsTab" class="tab-content px-20 hidden">
     <div class="bg-white p-6 rounded-lg shadow">
@@ -274,58 +412,194 @@
           </tr>
 
 <script>
-  const appointments = {};
   const datePicker = document.getElementById("datePicker");
   const selectedDate = document.getElementById("selectedDate");
   const appointmentsList = document.getElementById("appointmentsList");
   const addBtn = document.getElementById("addBtn");
-  const form = document.getElementById("form");
-  const searchInput = document.querySelector("input[type='text']");
+  const searchInput = document.getElementById("searchInput");
 
-  function renderAppointmentsList(date, filterDoctor = "") {
-    const appts = appointments[date] || [];
-    const filtered = appts.filter(app => app.doctor.toLowerCase().includes(filterDoctor.toLowerCase()));
+  // Set today's date as default
+  const today = new Date().toISOString().split('T')[0];
+  datePicker.value = today;
+  selectedDate.textContent = new Date(today).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    appointmentsList.innerHTML = filtered.length > 0
-      ? filtered.map(app => `
-        <div class="p-4 mb-2 border rounded bg-gray-50">
-          <p><strong>Patient:</strong> ${app.name}</p>
-          <p><strong>Doctor:</strong> ${app.doctor}</p>
-          <p><strong>Time:</strong> ${app.time}</p>
-        </div>
-      `).join('')
-      : `<p class="text-gray-500">No appointments found</p>`;
+  async function fetchAppointments(date, doctorName = '') {
+    try {
+      // Format the date to match the API's expected format (MM/DD/YYYY)
+      const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      console.log('Fetching appointments for:', { date: formattedDate, doctorName });
+      const url = `/api/confirmations`;
+      console.log('Making request to:', url);
+
+      const response = await fetch(url);
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch appointments: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Raw API Response:', data);
+
+      // Filter appointments to ensure they match the exact date and doctor name
+      const filteredAppointments = data.filter(app => {
+        if (!app.dateData?.date) {
+          console.log('Skipping appointment with invalid date:', app);
+          return false;
+        }
+        
+        // Normalize both dates to ensure exact match
+        const appointmentDate = app.dateData.date.trim();
+        const matchesDate = appointmentDate === formattedDate;
+        const matchesDoctor = !doctorName || 
+          (app.doctorData?.name && app.doctorData.name.toLowerCase().includes(doctorName.toLowerCase()));
+        
+        console.log('Comparing dates:', {
+          appointmentDate,
+          formattedDate,
+          matchesDate,
+          doctorName: app.doctorData?.name,
+          searchTerm: doctorName,
+          matchesDoctor
+        });
+        
+        return matchesDate && matchesDoctor;
+      });
+
+      console.log('Filtered appointments:', filteredAppointments);
+      return filteredAppointments;
+    } catch (error) {
+      console.error('Error in fetchAppointments:', error);
+      throw error;
+    }
   }
 
+  async function renderAppointmentsList(date, filterDoctor = "") {
+    try {
+      appointmentsList.innerHTML = `
+        <div class="flex justify-center items-center p-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span class="ml-2 text-gray-600">Loading appointments...</span>
+        </div>
+      `;
+
+      const appointments = await fetchAppointments(date, filterDoctor);
+      
+      if (!appointments || appointments.length === 0) {
+        const formattedDate = new Date(date).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        appointmentsList.innerHTML = `
+          <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">
+              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p class="text-lg font-medium mb-2">No appointments found</p>
+            <p class="text-sm">${formattedDate}</p>
+            ${filterDoctor ? `<p class="text-sm mt-1">for Dr. ${filterDoctor}</p>` : ''}
+          </div>
+        `;
+        return;
+      }
+
+      appointmentsList.innerHTML = appointments.map(app => `
+        <div class="p-4 mb-2 border rounded bg-gray-50 hover:bg-gray-100 transition-colors">
+          <div class="flex justify-between items-center">
+            <div class="flex-1">
+              <div class="mb-2">
+                <p class="text-lg font-semibold text-blue-600">${app.doctorData?.name || 'N/A'}</p>
+                <p class="text-sm text-gray-500">${app.doctorData?.specialty || 'N/A'}</p>
+              </div>
+              <div class="mb-2">
+                <p class="font-medium">${app.patientData?.name || 'N/A'}</p>
+                <p class="text-sm text-gray-600">${app.patientData?.age || 'N/A'} years, ${app.patientData?.gender || 'N/A'}</p>
+                <p class="text-sm text-gray-600">Blood Group: ${app.patientData?.blood || 'N/A'}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">📞 ${app.patientData?.contact || 'N/A'}</p>
+              </div>
+            </div>
+            <div class="text-right ml-4">
+              <p class="text-lg font-semibold text-blue-600">${app.dateData?.time || 'N/A'}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      console.error('Error in renderAppointmentsList:', error);
+      appointmentsList.innerHTML = `
+        <div class="p-4 text-center text-red-500">
+          <p class="font-semibold">Error loading appointments</p>
+          <p class="text-sm mt-2">${error.message || 'Please try again later'}</p>
+          <button onclick="renderAppointmentsList('${date}', '${filterDoctor}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Retry
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  // Handle date picker changes
   datePicker.addEventListener("change", () => {
-    const date = new Date(datePicker.value);
-    const formatted = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const date = datePicker.value;
+    const formatted = new Date(date).toLocaleDateString('en-US', { 
+      weekday: 'long',
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
     selectedDate.textContent = formatted;
-    renderAppointmentsList(datePicker.value, searchInput.value);
+    renderAppointmentsList(date, searchInput.value.trim());
   });
 
+  // Handle search input changes with debounce
+  let searchTimeout;
   searchInput.addEventListener("input", () => {
-    if (datePicker.value) renderAppointmentsList(datePicker.value, searchInput.value);
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      const currentDate = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+      console.log('Search term changed:', searchTerm);
+      renderAppointmentsList(currentDate, searchTerm);
+    }, 300); // 300ms debounce
   });
 
-  
+  // Initial render
+  renderAppointmentsList(today);
 
   // Tab switch logic
   const tabs = document.querySelectorAll(".tab");
   const tabContents = document.querySelectorAll(".tab-content");
 
   tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("tab-active", "tab-inactive"));
-      tabs.forEach(t => t.classList.add("tab-inactive"));
-      tab.classList.remove("tab-inactive");
-      tab.classList.add("tab-active");
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('tab-active', 'tab-inactive'));
+    tabs.forEach(t => t.classList.add('tab-inactive'));
+    tab.classList.remove('tab-inactive');
+    tab.classList.add('tab-active');
 
-      const targetId = tab.getAttribute("data-tab");
-      tabContents.forEach(c => c.classList.add("hidden"));
-      document.getElementById(targetId).classList.remove("hidden");
-    });
+    const targetId = tab.getAttribute("data-tab");
+    tabContents.forEach(c => c.classList.add("hidden"));
+    document.getElementById(targetId).classList.remove("hidden");
+
+    // 🩺 Load doctor list only if Doctors tab is clicked
+    if (targetId === 'doctorsTab') {
+      loadDoctors();
+    }
   });
+});
+
 
   // Action menu logic
   document.addEventListener("click", (e) => {
@@ -338,8 +612,7 @@
       menu.classList.toggle("hidden");
     }
   });
-  const tabButtons = document.querySelectorAll(".tab");
-const tabPanels = document.querySelectorAll(".tab-content");
+
 
 tabButtons.forEach(tab => {
   tab.addEventListener("click", () => {
@@ -380,6 +653,51 @@ document.querySelectorAll('a').forEach(link => {
   }
   // For normal links (like book-appointment.html), do NOT preventDefault!
 });
+
+
+async function loadDoctors() {
+  const tbody = document.getElementById('doctorTableBody');
+  tbody.innerHTML = `<tr><td class="p-4 text-gray-500" colspan="5">Loading...</td></tr>`;
+
+  try {
+    const res = await fetch('/api/doctors');
+    const { doctors } = await res.json();
+
+    if (!doctors || doctors.length === 0) {
+      tbody.innerHTML = `<tr><td class="p-4 text-gray-500" colspan="5">No doctors found.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = ''; // Clear loading message
+
+    doctors.forEach(doc => {
+      const row = document.createElement('tr');
+      row.className = 'border-t doctor-row';
+      row.innerHTML = `
+        <td class="px-6 py-2 font-medium">${doc.name}</td>
+        <td class="px-6 py-2">${doc.specialty}</td>
+        <td class="px-6 py-2">${doc.todayAppointments || 0}</td>
+        <td class="px-6 py-2">${doc.availability || 'Not Available'}</td>
+        <td class="px-4 py-2 relative">
+          <button class="action-btn text-xl">...</button>
+          <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Failed to load doctors:', error);
+    tbody.innerHTML = `<tr><td class="p-4 text-red-500" colspan="5">Error loading doctors</td></tr>`;
+  }
+}
+
+
+   
 
 
 </script>
