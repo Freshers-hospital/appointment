@@ -1,5 +1,4 @@
 
-
 const mongoose = require('mongoose');
 
 const appointmentSchema = new mongoose.Schema({
@@ -8,4 +7,7 @@ const appointmentSchema = new mongoose.Schema({
   patientName: String,
 });
 
+
 module.exports = mongoose.model('Appointment', appointmentSchema);
+
+
