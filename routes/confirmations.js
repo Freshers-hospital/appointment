@@ -61,35 +61,37 @@ if (slotTaken) {
  router.get('/', async (req, res) => {
   try {
     const { date, doctorName } = req.query;
-    let query = {};
 
-    // If date is provided, find the date document first
+    const query = {};
+
+    // Step 1: Resolve date filter
     if (date) {
       const dateDoc = await DateModel.findOne({ date });
-      if (dateDoc) {
-        query.date = dateDoc._id;
-      } else {
-        return res.json([]); // Return empty array if no date found
-      }
+      if (!dateDoc) return res.json([]);
+      query.date = dateDoc._id;
     }
 
-    // If doctor name is provided, find the doctor document first
+    // Step 2: Resolve doctor filter
     if (doctorName) {
       const doctor = await Doctor.findOne({ name: doctorName });
-      if (doctor) {
-        query.doctor = doctor._id;
-      } else {
-        return res.json([]); // Return empty array if no doctor found
-      }
+      if (!doctor) return res.json([]);
+      query.doctor = doctor._id;
     }
 
+    // Step 3: Fetch confirmations and populate all references
     const confirmations = await Confirmation.find(query)
-      .populate('patient')
-      .populate('doctor')
-      .populate('date');
+      .populate('patient', 'name age gender blood contact')
+      .populate('doctor', 'name specialty')
+      .populate('date', 'date time');
 
-    // Format the response
-    const formattedConfirmations = confirmations.map(conf => ({
+    // Step 4: Filter out null references BEFORE mapping
+    const safeConfirmations = confirmations.filter(conf =>
+      conf.patient && conf.doctor && conf.date
+    );
+
+    // Step 5: Format output
+    const formatted = safeConfirmations.map(conf => ({
+
       patientData: {
         name: conf.patient.name,
         age: conf.patient.age,
@@ -107,12 +109,16 @@ if (slotTaken) {
       }
     }));
 
-    res.status(200).json(formattedConfirmations);
-  } catch (error) {
-    console.error('Failed to fetch confirmations:', error);
-    res.status(500).json({ error: 'Server error' });
+
+    res.json(formatted);
+  } catch (err) {
+    console.error('Failed to fetch confirmations:', err);
+    res.status(500).json({ error: 'Server error fetching confirmations' });
+
   }
 });
+
+
 router.get('/booked-slots', async (req, res) => {
   const { doctorName, date } = req.query;
 
