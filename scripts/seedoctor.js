@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 const Doctor   = require('../models/doctor');
 
-const mongoURI = "mongodb+srv://ashuaswini517:ashuaswini517@aswini.z12qrkv.mongodb.net/employee_db";
+const mongoURI = "mongodb+srv://vinodkumar07:vinod07@cluster0.fxhf4wc.mongodb.net/hp";
+
 
 // const doctors = [
 //   { name: "Dr. Sarah Johnson",  specialty: "Cardiology",         experience: "15 years" },
@@ -88,10 +89,10 @@ async function seedDoctors() {
     await mongoose.connect(mongoURI);
     console.log('Connected to MongoDB');
 
-    // ✅ This line clears the existing doctor records
+    
     await Doctor.deleteMany({});
 
-    // ✅ Insert new doctors
+
     await Doctor.insertMany(doctors);
     console.log('Doctors seeded successfully');
   } catch (error) {
