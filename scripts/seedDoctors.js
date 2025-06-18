@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const Doctor = require("../models/doctor");
 
-const mongoURI = "mongodb+srv://vinodkumar07:vinod07@cluster0.fxhf4wc.mongodb.net/hp";
+const mongoURI = "mongodb+srv://ashuaswini517:ashuaswini517@aswini.z12qrkv.mongodb.net/employee_db";
 
 const doctors = [
     {
