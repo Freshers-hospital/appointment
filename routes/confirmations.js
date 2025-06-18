@@ -5,13 +5,13 @@ const Patient = require('../models/patient');
 const Doctor = require('../models/doctor');
 const DateModel = require('../models/date');
 
-
+// POST - Create a confirmation
 router.post('/', async (req, res) => {
   try {
     const { patientData, doctorData, dateData } = req.body;
     console.log('Received data:', { patientData, doctorData, dateData });
 
-   
+    // Step 1: Check if doctor with same name exists or create
     let doctor = await Doctor.findOne({ name: doctorData.name });
     if (!doctor) {
       console.log('Creating new doctor:', doctorData);
@@ -28,13 +28,11 @@ router.post('/', async (req, res) => {
       console.log('Found existing doctor:', doctor);
     }
 
-  
     // Step 2: Check if a booking already exists with same doctor, date, and time
-const existingConfirmations = await Confirmation.find({ doctor: doctor._id }).populate('date');
-
-const slotTaken = existingConfirmations.some(conf =>
-  conf.date.date === dateData.date && conf.date.time === dateData.time
-);
+    const existingConfirmations = await Confirmation.find({ doctor: doctor._id }).populate('date');
+    const slotTaken = existingConfirmations.some(conf =>
+      conf.date.date === dateData.date && conf.date.time === dateData.time
+    );
 
     if (slotTaken) {
       return res.status(400).json({
@@ -42,24 +40,28 @@ const slotTaken = existingConfirmations.some(conf =>
       });
     }
 
-   
+    // Step 3: Save patient
     const patient = new Patient(patientData);
     await patient.save();
     console.log('Patient saved:', patient);
 
-    
+    // Step 4: Create or reuse date
     let date = await DateModel.findOne({ date: dateData.date, time: dateData.time });
     if (!date) {
       date = new DateModel(dateData);
       await date.save();
     }
+    console.log('Date saved:', date);
 
-    // Step 5: Save confirmation
-    const confirmation = new Confirmation({
-      patient: patient._id,
-      doctor: doctor._id,
-      date: date._id
-    });
+   // Step 5: Save confirmation
+const confirmation = new Confirmation({
+    patient: patient._id,
+    doctor: doctor._id,
+    doctorName: doctor.name,  
+    date: date._id,
+    status: 'pending'
+});
+
 
     await confirmation.save();
     console.log('Confirmation saved:', confirmation);
@@ -79,64 +81,83 @@ const slotTaken = existingConfirmations.some(conf =>
 });
 
 
-// GET - Retrieve all confirmations with populated references
+// GET - Get all confirmations
 router.get('/', async (req, res) => {
   try {
-    const { date, doctorName } = req.query;
-    let query = {};
+    console.log('Fetching confirmations...');
+    
+    const confirmations = await Confirmation.find()
+      .populate({
+        path: 'doctor',
+        select: 'name specialty experience education image'
+      })
+      .populate({
+        path: 'patient',
+        select: 'name age gender blood contact'
+      })
+      .populate({
+        path: 'date',
+        select: 'date time'
+      })
+      .lean();
 
-    // If date is provided, find the date document first
-    if (date) {
-      const dateDoc = await DateModel.findOne({ date });
-      if (dateDoc) {
-        query.date = dateDoc._id;
-      } else {
-        return res.json([]); // Return empty array if no date found
-      }
+    console.log('Number of confirmations found:', confirmations.length);
+    
+    // Debug log to see raw data
+    if (confirmations.length > 0) {
+      console.log('First confirmation raw data:', JSON.stringify(confirmations[0], null, 2));
     }
 
-    // If doctor name is provided, find the doctor document first
-    if (doctorName) {
-      const doctor = await Doctor.findOne({ name: doctorName });
-      if (doctor) {
-        query.doctor = doctor._id;
-      } else {
-        return res.json([]); // Return empty array if no doctor found
-      }
-    }
+    const formattedConfirmations = confirmations.map(confirmation => {
+      // Debug log for each confirmation
+      console.log('Processing confirmation:', {
+        id: confirmation._id,
+        doctor: confirmation.doctor,
+        doctorName: confirmation.doctorName,
+        patient: confirmation.patient,
+        date: confirmation.date
+      });
 
-    const confirmations = await Confirmation.find(query)
-      .populate('patient')
-      .populate('doctor')
-      .populate('date');
+      // Get doctor name from either populated doctor or doctorName field
+      const doctorName = confirmation.doctor?.name || confirmation.doctorName;
 
-    // Format the response
-    const formattedConfirmations = confirmations.map(conf => ({
-      patientData: {
-        name: conf.patient.name,
-        age: conf.patient.age,
-        gender: conf.patient.gender,
-        blood: conf.patient.blood,
-        contact: conf.patient.contact
-      },
-      doctorData: {
-        name: conf.doctor.name,
-        specialty: conf.doctor.specialty
-      },
-      dateData: {
-        date: conf.date.date,
-        time: conf.date.time
-      }
-    }));
+      // Create the formatted confirmation object
+      const formattedConfirmation = {
+        _id: confirmation._id,
+        doctorData: {
+          name: doctorName,
+          specialty: confirmation.doctor?.specialty || '',
+          experience: confirmation.doctor?.experience || '',
+          education: confirmation.doctor?.education || '',
+          image: confirmation.doctor?.image || ''
+        },
+        patientData: confirmation.patient ? {
+          name: confirmation.patient.name || '',
+          age: confirmation.patient.age || '',
+          gender: confirmation.patient.gender || '',
+          blood: confirmation.patient.blood || '',
+          contact: confirmation.patient.contact || ''
+        } : null,
+        dateData: confirmation.date ? {
+          date: confirmation.date.date || '',
+          time: confirmation.date.time || ''
+        } : null,
+        status: confirmation.status || 'pending'
+      };
 
-    res.status(200).json(formattedConfirmations);
+      // Debug log for formatted data
+      console.log('Formatted confirmation:', formattedConfirmation);
+
+      return formattedConfirmation;
+    });
+
+    console.log('\nSending response with', formattedConfirmations.length, 'confirmations');
+    res.json(formattedConfirmations);
   } catch (error) {
-    console.error('Failed to fetch confirmations:', error);
-    res.status(500).json({ error: 'Server error' });
+    console.error('Error fetching confirmations:', error);
+    res.status(500).json({ error: error.message });
   }
 });
-
-
 router.get('/booked-slots', async (req, res) => {
   const { doctorName, date } = req.query;
 
@@ -153,6 +174,37 @@ router.get('/booked-slots', async (req, res) => {
     res.json({ bookedTimes });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT - Update (reschedule or cancel) a confirmation by ID
+router.put('/:id', async (req, res) => {
+  try {
+    const { date, time, status, action } = req.body;
+    const confirmation = await Confirmation.findById(req.params.id).populate('date');
+    if (!confirmation) {
+      return res.status(404).json({ error: 'Confirmation not found' });
+    }
+    // Reschedule: update date and/or time
+    if (action === 'reschedule' && date && time) {
+      let dateDoc = await DateModel.findOne({ date, time });
+      if (!dateDoc) {
+        dateDoc = new DateModel({ date, time });
+        await dateDoc.save();
+      }
+      confirmation.date = dateDoc._id;
+      await confirmation.save();
+      return res.json({ message: 'Appointment rescheduled', confirmation });
+    }
+    // Cancel: update status
+    if (action === 'cancel') {
+      confirmation.status = 'canceled';
+      await confirmation.save();
+      return res.json({ message: 'Appointment canceled', confirmation });
+    }
+    res.status(400).json({ error: 'Invalid action or missing data' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
