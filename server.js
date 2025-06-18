@@ -17,10 +17,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB connection
 
-mongoose.connect(mongoURI);
-mongoose.connection.once("open", () => console.log("MongoDB connected"));
-mongoose.connection.on("error", (err) => console.error("MongoDB connection error:", err));
-
 // API Routes
 app.use("/api/confirmations", confirmationRoutes);
 
@@ -32,6 +28,10 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+
+mongoose.connect(mongoURI).then(() => {
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}`);
+    });
 });
+
