@@ -75,7 +75,7 @@
     <div class="flex items-center gap-4 px-20">
       <div class="relative">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
-        <input type="text" id="searchInput" placeholder="Search..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
+        <input type="text" id="searchInput" placeholder="Search by doctor name..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
       <input type="date" id="datePicker" class="px-8 py-0 border border-gray-300 " />
     </div>
@@ -415,13 +415,15 @@
   datePicker.value = today;
   selectedDate.textContent = new Date(today).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  async function fetchAppointments(date, doctorName = '') {
+  async function fetchAppointments(date, searchDoctorName = '') {
     try {
       const formattedDate = new Date(date).toLocaleDateString('en-US', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric'
       });
+
+      console.log('Fetching appointments for date:', formattedDate, 'with doctor filter:', searchDoctorName);
 
       const url = `/api/confirmations`;
       const response = await fetch(url);
@@ -431,6 +433,8 @@
       }
       
       const data = await response.json();
+      console.log('Total appointments fetched:', data.length);
+      
       // Log the first appointment in detail
       if (data.length > 0) {
         console.log('First appointment details:', JSON.stringify(data[0], null, 2));
@@ -439,6 +443,7 @@
       // Filter appointments
       const filteredAppointments = data.filter(app => {
         if (!app.dateData?.date) {
+          console.log('Appointment missing date data:', app);
           return false;
         }
         
@@ -446,13 +451,18 @@
         const matchesDate = appointmentDate === formattedDate;
         
         // Get doctor name from the appointment data
-        const doctorName = app.doctorData?.name || app.doctorName || '';
-        const matchesDoctor = !doctorName || 
-          (doctorName && doctorName.toLowerCase().includes(doctorName.toLowerCase()));
+        const appointmentDoctorName = app.doctorData?.name || app.doctorName || '';
+        const matchesDoctor = !searchDoctorName || 
+          (appointmentDoctorName && appointmentDoctorName.toLowerCase().includes(searchDoctorName.toLowerCase()));
+        
+        if (searchDoctorName && appointmentDoctorName) {
+          console.log(`Checking doctor: "${appointmentDoctorName}" against search: "${searchDoctorName}" - matches: ${matchesDoctor}`);
+        }
         
         return matchesDate && matchesDoctor;
       });
 
+      console.log('Filtered appointments count:', filteredAppointments.length);
       console.log('Filtered appointments:', filteredAppointments);
       return filteredAppointments;
     } catch (error) {
@@ -600,8 +610,31 @@
       const currentDate = datePicker.value;
       const searchTerm = searchInput.value.trim();
       console.log('Search term changed:', searchTerm);
-      renderAppointmentsList(currentDate, searchTerm);
+      
+      // Determine which tab is active
+      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      
+      if (activeTab === 'appointmentsTab') {
+        renderAppointmentsList(currentDate, searchTerm);
+      } else if (activeTab === 'patientsTab') {
+        fetchAndDisplayPatients(currentDate, searchTerm);
+      }
     }, 300); // 300ms debounce
+  });
+
+  // Handle search input clear
+  searchInput.addEventListener("keyup", (e) => {
+    if (e.key === "Escape") {
+      searchInput.value = "";
+      const currentDate = datePicker.value;
+      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      
+      if (activeTab === 'appointmentsTab') {
+        renderAppointmentsList(currentDate, "");
+      } else if (activeTab === 'patientsTab') {
+        fetchAndDisplayPatients(currentDate, "");
+      }
+    }
   });
 
   // Initial render
@@ -920,6 +953,8 @@
         
         // Log the original data for debugging
         console.log('Original appointment data:', appointmentData);
+        console.log('Patient data from appointment:', appointmentData.patientData);
+        console.log('Age value from appointment:', appointmentData.patientData?.age);
 
         // Create a properly structured appointment object with all required fields
         const editData = {

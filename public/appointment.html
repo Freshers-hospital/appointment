@@ -250,7 +250,106 @@
             <select id="age" name="age" class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
               <option value="">Select Age</option>
               <option value="0.25">below 1 year</option>
-              
+              <option value="1">1 year</option>
+              <option value="2">2 years</option>
+              <option value="3">3 years</option>
+              <option value="4">4 years</option>
+              <option value="5">5 years</option>
+              <option value="6">6 years</option>
+              <option value="7">7 years</option>
+              <option value="8">8 years</option>
+              <option value="9">9 years</option>
+              <option value="10">10 years</option>
+              <option value="11">11 years</option>
+              <option value="12">12 years</option>
+              <option value="13">13 years</option>
+              <option value="14">14 years</option>
+              <option value="15">15 years</option>
+              <option value="16">16 years</option>
+              <option value="17">17 years</option>
+              <option value="18">18 years</option>
+              <option value="19">19 years</option>
+              <option value="20">20 years</option>
+              <option value="21">21 years</option>
+              <option value="22">22 years</option>
+              <option value="23">23 years</option>
+              <option value="24">24 years</option>
+              <option value="25">25 years</option>
+              <option value="26">26 years</option>
+              <option value="27">27 years</option>
+              <option value="28">28 years</option>
+              <option value="29">29 years</option>
+              <option value="30">30 years</option>
+              <option value="31">31 years</option>
+              <option value="32">32 years</option>
+              <option value="33">33 years</option>
+              <option value="34">34 years</option>
+              <option value="35">35 years</option>
+              <option value="36">36 years</option>
+              <option value="37">37 years</option>
+              <option value="38">38 years</option>
+              <option value="39">39 years</option>
+              <option value="40">40 years</option>
+              <option value="41">41 years</option>
+              <option value="42">42 years</option>
+              <option value="43">43 years</option>
+              <option value="44">44 years</option>
+              <option value="45">45 years</option>
+              <option value="46">46 years</option>
+              <option value="47">47 years</option>
+              <option value="48">48 years</option>
+              <option value="49">49 years</option>
+              <option value="50">50 years</option>
+              <option value="51">51 years</option>
+              <option value="52">52 years</option>
+              <option value="53">53 years</option>
+              <option value="54">54 years</option>
+              <option value="55">55 years</option>
+              <option value="56">56 years</option>
+              <option value="57">57 years</option>
+              <option value="58">58 years</option>
+              <option value="59">59 years</option>
+              <option value="60">60 years</option>
+              <option value="61">61 years</option>
+              <option value="62">62 years</option>
+              <option value="63">63 years</option>
+              <option value="64">64 years</option>
+              <option value="65">65 years</option>
+              <option value="66">66 years</option>
+              <option value="67">67 years</option>
+              <option value="68">68 years</option>
+              <option value="69">69 years</option>
+              <option value="70">70 years</option>
+              <option value="71">71 years</option>
+              <option value="72">72 years</option>
+              <option value="73">73 years</option>
+              <option value="74">74 years</option>
+              <option value="75">75 years</option>
+              <option value="76">76 years</option>
+              <option value="77">77 years</option>
+              <option value="78">78 years</option>
+              <option value="79">79 years</option>
+              <option value="80">80 years</option>
+              <option value="81">81 years</option>
+              <option value="82">82 years</option>
+              <option value="83">83 years</option>
+              <option value="84">84 years</option>
+              <option value="85">85 years</option>
+              <option value="86">86 years</option>
+              <option value="87">87 years</option>
+              <option value="88">88 years</option>
+              <option value="89">89 years</option>
+              <option value="90">90 years</option>
+              <option value="91">91 years</option>
+              <option value="92">92 years</option>
+              <option value="93">93 years</option>
+              <option value="94">94 years</option>
+              <option value="95">95 years</option>
+              <option value="96">96 years</option>
+              <option value="97">97 years</option>
+              <option value="98">98 years</option>
+              <option value="99">99 years</option>
+              <option value="100">100+ years</option>
             </select>
           </div>
 
@@ -1599,10 +1698,12 @@ function validateNameInput() {
       return url.searchParams.get(name);
     }
 
-    // On page load, check for edit mode
+    // Check for edit mode
     const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
+    let editData = null;
+    
     if (isEditMode) {
-      const editData = JSON.parse(localStorage.getItem('editAppointment'));
+      editData = JSON.parse(localStorage.getItem('editAppointment'));
       
       // Pre-fill patient data
       localStorage.setItem('patientData', JSON.stringify(editData.patientData));
@@ -1615,100 +1716,67 @@ function validateNameInput() {
         date: editData.dateData?.date,
         time: editData.dateData?.time
       }));
+    }
 
-      // Initialize the form with patient data
-      document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the form with patient data when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      if (isEditMode && editData) {
         // Pre-fill patient form fields
         const patientData = editData.patientData;
         if (patientData) {
-          document.getElementById('patient-name').value = patientData.name || '';
-          document.getElementById('age').value = patientData.age || '';
-          document.getElementById('patient-gender').value = patientData.gender || '';
-          document.getElementById('blood-group').value = patientData.blood || '';
-          document.getElementById('contact-number').value = patientData.contact || '';
+          console.log('Setting patient data in edit mode:', patientData);
           
-          // Enable the next button since we have data
-          document.getElementById('patientNextBtn').disabled = false;
-          document.getElementById('patientNextBtn').classList.remove('bg-gray-400');
-          document.getElementById('patientNextBtn').classList.add('bg-blue-600');
+          // Function to populate form fields
+          const populateFormFields = () => {
+            const nameField = document.getElementById('patient-name');
+            const ageField = document.getElementById('age');
+            const genderField = document.getElementById('patient-gender');
+            const bloodField = document.getElementById('blood-group');
+            const contactField = document.getElementById('contact-number');
+            
+            console.log('Form fields found:', {
+              nameField: !!nameField,
+              ageField: !!ageField,
+              genderField: !!genderField,
+              bloodField: !!bloodField,
+              contactField: !!contactField
+            });
+            
+            if (nameField) nameField.value = patientData.name || '';
+            if (ageField) {
+              const ageValue = String(patientData.age || '');
+              ageField.value = ageValue;
+              console.log('Age value set to:', patientData.age);
+              console.log('Age field value after setting:', ageField.value);
+              console.log('Age field options:', Array.from(ageField.options).map(opt => opt.value));
+            }
+            if (genderField) genderField.value = patientData.gender || '';
+            if (bloodField) bloodField.value = patientData.blood || '';
+            if (contactField) contactField.value = patientData.contact || '';
+            
+            // Enable the next button since we have data
+            const nextBtn = document.getElementById('patientNextBtn');
+            if (nextBtn) {
+              nextBtn.disabled = false;
+              nextBtn.classList.remove('bg-gray-400');
+              nextBtn.classList.add('bg-blue-600');
+            }
+          };
+          
+          // Try to populate immediately
+          populateFormFields();
+          
+          // Also try after a short delay to ensure everything is loaded
+          setTimeout(populateFormFields, 200);
+          setTimeout(populateFormFields, 500);
         }
 
         // Skip to select doctor step
         showSection('doctorSection');
         updateStepper(2);
         displayDoctors();
-      });
-    }
-
-    // When booking is confirmed, clear edit mode
-    async function confirmBooking() {
-      try {
-        const patientData = JSON.parse(localStorage.getItem('patientData'));
-        const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
-        const appointmentData = JSON.parse(localStorage.getItem('appointmentData'));
-
-        if (!patientData || !doctorData || !appointmentData) {
-          throw new Error('Missing required appointment information');
-        }
-
-        const confirmationData = {
-          patientData: {
-            name: patientData.name,
-            age: patientData.age,
-            gender: patientData.gender,
-            blood: patientData.blood,
-            contact: patientData.contact
-          },
-          doctorData: {
-            name: doctorData.name,
-            specialty: doctorData.specialty
-          },
-          dateData: {
-            date: appointmentData.date,
-            time: appointmentData.time
-          },
-          // If you have an appointment ID, include it for update
-          _id: isEditMode ? JSON.parse(localStorage.getItem('editAppointment'))._id : undefined
-        };
-
-        // Disable the confirm button to prevent double submission
-        const confirmButton = document.getElementById('confirmBookingBtn');
-        confirmButton.disabled = true;
-        confirmButton.textContent = 'Confirming...';
-        confirmButton.classList.add('opacity-75');
-
-        // Use PUT or PATCH for update, POST for new
-        const method = isEditMode ? 'PUT' : 'POST';
-        const url = isEditMode && confirmationData._id ? `/api/confirmations/${confirmationData._id}` : '/api/confirmations';
-
-        const response = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(confirmationData)
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to book appointment');
-        }
-
-        // Update step 4 to show checkmark
-        document.getElementById('step4').innerHTML = '✓';
-        // Clear edit mode
-        localStorage.removeItem('editAppointment');
-        // Show success message with blur effect
-        showAlert('Appointment booked successfully!');
-      } catch (error) {
-        // Re-enable the confirm button if there's an error
-        const confirmButton = document.getElementById('confirmBookingBtn');
-        confirmButton.disabled = false;
-        confirmButton.textContent = 'Confirm Appointment';
-        confirmButton.classList.remove('opacity-75');
-        showAlert(error.message || 'Failed to book appointment. Please try again.');
       }
-    }
+    });
 
     // Cancel Modal Logic
     function openCancelModal(app) {
