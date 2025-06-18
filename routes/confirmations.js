@@ -166,4 +166,44 @@ router.get('/search', async (req, res) => {
 });
 
 
+// GET /today-counts?date=MM/DD/YYYY
+router.get('/today-counts', async (req, res) => {
+  try {
+    const { date } = req.query;              // e.g. "6/30/2025"
+    if (!date) return res.status(400).json({ error: 'Missing date' });
+
+    // Match confirmations whose linked Date document equals the requested date
+    const matches = await Confirmation.aggregate([
+      {
+        $lookup: {                           // join Date collection
+          from: 'dates',
+          localField: 'date',
+          foreignField: '_id',
+          as: 'dateInfo'
+        }
+      },
+      { $unwind: '$dateInfo' },
+      { $match: { 'dateInfo.date': date } }, // filter by MM/DD/YYYY string
+      {
+        $group: {                            // count by doctor
+          _id: '$doctor',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    // shape => [{ doctorId, count }]
+    const counts = matches.map(m => ({
+      doctorId: m._id,
+      count: m.count
+    }));
+
+    res.json(counts);
+  } catch (err) {
+    console.error('today-counts error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 module.exports = router;

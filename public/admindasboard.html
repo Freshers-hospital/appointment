@@ -579,26 +579,29 @@
   renderAppointmentsList(today);
 
   // Tab switch logic
-  const tabs = document.querySelectorAll(".tab");
-  const tabContents = document.querySelectorAll(".tab-content");
+// Select all tab buttons
+  
+// Select all tab buttons
+const tabs = document.querySelectorAll(".tab");
+const tabContents = document.querySelectorAll(".tab-content");
 
-  tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('tab-active', 'tab-inactive'));
-    tabs.forEach(t => t.classList.add('tab-inactive'));
-    tab.classList.remove('tab-inactive');
-    tab.classList.add('tab-active');
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
 
+    tabContents.forEach(content => content.classList.add("hidden"));
     const targetId = tab.getAttribute("data-tab");
-    tabContents.forEach(c => c.classList.add("hidden"));
     document.getElementById(targetId).classList.remove("hidden");
 
-    // 🩺 Load doctor list only if Doctors tab is clicked
-    if (targetId === 'doctorsTab') {
+    if (targetId === "doctorsTab") {
       loadDoctors();
+    } else if (targetId === "appointmentsTab") {
+      renderAppointmentsList();
     }
   });
 });
+
 
 
   // Action menu logic

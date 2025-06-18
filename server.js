@@ -5,10 +5,11 @@ const app = express();
 const port = 3022;
 
 // Routes
+const confirmationRoutes = require('./routes/confirmations');
 
-const confirmationRoutes = require("./routes/confirmations");
+const doctorRoutes = require('./routes/doctors');
 
-const doctorRoutes = require("./routes/doctors");
+const appointmentRoutes  = require("./routes/appointments");  
 
 // const patientRoutes = require('./routes/patients');
 // const confirmationRoutes = require('./routes/confirmations');
@@ -31,9 +32,13 @@ mongoose.connection.on("error", (err) => console.error("MongoDB connection error
 
 
 // API Routes
-app.use("/api/confirmations", confirmationRoutes);
 
-app.use("/api/doctors", doctorRoutes);
+
+app.use('/api/doctors', doctorRoutes);
+
+app.use('/api/confirmations', confirmationRoutes);
+app.use('/api/appointments', appointmentRoutes);
+
 
 // app.use('/api/patients', patientRoutes);
 // app.use('/api/confirmations', confirmationRoutes);
