@@ -7,6 +7,8 @@ const port = 3022;
 // Routes
 const confirmationRoutes = require('./routes/confirmations');
 
+const loginRoutes = require('./routes/logins');
+
 // const patientRoutes = require('./routes/patients');
 // const confirmationRoutes = require('./routes/confirmations');
 // const dateRoutes = require('./routes/dates');
@@ -26,6 +28,8 @@ mongoose.connection.on('error', (err) => console.error('MongoDB connection error
 
 // API Routes
 app.use('/api/confirmations', confirmationRoutes);
+
+app.use('/api/logins', loginRoutes);
 
 // app.use('/api/patients', patientRoutes);
 // app.use('/api/confirmations', confirmationRoutes);
