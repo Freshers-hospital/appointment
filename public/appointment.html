@@ -136,6 +136,12 @@
     .section.active {
       display: block;
     }
+
+    .blurred-bg > *:not(#availabilityModalOverlay):not(#viewDetailsModalOverlay) {
+      filter: blur(4px) !important;
+      pointer-events: none;
+      user-select: none;
+    }
   </style>
 </head>
 <body class="bg-blue-50 font-sans">
@@ -144,8 +150,8 @@
     <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
       <div class="text-center">
        
-        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
-          <svg class="h-10 w-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+          <svg class="h-10 w-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
@@ -418,113 +424,46 @@
       <div class="bg-white rounded-lg shadow-sm p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Confirm Your Appointment</h2>
         <p class="text-gray-500 text-sm mb-6">Please review your appointment details before confirming.</p>
-        
-                  <!-- Doctor Information -->
-          <div class="border rounded-lg p-4 mb-4 bg-gray-100">
-            <div class="flex items-center gap-2 mb-2">
-              <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <p class="text-black text-bold text-lg">Doctor Information</p>
-            </div>
+        <div class="grid grid-cols-1 gap-4 mb-4">
+          <!-- Doctor Info -->
+          <div class="border rounded-lg p-4 bg-gray-50 mb-2">
+            <p class="text-black text-bold text-lg mb-2">Doctor Information</p>
             <div class="space-y-2">
-              <div>
-              <span class="text-gray-500">Name:</span>
-              <span class="text-gray-800 ml-1" id="confirmDoctor"></span>
+              <div><span class="text-gray-500">Name:</span> <span class="text-gray-800 ml-1" id="confirmDoctor"></span></div>
+              <div><span class="text-gray-500">Specialty:</span> <span class="text-gray-800 ml-1" id="confirmSpecialty"></span></div>
+              <div><span class="text-gray-500">Experience:</span> <span class="text-gray-800 ml-1" id="confirmExperience"></span> years</div>
             </div>
-            <div>
-              <span class="text-gray-500">Specialty:</span>
-              <span class="text-gray-800 ml-1" id="confirmSpecialty"></span>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="border rounded-lg p-4 bg-gray-50">
+              <p class="text-black text-lg mb-2">Date</p>
+              <span class="text-gray-800" id="confirmDate"></span>
             </div>
-            <div>
-              <span class="text-gray-500">Experience:</span>
-              <span class="text-gray-800 ml-1" id="confirmExperience"></span> years
+            <div class="border rounded-lg p-4 bg-gray-50">
+              <p class="text-black text-lg mb-2">Time</p>
+              <span class="text-gray-800" id="confirmTime"></span>
             </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="border rounded-lg p-4 bg-gray-50">
+              <p class="text-black text-bold text-lg mb-2">Personal Details</p>
+              <div class="space-y-2">
+                <div><span class="text-gray-500">Name:</span> <span class="text-gray-800 ml-1" id="confirmPatientName"></span></div>
+                <div><span class="text-gray-500">Age:</span> <span class="text-gray-800 ml-1" id="confirmPatientAge"></span></div>
+              </div>
+            </div>
+            <div class="border rounded-lg p-4 bg-gray-50">
+              <div class="space-y-2 mt-8">
+                <div><span class="text-gray-500">Blood Group:</span> <span class="text-gray-800 ml-1" id="confirmPatientBlood"></span></div>
+                <div><span class="text-gray-500">Gender:</span> <span class="text-gray-800 ml-1" id="confirmPatientGender"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="border rounded-lg p-4 bg-gray-50 mt-2">
+            <p class="text-black text-bold text-lg mb-2">Contact Information</p>
+            <div><span class="text-gray-500">Phone:</span> <span class="text-gray-800 ml-1" id="confirmPatientContact"></span></div>
           </div>
         </div>
-
-        <!-- Date and Time Grid -->
-        <div class="grid grid-cols-2 gap-4 mb-4">
-          <div class="border rounded-lg p-4 bg-gray-50">
-            <div class="flex items-center gap-2 mb-1">
-              <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <p class="text-black text-lg">Date</p>
-            </div>
-            <p class="text-gray-800" id="confirmDate">Saturday, June 14, 2025</p>
-          </div>
-          <div class="border rounded-lg p-4 bg-gray-50">
-            <div class="flex items-center gap-2 mb-1">
-              <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <p class="text-black text-lg">Time</p>
-            </div>
-            <p class="text-gray-800" id="confirmTime">4:30 PM</p>
-          </div>
-        </div>
-
-        <!-- Patient Information -->
-        
- <div class="grid grid-cols-2 gap-4 mb-4">
-         
-          <div class="border rounded-lg p-4 bg-gray-50">
-            
-            <p class="text-black text-bold text-lg mb-2">Personal Details</p>
-            <div class="space-y-2">
-              <div>
-                <span class="text-gray-500">Name:</span>
-                <span class="text-gray-800 ml-1" id="confirmPatientName"></span>
-              </div>
-              <div>
-                <span class="text-gray-500">Age:</span>
-                <span class="text-gray-800 ml-1" id="confirmPatientAge"></span>
-              </div>
-            </div>
-          </div>
-          <div class="border rounded-lg p-4 bg-gray-50">
-           
-            <div class="space-y-4 mt-4">
-              <div>
-                <span class="text-gray-500">Blood Group:</span>
-                <span class="text-gray-800 ml-1" id="confirmPatientBlood"></span>
-              </div>
-              <div>
-                <span class="text-gray-500">Gender:</span>
-                <span class="text-gray-800 ml-1" id="confirmPatientGender"></span>
-              </div>
-            </div>
-          </div>
-        </div> 
-         
-        <!-- Contact Information -->
-        <div class="border rounded-lg p-4 mb-4 bg-gray-50">
-          <p class="text-black text-lg mb-2">Contact Information</p>
-          <div>
-            <span class="text-gray-500">Phone:</span>
-            <span class="text-gray-800 ml-1" id="confirmPatientContact"></span>
-          </div>
-        </div>
-
-        <!-- Appointment Policy -->
-        <!-- <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-4">
-          <div class="flex gap-2">
-            <svg class="w-5 h-5 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div>
-              <h3 class="font-medium text-gray-800 mb-2">Appointment Policy</h3>
-              <ul class="list-disc pl-4 text-sm text-gray-600 space-y-1">
-                <li>Please arrive 15 minutes before your scheduled appointment time</li>
-                <li>Bring your insurance card and a valid ID</li>
-                <li>Cancellations must be made at least 24 hours in advance to avoid a cancellation fee</li>
-                <li>A confirmation email with these details will be sent to your registered email address</li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
-
         <!-- Action Buttons -->
         <div class="flex justify-between mt-6">
           <button onclick="goBackToDateTime()" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">
@@ -653,7 +592,7 @@ function validateNameInput() {
       { name: "Dr. Om", specialty: "Andrologist", experience: "16 years" }
     ];
 
-    const doctorsPerPage = 5;
+    const doctorsPerPage = 4;
     let currentPage = 1;
 
     function createDoctorCard(doctor) {
@@ -882,10 +821,18 @@ function validateNameInput() {
     function goBack() {
       const currentSection = document.querySelector('.section.active').id;
       if (currentSection === 'doctorSection') {
+        // Check if we're in edit mode
+        const isEditMode = getQueryParam('edit') === '1';
+        if (isEditMode) {
+          // If in edit mode, redirect to admin dashboard
+          window.location.href = 'admindasboard.html';
+          return;
+        }
+        
+        // If not in edit mode, proceed with normal flow
         showSection('patientSection');
         updateStepper(1);
         
-       
         const patientData = JSON.parse(localStorage.getItem('patientData') || '{}');
         if (patientData) {
           document.getElementById('patient-name').value = patientData.name || '';
@@ -893,7 +840,6 @@ function validateNameInput() {
           document.getElementById('patient-gender').value = patientData.gender || '';
           document.getElementById('blood-group').value = patientData.blood || '';
           document.getElementById('contact-number').value = patientData.contact || '';
-          
           
           checkPatientForm();
         }
@@ -1208,6 +1154,7 @@ function validateNameInput() {
         }
         
         dayDiv.className = className;
+        dayDiv.setAttribute('data-date', dateString);
         daysContainer.appendChild(dayDiv);
       }
     }
@@ -1645,6 +1592,191 @@ function validateNameInput() {
         window.location.reload();
       }
     }
+
+    // --- EDIT MODE LOGIC ---
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    // On page load, check for edit mode
+    const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
+    if (isEditMode) {
+      const editData = JSON.parse(localStorage.getItem('editAppointment'));
+      
+      // Pre-fill patient data
+      localStorage.setItem('patientData', JSON.stringify(editData.patientData));
+      
+      // Pre-fill doctor data
+      localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
+      
+      // Pre-fill appointment data
+      localStorage.setItem('appointmentData', JSON.stringify({
+        date: editData.dateData?.date,
+        time: editData.dateData?.time
+      }));
+
+      // Initialize the form with patient data
+      document.addEventListener('DOMContentLoaded', () => {
+        // Pre-fill patient form fields
+        const patientData = editData.patientData;
+        if (patientData) {
+          document.getElementById('patient-name').value = patientData.name || '';
+          document.getElementById('age').value = patientData.age || '';
+          document.getElementById('patient-gender').value = patientData.gender || '';
+          document.getElementById('blood-group').value = patientData.blood || '';
+          document.getElementById('contact-number').value = patientData.contact || '';
+          
+          // Enable the next button since we have data
+          document.getElementById('patientNextBtn').disabled = false;
+          document.getElementById('patientNextBtn').classList.remove('bg-gray-400');
+          document.getElementById('patientNextBtn').classList.add('bg-blue-600');
+        }
+
+        // Skip to select doctor step
+        showSection('doctorSection');
+        updateStepper(2);
+        displayDoctors();
+      });
+    }
+
+    // When booking is confirmed, clear edit mode
+    async function confirmBooking() {
+      try {
+        const patientData = JSON.parse(localStorage.getItem('patientData'));
+        const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
+        const appointmentData = JSON.parse(localStorage.getItem('appointmentData'));
+
+        if (!patientData || !doctorData || !appointmentData) {
+          throw new Error('Missing required appointment information');
+        }
+
+        const confirmationData = {
+          patientData: {
+            name: patientData.name,
+            age: patientData.age,
+            gender: patientData.gender,
+            blood: patientData.blood,
+            contact: patientData.contact
+          },
+          doctorData: {
+            name: doctorData.name,
+            specialty: doctorData.specialty
+          },
+          dateData: {
+            date: appointmentData.date,
+            time: appointmentData.time
+          },
+          // If you have an appointment ID, include it for update
+          _id: isEditMode ? JSON.parse(localStorage.getItem('editAppointment'))._id : undefined
+        };
+
+        // Disable the confirm button to prevent double submission
+        const confirmButton = document.getElementById('confirmBookingBtn');
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Confirming...';
+        confirmButton.classList.add('opacity-75');
+
+        // Use PUT or PATCH for update, POST for new
+        const method = isEditMode ? 'PUT' : 'POST';
+        const url = isEditMode && confirmationData._id ? `/api/confirmations/${confirmationData._id}` : '/api/confirmations';
+
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(confirmationData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to book appointment');
+        }
+
+        // Update step 4 to show checkmark
+        document.getElementById('step4').innerHTML = '✓';
+        // Clear edit mode
+        localStorage.removeItem('editAppointment');
+        // Show success message with blur effect
+        showAlert('Appointment booked successfully!');
+      } catch (error) {
+        // Re-enable the confirm button if there's an error
+        const confirmButton = document.getElementById('confirmBookingBtn');
+        confirmButton.disabled = false;
+        confirmButton.textContent = 'Confirm Appointment';
+        confirmButton.classList.remove('opacity-75');
+        showAlert(error.message || 'Failed to book appointment. Please try again.');
+      }
+    }
+
+    // Cancel Modal Logic
+    function openCancelModal(app) {
+      cancelAppointmentData = app;
+      document.getElementById('cancelModalOverlay').classList.remove('hidden');
+      document.body.classList.add('blurred-bg');
+    }
+
+    function closeCancelModal() {
+      document.getElementById('cancelModalOverlay').classList.add('hidden');
+      document.body.classList.remove('blurred-bg');
+      cancelAppointmentData = null;
+    }
+
+    document.getElementById('closeCancelModal').onclick = closeCancelModal;
+    document.getElementById('cancelCancelBtn').onclick = closeCancelModal;
+    document.getElementById('cancelModalOverlay').onclick = function(e) {
+      if (e.target === this) closeCancelModal();
+    };
+
+    document.getElementById('confirmCancelBtn').onclick = async function() {
+      if (!cancelAppointmentData || !cancelAppointmentData._id) {
+        alert('Error: Missing appointment ID.');
+        return;
+      }
+
+      try {
+        // Show loading state
+        const confirmButton = document.getElementById('confirmCancelBtn');
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Canceling...';
+        confirmButton.classList.add('opacity-75');
+
+        // Make API call to delete the appointment
+        const response = await fetch(`/api/confirmations/${cancelAppointmentData._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to cancel appointment');
+        }
+
+        // Close the modal
+        closeCancelModal();
+
+        // Show success message
+        showAlert('Appointment cancelled successfully!');
+
+        // Refresh the appointments list
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        await renderAppointmentsList(currentDate, searchTerm);
+
+      } catch (error) {
+        console.error('Error cancelling appointment:', error);
+        alert('Error cancelling appointment: ' + error.message);
+        
+        // Reset button state
+        const confirmButton = document.getElementById('confirmCancelBtn');
+        confirmButton.disabled = false;
+        confirmButton.textContent = 'Yes, Cancel';
+        confirmButton.classList.remove('opacity-75');
+      }
+    };
   </script>
 </body>
 </html>
