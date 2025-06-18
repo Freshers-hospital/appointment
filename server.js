@@ -2,9 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
-const port = 3022;
+const dotenv= require('dotenv');
+dotenv.config();
+const mongoURI =process.env.DATABASE_URL
+const port=process.env.PORT
 
-// Routes
+
 const confirmationRoutes = require('./routes/confirmations');
 
 const loginRoutes = require('./routes/logins');
@@ -15,13 +18,13 @@ const loginRoutes = require('./routes/logins');
 // const doctorRoutes = require('./routes/doctors');
 // const leaveRoutes = require('./routes/leaves');
 
-// Middleware
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public'))); // ✅ FIXED
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 // MongoDB connection
-const mongoURI = 'mongodb+srv://ashuaswini517:ashuaswini517@aswini.z12qrkv.mongodb.net/employee_db';
+
 mongoose.connect(mongoURI);
 mongoose.connection.once('open', () => console.log('MongoDB connected'));
 mongoose.connection.on('error', (err) => console.error('MongoDB connection error:', err));
