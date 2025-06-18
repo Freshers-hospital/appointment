@@ -9,9 +9,9 @@ console.log( mongoURI);
 console.log(typeof(mongoURI));
 const port = process.env.PORT;
 
-const confirmationRoutes = require("./routes/confirmations");
+const confirmationRoutes = require("./routes/confirmationsroutes");
 
-const loginRoutes = require("./routes/logins");
+const loginRoutes = require("./routes/loginsroute");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
