@@ -821,10 +821,18 @@ function validateNameInput() {
     function goBack() {
       const currentSection = document.querySelector('.section.active').id;
       if (currentSection === 'doctorSection') {
+        // Check if we're in edit mode
+        const isEditMode = getQueryParam('edit') === '1';
+        if (isEditMode) {
+          // If in edit mode, redirect to admin dashboard
+          window.location.href = 'admindasboard.html';
+          return;
+        }
+        
+        // If not in edit mode, proceed with normal flow
         showSection('patientSection');
         updateStepper(1);
         
-       
         const patientData = JSON.parse(localStorage.getItem('patientData') || '{}');
         if (patientData) {
           document.getElementById('patient-name').value = patientData.name || '';
@@ -832,7 +840,6 @@ function validateNameInput() {
           document.getElementById('patient-gender').value = patientData.gender || '';
           document.getElementById('blood-group').value = patientData.blood || '';
           document.getElementById('contact-number').value = patientData.contact || '';
-          
           
           checkPatientForm();
         }
@@ -1596,21 +1603,40 @@ function validateNameInput() {
     const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
     if (isEditMode) {
       const editData = JSON.parse(localStorage.getItem('editAppointment'));
-      // Pre-fill doctor, date, and time
+      
+      // Pre-fill patient data
+      localStorage.setItem('patientData', JSON.stringify(editData.patientData));
+      
+      // Pre-fill doctor data
       localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
+      
+      // Pre-fill appointment data
       localStorage.setItem('appointmentData', JSON.stringify({
         date: editData.dateData?.date,
         time: editData.dateData?.time
       }));
-      // Optionally pre-fill patientData if you want to allow editing patient info
-      // localStorage.setItem('patientData', JSON.stringify(editData.patientData));
 
-      // Skip to select doctor step
+      // Initialize the form with patient data
       document.addEventListener('DOMContentLoaded', () => {
+        // Pre-fill patient form fields
+        const patientData = editData.patientData;
+        if (patientData) {
+          document.getElementById('patient-name').value = patientData.name || '';
+          document.getElementById('age').value = patientData.age || '';
+          document.getElementById('patient-gender').value = patientData.gender || '';
+          document.getElementById('blood-group').value = patientData.blood || '';
+          document.getElementById('contact-number').value = patientData.contact || '';
+          
+          // Enable the next button since we have data
+          document.getElementById('patientNextBtn').disabled = false;
+          document.getElementById('patientNextBtn').classList.remove('bg-gray-400');
+          document.getElementById('patientNextBtn').classList.add('bg-blue-600');
+        }
+
+        // Skip to select doctor step
         showSection('doctorSection');
         updateStepper(2);
         displayDoctors();
-        // Optionally, highlight the selected doctor and pre-select date/time
       });
     }
 
@@ -1683,6 +1709,74 @@ function validateNameInput() {
         showAlert(error.message || 'Failed to book appointment. Please try again.');
       }
     }
+
+    // Cancel Modal Logic
+    function openCancelModal(app) {
+      cancelAppointmentData = app;
+      document.getElementById('cancelModalOverlay').classList.remove('hidden');
+      document.body.classList.add('blurred-bg');
+    }
+
+    function closeCancelModal() {
+      document.getElementById('cancelModalOverlay').classList.add('hidden');
+      document.body.classList.remove('blurred-bg');
+      cancelAppointmentData = null;
+    }
+
+    document.getElementById('closeCancelModal').onclick = closeCancelModal;
+    document.getElementById('cancelCancelBtn').onclick = closeCancelModal;
+    document.getElementById('cancelModalOverlay').onclick = function(e) {
+      if (e.target === this) closeCancelModal();
+    };
+
+    document.getElementById('confirmCancelBtn').onclick = async function() {
+      if (!cancelAppointmentData || !cancelAppointmentData._id) {
+        alert('Error: Missing appointment ID.');
+        return;
+      }
+
+      try {
+        // Show loading state
+        const confirmButton = document.getElementById('confirmCancelBtn');
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Canceling...';
+        confirmButton.classList.add('opacity-75');
+
+        // Make API call to delete the appointment
+        const response = await fetch(`/api/confirmations/${cancelAppointmentData._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to cancel appointment');
+        }
+
+        // Close the modal
+        closeCancelModal();
+
+        // Show success message
+        showAlert('Appointment cancelled successfully!');
+
+        // Refresh the appointments list
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        await renderAppointmentsList(currentDate, searchTerm);
+
+      } catch (error) {
+        console.error('Error cancelling appointment:', error);
+        alert('Error cancelling appointment: ' + error.message);
+        
+        // Reset button state
+        const confirmButton = document.getElementById('confirmCancelBtn');
+        confirmButton.disabled = false;
+        confirmButton.textContent = 'Yes, Cancel';
+        confirmButton.classList.remove('opacity-75');
+      }
+    };
   </script>
 </body>
 </html>
