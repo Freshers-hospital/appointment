@@ -4,7 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  
+    <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (typeof tailwind === 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js';
+      document.head.appendChild(script);
+    }
+  </script>
 </head>
 <body class="bg-blue-50 min-h-screen flex flex-col">
 
@@ -79,32 +87,38 @@
     }
 
     function login() {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorMsg = document.getElementById('error-msg');
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorMsg = document.getElementById('error-msg');
 
-      errorMsg.innerText = '';
+  errorMsg.innerText = '';
 
-      if (!username || !password) {
-        errorMsg.innerText = "Please enter both username and password.";
-        return;
-      }
+  if (!username || !password) {
+    errorMsg.innerText = "Please enter both username and password.";
+    return;
+  }
 
-      if (username.toLowerCase() === "admin" && password === "admin123") {
-        const loginButton = document.querySelector('button');
-        loginButton.disabled = true;
-        loginButton.textContent = 'Logging in...';
-        loginButton.classList.add('opacity-75');
+  fetch('http://localhost:3022/api/logins/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Invalid login");
+      return res.json();
+    })
+    .then(data => {
+      window.location.href = "admindasboard.html";
+    })
+    .catch(err => {
+      errorMsg.innerText = "Invalid username or password.";
+      errorMsg.classList.add('shake');
+      setTimeout(() => errorMsg.classList.remove('shake'), 500);
+    });
+}
 
-        setTimeout(() => {
-          window.location.href = "admindasboard.html";
-        }, 500);
-      } else {
-        errorMsg.innerText = "Invalid username or password.";
-        errorMsg.classList.add('shake');
-        setTimeout(() => errorMsg.classList.remove('shake'), 500);
-      }
-    }
   </script>
 
   <style>
