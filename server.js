@@ -5,6 +5,8 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoURI = process.env.DATABASE_URL;
+console.log( mongoURI);
+console.log(typeof(mongoURI));
 const port = process.env.PORT;
 
 const confirmationRoutes = require("./routes/confirmations");
@@ -33,5 +35,8 @@ mongoose.connect(mongoURI).then(() => {
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);
     });
-});
+}).catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+}); 
 
