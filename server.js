@@ -13,6 +13,8 @@ const confirmationRoutes = require("./routes/confirmationsroutes");
 
 const loginRoutes = require("./routes/loginsroute");
 
+const doctorsRoutes = require('./routes/doctors');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/confirmations", confirmationRoutes);
 
 app.use("/api/logins", loginRoutes);
+
+app.use('/api/doctors', doctorsRoutes);
 
 // Serve main HTML
 app.get("/", (req, res) => {
