@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard - MediCare</title>
-  <!-- Load Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Add a fallback CDN -->
   <script>
     if (typeof tailwind === 'undefined') {
       const script = document.createElement('script');
@@ -87,8 +85,6 @@
     <button class="tab px-[245px] py-2 font-semibold tab-inactive" data-tab="doctorsTab">Doctors</button>
     <button class="tab px-[245px] py-2 font-semibold tab-inactive" data-tab="patientsTab">Patients</button>
   </div>
-
-  <!-- Appointments Tab -->
   <div id="appointmentsTab" class="tab-content px-20">
     <div class="bg-white p-6 rounded-lg shadow relative">
       <div class="flex justify-between items-center mb-4">
@@ -100,13 +96,10 @@
   <a href="appointment.html"><button id="addBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Appointment</button></a>
 </div>
       <div id="appointmentsList">
-        <!-- Appointments Table will be rendered here -->
       </div>
       </div>
     </div>
   </div>
-
-  <!-- Doctors Tab -->
   <div id="doctorsTab" class="tab-content px-20 hidden">
     <div class="bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-4">
@@ -199,7 +192,6 @@
     </div>
   </div>
 </div>
-  <!-- Patients Tab -->
   <div id="patientsTab" class="tab-content px-20 hidden">
     <div class="bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-4">
@@ -219,14 +211,11 @@
           </tr>
         </thead>
         <tbody id="patientsList">
-          <!-- Patient data will be populated dynamically -->
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
-<!-- Manage Availability Modal -->
 <div id="availabilityModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
   <div id="availabilityModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
     <h2 class="text-2xl font-bold mb-4">Manage Availability</h2>
