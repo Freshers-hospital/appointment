@@ -177,14 +177,47 @@ router.get('/booked-slots', async (req, res) => {
   }
 });
 
-// PUT - Update (reschedule or cancel) a confirmation by ID
+// PUT - Update (edit, reschedule, or cancel) a confirmation by ID
 router.put('/:id', async (req, res) => {
   try {
-    const { date, time, status, action } = req.body;
+    const { patientData, doctorData, dateData, action, date, time, status } = req.body;
     const confirmation = await Confirmation.findById(req.params.id).populate('date');
     if (!confirmation) {
       return res.status(404).json({ error: 'Confirmation not found' });
     }
+
+    // General edit (doctor, patient, date)
+    if (patientData && doctorData && dateData) {
+      // Update patient
+      if (confirmation.patient) {
+        await Patient.findByIdAndUpdate(confirmation.patient, patientData);
+      }
+      // Update doctor
+      let doctor = await Doctor.findOne({ name: doctorData.name });
+      if (!doctor) {
+        doctor = new Doctor({
+          name: doctorData.name,
+          specialty: doctorData.specialty,
+          experience: doctorData.experience || '',
+          education: doctorData.education || '',
+          image: doctorData.image || ''
+        });
+        await doctor.save();
+      }
+      confirmation.doctor = doctor._id;
+
+      // Update date
+      let dateDoc = await DateModel.findOne({ date: dateData.date, time: dateData.time });
+      if (!dateDoc) {
+        dateDoc = new DateModel(dateData);
+        await dateDoc.save();
+      }
+      confirmation.date = dateDoc._id;
+
+      await confirmation.save();
+      return res.json({ message: 'Appointment updated', confirmation });
+    }
+
     // Reschedule: update date and/or time
     if (action === 'reschedule' && date && time) {
       let dateDoc = await DateModel.findOne({ date, time });

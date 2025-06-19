@@ -526,7 +526,7 @@
         <div class="grid grid-cols-1 gap-4 mb-4">
           <!-- Doctor Info -->
           <div class="border rounded-lg p-4 bg-gray-50 mb-2">
-            <p class="text-black text-bold text-lg mb-2">Doctor Information</p>
+            <p class="text-gray-800 font-semibold text-lg mb-2">Doctor Information</p>
             <div class="space-y-2">
               <div><span class="text-gray-500">Name:</span> <span class="text-gray-800 ml-1" id="confirmDoctor"></span></div>
               <div><span class="text-gray-500">Specialty:</span> <span class="text-gray-800 ml-1" id="confirmSpecialty"></span></div>
@@ -535,17 +535,17 @@
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div class="border rounded-lg p-4 bg-gray-50">
-              <p class="text-black text-lg mb-2">Date</p>
+              <p class="text-gray-800 font-semibold  text-lg mb-2">Date</p>
               <span class="text-gray-800" id="confirmDate"></span>
             </div>
             <div class="border rounded-lg p-4 bg-gray-50">
-              <p class="text-black text-lg mb-2">Time</p>
+              <p class="text-gray-800 font-semibold  text-lg mb-2">Time</p>
               <span class="text-gray-800" id="confirmTime"></span>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div class="border rounded-lg p-4 bg-gray-50">
-              <p class="text-black text-bold text-lg mb-2">Personal Details</p>
+              <p class="text-gray-800 font-semibold  text-lg mb-2">Personal Details</p>
               <div class="space-y-2">
                 <div><span class="text-gray-500">Name:</span> <span class="text-gray-800 ml-1" id="confirmPatientName"></span></div>
                 <div><span class="text-gray-500">Age:</span> <span class="text-gray-800 ml-1" id="confirmPatientAge"></span></div>
@@ -559,7 +559,7 @@
             </div>
           </div>
           <div class="border rounded-lg p-4 bg-gray-50 mt-2">
-            <p class="text-black text-bold text-lg mb-2">Contact Information</p>
+            <p class="text-gray-800 font-semibold text-lg mb-2">Contact Information</p>
             <div><span class="text-gray-500">Phone:</span> <span class="text-gray-800 ml-1" id="confirmPatientContact"></span></div>
           </div>
         </div>
@@ -711,7 +711,24 @@ function validateNameInput() {
       `;
     }
 
-    function displayDoctors(filteredDoctors = doctors) {
+    let lastFilteredDoctors = doctors;
+
+    function filterDoctors() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const specialty = document.getElementById('specialtyFilter').value;
+
+      currentPage = 1;
+      lastFilteredDoctors = doctors.filter(doctor => {
+        const matchesSearch = doctor.name.toLowerCase().includes(searchTerm) || 
+                            doctor.specialty.toLowerCase().includes(searchTerm);
+        const matchesSpecialty = !specialty || doctor.specialty === specialty;
+        return matchesSearch && matchesSpecialty;
+      });
+
+      displayDoctors(lastFilteredDoctors);
+    }
+
+    function displayDoctors(filteredDoctors = lastFilteredDoctors) {
       const doctorList = document.getElementById('doctorList');
       const start = (currentPage - 1) * doctorsPerPage;
       const end = start + doctorsPerPage;
@@ -759,30 +776,16 @@ function validateNameInput() {
     function prevPage() {
       if (currentPage > 1) {
         currentPage--;
-        filterDoctors();
+        displayDoctors(lastFilteredDoctors);
       }
     }
 
     function nextPage() {
-      const totalPages = Math.ceil(doctors.length / doctorsPerPage);
+      const totalPages = Math.ceil(lastFilteredDoctors.length / doctorsPerPage);
       if (currentPage < totalPages) {
         currentPage++;
-        filterDoctors();
+        displayDoctors(lastFilteredDoctors);
       }
-    }
-
-    function filterDoctors() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const specialty = document.getElementById('specialtyFilter').value;
-      
-      const filtered = doctors.filter(doctor => {
-        const matchesSearch = doctor.name.toLowerCase().includes(searchTerm) || 
-                            doctor.specialty.toLowerCase().includes(searchTerm);
-        const matchesSpecialty = !specialty || doctor.specialty === specialty;
-        return matchesSearch && matchesSpecialty;
-      });
-      
-      displayDoctors(filtered);
     }
 
     function selectDoctor(name, specialty, experience) {
@@ -1239,7 +1242,7 @@ function validateNameInput() {
           } else if (isUnavailable) {
             className += 'bg-red-100 text-gray-600 cursor-not-allowed';
           } else if (isPast) {
-            className += 'text-gray-200 cursor-not-allowed opacity-40';
+            className += 'text-gray-350 cursor-not-allowed opacity-40';
           } else {
             className += 'text-gray-400 cursor-not-allowed';
           }
@@ -1344,7 +1347,7 @@ function validateNameInput() {
           timeSlot.className = 'time-slot p-2 text-center border rounded bg-red-100 text-red-600 cursor-not-allowed';
           timeSlot.innerHTML = `${time}<br><span class="text-sm">Booked</span>`;
         } else if (isPastTime) {
-          timeSlot.className = 'time-slot p-2 text-center border rounded bg-gray-200 text-gray-500 cursor-not-allowed';
+          timeSlot.className = 'time-slot p-2 text-center border rounded bg-gray-300 text-gray-600 cursor-not-allowed';
           timeSlot.textContent = time;
         } else {
           timeSlot.className = 'time-slot p-2 text-center border rounded cursor-pointer hover:bg-gray-100';
@@ -1379,7 +1382,7 @@ function validateNameInput() {
   
       const lunchSlot = document.createElement('div');
       lunchSlot.className = 'time-slot p-2 text-center border rounded bg-gray-100 text-gray-600 cursor-not-allowed col-span-3';
-      lunchSlot.innerHTML = `1:00 PM - 2:00 PM<br><span class="text-sm">Lunch Break</span>`;
+      lunchSlot.innerHTML = `1:00 PM - 2:00 PM <span style="margin-left:12px;" class="text-sm">Lunch Break</span>`;
       lunchSlot.setAttribute('data-tooltip', 'Lunch Break');
       
       const slots = Array.from(timeSlotsContainer.children);
@@ -1574,13 +1577,27 @@ function validateNameInput() {
         confirmButton.textContent = 'Confirming...';
         confirmButton.classList.add('opacity-75');
 
-        const response = await fetch('/api/confirmations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(confirmationData)
-        });
+        // --- EDIT MODE LOGIC ---
+        const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
+        let response;
+        if (isEditMode) {
+          const editData = JSON.parse(localStorage.getItem('editAppointment'));
+          response = await fetch(`/api/confirmations/${editData._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(confirmationData)
+          });
+        } else {
+          response = await fetch('/api/confirmations', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(confirmationData)
+          });
+        }
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -1591,7 +1608,7 @@ function validateNameInput() {
         document.getElementById('step4').innerHTML = '✓';
         
         // Show success message with blur effect
-        showAlert('Appointment booked successfully!');
+        showAlert(isEditMode ? 'Appointment updated successfully!' : 'Appointment booked successfully!');
       } catch (error) {
         // Re-enable the confirm button if there's an error
         const confirmButton = document.getElementById('confirmBookingBtn');
@@ -1744,11 +1761,19 @@ function validateNameInput() {
             
             if (nameField) nameField.value = patientData.name || '';
             if (ageField) {
-              const ageValue = String(patientData.age || '');
+              let ageValue = patientData.age;
+              // If age is a number, convert to string
+              if (typeof ageValue === 'number') ageValue = String(ageValue);
+              // If age is '100+ years', set to '100', if 'Above 100 years', set to '101'
+              if (ageValue === '100+ years') ageValue = '100';
+              if (ageValue === 'Above 100 years') ageValue = '101';
+              // If age is like '25 years', extract the number
+              if (typeof ageValue === 'string' && ageValue.endsWith(' years')) {
+                ageValue = ageValue.replace(' years', '');
+              }
+              // If not found in options, set to ''
+              if (![...ageField.options].some(opt => opt.value === ageValue)) ageValue = '';
               ageField.value = ageValue;
-              console.log('Age value set to:', patientData.age);
-              console.log('Age field value after setting:', ageField.value);
-              console.log('Age field options:', Array.from(ageField.options).map(opt => opt.value));
             }
             if (genderField) genderField.value = patientData.gender || '';
             if (bloodField) bloodField.value = patientData.blood || '';
