@@ -1013,12 +1013,55 @@ const tabContents = document.querySelectorAll(".tab-content");
   function openRescheduleModal(app) {
     rescheduleAppointmentData = app;
     document.getElementById('reschedulePatientName').textContent = `Reschedule appointment for ${app.patientData?.name || ''}`;
-    document.getElementById('rescheduleDate').value = '';
-    document.getElementById('rescheduleTime').value = '';
+    // Pre-fill current date and time if available
+    document.getElementById('rescheduleDate').value = app.dateData?.date ? new Date(app.dateData.date).toISOString().split('T')[0] : '';
+    document.getElementById('rescheduleTime').value = app.dateData?.time || '';
     document.getElementById('rescheduleReason').value = '';
     document.getElementById('rescheduleModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
   }
+
+  // Update reschedule form submission to actually reschedule
+  document.getElementById('rescheduleForm').onsubmit = async function(e) {
+    e.preventDefault();
+    if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
+      alert('Error: Missing appointment ID.');
+      return;
+    }
+    const newDate = document.getElementById('rescheduleDate').value;
+    const newTime = document.getElementById('rescheduleTime').value;
+    if (!newDate || !newTime) {
+      alert('Please select both date and time.');
+      return;
+    }
+    try {
+      // Format date as MM/DD/YYYY to match backend expectations
+      const formattedDate = new Date(newDate).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      const response = await fetch(`/api/confirmations/${rescheduleAppointmentData._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'reschedule',
+          date: formattedDate,
+          time: newTime
+        })
+      });
+      if (!response.ok) throw new Error('Failed to reschedule appointment');
+      closeRescheduleModal();
+      showAlert('Appointment rescheduled successfully!');
+      // Refresh the appointments list
+      const currentDate = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+      await renderAppointmentsList(currentDate, searchTerm);
+    } catch (err) {
+      alert('Error rescheduling appointment: ' + err.message);
+    }
+  };
+
   function closeRescheduleModal() {
     document.getElementById('rescheduleModalOverlay').classList.add('hidden');
     document.body.classList.remove('blurred-bg');
@@ -1028,12 +1071,6 @@ const tabContents = document.querySelectorAll(".tab-content");
   document.getElementById('cancelRescheduleBtn').onclick = closeRescheduleModal;
   document.getElementById('rescheduleModalOverlay').onclick = function(e) {
     if (e.target === this) closeRescheduleModal();
-  };
-  document.getElementById('rescheduleForm').onsubmit = function(e) {
-    e.preventDefault();
-    // You can add your API call here to update the appointment
-    alert('Reschedule functionality coming soon!');
-    closeRescheduleModal();
   };
 
   // Cancel Modal Logic
