@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Confirmation = require("../models/confirmation");
-const Patient = require("../models/patient");
-const Doctor = require("../models/doctor");
-const DateModel = require("../models/date");
+const Confirmation = require('../models/confirmationModel');
+const Patient = require('../models/patientModel');
+const Doctor = require('../models/doctorModel');
+const DateModel = require('../models/dateModel');
 
 // POST - Create a confirmation
 router.post("/", async (req, res) => {
