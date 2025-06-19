@@ -5,15 +5,15 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoURI = process.env.DATABASE_URL;
-console.log( mongoURI);
-console.log(typeof(mongoURI));
+console.log(mongoURI);
+console.log(typeof mongoURI);
 const port = process.env.PORT;
 
 const confirmationRoutes = require("./routes/confirmationsroutes");
 
 const loginRoutes = require("./routes/loginsroute");
 
-const doctorsRoutes = require('./routes/doctors');
+const doctorsRoutes = require("./routes/doctors");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +26,7 @@ app.use("/api/confirmations", confirmationRoutes);
 
 app.use("/api/logins", loginRoutes);
 
-app.use('/api/doctors', doctorsRoutes);
+app.use("/api/doctors", doctorsRoutes);
 
 // Serve main HTML
 app.get("/", (req, res) => {
@@ -35,12 +35,14 @@ app.get("/", (req, res) => {
 
 // Start server
 
-mongoose.connect(mongoURI).then(() => {
-    app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
+mongoose
+    .connect(mongoURI)
+    .then(() => {
+        app.listen(port, () => {
+            console.log(`Server running at http://localhost:${port}`);
+        });
+    })
+    .catch((err) => {
+        console.error("MongoDB connection error:", err);
+        process.exit(1);
     });
-}).catch((err) => {
-    console.error("MongoDB connection error:", err);
-    process.exit(1);
-}); 
-
