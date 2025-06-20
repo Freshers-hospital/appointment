@@ -161,11 +161,11 @@ router.get("/booked-slots", async (req, res) => {
         const doctor = await Doctor.findOne({ name: doctorName });
         if (!doctor) return res.status(404).json({ error: "Doctor not found" });
 
-<<<<<<< HEAD
+
     const confirmations = await Confirmation.find({ doctor: doctor._id, status: { $ne: 'canceled' } }).populate('date');
-=======
-        const confirmations = await Confirmation.find({ doctor: doctor._id }).populate("date");
->>>>>>> f9ff307df995e95401230e1f9770c6c48335a80a
+
+
+ 
 
         const bookedTimes = confirmations.filter((c) => c.date.date === date).map((c) => c.date.time);
 
@@ -178,11 +178,8 @@ router.get("/booked-slots", async (req, res) => {
 // PUT - Update (edit, reschedule, or cancel) a confirmation by ID
 router.put('/:id', async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { date, time, status, action, newDate, newTime, reason } = req.body;
-=======
+
     const { patientData, doctorData, dateData, action, date, time, status } = req.body;
->>>>>>> f9ff307df995e95401230e1f9770c6c48335a80a
     const confirmation = await Confirmation.findById(req.params.id).populate('date');
     if (!confirmation) {
       return res.status(404).json({ error: 'Confirmation not found' });
