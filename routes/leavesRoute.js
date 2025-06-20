@@ -1,4 +1,4 @@
-// routes/leaves.js
+
 const express = require('express');
 const router = express.Router();
 const Leave = require('../models/leaveModel');

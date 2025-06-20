@@ -13,7 +13,7 @@ const confirmationRoutes = require("./routes/confirmationsroutes");
 
 const loginRoutes = require("./routes/loginsroute");
 
-const doctorsRoutes = require('./routes/doctors');
+const doctorsRoutes = require('./routes/doctorsRoute');
 
 const leaveRoutes = require("./routes/leavesRoute");
 
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// MongoDB connection
+
 
 // API Routes
 app.use("/api/confirmations", confirmationRoutes);
@@ -32,7 +32,7 @@ app.use('/api/doctors', doctorsRoutes);
 app.use("/api/leaves", leaveRoutes);
 
 
-// Serve main HTML
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "login.html"));
 });
