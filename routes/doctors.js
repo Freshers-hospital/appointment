@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Confirmation = require('../models/confirmation');
-const Doctor = require('../models/doctor');
+const Confirmation = require('../models/confirmationModel');
+const Doctor = require('../models/doctorModel');
 
 // GET /api/doctors/with-count
 router.get('/with-count', async (req, res) => {
