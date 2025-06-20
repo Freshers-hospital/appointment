@@ -403,6 +403,33 @@
   </div>
 </div>
 
+<!-- Add Doctor Modal -->
+<div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <button id="closeAddDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-4">Add Doctor</h2>
+    <form id="addDoctorForm">
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Doctor</label>
+        <input type="text" id="addDoctorName" name="doctor" class="w-full border border-gray-300 rounded px-3 py-2" required />
+      </div>
+      <div class="flex gap-2 mb-4">
+        <div class="flex-1">
+          <label class="block text-gray-700 mb-2">Specialty</label>
+          <input type="text" id="addDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+        <div class="flex-1">
+          <label class="block text-gray-700 mb-2">Availability</label>
+          <input type="text" id="addDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <button type="submit" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
   const datePicker = document.getElementById("datePicker");
   const selectedDate = document.getElementById("selectedDate");
@@ -915,7 +942,14 @@ const tabContents = document.querySelectorAll(".tab-content");
       await renderAppointmentsList(currentDate, searchTerm);
 
       closeAssignDoctorModal();
-      alert('Doctor assigned successfully!');
+      showAlert('Doctor assigned successfully!');
+      await renderAppointmentsList(currentDate, searchTerm);
+      // Clear the booked slots cache in the booking form (if open)
+      if (window.bookedSlotsCache) {
+        window.bookedSlotsCache.clear();
+      } else {
+        window.bookedSlotsCache = new Map();
+      }
     } catch (error) {
       console.error('Error assigning doctor:', error);
       alert('Failed to assign doctor. Please try again.');
@@ -1040,11 +1074,59 @@ const tabContents = document.querySelectorAll(".tab-content");
   document.getElementById('rescheduleModalOverlay').onclick = function(e) {
     if (e.target === this) closeRescheduleModal();
   };
-  document.getElementById('rescheduleForm').onsubmit = function(e) {
+  document.getElementById('rescheduleForm').onsubmit = async function(e) {
     e.preventDefault();
-    // You can add your API call here to update the appointment
-    alert('Reschedule functionality coming soon!');
-    closeRescheduleModal();
+    if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
+      alert('Error: Missing appointment data.');
+      return;
+    }
+    const newDate = document.getElementById('rescheduleDate').value;
+    const newTime = document.getElementById('rescheduleTime').value;
+    const reason = document.getElementById('rescheduleReason').value;
+    if (!newDate || !newTime) {
+      alert('Please select both a new date and time.');
+      return;
+    }
+    try {
+      // Show loading state (optional)
+      const rescheduleBtn = document.querySelector('#rescheduleForm button[type="submit"]');
+      rescheduleBtn.disabled = true;
+      rescheduleBtn.textContent = 'Rescheduling...';
+      // Send PUT request to update appointment
+      const response = await fetch(`/api/confirmations/${rescheduleAppointmentData._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'reschedule',
+          newDate,
+          newTime,
+          reason
+        })
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to reschedule appointment');
+      }
+      // Refresh appointments list
+      closeRescheduleModal();
+      showAlert('Appointment rescheduled successfully!');
+      const currentDate = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+      await renderAppointmentsList(currentDate, searchTerm);
+      // Clear the booked slots cache in the booking form (if open)
+      if (window.bookedSlotsCache) {
+        window.bookedSlotsCache.clear();
+      } else {
+        window.bookedSlotsCache = new Map();
+      }
+    } catch (error) {
+      alert('Error rescheduling appointment: ' + error.message);
+    } finally {
+      // Reset button state
+      const rescheduleBtn = document.querySelector('#rescheduleForm button[type="submit"]');
+      rescheduleBtn.disabled = false;
+      rescheduleBtn.textContent = 'Reschedule';
+    }
   };
 
   // Cancel Modal Logic
@@ -1123,6 +1205,23 @@ const tabContents = document.querySelectorAll(".tab-content");
   function hideAlert() {
     document.getElementById('overlay').style.display = 'none';
   }
+
+  // Add Doctor Modal Logic
+  const addDoctorBtn = document.querySelector('#doctorsTab .bg-black');
+  const addDoctorModalOverlay = document.getElementById('addDoctorModalOverlay');
+  const closeAddDoctorModal = document.getElementById('closeAddDoctorModal');
+
+  addDoctorBtn.onclick = function() {
+    addDoctorModalOverlay.classList.remove('hidden');
+  };
+  closeAddDoctorModal.onclick = function() {
+    addDoctorModalOverlay.classList.add('hidden');
+  };
+  addDoctorModalOverlay.onclick = function(e) {
+    if (e.target === this) {
+      addDoctorModalOverlay.classList.add('hidden');
+    }
+  };
 </script>
 
 </body>

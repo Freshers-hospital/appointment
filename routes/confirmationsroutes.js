@@ -165,7 +165,7 @@ router.get('/booked-slots', async (req, res) => {
     const doctor = await Doctor.findOne({ name: doctorName });
     if (!doctor) return res.status(404).json({ error: 'Doctor not found' });
 
-    const confirmations = await Confirmation.find({ doctor: doctor._id }).populate('date');
+    const confirmations = await Confirmation.find({ doctor: doctor._id, status: { $ne: 'canceled' } }).populate('date');
 
     const bookedTimes = confirmations
       .filter(c => c.date.date === date)
@@ -180,20 +180,30 @@ router.get('/booked-slots', async (req, res) => {
 // PUT - Update (reschedule or cancel) a confirmation by ID
 router.put('/:id', async (req, res) => {
   try {
-    const { date, time, status, action } = req.body;
+    const { date, time, status, action, newDate, newTime, reason } = req.body;
     const confirmation = await Confirmation.findById(req.params.id).populate('date');
     if (!confirmation) {
       return res.status(404).json({ error: 'Confirmation not found' });
     }
     // Reschedule: update date and/or time
-    if (action === 'reschedule' && date && time) {
-      let dateDoc = await DateModel.findOne({ date, time });
+    if (action === 'reschedule' && (newDate && newTime)) {
+      // Store the old date slot id
+      const oldDateId = confirmation.date?._id;
+      // Find or create the new date slot
+      let dateDoc = await DateModel.findOne({ date: newDate, time: newTime });
       if (!dateDoc) {
-        dateDoc = new DateModel({ date, time });
+        dateDoc = new DateModel({ date: newDate, time: newTime });
         await dateDoc.save();
       }
       confirmation.date = dateDoc._id;
       await confirmation.save();
+      // After saving, check if the old slot is now unused
+      if (oldDateId) {
+        const stillUsed = await Confirmation.exists({ date: oldDateId });
+        if (!stillUsed) {
+          await DateModel.findByIdAndDelete(oldDateId);
+        }
+      }
       return res.json({ message: 'Appointment rescheduled', confirmation });
     }
     // Cancel: update status
