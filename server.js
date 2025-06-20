@@ -13,7 +13,9 @@ const confirmationRoutes = require("./routes/confirmationsroutes");
 
 const loginRoutes = require("./routes/loginsroute");
 
-const doctorsRoutes = require("./routes/doctors");
+const doctorsRoutes = require('./routes/doctors');
+
+const leaveRoutes = require("./routes/leavesRoute");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +28,9 @@ app.use("/api/confirmations", confirmationRoutes);
 
 app.use("/api/logins", loginRoutes);
 
-app.use("/api/doctors", doctorsRoutes);
+app.use('/api/doctors', doctorsRoutes);
+app.use("/api/leaves", leaveRoutes);
+
 
 // Serve main HTML
 app.get("/", (req, res) => {
