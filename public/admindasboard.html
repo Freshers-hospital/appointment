@@ -12,6 +12,8 @@
       document.head.appendChild(script);
     }
   </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
   <style>
     .tab-active {
       background-color: white;
@@ -73,9 +75,9 @@
     <div class="flex items-center gap-4 px-20">
       <div class="relative">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
-        <input type="text" id="searchInput" placeholder="Search by doctor name..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
+        <input type="text" id="searchInput" placeholder="Search " class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
-      <input type="date" id="datePicker" class="px-8 py-0 border border-gray-300 " />
+      <input type="text" id="datePicker" class="px-8 py-0 border border-gray-300" readonly />
     </div>
   </div>
 
@@ -87,6 +89,7 @@
   </div>
   <div id="appointmentsTab" class="tab-content px-20">
     <div class="bg-white p-6 rounded-lg shadow relative">
+      
       <div class="flex justify-between items-center mb-4">
         <div>
           <h3 class="text-xl font-semibold">Today's Appointments</h3>
@@ -392,6 +395,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
   const datePicker = document.getElementById("datePicker");
   const selectedDate = document.getElementById("selectedDate");
@@ -569,25 +573,30 @@
     }
   }
 
-  // Handle date picker changes
-  datePicker.addEventListener("change", () => {
-    const date = datePicker.value;
-    const formatted = new Date(date).toLocaleDateString('en-US', { 
-      weekday: 'long',
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-    selectedDate.textContent = formatted;
+  // Initialize Flatpickr for the date picker
+  flatpickr("#datePicker", {
+    dateFormat: "Y-m-d",
+    defaultDate: new Date(),
+    locale: "en",
+    onChange: function(selectedDates, dateStr, instance) {
+      datePicker.value = dateStr;
+      const formatted = new Date(dateStr).toLocaleDateString('en-US', { 
+        weekday: 'long',
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      selectedDate.textContent = formatted;
 
-    // Determine which tab is active
-    const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
-    const searchTerm = searchInput.value.trim();
+      // Filtering logic
+      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      const searchTerm = searchInput.value.trim();
 
-    if (activeTab === 'appointmentsTab') {
-      renderAppointmentsList(date, searchTerm);
-    } else if (activeTab === 'patientsTab') {
-      fetchAndDisplayPatients(date, searchTerm);
+      if (activeTab === 'appointmentsTab') {
+        renderAppointmentsList(dateStr, searchTerm);
+      } else if (activeTab === 'patientsTab') {
+        fetchAndDisplayPatients(dateStr, searchTerm);
+      }
     }
   });
 
