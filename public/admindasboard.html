@@ -122,75 +122,9 @@
             <th class="px-4 py-2">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="px-6 py-2 font-semibold">Dr. Sarah Johnson</td>
-            <td class="px-6 py-2">Cardiology</td>
-            <td class="px-6 py-2">8</td>
-            <td class="px-6 py-2">10:00 AM - 5:00 PM</td>
-            <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </td>
-          </tr>
-           <tr>
-              <td class="px-6 py-2 font-medium">Dr.Kiran</td>
-              <td class="px-6 py-2">Pediatrics</td>
-              <td class="px-6 py-2">5</td>
-              <td class="px-6 py-2">8:30 AM - 4:30 PM</td>
-               <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-               <tr>
-              <td class="px-6 py-2 font-medium">Dr.Akhila</td>
-              <td class="px-6 py-2">Neurology</td>
-              <td class="px-6 py-2">3</td>
-              <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
-           <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-              <tr>
-              <td class="px-6 py-2 font-medium">Dr.Vinod</td>
-              <td class="px-6 py-2">Orthopedics</td>
-              <td class="px-6 py-2">4</td>
-              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
-              <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-              <tr>
-              <td class="px-6 py-2 font-medium">Dr.Srivani</td>
-              <td class="px-6 py-2">Gynecologist</td>
-              <td class="px-6 py-2">4</td>
-              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
-              <td class="px-4 py-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-        </tbody>
+
+       <tbody id="doctorsBody"></tbody>
+
       </table>
     </div>
   </div>
@@ -392,6 +326,33 @@
     <div class="mt-4 flex justify-center">
       <button onclick="hideAlert()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">OK</button>
     </div>
+  </div>
+</div>
+
+<!-- Add Doctor Modal -->
+<div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <button id="closeAddDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-4">Add Doctor</h2>
+    <form id="addDoctorForm">
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Doctor</label>
+        <input type="text" id="addDoctorName" name="doctor" class="w-full border border-gray-300 rounded px-3 py-2" required />
+      </div>
+      <div class="flex gap-2 mb-4">
+        <div class="flex-1">
+          <label class="block text-gray-700 mb-2">Specialty</label>
+          <input type="text" id="addDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+        <div class="flex-1">
+          <label class="block text-gray-700 mb-2">Availability</label>
+          <input type="text" id="addDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <button type="submit" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold">Add</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -661,13 +622,17 @@ const tabContents = document.querySelectorAll(".tab-content");
       const searchTerm = searchInput.value.trim();
 
       // Update content based on active tab
-      if (targetId === 'appointmentsTab') {
-        renderAppointmentsList(date, searchTerm);
-      } else if (targetId === 'patientsTab') {
-        fetchAndDisplayPatients(date, searchTerm);
-      }
+    if (targetId === 'appointmentsTab') {
+  renderAppointmentsList(date, searchTerm);
+} else if (targetId === 'patientsTab') {
+  fetchAndDisplayPatients(date, searchTerm);
+} else if (targetId === 'doctorsTab') {
+  renderDoctorsTable();   // ← add THIS line
+}
+
     });
   });
+
 
   // Update the fetchAndDisplayPatients function to handle date filtering
   async function fetchAndDisplayPatients(date = null, searchTerm = '') {
@@ -913,7 +878,14 @@ const tabContents = document.querySelectorAll(".tab-content");
       await renderAppointmentsList(currentDate, searchTerm);
 
       closeAssignDoctorModal();
-      alert('Doctor assigned successfully!');
+      showAlert('Doctor assigned successfully!');
+      await renderAppointmentsList(currentDate, searchTerm);
+      // Clear the booked slots cache in the booking form (if open)
+      if (window.bookedSlotsCache) {
+        window.bookedSlotsCache.clear();
+      } else {
+        window.bookedSlotsCache = new Map();
+      }
     } catch (error) {
       console.error('Error assigning doctor:', error);
       alert('Failed to assign doctor. Please try again.');
@@ -1080,6 +1052,12 @@ const tabContents = document.querySelectorAll(".tab-content");
   document.getElementById('cancelRescheduleBtn').onclick = closeRescheduleModal;
   document.getElementById('rescheduleModalOverlay').onclick = function(e) {
     if (e.target === this) closeRescheduleModal();
+  };
+  document.getElementById('rescheduleForm').onsubmit = function(e) {
+    e.preventDefault();
+    // You can add your API call here to update the appointment
+    alert('Reschedule functionality coming soon!');
+    closeRescheduleModal();
   };
 
   // Cancel Modal Logic
