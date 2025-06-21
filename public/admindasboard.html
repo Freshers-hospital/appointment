@@ -12,8 +12,8 @@
       document.head.appendChild(script);
     }
   </script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
   <style>
     .tab-active {
       background-color: white;
@@ -58,12 +58,152 @@
     #cancelModalOverlay {
       z-index: 50;
     }
+    /* Pikaday custom styles for modern look */
+    .pika-single {
+      background: rgba(80, 80, 100, 0.85) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+      border: none !important;
+      font-family: inherit !important;
+      color: #fff !important;
+      padding: 0 !important;
+      margin-top: 10px !important;
+    }
+
+    .pika-single .pika-title {
+      background: rgba(180,180,190,0.85) !important;
+      border-radius: 16px 16px 0 0 !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      font-size: 1.3rem !important;
+      padding: 0.7rem 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+      margin-bottom: 0 !important;
+    }
+
+    .pika-single .pika-label {
+      background: transparent !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      font-size: 1.2rem !important;
+      border: none !important;
+      pointer-events: none !important;
+    }
+
+    .pika-single .pika-prev, .pika-single .pika-next {
+      background: transparent !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 50% !important;
+      width: 36px !important;
+      height: 36px !important;
+      font-size: 1.7rem !important;
+      line-height: 36px !important;
+      margin: 0 8px !important;
+      transition: background 0.2s !important;
+      opacity: 0.7 !important;
+    }
+    .pika-single .pika-prev:hover, .pika-single .pika-next:hover {
+      background: rgba(255,255,255,0.12) !important;
+      opacity: 1 !important;
+    }
+
+    .pika-single .pika-table {
+      background: transparent !important;
+      border-collapse: separate !important;
+      border-spacing: 0 4px !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
+
+    .pika-single .pika-table th {
+      color: #3de0e0 !important;
+      font-weight: 600 !important;
+      font-size: 1.1rem !important;
+      background: transparent !important;
+      padding: 0.4em 0 !important;
+      letter-spacing: 0.05em !important;
+    }
+
+    .pika-single .pika-table th:nth-child(1) { color: #3de0e0 !important; } /* Su */
+    .pika-single .pika-table th:nth-child(2) { color: #3de0a0 !important; } /* Mo */
+    .pika-single .pika-table th:nth-child(3) { color: #3dc0e0 !important; } /* Tu */
+    .pika-single .pika-table th:nth-child(4) { color: #3da0e0 !important; } /* We */
+    .pika-single .pika-table th:nth-child(5) { color: #3d80e0 !important; } /* Th */
+    .pika-single .pika-table th:nth-child(6) { color: #3d60e0 !important; } /* Fr */
+    .pika-single .pika-table th:nth-child(7) { color: #3d40e0 !important; } /* Sa */
+
+    .pika-single .pika-table td {
+      text-align: center !important;
+      padding: 0.3em 0 !important;
+    }
+
+    .pika-single .pika-button {
+      border: none !important;
+      background: none !important;
+      color: #fff !important;
+      font-weight: 500 !important;
+      border-radius: 50% !important;
+      width: 2.2em !important;
+      height: 2.2em !important;
+      line-height: 2.2em !important;
+      font-size: 1.1em !important;
+      transition: background 0.2s, color 0.2s !important;
+      margin: 0 auto !important;
+      display: inline-block !important;
+    }
+
+    .pika-single .pika-button:hover {
+      background: #3de0e0 !important;
+      color: #222 !important;
+    }
+
+    .pika-single .pika-table td.is-selected .pika-button,
+    .pika-single .pika-table td .pika-button:active {
+      background: #3de0e0 !important;
+      color: #222 !important;
+      box-shadow: 0 2px 8px rgba(61,224,224,0.2) !important;
+    }
+
+    .pika-single .pika-table td.is-today .pika-button {
+      border: 2px solid #fff !important;
+    }
+
+    .pika-single .pika-select-month,
+    .pika-single .pika-select-year {
+      display: none !important;
+    }
+
+    /* Show month and year as plain text, side by side */
+    .pika-single .pika-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .pika-single .pika-label {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #fff;
+      background: transparent !important;
+      border: none !important;
+      pointer-events: none;
+    }
+    body {
+      overflow-y: hidden;
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
 
-<nav class="bg-white shadow pl-[120px] py-4">
-  <div class="text-blue-600 font-bold text-xl">MediCare</div>
+<nav class="bg-white shadow py-4 px-8">
+  <div class="flex justify-between items-center w-full">
+    <div class="text-blue-600 font-bold text-xl">MediCare</div>
+    <button id="signOutBtn" class="bg-red-500 hover:bg-red-600 text-white rounded px-4 py-2 rounded">Sign Out</button>
+  </div>
 </nav>
 
 <div class="p-8">
@@ -77,7 +217,10 @@
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
         <input type="text" id="searchInput" placeholder="Search " class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
-      <input type="text" id="datePicker" class="px-8 py-0 border border-gray-300" readonly />
+      <div class="flex items-center gap-2">
+        <label for="datePicker" class="font-semibold"></label>
+        <input type="text" id="datePicker" class="px-8 py-0 border border-gray-300" readonly />
+      </div>
     </div>
   </div>
 
@@ -122,9 +265,75 @@
             <th class="px-4 py-2">Actions</th>
           </tr>
         </thead>
-
-       <tbody id="doctorsBody"></tbody>
-
+        <tbody>
+          <tr class="border-t">
+            <td class="px-6 py-2 font-semibold">Dr. Sarah Johnson</td>
+            <td class="px-6 py-2">Cardiology</td>
+            <td class="px-6 py-2">8</td>
+            <td class="px-6 py-2">10:00 AM - 5:00 PM</td>
+            <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+            </td>
+          </tr>
+           <tr>
+              <td class="px-6 py-2 font-medium">Dr.Kiran</td>
+              <td class="px-6 py-2">Pediatrics</td>
+              <td class="px-6 py-2">5</td>
+              <td class="px-6 py-2">8:30 AM - 4:30 PM</td>
+               <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+               <tr>
+              <td class="px-6 py-2 font-medium">Dr.Akhila</td>
+              <td class="px-6 py-2">Neurology</td>
+              <td class="px-6 py-2">3</td>
+              <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
+           <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+              <tr>
+              <td class="px-6 py-2 font-medium">Dr.Vinod</td>
+              <td class="px-6 py-2">Orthopedics</td>
+              <td class="px-6 py-2">4</td>
+              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+              <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+              <tr>
+              <td class="px-6 py-2 font-medium">Dr.Srivani</td>
+              <td class="px-6 py-2">Gynecologist</td>
+              <td class="px-6 py-2">4</td>
+              <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+              <td class="px-4 py-2 relative">
+              <button class="action-btn text-xl">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
+                <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              </div>
+        </tbody>
       </table>
     </div>
   </div>
@@ -329,33 +538,6 @@
   </div>
 </div>
 
-<!-- Add Doctor Modal -->
-<div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-    <button id="closeAddDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
-    <h2 class="text-2xl font-bold mb-4">Add Doctor</h2>
-    <form id="addDoctorForm">
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Doctor</label>
-        <input type="text" id="addDoctorName" name="doctor" class="w-full border border-gray-300 rounded px-3 py-2" required />
-      </div>
-      <div class="flex gap-2 mb-4">
-        <div class="flex-1">
-          <label class="block text-gray-700 mb-2">Specialty</label>
-          <input type="text" id="addDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
-        </div>
-        <div class="flex-1">
-          <label class="block text-gray-700 mb-2">Availability</label>
-          <input type="text" id="addDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
-        </div>
-      </div>
-      <div class="flex justify-end mt-6">
-        <button type="submit" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
   const datePicker = document.getElementById("datePicker");
@@ -364,10 +546,32 @@
   const addBtn = document.getElementById("addBtn");
   const searchInput = document.getElementById("searchInput");
 
-  // Set today's date as default
-  const today = new Date().toISOString().split('T')[0];
-  datePicker.value = today;
-  selectedDate.textContent = new Date(today).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  // Initialize Flatpickr as a popup on the input
+  flatpickr("#datePicker", {
+    defaultDate: new Date(),
+    onChange: function(selectedDates, dateStr, instance) {
+      document.getElementById('datePicker').value = dateStr;
+      // Update dashboard as before
+      const formatted = selectedDates[0].toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('selectedDate').textContent = formatted;
+      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      const searchTerm = document.getElementById('searchInput').value.trim();
+      if (activeTab === 'appointmentsTab') {
+        renderAppointmentsList(dateStr, searchTerm);
+      } else if (activeTab === 'patientsTab') {
+        fetchAndDisplayPatients(dateStr, searchTerm);
+      }
+    }
+  });
+  // Set today's date as default in the input
+  const today = new Date();
+  document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+  document.getElementById('selectedDate').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   async function fetchAppointments(date, searchDoctorName = '') {
     try {
@@ -534,33 +738,6 @@
     }
   }
 
-  // Initialize Flatpickr for the date picker
-  flatpickr("#datePicker", {
-    dateFormat: "Y-m-d",
-    defaultDate: new Date(),
-    locale: "en",
-    onChange: function(selectedDates, dateStr, instance) {
-      datePicker.value = dateStr;
-      const formatted = new Date(dateStr).toLocaleDateString('en-US', { 
-        weekday: 'long',
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      });
-      selectedDate.textContent = formatted;
-
-      // Filtering logic
-      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
-      const searchTerm = searchInput.value.trim();
-
-      if (activeTab === 'appointmentsTab') {
-        renderAppointmentsList(dateStr, searchTerm);
-      } else if (activeTab === 'patientsTab') {
-        fetchAndDisplayPatients(dateStr, searchTerm);
-      }
-    }
-  });
-
   // Handle search input changes with debounce
   let searchTimeout;
   searchInput.addEventListener("input", () => {
@@ -578,10 +755,10 @@
       } else if (activeTab === 'patientsTab') {
         fetchAndDisplayPatients(currentDate, searchTerm);
       }
-    }, 300); // 300ms debounce
+    }, 300); 
   });
 
-  // Handle search input clear
+  
   searchInput.addEventListener("keyup", (e) => {
     if (e.key === "Escape") {
       searchInput.value = "";
@@ -596,13 +773,10 @@
     }
   });
 
-  // Initial render
+  
   renderAppointmentsList(today);
 
-  // Tab switch logic
-// Select all tab buttons
   
-// Select all tab buttons
 const tabs = document.querySelectorAll(".tab");
 const tabContents = document.querySelectorAll(".tab-content");
 
@@ -622,17 +796,13 @@ const tabContents = document.querySelectorAll(".tab-content");
       const searchTerm = searchInput.value.trim();
 
       // Update content based on active tab
-    if (targetId === 'appointmentsTab') {
-  renderAppointmentsList(date, searchTerm);
-} else if (targetId === 'patientsTab') {
-  fetchAndDisplayPatients(date, searchTerm);
-} else if (targetId === 'doctorsTab') {
-  renderDoctorsTable();   // ← add THIS line
-}
-
+      if (targetId === 'appointmentsTab') {
+        renderAppointmentsList(date, searchTerm);
+      } else if (targetId === 'patientsTab') {
+        fetchAndDisplayPatients(date, searchTerm);
+      }
     });
   });
-
 
   // Update the fetchAndDisplayPatients function to handle date filtering
   async function fetchAndDisplayPatients(date = null, searchTerm = '') {
@@ -652,10 +822,10 @@ const tabContents = document.querySelectorAll(".tab-content");
         year: 'numeric'
       }) : null;
 
-      // Filter appointments based on date and search term
+      // Filter appointments based on date, search term, and status
       const filteredAppointments = appointments.filter(app => {
         if (!app.patientData) return false;
-        
+        if (app.status === 'canceled') return false;
         const matchesDate = !formattedDate || (app.dateData && app.dateData.date === formattedDate);
         const matchesSearch = !searchTerm || 
           (app.patientData.name && app.patientData.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -695,15 +865,14 @@ const tabContents = document.querySelectorAll(".tab-content");
     }
   }
 
-  // Manage Availability Modal Logic
   let currentDoctor = null;
 
-  // Open modal and blur background
+  
   function openAvailabilityModal(doctorName) {
     currentDoctor = doctorName;
     document.getElementById('availabilityModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
-    // Optionally set default values
+   
     document.getElementById('availabilityForm').reset();
   }
 
@@ -734,16 +903,16 @@ const tabContents = document.querySelectorAll(".tab-content");
       end
     };
     try {
-      // TODO: Replace with your actual API endpoint
+      
       const response = await fetch('/api/doctor-availability', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Failed to save availability');
-      // Optionally refresh doctor data here
+      
       closeAvailabilityModal();
-      // Optionally show a success message
+     
     } catch (err) {
       alert('Error saving availability: ' + err.message);
     }
@@ -763,13 +932,12 @@ const tabContents = document.querySelectorAll(".tab-content");
       }
     });
   }
-  // Call after DOM is ready and after any dynamic table updates
+  
   attachManageAvailabilityListeners();
-  // If you update the doctors table dynamically, call attachManageAvailabilityListeners() again.
+  
 
-  // Appointment Details Modal Logic
   function openAppointmentDetailsModal(app) {
-    // Get doctor name from any possible field
+    
     const doctorName = 
       app.doctorData?.name || 
       app.doctor?.name || 
@@ -787,7 +955,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     document.body.classList.add('blurred-bg');
   }
 
-  // Add event listeners for the view details modal
+  
   document.getElementById('closeViewDetailsModal').onclick = function() {
     document.getElementById('viewDetailsModalOverlay').classList.add('hidden');
     document.body.classList.remove('blurred-bg');
@@ -805,7 +973,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     }
   };
 
-  // Add these new functions for doctor assignment
+  
   let currentAppointmentForAssignment = null;
 
   async function loadDoctors() {
@@ -844,7 +1012,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     currentAppointmentForAssignment = null;
   }
 
-  // Add event listeners for the Assign Doctor modal
+  
   document.getElementById('closeAssignDoctorModal').onclick = closeAssignDoctorModal;
   document.getElementById('cancelAssignDoctor').onclick = closeAssignDoctorModal;
   document.getElementById('assignDoctorModalOverlay').onclick = function(e) {
@@ -872,35 +1040,28 @@ const tabContents = document.querySelectorAll(".tab-content");
 
       if (!response.ok) throw new Error('Failed to assign doctor');
 
-      // Refresh the appointments list
+      
       const currentDate = datePicker.value;
       const searchTerm = searchInput.value.trim();
       await renderAppointmentsList(currentDate, searchTerm);
 
       closeAssignDoctorModal();
-      showAlert('Doctor assigned successfully!');
-      await renderAppointmentsList(currentDate, searchTerm);
-      // Clear the booked slots cache in the booking form (if open)
-      if (window.bookedSlotsCache) {
-        window.bookedSlotsCache.clear();
-      } else {
-        window.bookedSlotsCache = new Map();
-      }
+      alert('Doctor assigned successfully!');
     } catch (error) {
       console.error('Error assigning doctor:', error);
       alert('Failed to assign doctor. Please try again.');
     }
   };
 
-  // Remove all existing event listeners and add new ones
+
   document.addEventListener('DOMContentLoaded', function() {
-    // Remove any existing event listeners
+ 
     const oldClickHandler = document.onclick;
     document.onclick = null;
 
-    // Add new event listener for action menu
+    
     document.addEventListener('click', function(e) {
-      // Handle action menu toggle
+      
       if (e.target.classList.contains('action-btn')) {
         e.stopPropagation();
         const menus = document.querySelectorAll('.action-menu');
@@ -909,7 +1070,7 @@ const tabContents = document.querySelectorAll(".tab-content");
         menu.classList.toggle('hidden');
       }
       
-      // Handle View Details
+      
       if (e.target.classList.contains('view-details-btn')) {
         e.preventDefault();
         e.stopPropagation();
@@ -924,7 +1085,7 @@ const tabContents = document.querySelectorAll(".tab-content");
         e.stopPropagation();
         const appointmentData = JSON.parse(e.target.getAttribute('data-appointment'));
         
-        // Log the original data for debugging
+     
         console.log('Original appointment data:', appointmentData);
         console.log('Patient data from appointment:', appointmentData.patientData);
         console.log('Age value from appointment:', appointmentData.patientData?.age);
@@ -1053,12 +1214,6 @@ const tabContents = document.querySelectorAll(".tab-content");
   document.getElementById('rescheduleModalOverlay').onclick = function(e) {
     if (e.target === this) closeRescheduleModal();
   };
-  document.getElementById('rescheduleForm').onsubmit = function(e) {
-    e.preventDefault();
-    // You can add your API call here to update the appointment
-    alert('Reschedule functionality coming soon!');
-    closeRescheduleModal();
-  };
 
   // Cancel Modal Logic
   function openCancelModal(app) {
@@ -1136,6 +1291,13 @@ const tabContents = document.querySelectorAll(".tab-content");
   function hideAlert() {
     document.getElementById('overlay').style.display = 'none';
   }
+
+  document.getElementById('signOutBtn').onclick = function() {
+    if (confirm('Are you sure you want to sign out?')) {
+      // Optionally clear session/local storage here
+      window.location.href = 'login.html';
+    }
+  };
 </script>
 
 </body>
