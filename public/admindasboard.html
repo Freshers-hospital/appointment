@@ -73,9 +73,25 @@
     <div class="flex items-center gap-4 px-20">
       <div class="relative">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
-        <input type="text" id="searchInput" placeholder="Search by doctor name..." class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
+        <input type="text" id="searchInput" placeholder="Search" class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
-      <input type="date" id="datePicker" class="px-8 py-0 border border-gray-300 " />
+      <!-- Date Label and Custom Calendar Start -->
+      <div class="relative" id="calendarDropdownWrapper">
+        <label id="dateLabel" class="cursor-pointer px-4 py-2 bg-white rounded shadow border border-gray-300 font-semibold text-gray-700 hover:bg-gray-50 transition select-none">
+          <span id="dateLabelText"></span>
+          <svg class="inline ml-2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </label>
+        <div id="customCalendarContainer" class="absolute left-0 mt-2 z-30 bg-white rounded-lg shadow-lg" style="display:none; min-width: 260px;">
+          <div id="calendarHeader" class="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-blue-300 to-indigo-400 rounded-t-lg">
+            <button id="prevMonthBtn" class="text-2xl font-bold text-gray-600 hover:text-black">&#8592;</button>
+            <span id="calendarMonthYear" class="font-semibold text-lg text-gray-700"></span>
+            <button id="nextMonthBtn" class="text-2xl font-bold text-gray-600 hover:text-black">&#8594;</button>
+          </div>
+          <div id="calendarBody" class="bg-white rounded-b-lg shadow p-4"></div>
+        </div>
+        <input type="hidden" id="datePicker" />
+      </div>
+      <!-- Date Label and Custom Calendar End -->
     </div>
   </div>
 
@@ -328,26 +344,26 @@
 
 <!-- Add Doctor Modal -->
 <div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-    <button id="closeAddDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
-    <h2 class="text-2xl font-bold mb-4">Add Doctor</h2>
-    <form id="addDoctorForm">
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Doctor</label>
-        <input type="text" id="addDoctorName" name="doctor" class="w-full border border-gray-300 rounded px-3 py-2" required />
+  <div class="bg-white rounded-2xl shadow-xl p-10 w-full max-w-lg relative flex flex-col items-center" style="box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);">
+    <button id="closeAddDoctorModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-3xl font-bold mb-8 w-full text-left">Add Doctor</h2>
+    <form id="addDoctorForm" class="w-full flex flex-col gap-6">
+      <div>
+        <label class="block text-xl font-semibold mb-2">Doctor</label>
+        <input type="text" id="addDoctorName" name="doctor" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200" required />
       </div>
-      <div class="flex gap-2 mb-4">
+      <div class="flex gap-4">
         <div class="flex-1">
-          <label class="block text-gray-700 mb-2">Specialty</label>
-          <input type="text" id="addDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
+          <label class="block text-xl font-semibold mb-2">Specialty</label>
+          <input type="text" id="addDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200" required />
         </div>
         <div class="flex-1">
-          <label class="block text-gray-700 mb-2">Availability</label>
-          <input type="text" id="addDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
+          <label class="block text-xl font-semibold mb-2">Availability</label>
+          <input type="text" id="addDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200" required />
         </div>
       </div>
-      <div class="flex justify-end mt-6">
-        <button type="submit" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold">Add</button>
+      <div class="flex justify-end mt-4">
+        <button type="submit" class="px-8 py-3 rounded-lg bg-blue-600 text-white text-xl font-bold shadow hover:bg-blue-700 transition">Add</button>
       </div>
     </form>
   </div>
@@ -1127,6 +1143,143 @@ const tabContents = document.querySelectorAll(".tab-content");
   function hideAlert() {
     document.getElementById('overlay').style.display = 'none';
   }
+
+  // Custom Calendar Date Picker Logic with Dropdown
+  const calendarDropdownWrapper = document.getElementById('calendarDropdownWrapper');
+  const dateLabel = document.getElementById('dateLabel');
+  const dateLabelText = document.getElementById('dateLabelText');
+  const calendarContainer = document.getElementById('customCalendarContainer');
+  const calendarHeader = document.getElementById('calendarHeader');
+  const calendarBody = document.getElementById('calendarBody');
+  const calendarMonthYear = document.getElementById('calendarMonthYear');
+  const prevMonthBtn = document.getElementById('prevMonthBtn');
+  const nextMonthBtn = document.getElementById('nextMonthBtn');
+  const hiddenDateInput = document.getElementById('datePicker');
+
+  let selectedCalendarDate = new Date();
+  let calendarSelectedDay = selectedCalendarDate.getDate();
+
+  function updateDateLabel(date) {
+    dateLabelText.textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function renderCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const today = new Date();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDay = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+
+    // Header
+    calendarMonthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+
+    // Days grid
+    let html = '<div class="grid grid-cols-7 gap-2 text-center mb-2">';
+    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    for (let d of days) html += `<div class="font-semibold text-gray-500">${d}</div>`;
+    html += '</div><div class="grid grid-cols-7 gap-2 text-center">';
+
+    // Empty cells before first day
+    for (let i = 0; i < startDay; i++) html += '<div></div>';
+
+    // Days
+    for (let day = 1; day <= daysInMonth; day++) {
+      const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
+      const isSelected = calendarSelectedDay === day && selectedCalendarDate.getMonth() === month && selectedCalendarDate.getFullYear() === year;
+      html += `<button class="rounded-full w-10 h-10 flex items-center justify-center mx-auto ${isSelected ? 'border-2 border-pink-400 text-pink-600 font-bold' : isToday ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}" data-day="${day}">${day}</button>`;
+    }
+    html += '</div>';
+    calendarBody.innerHTML = html;
+
+    // Add click listeners
+    calendarBody.querySelectorAll('button[data-day]').forEach(btn => {
+      btn.onclick = function() {
+        calendarSelectedDay = parseInt(this.getAttribute('data-day'));
+        selectedCalendarDate.setDate(calendarSelectedDay);
+        // Update hidden input in yyyy-mm-dd format
+        const yyyy = selectedCalendarDate.getFullYear();
+        const mm = String(selectedCalendarDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(calendarSelectedDay).padStart(2, '0');
+        hiddenDateInput.value = `${yyyy}-${mm}-${dd}`;
+        // Update selected date text
+        selectedDate.textContent = selectedCalendarDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        updateDateLabel(selectedCalendarDate);
+        // Trigger appointments reload
+        const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+        const searchTerm = searchInput.value.trim();
+        if (activeTab === 'appointmentsTab') {
+          renderAppointmentsList(hiddenDateInput.value, searchTerm);
+        } else if (activeTab === 'patientsTab') {
+          fetchAndDisplayPatients(hiddenDateInput.value, searchTerm);
+        }
+        renderCalendar(selectedCalendarDate);
+        // Hide calendar after selection
+        calendarContainer.style.display = 'none';
+      };
+    });
+  }
+
+  dateLabel.onclick = function(e) {
+    e.stopPropagation();
+    calendarContainer.style.display = calendarContainer.style.display === 'none' ? 'block' : 'none';
+  };
+  document.addEventListener('click', function(e) {
+    if (!calendarDropdownWrapper.contains(e.target)) {
+      calendarContainer.style.display = 'none';
+    }
+  });
+
+  prevMonthBtn.onclick = function(e) {
+    e.stopPropagation();
+    selectedCalendarDate.setMonth(selectedCalendarDate.getMonth() - 1);
+    calendarSelectedDay = 1;
+    selectedCalendarDate.setDate(calendarSelectedDay);
+    renderCalendar(selectedCalendarDate);
+  };
+  nextMonthBtn.onclick = function(e) {
+    e.stopPropagation();
+    selectedCalendarDate.setMonth(selectedCalendarDate.getMonth() + 1);
+    calendarSelectedDay = 1;
+    selectedCalendarDate.setDate(calendarSelectedDay);
+    renderCalendar(selectedCalendarDate);
+  };
+
+  // Initialize calendar with today
+  (function() {
+    selectedCalendarDate = new Date();
+    calendarSelectedDay = selectedCalendarDate.getDate();
+    const yyyy = selectedCalendarDate.getFullYear();
+    const mm = String(selectedCalendarDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(calendarSelectedDay).padStart(2, '0');
+    hiddenDateInput.value = `${yyyy}-${mm}-${dd}`;
+    renderCalendar(selectedCalendarDate);
+    updateDateLabel(selectedCalendarDate);
+  })();
+
+  // Add Doctor Modal Open/Close Logic
+  (function() {
+    // Find the Add Doctor button (in Doctors tab)
+    const addDoctorBtn = document.querySelector("#doctorsTab .bg-black");
+    const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
+    const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
+
+    if (addDoctorBtn && addDoctorModalOverlay && closeAddDoctorModal) {
+      addDoctorBtn.onclick = function() {
+        addDoctorModalOverlay.classList.remove("hidden");
+      };
+      closeAddDoctorModal.onclick = function() {
+        addDoctorModalOverlay.classList.add("hidden");
+      };
+      // Optional: close modal when clicking outside the modal card
+      addDoctorModalOverlay.onclick = function(e) {
+        if (e.target === addDoctorModalOverlay) {
+          addDoctorModalOverlay.classList.add("hidden");
+        }
+      };
+    }
+  })();
 </script>
 
 </body>
