@@ -181,11 +181,11 @@
 
   
   <div class="max-w-4xl mx-auto mt-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Book an Appointment</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6" id="pageTitle">Book an Appointment</h2>
   </div>
 
   
-  <div class="max-w-4xl mx-auto mt-8">
+  <div class="max-w-4xl mx-auto mt-8" id="stepperContainer">
     <div class="flex items-center justify-between relative">
       <div class="relative flex justify-between w-full">
         
@@ -194,7 +194,7 @@
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step1">1</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient details</p>
+          <p class="mt-2 text-sm text-gray-400" id="step1Text">Select doctor</p>
         </div>
 
        
@@ -204,7 +204,7 @@
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step2">2</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step2Text">Select doctor</p>
+          <p class="mt-2 text-sm text-gray-400" id="step2Text">Date & Time</p>
         </div>
 
        
@@ -214,14 +214,14 @@
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step3">3</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step3Text">Choose Date & Time</p>
+          <p class="mt-2 text-sm text-gray-400" id="step3Text">Confirmation</p>
         </div>
         <div class="flex-1 text-center">
           <div class="relative">
             <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step4">4</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step4Text">Confirmation</p>
+          <p class="mt-2 text-sm text-gray-400" id="step4Text">Complete</p>
         </div>
       </div>
     </div>
@@ -423,7 +423,7 @@
       <div id="doctorList" class="space-y-4">
        </div>
       <div id="pagination" class="flex justify-between items-center mt-6">
-        <button onclick="goBack()" class="bg-gray-500 text-white px-6 py-2 rounded bg-gray-600">
+        <button onclick="goBack()" class="bg-gray-500 text-white px-6 py-2 rounded bg-gray-600" id="doctorBackBtn">
           Back
         </button>
 
@@ -797,10 +797,18 @@ function validateNameInput() {
       };
       localStorage.setItem('selectedDoctor', JSON.stringify(doctorData));
       
-    
-      document.getElementById('doctorNextBtn').disabled = false;
-      document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
-      document.getElementById('doctorNextBtn').classList.add('bg-blue-600');
+      // Check if we're in edit mode
+      const isEditMode = getQueryParam('edit') === '1';
+      
+      if (isEditMode) {
+        // In edit mode, auto-advance to date/time section
+        goToDateTimeSection();
+      } else {
+        // Normal mode - enable next button
+        document.getElementById('doctorNextBtn').disabled = false;
+        document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
+        document.getElementById('doctorNextBtn').classList.add('bg-blue-600');
+      }
       
      
       const selectButtons = document.querySelectorAll('.select-btn');
@@ -909,7 +917,7 @@ function validateNameInput() {
    
     function goToDoctorSection() {
       showSection('doctorSection');
-      updateStepper(2);
+      updateStepper(1);
       
      
       const line1 = document.getElementById('line1');
@@ -950,7 +958,7 @@ function validateNameInput() {
 
     function goToDateTimeSection() {
       showSection('dateTimeSection');
-      updateStepper(3);
+      updateStepper(2);
       initializeDateTime();
     }
 
@@ -1234,14 +1242,24 @@ function validateNameInput() {
         const isWithinBookingWindow = isAvailableMonth(thisDate);
         const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
         
+        // NEW: Disable today if all slots are past
+        let isTodayAllSlotsPast = false;
+        if (
+          selectedDoctor &&
+          thisDate.getTime() === today.getTime()
+        ) {
+          const slots = doctorTimeSlots[selectedDoctor.name] || [];
+          isTodayAllSlotsPast = slots.every(slot => isTimeSlotPast(slot));
+        }
+        
         let className = 'calendar-day h-10 flex items-center justify-center rounded-full font-medium ';
         
-        if (isPast || isUnavailable || !isWithinBookingWindow) {
+        if (isPast || isUnavailable || !isWithinBookingWindow || isTodayAllSlotsPast) {
           if (isFutureMonth) {
             className += 'bg-gray-50 text-gray-400 cursor-not-allowed';
           } else if (isUnavailable) {
             className += 'bg-red-100 text-gray-600 cursor-not-allowed';
-          } else if (isPast) {
+          } else if (isPast || isTodayAllSlotsPast) {
             className += 'text-gray-350 cursor-not-allowed opacity-40';
           } else {
             className += 'text-gray-400 cursor-not-allowed';
@@ -1517,14 +1535,14 @@ function validateNameInput() {
         localStorage.setItem('appointmentData', JSON.stringify(appointmentData));
         
         showSection('confirmationSection');
-        updateStepper(4);
+        updateStepper(3);
         initializeConfirmation();
       }
     }
 
     function goBackToDateTime() {
       showSection('dateTimeSection');
-      updateStepper(3);
+      updateStepper(2);
       
       // Restore the previously selected date and time
       const appointmentData = JSON.parse(localStorage.getItem('appointmentData') || '{}');
@@ -1738,6 +1756,18 @@ function validateNameInput() {
     // Initialize the form with patient data when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
       if (isEditMode && editData) {
+        // Update page title for edit mode
+        const pageTitle = document.getElementById('pageTitle');
+        if (pageTitle) {
+          pageTitle.textContent = 'Edit Appointment';
+        }
+        
+        // Hide stepper for edit mode
+        const stepperContainer = document.getElementById('stepperContainer');
+        if (stepperContainer) {
+          stepperContainer.style.display = 'none';
+        }
+        
         // Pre-fill patient form fields
         const patientData = editData.patientData;
         if (patientData) {
@@ -1798,8 +1828,27 @@ function validateNameInput() {
 
         // Skip to select doctor step
         showSection('doctorSection');
-        updateStepper(2);
         displayDoctors();
+        
+        // Hide back and next buttons in doctor section for edit mode
+        const doctorBackBtn = document.getElementById('doctorBackBtn');
+        const doctorNextBtn = document.getElementById('doctorNextBtn');
+        if (doctorBackBtn) doctorBackBtn.style.display = 'none';
+        if (doctorNextBtn) doctorNextBtn.style.display = 'none';
+        
+        // Pre-select the current doctor
+        setTimeout(() => {
+          const doctorData = editData.doctorData;
+          if (doctorData && doctorData.name) {
+            const doctorButtons = document.querySelectorAll('.select-btn');
+            doctorButtons.forEach(button => {
+              if (button.getAttribute('data-doctor') === doctorData.name) {
+                button.classList.remove('bg-black', 'hover:bg-gray-800');
+                button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+              }
+            });
+          }
+        }, 1000);
       }
     });
 
