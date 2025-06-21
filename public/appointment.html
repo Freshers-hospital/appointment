@@ -137,95 +137,95 @@
                 display: block;
             }
 
-            .blurred-bg > *:not(#availabilityModalOverlay):not(#viewDetailsModalOverlay) {
-                filter: blur(4px) !important;
-                pointer-events: none;
-                user-select: none;
-            }
-        </style>
-    </head>
-    <body class="bg-blue-50 font-sans">
-        <div id="overlay" class="overlay">
-            <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-                <div class="text-center">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                        <svg class="h-10 w-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                    </div>
+    .blurred-bg > *:not(#availabilityModalOverlay):not(#viewDetailsModalOverlay) {
+      filter: blur(4px) !important;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 font-sans">
+  
+  <div id="overlay" class="overlay">
+    <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+      <div class="text-center">
+       
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+          <svg class="h-10 w-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+       
+        <h3 class="text-lg font-medium text-gray-900 mb-4" id="alertMessage">Appointment booked successfully!</h3>
+        
+        <button onclick="hideAlert()" class="w-full inline-flex justify-center px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm transition-colors duration-200">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
 
-                    <h3 class="text-lg font-medium text-gray-900 mb-4" id="alertMessage">Appointment booked successfully!</h3>
+  
+  <div class="p-4 flex justify-between items-center bg-white shadow">
+    <div class="flex items-center">
+      <svg class="w-6 h-6 text-blue-600 mr-2 ml-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+      </svg>
+      <h1 class="text-2xl font-bold text-blue-600">MediCare</h1>
+    </div>
+    <button onclick="window.location.href='admindasboard.html'" class="text-gray-600 hover:text-gray-800 flex items-center">
+      Back to Dashboard
+      <svg class="w-4 h-4 mr-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+    </button>
+  </div>
 
-                    <button
-                        onclick="hideAlert()"
-                        class="w-full inline-flex justify-center px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm transition-colors duration-200"
-                    >
-                        OK
-                    </button>
-                </div>
-            </div>
+  
+  <div class="max-w-4xl mx-auto mt-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6" id="pageTitle">Book an Appointment</h2>
+  </div>
+
+  
+  <div class="max-w-4xl mx-auto mt-8" id="stepperContainer">
+    <div class="flex items-center justify-between relative">
+      <div class="relative flex justify-between w-full">
+        
+        <div class="flex-1 text-center">
+          <div class="relative">
+            <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
+            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step1">1</div>
+          </div>
+          <p class="mt-2 text-sm text-gray-400" id="step1Text">Select doctor</p>
         </div>
 
-        <div class="p-4 flex justify-between items-center bg-white shadow">
-            <div class="flex items-center">
-                <svg class="w-6 h-6 text-blue-600 mr-2 ml-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                </svg>
-                <h1 class="text-2xl font-bold text-blue-600">MediCare</h1>
-            </div>
-            <button onclick="window.location.href='admindasboard.html'" class="text-gray-600 hover:text-gray-800 flex items-center">
-                Back to Dashboard
-                <svg class="w-4 h-4 mr-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
-            </button>
+       
+        <div class="flex-1 text-center">
+          <div class="relative">
+            <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line2Left"></div>
+            <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
+            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step2">2</div>
+          </div>
+          <p class="mt-2 text-sm text-gray-400" id="step2Text">Date & Time</p>
         </div>
 
-        <div class="max-w-4xl mx-auto mt-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Book an Appointment</h2>
+       
+        <div class="flex-1 text-center">
+          <div class="relative">
+            <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line3Left"></div>
+            <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
+            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step3">3</div>
+          </div>
+          <p class="mt-2 text-sm text-gray-400" id="step3Text">Confirmation</p>
         </div>
-
-        <div class="max-w-4xl mx-auto mt-8">
-            <div class="flex items-center justify-between relative">
-                <div class="relative flex justify-between w-full">
-                    <div class="flex-1 text-center">
-                        <div class="relative">
-                            <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
-                            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step1">1</div>
-                        </div>
-                        <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient details</p>
-                    </div>
-
-                    <div class="flex-1 text-center">
-                        <div class="relative">
-                            <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line2Left"></div>
-                            <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
-                            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step2">2</div>
-                        </div>
-                        <p class="mt-2 text-sm text-gray-400" id="step2Text">Select doctor</p>
-                    </div>
-
-                    <div class="flex-1 text-center">
-                        <div class="relative">
-                            <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line3Left"></div>
-                            <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
-                            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step3">3</div>
-                        </div>
-                        <p class="mt-2 text-sm text-gray-400" id="step3Text">Choose Date & Time</p>
-                    </div>
-                    <div class="flex-1 text-center">
-                        <div class="relative">
-                            <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4"></div>
-                            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step4">4</div>
-                        </div>
-                        <p class="mt-2 text-sm text-gray-400" id="step4Text">Confirmation</p>
-                    </div>
-                </div>
-            </div>
+        <div class="flex-1 text-center">
+          <div class="relative">
+            <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4"></div>
+            <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step4">4</div>
+          </div>
+          <p class="mt-2 text-sm text-gray-400" id="step4Text">Complete</p>
         </div>
+      </div>
+    </div>
+  </div>
 
         <section id="patientSection" class="section active">
             <div class="form-section">
@@ -418,9 +418,13 @@
                     </select>
                 </div>
 
-                <div id="doctorList" class="space-y-4"></div>
-                <div id="pagination" class="flex justify-between items-center mt-6">
-                    <button onclick="goBack()" class="bg-gray-500 text-white px-6 py-2 rounded bg-gray-600">Back</button>
+      
+      <div id="doctorList" class="space-y-4">
+       </div>
+      <div id="pagination" class="flex justify-between items-center mt-6">
+        <button onclick="goBack()" class="bg-gray-500 text-white px-6 py-2 rounded bg-gray-600" id="doctorBackBtn">
+          Back
+        </button>
 
                     <div class="flex items-center space-x-4">
                         <button
@@ -798,34 +802,50 @@
                 }
             }
 
-            /** Select doctor */
-            function selectDoctor(name, specialty, experience) {
-                localStorage.setItem("selectedDoctor", JSON.stringify({ name, specialty, experience }));
-                enableDoctorNext();
-                // visually highlight
-                document.querySelectorAll(".select-btn").forEach((b) => {
-                    b.classList.remove("bg-blue-500", "hover:bg-blue-600");
-                    b.classList.add("bg-black", "hover:bg-gray-800");
-                    if (b.dataset.doctor === name) {
-                        b.classList.remove("bg-black", "hover:bg-gray-800");
-                        b.classList.add("bg-blue-500", "hover:bg-blue-600");
-                    }
-                });
-            }
-            function enableDoctorNext() {
-                const btn = document.getElementById("doctorNextBtn");
-                btn.disabled = false;
-                btn.classList.remove("bg-gray-400");
-                btn.classList.add("bg-blue-600");
-            }
+    function selectDoctor(name, specialty, experience) {
+      
+      const doctorData = {
+        name: name,
+        specialty: specialty,
+        experience: experience
+      };
+      localStorage.setItem('selectedDoctor', JSON.stringify(doctorData));
+      
+      // Check if we're in edit mode
+      const isEditMode = getQueryParam('edit') === '1';
+      
+      if (isEditMode) {
+        // In edit mode, auto-advance to date/time section
+        goToDateTimeSection();
+      } else {
+        // Normal mode - enable next button
+        document.getElementById('doctorNextBtn').disabled = false;
+        document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
+        document.getElementById('doctorNextBtn').classList.add('bg-blue-600');
+      }
+      
+     
+      const selectButtons = document.querySelectorAll('.select-btn');
+      selectButtons.forEach(button => {
+        button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        button.classList.add('bg-black', 'hover:bg-gray-800');
+        
+        if (button.getAttribute('data-doctor') === name) {
+          button.classList.remove('bg-black', 'hover:bg-gray-800');
+          button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+        }
+      });
+    }
 
-            function showSection(sectionId) {
-                document.querySelectorAll(".section").forEach((section) => {
-                    section.classList.remove("active");
-                });
-
-                document.getElementById(sectionId).classList.add("active");
-            }
+   
+    function showSection(sectionId) {
+       document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+     
+      document.getElementById(sectionId).classList.add('active');
+    }
 
             function updateStepper(activeStep) {
                 for (let i = 1; i <= 4; i++) {
@@ -917,21 +937,23 @@
                 goToDoctorSection();
             });
 
-            document.getElementById("patientNextBtn").addEventListener("click", function () {
-                document.getElementById("patientForm").dispatchEvent(new Event("submit"));
-            });
+    document.getElementById('patientNextBtn').addEventListener('click', function() {
+      document.getElementById('patientForm').dispatchEvent(new Event('submit'));
+    });
 
-            function goToDoctorSection() {
-                showSection("doctorSection");
-                updateStepper(2);
-
-                const line1 = document.getElementById("line1");
-                if (line1) {
-                    line1.className = "absolute top-5 left-1/2 w-full h-1 bg-blue-600";
-                }
-
-                displayDoctors();
-            }
+   
+    function goToDoctorSection() {
+      showSection('doctorSection');
+      updateStepper(1);
+      
+     
+      const line1 = document.getElementById('line1');
+      if (line1) {
+        line1.className = 'absolute top-5 left-1/2 w-full h-1 bg-blue-600';
+      }
+      
+      displayDoctors();
+    }
 
             function goBack() {
                 const currentSection = document.querySelector(".section.active").id;
@@ -961,18 +983,19 @@
                 }
             }
 
-            function goToDateTimeSection() {
-                showSection("dateTimeSection");
-                updateStepper(3);
-                initializeDateTime();
-            }
+    function goToDateTimeSection() {
+      showSection('dateTimeSection');
+      updateStepper(2);
+      initializeDateTime();
+    }
 
-            function checkPatientForm() {
-                const name = document.getElementById("patient-name").value.trim();
-                const age = document.getElementById("age").value;
-                const gender = document.getElementById("patient-gender").value;
-                const blood = document.getElementById("blood-group").value;
-                const contact = document.getElementById("contact-number").value;
+    
+    function checkPatientForm() {
+      const name = document.getElementById('patient-name').value.trim();
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('patient-gender').value;
+      const blood = document.getElementById('blood-group').value;
+      const contact = document.getElementById('contact-number').value;
 
                 const nextButton = document.getElementById("patientNextBtn");
 
@@ -1142,81 +1165,97 @@
                 return true;
             }
 
-            function renderCalendar(date) {
-                const monthLabel = document.getElementById("monthLabel");
-                const daysContainer = document.getElementById("daysContainer");
-                const dayNames = document.getElementById("dayNames");
+    function renderCalendar(date) {
+      const monthLabel = document.getElementById('monthLabel');
+      const daysContainer = document.getElementById('daysContainer');
+      const dayNames = document.getElementById('dayNames');
+      
 
-                const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-                dayNames.innerHTML = days.map((d) => `<div class="text-center font-medium">${d}</div>`).join("");
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayNames.innerHTML = days.map(d => `<div class="text-center font-medium">${d}</div>`).join('');
+      
+    
+      daysContainer.innerHTML = '';
+      
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      
+      const monthName = date.toLocaleString('default', { month: 'long' });
+      monthLabel.textContent = `${monthName} ${year}`;
+      
+      
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      
+      for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'h-10';
+        daysContainer.appendChild(emptyDay);
+      }
+      
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-                daysContainer.innerHTML = "";
+      
+      const lastAvailableMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
+      
+      const isAvailableMonth = (thisDate) => {
+        return thisDate >= today && thisDate <= lastAvailableMonth;
+      };
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.textContent = day;
+        
+        const thisDate = new Date(year, month, day);
+        thisDate.setHours(0, 0, 0, 0);
+        const dateString = formatDateString(thisDate);
+        
+        const isPast = thisDate < today;
+        const isUnavailable = selectedDoctor && 
+          doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
+        const isWithinBookingWindow = isAvailableMonth(thisDate);
+        const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
+        
+        // NEW: Disable today if all slots are past
+        let isTodayAllSlotsPast = false;
+        if (
+          selectedDoctor &&
+          thisDate.getTime() === today.getTime()
+        ) {
+          const slots = doctorTimeSlots[selectedDoctor.name] || [];
+          isTodayAllSlotsPast = slots.every(slot => isTimeSlotPast(slot));
+        }
+        
+        let className = 'calendar-day h-10 flex items-center justify-center rounded-full font-medium ';
+        
+        if (isPast || isUnavailable || !isWithinBookingWindow || isTodayAllSlotsPast) {
+          if (isFutureMonth) {
+            className += 'bg-gray-50 text-gray-400 cursor-not-allowed';
+          } else if (isUnavailable) {
+            className += 'bg-red-100 text-gray-600 cursor-not-allowed';
+          } else if (isPast || isTodayAllSlotsPast) {
+            className += 'text-gray-350 cursor-not-allowed opacity-40';
+          } else {
+            className += 'text-gray-400 cursor-not-allowed';
+          }
+        } else {
+          className += 'bg-green-100 text-gray-800 cursor-pointer hover:bg-green-200';
+          dayDiv.addEventListener('click', () => selectDate(dateString, dayDiv));
+        }
+        
+        if (selectedDate === dateString) {
+          className += ' selected bg-green-500 text-white hover:bg-green-600';
+        }
+        
+        dayDiv.className = className;
+        dayDiv.setAttribute('data-date', dateString);
+        daysContainer.appendChild(dayDiv);
+      }
+    }
 
-                const year = date.getFullYear();
-                const month = date.getMonth();
-
-                const monthName = date.toLocaleString("default", { month: "long" });
-                monthLabel.textContent = `${monthName} ${year}`;
-
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                for (let i = 0; i < firstDay; i++) {
-                    const emptyDay = document.createElement("div");
-                    emptyDay.className = "h-10";
-                    daysContainer.appendChild(emptyDay);
-                }
-
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                const lastAvailableMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
-
-                const isAvailableMonth = (thisDate) => {
-                    return thisDate >= today && thisDate <= lastAvailableMonth;
-                };
-
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dayDiv = document.createElement("div");
-                    dayDiv.textContent = day;
-
-                    const thisDate = new Date(year, month, day);
-                    thisDate.setHours(0, 0, 0, 0);
-                    const dateString = formatDateString(thisDate);
-
-                    const isPast = thisDate < today;
-                    const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
-                    const isWithinBookingWindow = isAvailableMonth(thisDate);
-                    const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
-
-                    let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
-
-                    if (isPast || isUnavailable || !isWithinBookingWindow) {
-                        if (isFutureMonth) {
-                            className += "bg-gray-50 text-gray-400 cursor-not-allowed";
-                        } else if (isUnavailable) {
-                            className += "bg-red-100 text-gray-600 cursor-not-allowed";
-                        } else if (isPast) {
-                            className += "text-gray-350 cursor-not-allowed opacity-40";
-                        } else {
-                            className += "text-gray-400 cursor-not-allowed";
-                        }
-                    } else {
-                        className += "bg-green-100 text-gray-800 cursor-pointer hover:bg-green-200";
-                        dayDiv.addEventListener("click", () => selectDate(dateString, dayDiv));
-                    }
-
-                    if (selectedDate === dateString) {
-                        className += " selected bg-green-500 text-white hover:bg-green-600";
-                    }
-
-                    dayDiv.className = className;
-                    dayDiv.setAttribute("data-date", dateString);
-                    daysContainer.appendChild(dayDiv);
-                }
-            }
-
-            const bookedSlotsCache = new Map();
+ 
+    const bookedSlotsCache = new Map();
 
             async function getBookedSlots(doctorName, date) {
                 const cacheKey = `${doctorName}-${date}`;
@@ -1460,40 +1499,40 @@
                 updateStepper(2);
             }
 
-            function goToConfirmation() {
-                if (selectedDate && selectedTime) {
-                    const appointmentData = {
-                        date: selectedDate,
-                        time: selectedTime,
-                    };
-                    localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+    function goToConfirmation() {
+      if (selectedDate && selectedTime) {
+        const appointmentData = {
+          date: selectedDate,
+          time: selectedTime
+        };
+        localStorage.setItem('appointmentData', JSON.stringify(appointmentData));
+        
+        showSection('confirmationSection');
+        updateStepper(3);
+        initializeConfirmation();
+      }
+    }
 
-                    showSection("confirmationSection");
-                    updateStepper(4);
-                    initializeConfirmation();
-                }
-            }
-
-            function goBackToDateTime() {
-                showSection("dateTimeSection");
-                updateStepper(3);
-
-                // Restore the previously selected date and time
-                const appointmentData = JSON.parse(localStorage.getItem("appointmentData") || "{}");
-                if (appointmentData.date && appointmentData.time) {
-                    selectedDate = appointmentData.date;
-                    selectedTime = appointmentData.time;
-
-                    // Re-render the calendar with the selected date
-                    const [month, day, year] = selectedDate.split("/");
-                    currentDate = new Date(year, month - 1, day);
-                    renderCalendar(currentDate);
-                    updateMonthNavigation();
-
-                    // Update time slots to show the selected time
-                    updateTimeSlots();
-                }
-            }
+    function goBackToDateTime() {
+      showSection('dateTimeSection');
+      updateStepper(2);
+      
+      // Restore the previously selected date and time
+      const appointmentData = JSON.parse(localStorage.getItem('appointmentData') || '{}');
+      if (appointmentData.date && appointmentData.time) {
+        selectedDate = appointmentData.date;
+        selectedTime = appointmentData.time;
+        
+        // Re-render the calendar with the selected date
+        const [month, day, year] = selectedDate.split('/');
+        currentDate = new Date(year, month - 1, day);
+        renderCalendar(currentDate);
+        updateMonthNavigation();
+        
+        // Update time slots to show the selected time
+        updateTimeSlots();
+      }
+    }
 
             async function confirmBooking() {
                 try {
@@ -1694,73 +1733,104 @@
                 );
             }
 
-            // Initialize the form with patient data when DOM is ready
-            document.addEventListener("DOMContentLoaded", () => {
-                if (isEditMode && editData) {
-                    // Pre-fill patient form fields
-                    const patientData = editData.patientData;
-                    if (patientData) {
-                        console.log("Setting patient data in edit mode:", patientData);
-
-                        // Function to populate form fields
-                        const populateFormFields = () => {
-                            const nameField = document.getElementById("patient-name");
-                            const ageField = document.getElementById("age");
-                            const genderField = document.getElementById("patient-gender");
-                            const bloodField = document.getElementById("blood-group");
-                            const contactField = document.getElementById("contact-number");
-
-                            console.log("Form fields found:", {
-                                nameField: !!nameField,
-                                ageField: !!ageField,
-                                genderField: !!genderField,
-                                bloodField: !!bloodField,
-                                contactField: !!contactField,
-                            });
-
-                            if (nameField) nameField.value = patientData.name || "";
-                            if (ageField) {
-                                let ageValue = patientData.age;
-                                // If age is a number, convert to string
-                                if (typeof ageValue === "number") ageValue = String(ageValue);
-                                // If age is '100+ years', set to '100', if 'Above 100 years', set to '101'
-                                if (ageValue === "100+ years") ageValue = "100";
-                                if (ageValue === "Above 100 years") ageValue = "101";
-                                // If age is like '25 years', extract the number
-                                if (typeof ageValue === "string" && ageValue.endsWith(" years")) {
-                                    ageValue = ageValue.replace(" years", "");
-                                }
-                                // If not found in options, set to ''
-                                if (![...ageField.options].some((opt) => opt.value === ageValue)) ageValue = "";
-                                ageField.value = ageValue;
-                            }
-                            if (genderField) genderField.value = patientData.gender || "";
-                            if (bloodField) bloodField.value = patientData.blood || "";
-                            if (contactField) contactField.value = patientData.contact || "";
-
-                            // Enable the next button since we have data
-                            const nextBtn = document.getElementById("patientNextBtn");
-                            if (nextBtn) {
-                                nextBtn.disabled = false;
-                                nextBtn.classList.remove("bg-gray-400");
-                                nextBtn.classList.add("bg-blue-600");
-                            }
-                        };
-
-                        // Try to populate immediately
-                        populateFormFields();
-
-                        // Also try after a short delay to ensure everything is loaded
-                        setTimeout(populateFormFields, 200);
-                        setTimeout(populateFormFields, 500);
-                    }
-
-                    // Skip to select doctor step
-                    showSection("doctorSection");
-                    updateStepper(2);
-                    displayDoctors();
-                }
+    // Initialize the form with patient data when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      if (isEditMode && editData) {
+        // Update page title for edit mode
+        const pageTitle = document.getElementById('pageTitle');
+        if (pageTitle) {
+          pageTitle.textContent = 'Edit Appointment';
+        }
+        
+        // Hide stepper for edit mode
+        const stepperContainer = document.getElementById('stepperContainer');
+        if (stepperContainer) {
+          stepperContainer.style.display = 'none';
+        }
+        
+        // Pre-fill patient form fields
+        const patientData = editData.patientData;
+        if (patientData) {
+          console.log('Setting patient data in edit mode:', patientData);
+          
+          // Function to populate form fields
+          const populateFormFields = () => {
+            const nameField = document.getElementById('patient-name');
+            const ageField = document.getElementById('age');
+            const genderField = document.getElementById('patient-gender');
+            const bloodField = document.getElementById('blood-group');
+            const contactField = document.getElementById('contact-number');
+            
+            console.log('Form fields found:', {
+              nameField: !!nameField,
+              ageField: !!ageField,
+              genderField: !!genderField,
+              bloodField: !!bloodField,
+              contactField: !!contactField
             });
+            
+            if (nameField) nameField.value = patientData.name || '';
+            if (ageField) {
+              let ageValue = patientData.age;
+              // If age is a number, convert to string
+              if (typeof ageValue === 'number') ageValue = String(ageValue);
+              // If age is '100+ years', set to '100', if 'Above 100 years', set to '101'
+              if (ageValue === '100+ years') ageValue = '100';
+              if (ageValue === 'Above 100 years') ageValue = '101';
+              // If age is like '25 years', extract the number
+              if (typeof ageValue === 'string' && ageValue.endsWith(' years')) {
+                ageValue = ageValue.replace(' years', '');
+              }
+              // If not found in options, set to ''
+              if (![...ageField.options].some(opt => opt.value === ageValue)) ageValue = '';
+              ageField.value = ageValue;
+            }
+            if (genderField) genderField.value = patientData.gender || '';
+            if (bloodField) bloodField.value = patientData.blood || '';
+            if (contactField) contactField.value = patientData.contact || '';
+            
+            // Enable the next button since we have data
+            const nextBtn = document.getElementById('patientNextBtn');
+            if (nextBtn) {
+              nextBtn.disabled = false;
+              nextBtn.classList.remove('bg-gray-400');
+              nextBtn.classList.add('bg-blue-600');
+            }
+          };
+          
+          // Try to populate immediately
+          populateFormFields();
+          
+          // Also try after a short delay to ensure everything is loaded
+          setTimeout(populateFormFields, 200);
+          setTimeout(populateFormFields, 500);
+        }
+
+        // Skip to select doctor step
+        showSection('doctorSection');
+        displayDoctors();
+        
+        // Hide back and next buttons in doctor section for edit mode
+        const doctorBackBtn = document.getElementById('doctorBackBtn');
+        const doctorNextBtn = document.getElementById('doctorNextBtn');
+        if (doctorBackBtn) doctorBackBtn.style.display = 'none';
+        if (doctorNextBtn) doctorNextBtn.style.display = 'none';
+        
+        // Pre-select the current doctor
+        setTimeout(() => {
+          const doctorData = editData.doctorData;
+          if (doctorData && doctorData.name) {
+            const doctorButtons = document.querySelectorAll('.select-btn');
+            doctorButtons.forEach(button => {
+              if (button.getAttribute('data-doctor') === doctorData.name) {
+                button.classList.remove('bg-black', 'hover:bg-gray-800');
+                button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+              }
+            });
+          }
+        }, 1000);
+      }
+    });
 
             // Cancel Modal Logic
             function openCancelModal(app) {

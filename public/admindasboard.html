@@ -12,14 +12,23 @@
       document.head.appendChild(script);
     }
   </script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
     .tab-active {
       background-color: white;
-      color: black;
+      color: #1f2937; 
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+      border-radius: 0.375rem; 
     }
     .tab-inactive {
-      background-color: #e5e7eb;
-      color: #4b5563;
+      background-color: transparent;
+      color: #4b5563; 
+    }
+    .tab-inactive:hover {
+      color: #1f2937; 
+      background-color: rgba(229, 231, 235, 0.5); 
+      border-radius: 0.375rem; 
     }
     .doctor-row {
       cursor: pointer;
@@ -56,12 +65,152 @@
     #cancelModalOverlay {
       z-index: 50;
     }
+   
+    .pika-single {
+      background: rgba(80, 80, 100, 0.85) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+      border: none !important;
+      font-family: inherit !important;
+      color: #fff !important;
+      padding: 0 !important;
+      margin-top: 10px !important;
+    }
+
+    .pika-single .pika-title {
+      background: rgba(180,180,190,0.85) !important;
+      border-radius: 16px 16px 0 0 !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      font-size: 1.3rem !important;
+      padding: 0.7rem 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+      margin-bottom: 0 !important;
+    }
+
+    .pika-single .pika-label {
+      background: transparent !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      font-size: 1.2rem !important;
+      border: none !important;
+      pointer-events: none !important;
+    }
+
+    .pika-single .pika-prev, .pika-single .pika-next {
+      background: transparent !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 50% !important;
+      width: 36px !important;
+      height: 36px !important;
+      font-size: 1.7rem !important;
+      line-height: 36px !important;
+      margin: 0 8px !important;
+      transition: background 0.2s !important;
+      opacity: 0.7 !important;
+    }
+    .pika-single .pika-prev:hover, .pika-single .pika-next:hover {
+      background: rgba(255,255,255,0.12) !important;
+      opacity: 1 !important;
+    }
+
+    .pika-single .pika-table {
+      background: transparent !important;
+      border-collapse: separate !important;
+      border-spacing: 0 4px !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
+
+    .pika-single .pika-table th {
+      color: #3de0e0 !important;
+      font-weight: 600 !important;
+      font-size: 1.1rem !important;
+      background: transparent !important;
+      padding: 0.4em 0 !important;
+      letter-spacing: 0.05em !important;
+    }
+
+    .pika-single .pika-table th:nth-child(1) { color: #3de0e0 !important; } 
+    .pika-single .pika-table th:nth-child(2) { color: #3de0a0 !important; } 
+    .pika-single .pika-table th:nth-child(3) { color: #3dc0e0 !important; } 
+    .pika-single .pika-table th:nth-child(4) { color: #3da0e0 !important; } 
+    .pika-single .pika-table th:nth-child(5) { color: #3d80e0 !important; } 
+    .pika-single .pika-table th:nth-child(6) { color: #3d60e0 !important; } 
+    .pika-single .pika-table th:nth-child(7) { color: #3d40e0 !important; }  
+
+    .pika-single .pika-table td {
+      text-align: center !important;
+      padding: 0.3em 0 !important;
+    }
+
+    .pika-single .pika-button {
+      border: none !important;
+      background: none !important;
+      color: #fff !important;
+      font-weight: 500 !important;
+      border-radius: 50% !important;
+      width: 2.2em !important;
+      height: 2.2em !important;
+      line-height: 2.2em !important;
+      font-size: 1.1em !important;
+      transition: background 0.2s, color 0.2s !important;
+      margin: 0 auto !important;
+      display: inline-block !important;
+    }
+
+    .pika-single .pika-button:hover {
+      background: #3de0e0 !important;
+      color: #222 !important;
+    }
+
+    .pika-single .pika-table td.is-selected .pika-button,
+    .pika-single .pika-table td .pika-button:active {
+      background: #3de0e0 !important;
+      color: #222 !important;
+      box-shadow: 0 2px 8px rgba(61,224,224,0.2) !important;
+    }
+
+    .pika-single .pika-table td.is-today .pika-button {
+      border: 2px solid #fff !important;
+    }
+
+    .pika-single .pika-select-month,
+    .pika-single .pika-select-year {
+      display: none !important;
+    }
+
+   
+    .pika-single .pika-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .pika-single .pika-label {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #fff;
+      background: transparent !important;
+      border: none !important;
+      pointer-events: none;
+    }
+    body {
+      overflow-y: hidden;
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
 
-<nav class="bg-white shadow pl-[120px] py-4">
-  <div class="text-blue-600 font-bold text-xl">MediCare</div>
+<nav class="bg-white shadow py-4 px-8">
+  <div class="flex justify-between items-center w-full">
+    <div class="text-blue-600 font-bold text-xl">MediCare</div>
+    <button id="signOutBtn" class="bg-red-500 hover:bg-red-600 text-white rounded px-4 py-2 rounded">Sign Out</button>
+  </div>
 </nav>
 
 <div class="p-8">
@@ -73,96 +222,153 @@
     <div class="flex items-center gap-4 px-20">
       <div class="relative">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
-        <input type="text" id="searchInput" placeholder="Search" class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
+        <input type="text" id="searchInput" placeholder="Search " class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
       </div>
-      <!-- Date Label and Custom Calendar Start -->
-      <div class="relative" id="calendarDropdownWrapper">
-        <label id="dateLabel" class="cursor-pointer px-4 py-2 bg-white rounded shadow border border-gray-300 font-semibold text-gray-700 hover:bg-gray-50 transition select-none">
-          <span id="dateLabelText"></span>
-          <svg class="inline ml-2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-        </label>
-        <div id="customCalendarContainer" class="absolute left-0 mt-2 z-30 bg-white rounded-lg shadow-lg" style="display:none; min-width: 260px;">
-          <div id="calendarHeader" class="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-blue-300 to-indigo-400 rounded-t-lg">
-            <button id="prevMonthBtn" class="text-2xl font-bold text-gray-600 hover:text-black">&#8592;</button>
-            <span id="calendarMonthYear" class="font-semibold text-lg text-gray-700"></span>
-            <button id="nextMonthBtn" class="text-2xl font-bold text-gray-600 hover:text-black">&#8594;</button>
-          </div>
-          <div id="calendarBody" class="bg-white rounded-b-lg shadow p-4"></div>
-        </div>
-        <input type="hidden" id="datePicker" />
+      <div class="flex items-center gap-2">
+        <label for="datePicker" class="font-semibold"></label>
+        <input type="text" id="datePicker" class="px-8 py-0 border border-gray-300" readonly />
       </div>
-      <!-- Date Label and Custom Calendar End -->
     </div>
   </div>
 
   <!-- Tabs -->
-  <div class="flex justify-center mt-6 mb-6">
-    <button class="tab px-[245px] py-2 font-semibold tab-active" data-tab="appointmentsTab">Appointments</button>
-    <button class="tab px-[245px] py-2 font-semibold tab-inactive" data-tab="doctorsTab">Doctors</button>
-    <button class="tab px-[245px] py-2 font-semibold tab-inactive" data-tab="patientsTab">Patients</button>
-  </div>
-  <div id="appointmentsTab" class="tab-content px-20">
-    <div class="bg-white p-6 rounded-lg shadow relative">
-      <div class="flex justify-between items-center mb-4">
-        <div>
-          <h3 class="text-xl font-semibold">Today's Appointments</h3>
-          <p class="text-gray-500" id="selectedDate">No date selected</p>
-        </div>
-      
-  <a href="appointment.html"><button id="addBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Appointment</button></a>
-</div>
-      <div id="appointmentsList">
-      </div>
-      </div>
+  <div class="px-20 mt-6">
+    <div class="bg-gray-100 p-1 rounded-lg flex items-center mb-6">
+      <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active" data-tab="appointmentsTab">Appointments</button>
+      <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
+      <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="patientsTab">Patients</button>
     </div>
   </div>
-  <div id="doctorsTab" class="tab-content px-20 hidden">
+
+  <!-- Main Content Container -->
+  <div class="px-20">
     <div class="bg-white p-6 rounded-lg shadow">
-      <div class="flex justify-between items-center mb-4">
-        <div>
-          <h3 class="text-xl font-semibold">Doctors</h3>
-          <p class="text-gray-500">Manage doctor profiles and schedules</p>
+      <!-- Appointments Content -->
+      <div id="appointmentsTab" class="tab-content">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h3 class="text-xl font-semibold">Today's Appointments</h3>
+            <p class="text-gray-500" id="selectedDate">No date selected</p>
+          </div>
+          <a href="appointment.html"><button id="addBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Appointment</button></a>
         </div>
-        <button class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
-      </div>
-      <table class="w-full table-auto text-left">
-        <thead>
-          <tr class="bg-gray-0">
-            <th class="px-4 py-2">Doctor</th>
-            <th class="px-4 py-2">Specialty</th>
-            <th class="px-4 py-2">Today's Appointments</th>
-            <th class="px-4 py-2">Availability</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-
-       <tbody id="doctorsBody"></tbody>
-
-      </table>
-    </div>
-  </div>
-</div>
-  <div id="patientsTab" class="tab-content px-20 hidden">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <div class="flex justify-between items-center mb-4">
-        <div>
-          <h3 class="text-xl font-semibold">Patients</h3>
-          <p class="text-gray-500">View patient appointment details</p>
+        <div id="appointmentsList">
         </div>
       </div>
-       <table class="w-full table-auto text-left">
-        <thead>
-          <tr class="bg-gray-0">
-            <th class="px-4 py-2">Patient</th>
-            <th class="px-4 py-2">Age/Gender</th>
-            <th class="px-4 py-2">Blood Group</th>
-            <th class="px-4 py-2">Contact</th>
-            <th class="px-4 py-2">Appointment Date</th>
-          </tr>
-        </thead>
-        <tbody id="patientsList">
-        </tbody>
-      </table>
+
+      <!-- Doctors Content -->
+      <div id="doctorsTab" class="tab-content hidden">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h3 class="text-xl font-semibold">Doctors</h3>
+            <p class="text-gray-500">Manage doctor profiles and schedules</p>
+          </div>
+          <button class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
+        </div>
+        <table class="w-full table-auto text-left">
+          <thead>
+            <tr class="bg-gray-0">
+              <th class="px-4 py-2">Doctor</th>
+              <th class="px-4 py-2">Specialty</th>
+              <th class="px-4 py-2">Today's Appointments</th>
+              <th class="px-4 py-2">Availability</th>
+              <th class="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t">
+              <td class="px-6 py-2 font-semibold">Dr. Sarah Johnson</td>
+              <td class="px-6 py-2">Cardiology</td>
+              <td class="px-6 py-2">8</td>
+              <td class="px-6 py-2">10:00 AM - 5:00 PM</td>
+              <td class="px-4 py-2 relative">
+                <button class="action-btn text-xl">...</button>
+                <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+                </div>
+              </td>
+            </tr>
+             <tr>
+                <td class="px-6 py-2 font-medium">Dr.Kiran</td>
+                <td class="px-6 py-2">Pediatrics</td>
+                <td class="px-6 py-2">5</td>
+                <td class="px-6 py-2">8:30 AM - 4:30 PM</td>
+                 <td class="px-4 py-2 relative">
+                <button class="action-btn text-xl">...</button>
+                <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+                </div>
+                 <tr>
+                <td class="px-6 py-2 font-medium">Dr.Akhila</td>
+                <td class="px-6 py-2">Neurology</td>
+                <td class="px-6 py-2">3</td>
+                <td class="px-6 py-2">8:00 AM - 4:00 PM</td>
+             <td class="px-4 py-2 relative">
+                <button class="action-btn text-xl">...</button>
+                <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+                </div>
+                <tr>
+                <td class="px-6 py-2 font-medium">Dr.Vinod</td>
+                <td class="px-6 py-2">Orthopedics</td>
+                <td class="px-6 py-2">4</td>
+                <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+                <td class="px-4 py-2 relative">
+                <button class="action-btn text-xl">...</button>
+                <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+                </div>
+                <tr>
+                <td class="px-6 py-2 font-medium">Dr.Srivani</td>
+                <td class="px-6 py-2">Gynecologist</td>
+                <td class="px-6 py-2">4</td>
+                <td class="px-6 py-2">9:00 AM - 5:00 PM</td>
+                <td class="px-4 py-2 relative">
+                <button class="action-btn text-xl">...</button>
+                <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Profile</a>
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">View Availability</a>
+                  <a href="#" class="block px-2 py-0 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+                </div>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Patients Content -->
+      <div id="patientsTab" class="tab-content hidden">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h3 class="text-xl font-semibold">Patients List</h3>
+            <p class="text-gray-500">View and manage patient records</p>
+          </div>
+        </div>
+        <!-- Header Row -->
+        <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">
+          <div class="col-span-3">Patient</div>
+          <div class="col-span-2">Age/Gender</div>
+          <div class="col-span-1">Blood</div>
+          <div class="col-span-2">Contact</div>
+          <div class="col-span-2">Upcoming Date</div>
+          <div class="col-span-2">Last Visit</div>
+        </div>
+        <!-- Patients List Container -->
+        <div id="patientsList" class="space-y-2 mt-2">
+          <!-- Patient items will be injected here by JavaScript -->
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -265,29 +471,95 @@
 
 <!-- View Details Modal -->
 <div id="viewDetailsModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-  <div id="viewDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+  <div id="viewDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl relative">
     <button id="closeViewDetailsModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
-    <h2 class="text-xl font-bold mb-6">Appointment Details</h2>
-    <div class="space-y-4">
-      <div>
-        <div class="text-gray-500 text-sm mb-1">Patient Name</div>
-        <div class="font-semibold text-lg" id="viewDetailsPatient"></div>
-      </div>
-      <div>
-        <div class="text-gray-500 text-sm mb-1">Doctor Name</div>
-        <div class="font-semibold text-lg" id="viewDetailsDoctor"></div>
-      </div>
-      <div>
-        <div class="text-gray-500 text-sm mb-1">Date</div>
-        <div class="font-semibold text-lg" id="viewDetailsDate"></div>
-      </div>
-      <div>
-        <div class="text-gray-500 text-sm mb-1">Time</div>
-        <div class="font-semibold text-lg" id="viewDetailsTime"></div>
+    
+    <!-- Card Header -->
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Appointment Details</h2>
+      <div class="mt-4 text-lg font-semibold text-blue-600" id="viewDetailsPatient"></div>
+      <div class="mt-2 text-md font-medium text-gray-600" id="viewDetailsDoctor"></div>
+      <div class="mt-2 text-sm text-gray-500" id="viewDetailsDateTime"></div>
+    </div>
+
+    <!-- Card Content -->
+    <div class="bg-gray-50 rounded-lg p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Doctor Information -->
+        <div class="border rounded-lg p-4 bg-white">
+          <h3 class="text-gray-800 font-semibold text-lg mb-3">Doctor Information</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Name:</span>
+              <span id="viewDetailsDoctorName" class="font-medium text-gray-900"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Specialty:</span>
+              <span id="viewDetailsDoctorSpecialty" class="font-medium text-gray-900"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appointment Information -->
+        <div class="border rounded-lg p-4 bg-white">
+          <h3 class="text-gray-800 font-semibold text-lg mb-3">Appointment Information</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Date:</span>
+              <span id="viewDetailsDate" class="font-medium text-gray-900"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Time:</span>
+              <span id="viewDetailsTime" class="font-medium text-gray-900"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Status:</span>
+              <span id="viewDetailsStatus" class="font-medium text-gray-900"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Details -->
+        <div class="border rounded-lg p-4 bg-white">
+          <h3 class="text-gray-800 font-semibold text-lg mb-3">Personal Details</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Name:</span>
+              <span id="viewDetailsPatientName" class="font-medium text-gray-900"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Age:</span>
+              <span id="viewDetailsAge" class="font-medium text-gray-900"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Gender:</span>
+              <span id="viewDetailsGender" class="font-medium text-gray-900"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="border rounded-lg p-4 bg-white">
+          <h3 class="text-gray-800 font-semibold text-lg mb-3">Contact Information</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Phone:</span>
+              <span id="viewDetailsContact" class="font-medium text-gray-900"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-500">Blood Group:</span>
+              <span id="viewDetailsBlood" class="font-medium text-gray-900"></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Card Footer -->
     <div class="flex justify-end mt-6">
-      <button id="okViewDetailsModal" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold">OK</button>
+      <button id="okViewDetailsModal" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">
+        Close
+      </button>
     </div>
   </div>
 </div>
@@ -342,33 +614,7 @@
   </div>
 </div>
 
-<!-- Add Doctor Modal -->
-<div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-2xl shadow-xl p-10 w-full max-w-lg relative flex flex-col items-center" style="box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);">
-    <button id="closeAddDoctorModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
-    <h2 class="text-3xl font-bold mb-8 w-full text-left">Add Doctor</h2>
-    <form id="addDoctorForm" class="w-full flex flex-col gap-6">
-      <div>
-        <label class="block text-xl font-semibold mb-2">Doctor</label>
-        <input type="text" id="addDoctorName" name="doctor" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200" required />
-      </div>
-      <div class="flex gap-4">
-        <div class="flex-1">
-          <label class="block text-xl font-semibold mb-2">Specialty</label>
-          <input type="text" id="addDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200" required />
-        </div>
-        <div class="flex-1">
-          <label class="block text-xl font-semibold mb-2">Availability</label>
-          <input type="text" id="addDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200" required />
-        </div>
-      </div>
-      <div class="flex justify-end mt-4">
-        <button type="submit" class="px-8 py-3 rounded-lg bg-blue-600 text-white text-xl font-bold shadow hover:bg-blue-700 transition">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
   const datePicker = document.getElementById("datePicker");
   const selectedDate = document.getElementById("selectedDate");
@@ -376,10 +622,34 @@
   const addBtn = document.getElementById("addBtn");
   const searchInput = document.getElementById("searchInput");
 
-  // Set today's date as default
-  const today = new Date().toISOString().split('T')[0];
-  datePicker.value = today;
-  selectedDate.textContent = new Date(today).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  // Initialize Flatpickr as a popup on the input
+  flatpickr("#datePicker", {
+    defaultDate: new Date(),
+    onChange: function(selectedDates, dateStr, instance) {
+      document.getElementById('datePicker').value = dateStr;
+      // Reset pagination when changing dates
+      currentAppointmentsPage = 1;
+      // Update dashboard as before
+      const formatted = selectedDates[0].toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('selectedDate').textContent = formatted;
+      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      const searchTerm = document.getElementById('searchInput').value.trim();
+      if (activeTab === 'appointmentsTab') {
+        renderAppointmentsList(dateStr, searchTerm);
+      } else if (activeTab === 'patientsTab') {
+        fetchAndDisplayPatients(dateStr, searchTerm);
+      }
+    }
+  });
+  // Set today's date as default in the input
+  const today = new Date();
+  document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+  document.getElementById('selectedDate').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   async function fetchAppointments(date, searchDoctorName = '') {
     try {
@@ -437,6 +707,11 @@
     }
   }
 
+  // Global variables for pagination
+  let currentAppointmentsPage = 1;
+  const appointmentsPerPage = 7;
+  let allAppointmentsData = [];
+
   async function renderAppointmentsList(date, filterDoctor = "") {
     try {
       appointmentsList.innerHTML = `
@@ -448,6 +723,17 @@
 
       const appointments = await fetchAppointments(date, filterDoctor);
       console.log('Appointments data:', appointments);
+      
+      // Store all appointments data for pagination
+      allAppointmentsData = appointments;
+      
+      // Ensure current page is valid after filtering
+      const maxPages = Math.ceil(appointments.length / appointmentsPerPage);
+      if (currentAppointmentsPage > maxPages && maxPages > 0) {
+        currentAppointmentsPage = maxPages;
+      } else if (maxPages === 0) {
+        currentAppointmentsPage = 1;
+      }
       
       if (!appointments || appointments.length === 0) {
         const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -472,6 +758,12 @@
         return;
       }
 
+      // Calculate pagination
+      const totalPages = Math.ceil(appointments.length / appointmentsPerPage);
+      const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
+      const endIndex = startIndex + appointmentsPerPage;
+      const currentPageAppointments = appointments.slice(startIndex, endIndex);
+
       // Table header
       let tableHTML = `
         <div class="overflow-x-auto">
@@ -489,11 +781,14 @@
       `;
 
       // Table rows
-      tableHTML += appointments.map((app, idx) => {
+      tableHTML += currentPageAppointments.map((app, idx) => {
         console.log('Processing appointment:', JSON.stringify(app, null, 2));
 
         // Get doctor name from the appointment data
         const doctorName = app.doctorData?.name || '';
+        
+        // Check if appointment is already canceled
+        const isCanceled = app.status === 'canceled';
 
         return `
           <tr class="border-b hover:bg-gray-50 transition-colors">
@@ -512,7 +807,9 @@
               </div>
             </td>
             <td class="px-4 py-3">
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${app.status === 'pending' ? 'bg-gray-200 text-gray-700' : 'bg-black text-white'}">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${app.status === 'pending' ? 'bg-gray-200 text-gray-700' : 
+                app.status === 'canceled' ? 'bg-red-200 text-red-700' : 
+                'bg-black text-white'}">
                 ${app.status ? app.status : 'confirmed'}
               </span>
             </td>
@@ -520,9 +817,9 @@
               <button class="action-btn text-xl focus:outline-none">...</button>
               <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
                 <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View Details</a>
-                <a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>
-                <a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>
-                <a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>
+                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ''}
+                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ''}
+                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ''}
               </div>
             </td>
           </tr>
@@ -530,6 +827,33 @@
       }).join('');
 
       tableHTML += `</tbody></table></div>`;
+
+      // Add pagination controls if needed
+      if (totalPages > 1) {
+        tableHTML += `
+          <div class="flex justify-between items-center mt-6 px-4">
+            <div class="text-sm text-gray-600">
+              Showing ${startIndex + 1} to ${Math.min(endIndex, appointments.length)} of ${appointments.length} appointments
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeAppointmentsPage(${currentAppointmentsPage - 1})" 
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
+                ${currentAppointmentsPage === 1 ? 'disabled' : ''}>
+                Previous
+              </button>
+              <span class="text-sm text-gray-600">
+                Page ${currentAppointmentsPage} of ${totalPages}
+              </span>
+              <button onclick="changeAppointmentsPage(${currentAppointmentsPage + 1})" 
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
+                ${currentAppointmentsPage === totalPages ? 'disabled' : ''}>
+                Next
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
       appointmentsList.innerHTML = tableHTML;
 
     } catch (error) {
@@ -546,27 +870,17 @@
     }
   }
 
-  // Handle date picker changes
-  datePicker.addEventListener("change", () => {
-    const date = datePicker.value;
-    const formatted = new Date(date).toLocaleDateString('en-US', { 
-      weekday: 'long',
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-    selectedDate.textContent = formatted;
-
-    // Determine which tab is active
-    const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
-    const searchTerm = searchInput.value.trim();
-
-    if (activeTab === 'appointmentsTab') {
-      renderAppointmentsList(date, searchTerm);
-    } else if (activeTab === 'patientsTab') {
-      fetchAndDisplayPatients(date, searchTerm);
+  // Function to change appointments page
+  function changeAppointmentsPage(newPage) {
+    if (newPage < 1 || newPage > Math.ceil(allAppointmentsData.length / appointmentsPerPage)) {
+      return;
     }
-  });
+    
+    currentAppointmentsPage = newPage;
+    const currentDate = datePicker.value;
+    const searchTerm = searchInput.value.trim();
+    renderAppointmentsList(currentDate, searchTerm);
+  }
 
   // Handle search input changes with debounce
   let searchTimeout;
@@ -577,6 +891,9 @@
       const searchTerm = searchInput.value.trim();
       console.log('Search term changed:', searchTerm);
       
+      // Reset pagination when searching
+      currentAppointmentsPage = 1;
+      
       // Determine which tab is active
       const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
       
@@ -585,10 +902,10 @@
       } else if (activeTab === 'patientsTab') {
         fetchAndDisplayPatients(currentDate, searchTerm);
       }
-    }, 300); // 300ms debounce
+    }, 300); 
   });
 
-  // Handle search input clear
+  
   searchInput.addEventListener("keyup", (e) => {
     if (e.key === "Escape") {
       searchInput.value = "";
@@ -603,13 +920,10 @@
     }
   });
 
-  // Initial render
+  
   renderAppointmentsList(today);
 
-  // Tab switch logic
-// Select all tab buttons
   
-// Select all tab buttons
 const tabs = document.querySelectorAll(".tab");
 const tabContents = document.querySelectorAll(".tab-content");
 
@@ -624,93 +938,148 @@ const tabContents = document.querySelectorAll(".tab-content");
       tabContents.forEach(c => c.classList.add("hidden"));
       document.getElementById(targetId).classList.remove("hidden");
 
+      // Reset pagination when switching to appointments tab
+      if (targetId === 'appointmentsTab') {
+        currentAppointmentsPage = 1;
+      }
+
       // Get current date and search term
       const date = datePicker.value;
       const searchTerm = searchInput.value.trim();
 
       // Update content based on active tab
-    if (targetId === 'appointmentsTab') {
-  renderAppointmentsList(date, searchTerm);
-} else if (targetId === 'patientsTab') {
-  fetchAndDisplayPatients(date, searchTerm);
-} else if (targetId === 'doctorsTab') {
-  renderDoctorsTable();   // ← add THIS line
-}
-
+      if (targetId === 'appointmentsTab') {
+        renderAppointmentsList(date, searchTerm);
+      } else if (targetId === 'patientsTab') {
+        fetchAndDisplayPatients(date, searchTerm);
+      }
     });
   });
-
 
   // Update the fetchAndDisplayPatients function to handle date filtering
   async function fetchAndDisplayPatients(date = null, searchTerm = '') {
     try {
       const response = await fetch('/api/confirmations');
-      if (!response.ok) {
-        throw new Error('Failed to fetch patient data');
-      }
+      if (!response.ok) throw new Error('Failed to fetch patient data');
       
-      const appointments = await response.json();
-      const patientsList = document.getElementById('patientsList');
-      
-      // Format the date to match the API's expected format (MM/DD/YYYY)
-      const formattedDate = date ? new Date(date).toLocaleDateString('en-US', {
+      const allAppointments = await response.json();
+      const patientsListContainer = document.getElementById('patientsList');
+      patientsListContainer.innerHTML = '<div class="text-center p-4">Loading patients...</div>';
+
+      const formattedSelectedDate = date ? new Date(date).toLocaleDateString('en-US', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric'
       }) : null;
-
-      // Filter appointments based on date and search term
-      const filteredAppointments = appointments.filter(app => {
-        if (!app.patientData) return false;
-        
-        const matchesDate = !formattedDate || (app.dateData && app.dateData.date === formattedDate);
-        const matchesSearch = !searchTerm || 
-          (app.patientData.name && app.patientData.name.toLowerCase().includes(searchTerm.toLowerCase()));
-        return matchesDate && matchesSearch;
+      
+      // 1. Group all non-canceled appointments by patient using a composite key (name + contact).
+      const patientsMap = new Map();
+      allAppointments.forEach(app => {
+        // Ignore appointments that are canceled or have no patient name
+        if (!app.patientData || !app.patientData.name || app.status === 'canceled') {
+          return;
+        }
+        // Use a combination of name and contact for a more reliable unique key
+        const patientKey = `${app.patientData.name}-${app.patientData.contact}`;
+        if (!patientsMap.has(patientKey)) {
+          patientsMap.set(patientKey, {
+            details: app.patientData,
+            appointments: []
+          });
+        }
+        if (app.dateData && app.dateData.date) {
+          patientsMap.get(patientKey).appointments.push({
+            date: app.dateData.date,
+            status: app.status || 'confirmed'
+          });
+        }
       });
       
-      if (!filteredAppointments || filteredAppointments.length === 0) {
-        patientsList.innerHTML = `
-          <tr>
-            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-              ${formattedDate ? `No appointments found for ${formattedDate}` : 'No patient appointments found'}
-            </td>
-          </tr>
-        `;
+      // 2. Filter the list of unique patients based on search term AND the selected date.
+      const finalPatientList = [];
+      for (const [patientKey, patientData] of patientsMap.entries()) {
+        const patientName = patientData.details.name || '';
+        const matchesSearch = !searchTerm || patientName.toLowerCase().includes(searchTerm.toLowerCase());
+
+        // Date check: Only filter if a date is actually selected.
+        const hasAppointmentOnDate = formattedSelectedDate 
+          ? patientData.appointments.some(a => a.date === formattedSelectedDate)
+          : true; // If no date is selected, this is always true.
+        
+        if (matchesSearch && hasAppointmentOnDate) {
+          finalPatientList.push(patientData);
+        }
+      }
+
+      if (finalPatientList.length === 0) {
+        let message = 'No patients found';
+        if (searchTerm) message += ` for "${searchTerm}"`;
+        if (formattedSelectedDate) message += ` with appointments on ${new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
+        patientsListContainer.innerHTML = `<div class="text-center p-6 text-gray-500">${message}.</div>`;
         return;
       }
 
-      patientsList.innerHTML = filteredAppointments.map(app => `
-        <tr class="border-t hover:bg-gray-50">
-          <td class="px-6 py-2 font-semibold">${app.patientData?.name || 'N/A'}</td>
-          <td class="px-6 py-2">${app.patientData?.age || 'N/A'} / ${app.patientData?.gender || 'N/A'}</td>
-          <td class="px-6 py-2">${app.patientData?.blood || 'N/A'}</td>
-          <td class="px-6 py-2">${app.patientData?.contact || 'N/A'}</td>
-          <td class="px-6 py-2">${app.dateData?.date || 'N/A'} ${app.dateData?.time ? `at ${app.dateData.time}` : ''}</td>
-        </tr>
-      `).join('');
+      // 3. Calculate upcoming and last visit for each patient and build HTML
+      let patientsHTML = '';
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      finalPatientList.forEach(patient => {
+        const sortedAppointments = patient.appointments
+          .map(a => new Date(a.date))
+          .sort((a, b) => a - b);
+        
+        const futureAppointments = sortedAppointments.filter(d => d >= today);
+        const pastAppointments = sortedAppointments.filter(d => d < today);
+
+        const upcomingDate = futureAppointments.length > 0
+          ? futureAppointments[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          : '<span class="text-gray-400">N/A</span>';
+        
+        const lastVisit = pastAppointments.length > 0
+          ? pastAppointments[pastAppointments.length - 1].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          : '<span class="text-gray-400">N/A</span>';
+
+        patientsHTML += `
+          <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+            <!-- Patient -->
+            <div class="col-span-3 flex items-center">
+              <span class="font-semibold text-gray-800 px-3">${patient.details.name || 'N/A'}</span>
+            </div>
+            <!-- Age/Gender -->
+            <div class="col-span-2 text-gray-600">${patient.details.age || 'N/A'} / ${patient.details.gender ? patient.details.gender.charAt(0) : 'N/A'}</div>
+            <!-- Blood Group -->
+            <div class="col-span-1 text-gray-600">${patient.details.blood || 'N/A'}</div>
+            <!-- Contact -->
+            <div class="col-span-2 text-gray-600">${patient.details.contact || 'N/A'}</div>
+            <!-- Upcoming Date -->
+            <div class="col-span-2 text-gray-600">${upcomingDate}</div>
+            <!-- Last Visit -->
+            <div class="col-span-2 text-gray-600">${lastVisit}</div>
+          </div>
+        `;
+      });
+
+      patientsListContainer.innerHTML = patientsHTML;
+
     } catch (error) {
       console.error('Error fetching patient data:', error);
-      const patientsList = document.getElementById('patientsList');
-      patientsList.innerHTML = `
-        <tr>
-          <td colspan="5" class="px-6 py-4 text-center text-red-500">
-            Error loading patient data. Please try again later.
-          </td>
-        </tr>
+      document.getElementById('patientsList').innerHTML = `
+        <div class="p-4 text-center text-red-500">
+          Error loading patient data. Please try again later.
+        </div>
       `;
     }
   }
 
-  // Manage Availability Modal Logic
   let currentDoctor = null;
 
-  // Open modal and blur background
+  
   function openAvailabilityModal(doctorName) {
     currentDoctor = doctorName;
     document.getElementById('availabilityModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
-    // Optionally set default values
+   
     document.getElementById('availabilityForm').reset();
   }
 
@@ -741,16 +1110,16 @@ const tabContents = document.querySelectorAll(".tab-content");
       end
     };
     try {
-      // TODO: Replace with your actual API endpoint
+      
       const response = await fetch('/api/doctor-availability', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Failed to save availability');
-      // Optionally refresh doctor data here
+      
       closeAvailabilityModal();
-      // Optionally show a success message
+     
     } catch (err) {
       alert('Error saving availability: ' + err.message);
     }
@@ -770,13 +1139,12 @@ const tabContents = document.querySelectorAll(".tab-content");
       }
     });
   }
-  // Call after DOM is ready and after any dynamic table updates
+  
   attachManageAvailabilityListeners();
-  // If you update the doctors table dynamically, call attachManageAvailabilityListeners() again.
+  
 
-  // Appointment Details Modal Logic
   function openAppointmentDetailsModal(app) {
-    // Get doctor name from any possible field
+    
     const doctorName = 
       app.doctorData?.name || 
       app.doctor?.name || 
@@ -785,16 +1153,34 @@ const tabContents = document.querySelectorAll(".tab-content");
       app.assigned_doctor?.name ||
       'Not Assigned';
     
+    // Populate header information
     document.getElementById('viewDetailsPatient').textContent = app.patientData?.name || 'N/A';
     document.getElementById('viewDetailsDoctor').textContent = doctorName;
+    document.getElementById('viewDetailsDateTime').textContent = `${app.dateData?.date || 'N/A'} at ${app.dateData?.time || 'N/A'}`;
+    
+    // Populate Doctor Information
+    document.getElementById('viewDetailsDoctorName').textContent = doctorName;
+    document.getElementById('viewDetailsDoctorSpecialty').textContent = app.doctorData?.specialty || 'N/A';
+    
+    // Populate Appointment Information
     document.getElementById('viewDetailsDate').textContent = app.dateData?.date || 'N/A';
     document.getElementById('viewDetailsTime').textContent = app.dateData?.time || 'N/A';
+    document.getElementById('viewDetailsStatus').textContent = app.status || 'confirmed';
+    
+    // Populate Personal Details
+    document.getElementById('viewDetailsPatientName').textContent = app.patientData?.name || 'N/A';
+    document.getElementById('viewDetailsAge').textContent = app.patientData?.age || 'N/A';
+    document.getElementById('viewDetailsGender').textContent = app.patientData?.gender || 'N/A';
+    
+    // Populate Contact Information
+    document.getElementById('viewDetailsContact').textContent = app.patientData?.contact || 'N/A';
+    document.getElementById('viewDetailsBlood').textContent = app.patientData?.blood || 'N/A';
     
     document.getElementById('viewDetailsModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
   }
 
-  // Add event listeners for the view details modal
+  
   document.getElementById('closeViewDetailsModal').onclick = function() {
     document.getElementById('viewDetailsModalOverlay').classList.add('hidden');
     document.body.classList.remove('blurred-bg');
@@ -812,7 +1198,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     }
   };
 
-  // Add these new functions for doctor assignment
+  
   let currentAppointmentForAssignment = null;
 
   async function loadDoctors() {
@@ -851,7 +1237,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     currentAppointmentForAssignment = null;
   }
 
-  // Add event listeners for the Assign Doctor modal
+  
   document.getElementById('closeAssignDoctorModal').onclick = closeAssignDoctorModal;
   document.getElementById('cancelAssignDoctor').onclick = closeAssignDoctorModal;
   document.getElementById('assignDoctorModalOverlay').onclick = function(e) {
@@ -879,7 +1265,7 @@ const tabContents = document.querySelectorAll(".tab-content");
 
       if (!response.ok) throw new Error('Failed to assign doctor');
 
-      // Refresh the appointments list
+      
       const currentDate = datePicker.value;
       const searchTerm = searchInput.value.trim();
       await renderAppointmentsList(currentDate, searchTerm);
@@ -892,15 +1278,15 @@ const tabContents = document.querySelectorAll(".tab-content");
     }
   };
 
-  // Remove all existing event listeners and add new ones
+
   document.addEventListener('DOMContentLoaded', function() {
-    // Remove any existing event listeners
+ 
     const oldClickHandler = document.onclick;
     document.onclick = null;
 
-    // Add new event listener for action menu
+    
     document.addEventListener('click', function(e) {
-      // Handle action menu toggle
+      
       if (e.target.classList.contains('action-btn')) {
         e.stopPropagation();
         const menus = document.querySelectorAll('.action-menu');
@@ -909,7 +1295,7 @@ const tabContents = document.querySelectorAll(".tab-content");
         menu.classList.toggle('hidden');
       }
       
-      // Handle View Details
+      
       if (e.target.classList.contains('view-details-btn')) {
         e.preventDefault();
         e.stopPropagation();
@@ -924,7 +1310,7 @@ const tabContents = document.querySelectorAll(".tab-content");
         e.stopPropagation();
         const appointmentData = JSON.parse(e.target.getAttribute('data-appointment'));
         
-        // Log the original data for debugging
+     
         console.log('Original appointment data:', appointmentData);
         console.log('Patient data from appointment:', appointmentData.patientData);
         console.log('Age value from appointment:', appointmentData.patientData?.age);
@@ -1034,10 +1420,21 @@ const tabContents = document.querySelectorAll(".tab-content");
       if (!response.ok) throw new Error('Failed to reschedule appointment');
       closeRescheduleModal();
       showAlert('Appointment rescheduled successfully!');
-      // Refresh the appointments list
-      const currentDate = datePicker.value;
-      const searchTerm = searchInput.value.trim();
-      await renderAppointmentsList(currentDate, searchTerm);
+      
+      // Force refresh the appointments list after a short delay
+      setTimeout(async () => {
+        try {
+          const currentDate = datePicker.value;
+          const searchTerm = searchInput.value.trim();
+          console.log('Refreshing appointments list after reschedule...');
+          await renderAppointmentsList(currentDate, searchTerm);
+          console.log('Appointments list refreshed successfully');
+        } catch (refreshError) {
+          console.error('Error refreshing appointments list:', refreshError);
+          // If refresh fails, reload the page as fallback
+          window.location.reload();
+        }
+      }, 500);
     } catch (err) {
       alert('Error rescheduling appointment: ' + err.message);
     }
@@ -1098,16 +1495,26 @@ const tabContents = document.querySelectorAll(".tab-content");
         throw new Error(errorData.error || 'Failed to cancel appointment');
       }
 
-      // Close the modal
+      // Close the modal first
       closeCancelModal();
 
       // Show success message
       showAlert('Appointment cancelled successfully!');
 
-      // Refresh the appointments list
-      const currentDate = datePicker.value;
-      const searchTerm = searchInput.value.trim();
-      await renderAppointmentsList(currentDate, searchTerm);
+      // Force refresh the appointments list after a short delay
+      setTimeout(async () => {
+        try {
+          const currentDate = datePicker.value;
+          const searchTerm = searchInput.value.trim();
+          console.log('Refreshing appointments list after cancellation...');
+          await renderAppointmentsList(currentDate, searchTerm);
+          console.log('Appointments list refreshed successfully');
+        } catch (refreshError) {
+          console.error('Error refreshing appointments list:', refreshError);
+          // If refresh fails, reload the page as fallback
+          window.location.reload();
+        }
+      }, 500);
 
     } catch (error) {
       console.error('Error cancelling appointment:', error);
@@ -1131,142 +1538,12 @@ const tabContents = document.querySelectorAll(".tab-content");
     document.getElementById('overlay').style.display = 'none';
   }
 
-  // Custom Calendar Date Picker Logic with Dropdown
-  const calendarDropdownWrapper = document.getElementById('calendarDropdownWrapper');
-  const dateLabel = document.getElementById('dateLabel');
-  const dateLabelText = document.getElementById('dateLabelText');
-  const calendarContainer = document.getElementById('customCalendarContainer');
-  const calendarHeader = document.getElementById('calendarHeader');
-  const calendarBody = document.getElementById('calendarBody');
-  const calendarMonthYear = document.getElementById('calendarMonthYear');
-  const prevMonthBtn = document.getElementById('prevMonthBtn');
-  const nextMonthBtn = document.getElementById('nextMonthBtn');
-  const hiddenDateInput = document.getElementById('datePicker');
-
-  let selectedCalendarDate = new Date();
-  let calendarSelectedDay = selectedCalendarDate.getDate();
-
-  function updateDateLabel(date) {
-    dateLabelText.textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  }
-
-  function renderCalendar(date) {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const today = new Date();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const startDay = firstDay.getDay();
-    const daysInMonth = lastDay.getDate();
-
-    // Header
-    calendarMonthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
-
-    // Days grid
-    let html = '<div class="grid grid-cols-7 gap-2 text-center mb-2">';
-    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    for (let d of days) html += `<div class="font-semibold text-gray-500">${d}</div>`;
-    html += '</div><div class="grid grid-cols-7 gap-2 text-center">';
-
-    // Empty cells before first day
-    for (let i = 0; i < startDay; i++) html += '<div></div>';
-
-    // Days
-    for (let day = 1; day <= daysInMonth; day++) {
-      const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
-      const isSelected = calendarSelectedDay === day && selectedCalendarDate.getMonth() === month && selectedCalendarDate.getFullYear() === year;
-      html += `<button class="rounded-full w-10 h-10 flex items-center justify-center mx-auto ${isSelected ? 'border-2 border-pink-400 text-pink-600 font-bold' : isToday ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}" data-day="${day}">${day}</button>`;
+  document.getElementById('signOutBtn').onclick = function() {
+    if (confirm('Are you sure you want to sign out?')) {
+      // Optionally clear session/local storage here
+      window.location.href = 'login.html';
     }
-    html += '</div>';
-    calendarBody.innerHTML = html;
-
-    // Add click listeners
-    calendarBody.querySelectorAll('button[data-day]').forEach(btn => {
-      btn.onclick = function() {
-        calendarSelectedDay = parseInt(this.getAttribute('data-day'));
-        selectedCalendarDate.setDate(calendarSelectedDay);
-        // Update hidden input in yyyy-mm-dd format
-        const yyyy = selectedCalendarDate.getFullYear();
-        const mm = String(selectedCalendarDate.getMonth() + 1).padStart(2, '0');
-        const dd = String(calendarSelectedDay).padStart(2, '0');
-        hiddenDateInput.value = `${yyyy}-${mm}-${dd}`;
-        // Update selected date text
-        selectedDate.textContent = selectedCalendarDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        updateDateLabel(selectedCalendarDate);
-        // Trigger appointments reload
-        const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
-        const searchTerm = searchInput.value.trim();
-        if (activeTab === 'appointmentsTab') {
-          renderAppointmentsList(hiddenDateInput.value, searchTerm);
-        } else if (activeTab === 'patientsTab') {
-          fetchAndDisplayPatients(hiddenDateInput.value, searchTerm);
-        }
-        renderCalendar(selectedCalendarDate);
-        // Hide calendar after selection
-        calendarContainer.style.display = 'none';
-      };
-    });
-  }
-
-  dateLabel.onclick = function(e) {
-    e.stopPropagation();
-    calendarContainer.style.display = calendarContainer.style.display === 'none' ? 'block' : 'none';
   };
-  document.addEventListener('click', function(e) {
-    if (!calendarDropdownWrapper.contains(e.target)) {
-      calendarContainer.style.display = 'none';
-    }
-  });
-
-  prevMonthBtn.onclick = function(e) {
-    e.stopPropagation();
-    selectedCalendarDate.setMonth(selectedCalendarDate.getMonth() - 1);
-    calendarSelectedDay = 1;
-    selectedCalendarDate.setDate(calendarSelectedDay);
-    renderCalendar(selectedCalendarDate);
-  };
-  nextMonthBtn.onclick = function(e) {
-    e.stopPropagation();
-    selectedCalendarDate.setMonth(selectedCalendarDate.getMonth() + 1);
-    calendarSelectedDay = 1;
-    selectedCalendarDate.setDate(calendarSelectedDay);
-    renderCalendar(selectedCalendarDate);
-  };
-
-  // Initialize calendar with today
-  (function() {
-    selectedCalendarDate = new Date();
-    calendarSelectedDay = selectedCalendarDate.getDate();
-    const yyyy = selectedCalendarDate.getFullYear();
-    const mm = String(selectedCalendarDate.getMonth() + 1).padStart(2, '0');
-    const dd = String(calendarSelectedDay).padStart(2, '0');
-    hiddenDateInput.value = `${yyyy}-${mm}-${dd}`;
-    renderCalendar(selectedCalendarDate);
-    updateDateLabel(selectedCalendarDate);
-  })();
-
-  // Add Doctor Modal Open/Close Logic
-  (function() {
-    // Find the Add Doctor button (in Doctors tab)
-    const addDoctorBtn = document.querySelector("#doctorsTab .bg-black");
-    const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
-    const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
-
-    if (addDoctorBtn && addDoctorModalOverlay && closeAddDoctorModal) {
-      addDoctorBtn.onclick = function() {
-        addDoctorModalOverlay.classList.remove("hidden");
-      };
-      closeAddDoctorModal.onclick = function() {
-        addDoctorModalOverlay.classList.add("hidden");
-      };
-      // Optional: close modal when clicking outside the modal card
-      addDoctorModalOverlay.onclick = function(e) {
-        if (e.target === addDoctorModalOverlay) {
-          addDoctorModalOverlay.classList.add("hidden");
-        }
-      };
-    }
-  })();
 </script>
 
 </body>
