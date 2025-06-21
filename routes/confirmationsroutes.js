@@ -181,27 +181,48 @@ router.get('/booked-slots', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { date, time, status, action } = req.body;
-    const confirmation = await Confirmation.findById(req.params.id).populate('date');
+    const confirmation = await Confirmation.findById(req.params.id).populate('date').populate('doctor');
     if (!confirmation) {
       return res.status(404).json({ error: 'Confirmation not found' });
     }
+    
     // Reschedule: update date and/or time
     if (action === 'reschedule' && date && time) {
+      // Check if the new time slot is already booked for this doctor
+      const existingConfirmations = await Confirmation.find({ 
+        doctor: confirmation.doctor._id,
+        _id: { $ne: confirmation._id } // Exclude current appointment
+      }).populate('date');
+      
+      const slotTaken = existingConfirmations.some(conf =>
+        conf.date.date === date && conf.date.time === time
+      );
+
+      if (slotTaken) {
+        return res.status(400).json({
+          error: 'This time slot is already booked for this doctor.'
+        });
+      }
+
+      // Create or find the new date/time slot
       let dateDoc = await DateModel.findOne({ date, time });
       if (!dateDoc) {
         dateDoc = new DateModel({ date, time });
         await dateDoc.save();
       }
+      
       confirmation.date = dateDoc._id;
       await confirmation.save();
       return res.json({ message: 'Appointment rescheduled', confirmation });
     }
+    
     // Cancel: update status
     if (action === 'cancel') {
       confirmation.status = 'canceled';
       await confirmation.save();
       return res.json({ message: 'Appointment canceled', confirmation });
     }
+    
     res.status(400).json({ error: 'Invalid action or missing data' });
   } catch (error) {
     res.status(500).json({ error: error.message });
