@@ -30,7 +30,7 @@ const initialDoctors = [
 // GET  /api/dynamic-doctors  → fixed list
 router.get("/", (req, res) => res.json(initialDoctors));
 
-// Any other HTTP verb returns 405 (read‑only)
-router.all("*", (req, res) => res.status(405).json({ message: "Doctor list is read‑only" }));
+
+
 
 module.exports = router;
