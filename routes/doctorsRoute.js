@@ -3,20 +3,18 @@ const router = express.Router();
 const Confirmation = require('../models/confirmationModel');
 const Doctor = require('../models/doctorModel');
 
-// GET /api/doctors/with-count
 router.get('/with-count', async (req, res) => {
   try {
     const today = new Date();
     const todayStr = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
 
-    // Aggregate confirmations matching today's date and not canceled,
-    // group by doctor and sum counts correctly
+  
     const counts = await Confirmation.aggregate([
       {
         $lookup: {
-          from: 'dates',           // joining with dates collection
-          localField: 'date',      // Confirmation.date is ObjectId
-          foreignField: '_id',     // Dates._id
+          from: 'dates',           
+          localField: 'date',     
+          foreignField: '_id',    
           as: 'dateDoc'
         }
       },
@@ -25,15 +23,15 @@ router.get('/with-count', async (req, res) => {
       {
         $group: {
           _id: '$doctor',
-          count: { $sum: 1 }        // sum 1 per matching appointment (corrected from $sum:3)
+          count: { $sum: 1 }        
         }
       }
     ]);
 
-    // Convert counts array to Map for quick lookup
+   
     const countMap = new Map(counts.map(c => [String(c._id), c.count]));
 
-    // Fetch all doctors and merge appointment counts
+  
     const doctors = await Doctor.find().lean();
     const result = doctors.map(doc => ({
       _id: doc._id,
