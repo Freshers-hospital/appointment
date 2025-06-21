@@ -1,35 +1,67 @@
+// const express = require("express");
+// const router = express.Router();
+// const Doctor = require("../models/doctorModel");
+
+// const initialDoctors =  [/* your same array here */];
+     
+
+// // // GET  /api/dynamic-doctors  → fixed list
+// // router.get("/", (req, res) => res.json(initialDoctors));
+
+
+// router.post("/seed", async (req, res) => {
+//   try {
+//     const count = await Doctor.countDocuments();
+//     if (count === 0) {
+//       await Doctor.insertMany(initialDoctors);
+//       return res.status(201).json({ message: "Doctors seeded successfully" });
+//     } else {
+//       return res.status(200).json({ message: "Doctors already exist" });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Failed to seed doctors" });
+//   }
+// });
+
+// module.exports = router;
+
+
+
+
 const express = require("express");
-const router = express.Router();
+const router  = express.Router();
+const Doctor  = require("../models/doctorModel");
 
-const initialDoctors = [
-    { name: "Dr. Sarah Johnson", specialty: "Cardiology", experience: "15 years" },
-    { name: "Dr. Michael Chen", specialty: "Dermatology", experience: "10 years" },
-    { name: "Dr. Emily Rodriguez", specialty: "Neurology", experience: "12 years" },
-    { name: "Dr. James Wilson", specialty: "Orthopedics", experience: "20 years" },
-    { name: "Dr. Srivani", specialty: "ENT", experience: "12 years" },
-    { name: "Dr. Aswini", specialty: "General Surgery", experience: "6.9 years" },
-    { name: "Dr. Akhila", specialty: "Gynecologist", experience: "8 years" },
-    { name: "Dr. Vinod", specialty: "Pediatrics", experience: "10 years" },
-    { name: "Dr. Kiran", specialty: "Radiology", experience: "11 years" },
-    { name: "Dr. Keerthi", specialty: "Oncologist", experience: "12 years" },
-    { name: "Dr. Vedanshi", specialty: "Gastroenterologist", experience: "10 years" },
-    { name: "Dr. Vivek", specialty: "Dentist", experience: "15 years" },
-    { name: "Dr. Om", specialty: "Andrologist", experience: "16 years" },
-    { name: "Dr. Ganesh", specialty: "General Medicine", experience: "17 years" },
-    { name: "Dr. Ayesha Khan", specialty: "Endocrinologist", experience: "9 years" },
-    { name: "Dr. Rohit Sharma", specialty: "Nephrologist", experience: "14 years" },
-    { name: "Dr. Meera Iyer", specialty: "Psychiatrist", experience: "11 years" },
-    { name: "Dr. Arjun Patel", specialty: "Pulmonologist", experience: "13 years" },
-    { name: "Dr. Sneha Reddy", specialty: "Ophthalmologist", experience: "7 years" },
-    { name: "Dr. Prakash Verma", specialty: "Rheumatologist", experience: "16 years" },
-    { name: "Dr. Nidhi Saxena", specialty: "Hematologist", experience: "8 years" },
-    { name: "Dr. Manish Desai", specialty: "Urologist", experience: "12 years" },
-    { name: "Dr. Priya Nair", specialty: "Pathologist", experience: "10 years" },
-];
+// GET /api/dynamic-doctors → fetch docs from DB
+router.get("/", async (_req, res) => {
+  try {
+    const doctors = await Doctor.find().sort({ name: 1 });  // alphabetical
+    res.json(doctors);                       // [{ _id, name, specialty, … }, …]
+  } catch (err) {
+    console.error("Fetch doctors error:", err);
+    res.status(500).json({ error: "Failed to fetch doctors" });
+  }
+});
 
-// GET  /api/dynamic-doctors  → fixed list
-router.get("/", (req, res) => res.json(initialDoctors));
 
+router.post("/", async (req, res) => {
+  const { name, specialty, experience } = req.body;
+
+  // basic validation
+  if (!name || !specialty || !experience) {
+    return res.status(400).json({ error: "Name, specialty & experience are required" });
+  }
+
+  try {
+    const doctor = new Doctor({ name, specialty, experience });
+    await doctor.save();
+    res.status(201).json(doctor); // full saved doc with _id
+  } catch (err) {
+    console.error("Create doctor error:", err);
+    res.status(500).json({ error: "Failed to create doctor" });
+  }
+});
 
 
 

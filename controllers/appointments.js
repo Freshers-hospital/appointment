@@ -1,7 +1,7 @@
 // npm i moment-timezone   ← if you don't have it yet
 const moment       = require('moment-timezone');
 const Appointment  = require('../models/appointment');
-const Doctor       = require('../models/doctor');
+const Doctor       = require('../models/doctorModel');
 
 exports.getTodayCounts = async (req, res) => {
   try {

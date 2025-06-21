@@ -1905,12 +1905,53 @@
 
 
 
+async function loadDoctors() {
+  try {
+    const res  = await fetch("/api/dynamic-doctors");
+    const list = await res.json();
+
+    const select = document.getElementById("doctorSelect");
+    select.innerHTML = '<option value="">Choose a doctor</option>' +
+      list.map(d => `<option value="${d._id}">
+                       Dr. ${d.name} - ${d.specialty}
+                     </option>`).join("");
+  } catch (err) {
+    console.error("Doctor load failed:", err);
+    alert("Unable to load doctors right now.");
+  }
+}
+
+// call once page loads
+document.addEventListener("DOMContentLoaded", loadDoctors);
 
 
 
 
+    const form = document.getElementById("addDoctorForm");
+    const msg  = document.getElementById("msg");
 
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const res = await fetch("/api/dynamic-doctors", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) throw await res.json();
+
+        msg.textContent = "Doctor added ";
+        msg.className   = "text-green-600";
+        form.reset();
+      } catch (err) {
+        msg.textContent = err.error || "Error adding doctor";
+        msg.className   = "text-red-600";
+      }
+    });
 
 
 
