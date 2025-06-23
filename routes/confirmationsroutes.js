@@ -185,7 +185,12 @@ router.put('/:id', async (req, res) => {
     if (!confirmation) {
       return res.status(404).json({ error: 'Confirmation not found' });
     }
-    
+
+    // Defensive: check for required fields
+    if (action === 'reschedule' && (!date || !time)) {
+      return res.status(400).json({ error: 'Date and time are required for rescheduling.' });
+    }
+
     // Reschedule: update date and/or time
     if (action === 'reschedule' && date && time) {
       // Check if the new time slot is already booked for this doctor
@@ -195,7 +200,7 @@ router.put('/:id', async (req, res) => {
       }).populate('date');
       
       const slotTaken = existingConfirmations.some(conf =>
-        conf.date.date === date && conf.date.time === time
+        conf.date && conf.date.date === date && conf.date.time === time
       );
 
       if (slotTaken) {
@@ -225,6 +230,7 @@ router.put('/:id', async (req, res) => {
     
     res.status(400).json({ error: 'Invalid action or missing data' });
   } catch (error) {
+    console.error('Error in PUT /api/confirmations/:id:', error);
     res.status(500).json({ error: error.message });
   }
 });
