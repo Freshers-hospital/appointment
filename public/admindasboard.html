@@ -91,7 +91,7 @@
       background: #f3f4f6; /* bg-gray-100 */
     }
     .flatpickr-day.today {
-      border-color: #a792c3;
+      border-color: #000000;
     }
     .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
       background: transparent;
@@ -116,7 +116,7 @@
     }
     .tab-inactive:hover {
       color: #1f2937; /* text-gray-800 */
-      background-color: rgba(229, 231, 235, 0.5); /* bg-gray-200/50 */
+      background-color: rgba(255, 255, 255, 0.6); /* Lighten on hover */
       border-radius: 0.375rem; /* .rounded-md */
     }
     .doctor-row {
@@ -141,8 +141,10 @@
       bottom: 0;
       background: rgba(0, 0, 0, 0.4);
       z-index: 40;
+      /* Add blur to the whole page except modal */
+      backdrop-filter: blur(6px);
     }
-    .blurred-bg > *:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(#addDoctorModalOverlay) {
+    .blurred-bg > *:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(#addDoctorModalOverlay):not(#patientDetailsModalOverlay) {
       filter: blur(4px);
       pointer-events: none;
       user-select: none;
@@ -152,11 +154,25 @@
     #availabilityModalOverlay,
     #rescheduleModalOverlay,
     #cancelModalOverlay,
-    #addDoctorModalOverlay {
+    #addDoctorModalOverlay,
+    #patientDetailsModalOverlay {
       z-index: 50;
     }
     body {
       overflow-y: hidden;
+    }
+    /* Patient Details Modal grid clarity */
+    #patientDetailsModal .grid {
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    #patientDetailsModal .font-semibold {
+      color: #6b7280;
+    }
+    #patientDetailsModal .text-gray-900 {
+      font-weight: 500;
     }
   </style>
 </head>
@@ -165,7 +181,11 @@
 <nav class="bg-white shadow py-4 px-8">
   <div class="flex justify-between items-center w-full">
     <div class="text-blue-600 font-bold text-xl">MediCare</div>
-    <button id="signOutBtn" class="bg-red-500 hover:bg-red-600 text-white rounded px-4 py-2 rounded">Sign Out</button>
+    <button id="signOutBtn" title="Sign Out" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 flex items-center justify-center transition-colors duration-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l5-5m0 0l-5-5m5 5H9m4 5v1a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h4a2 2 0 012 2v1" />
+      </svg>
+    </button>
   </div>
 </nav>
 
@@ -182,14 +202,14 @@
       </div>
       <div class="flex items-center gap-2">
         <label for="datePicker" class="font-semibold"></label>
-        <input type="text" id="datePicker" class="px-8 py-0 border border-gray-300" readonly />
+        <input type="text" id="datePicker" class="px-3 py-0 border border-gray-300" readonly />
       </div>
     </div>
   </div>
 
   <!-- Tabs -->
   <div class="px-20 mt-6">
-    <div class="bg-gray-100 p-1 rounded-lg flex items-center mb-6">
+    <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
       <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active" data-tab="appointmentsTab">Appointments</button>
       <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
       <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="patientsTab">Patients</button>
@@ -222,7 +242,7 @@
           <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
         </div>
         <!-- Header Row -->
-        <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">
+        <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-semibold bg-gray-50 text-gray-700 border-b">
           <div class="col-span-3">Doctor</div>
           <div class="col-span-2">Specialty</div>
           <div class="col-span-2">Today's Appointments</div>
@@ -232,120 +252,17 @@
         <!-- Doctors List Container -->
         <div id="doctorsList" class="space-y-2 mt-2">
           <!-- Doctor items will be injected here by JavaScript -->
-          <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-            <!-- Doctor -->
-            <div class="col-span-3 flex items-center">
-              <span class="font-semibold text-gray-800 px-3">Dr. Sarah Johnson</span>
-            </div>
-            <!-- Specialty -->
-            <div class="col-span-2 text-gray-600">Cardiology</div>
-            <!-- Today's Appointments -->
-            <div class="col-span-2 text-gray-600">8</div>
-            <!-- Availability -->
-            <div class="col-span-3 text-gray-600">10:00 AM - 5:00 PM</div>
-            <!-- Actions -->
-            <div class="col-span-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-            <!-- Doctor -->
-            <div class="col-span-3 flex items-center">
-              <span class="font-semibold text-gray-800 px-3">Dr. Kiran</span>
-            </div>
-            <!-- Specialty -->
-            <div class="col-span-2 text-gray-600">Pediatrics</div>
-            <!-- Today's Appointments -->
-            <div class="col-span-2 text-gray-600">5</div>
-            <!-- Availability -->
-            <div class="col-span-3 text-gray-600">8:30 AM - 4:30 PM</div>
-            <!-- Actions -->
-            <div class="col-span-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-            <!-- Doctor -->
-            <div class="col-span-3 flex items-center">
-              <span class="font-semibold text-gray-800 px-3">Dr. Akhila</span>
-            </div>
-            <!-- Specialty -->
-            <div class="col-span-2 text-gray-600">Neurology</div>
-            <!-- Today's Appointments -->
-            <div class="col-span-2 text-gray-600">3</div>
-            <!-- Availability -->
-            <div class="col-span-3 text-gray-600">8:00 AM - 4:00 PM</div>
-            <!-- Actions -->
-            <div class="col-span-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-            <!-- Doctor -->
-            <div class="col-span-3 flex items-center">
-              <span class="font-semibold text-gray-800 px-3">Dr. Vinod</span>
-            </div>
-            <!-- Specialty -->
-            <div class="col-span-2 text-gray-600">Orthopedics</div>
-            <!-- Today's Appointments -->
-            <div class="col-span-2 text-gray-600">4</div>
-            <!-- Availability -->
-            <div class="col-span-3 text-gray-600">9:00 AM - 5:00 PM</div>
-            <!-- Actions -->
-            <div class="col-span-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-            <!-- Doctor -->
-            <div class="col-span-3 flex items-center">
-              <span class="font-semibold text-gray-800 px-3">Dr. Srivani</span>
-            </div>
-            <!-- Specialty -->
-            <div class="col-span-2 text-gray-600">Gynecologist</div>
-            <!-- Today's Appointments -->
-            <div class="col-span-2 text-gray-600">4</div>
-            <!-- Availability -->
-            <div class="col-span-3 text-gray-600">9:00 AM - 5:00 PM</div>
-            <!-- Actions -->
-            <div class="col-span-2 relative">
-              <button class="action-btn text-xl">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
-              </div>
-            </div>
-          </div>
+        </div>
+        
+        <!-- Doctors Pagination Controls -->
+        <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
+          <button id="prevDoctorsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            Previous
+          </button>
+          <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+          <button id="nextDoctorsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+          </button>
         </div>
       </div>
 
@@ -358,7 +275,7 @@
           </div>
         </div>
         <!-- Header Row -->
-        <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-2 text-left text-sm font-semibold text-gray-600 border-b">
+        <div id="patientsHeader" class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-semibold bg-gray-50 text-gray-700 border-b">
           <div class="col-span-3">Patient</div>
           <div class="col-span-2">Age/Gender</div>
           <div class="col-span-1">Blood</div>
@@ -639,6 +556,33 @@
     <p id="alertMessage" class="text-center text-lg"></p>
     <div class="mt-4 flex justify-center">
       <button onclick="hideAlert()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Patient Details Modal -->
+<div id="patientDetailsModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <button id="closePatientDetailsModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="font-semibold text-gray-600">Patient</div>
+      <div id="modalPatientName" class="text-gray-900"></div>
+      <div class="font-semibold text-gray-600">Age/Gender</div>
+      <div id="modalPatientAgeGender" class="text-gray-900"></div>
+      <div class="font-semibold text-gray-600">Blood</div>
+      <div id="modalPatientBlood" class="text-gray-900"></div>
+      <div class="font-semibold text-gray-600">Contact</div>
+      <div id="modalPatientContact" class="text-gray-900"></div>
+      <div class="font-semibold text-gray-600">Upcoming Date</div>
+      <div id="modalPatientUpcoming" class="text-gray-900"></div>
+      <div class="font-semibold text-gray-600">Last Visit</div>
+      <div id="modalPatientLastVisit" class="text-gray-900"></div>
+    </div>
+    <div class="flex justify-end mt-6">
+      <button id="closePatientDetailsBtn" class="px-4 py-2 rounded border border-gray-300 bg-white text-gray-700 font-semibold hover:bg-gray-50">
+        Close
+      </button>
     </div>
   </div>
 </div>
@@ -982,6 +926,8 @@ const tabContents = document.querySelectorAll(".tab-content");
         renderAppointmentsList(date, searchTerm);
       } else if (targetId === 'patientsTab') {
         fetchAndDisplayPatients(date, searchTerm);
+      } else if (targetId === 'doctorsTab') {
+        fetchAndDisplayDoctors(date);
       }
     });
   });
@@ -994,6 +940,7 @@ const tabContents = document.querySelectorAll(".tab-content");
       
       const allAppointments = await response.json();
       const patientsListContainer = document.getElementById('patientsList');
+      const patientsHeader = document.getElementById('patientsHeader');
       patientsListContainer.innerHTML = '<div class="text-center p-4">Loading patients...</div>';
 
       const formattedSelectedDate = date ? new Date(date).toLocaleDateString('en-US', {
@@ -1042,11 +989,31 @@ const tabContents = document.querySelectorAll(".tab-content");
       }
 
       if (finalPatientList.length === 0) {
+        // Hide the header when no patients are found
+        if (patientsHeader) {
+          patientsHeader.classList.add('hidden');
+        }
+        
         let message = 'No patients found';
         if (searchTerm) message += ` for "${searchTerm}"`;
         if (formattedSelectedDate) message += ` with appointments on ${new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
-        patientsListContainer.innerHTML = `<div class="text-center p-6 text-gray-500">${message}.</div>`;
+        patientsListContainer.innerHTML = `
+          <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">
+              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <p class="text-lg font-medium mb-2">No patients found</p>
+            <p class="text-sm">${message}</p>
+          </div>
+        `;
         return;
+      }
+
+      // Show the header when patients are found
+      if (patientsHeader) {
+        patientsHeader.classList.remove('hidden');
       }
 
       // 3. Calculate upcoming and last visit for each patient and build HTML
@@ -1074,7 +1041,21 @@ const tabContents = document.querySelectorAll(".tab-content");
           <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
             <!-- Patient -->
             <div class="col-span-3 flex items-center">
-              <span class="font-semibold text-gray-800 px-3">${patient.details.name || 'N/A'}</span>
+              <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0 cursor-pointer patient-placeholder" 
+                data-patient='${JSON.stringify({
+                  name: patient.details.name || 'N/A',
+                  age: patient.details.age || 'N/A',
+                  gender: patient.details.gender || 'N/A',
+                  blood: patient.details.blood || 'N/A',
+                  contact: patient.details.contact || 'N/A',
+                  upcomingDate: upcomingDate.replace(/<[^>]+>/g, ''),
+                  lastVisit: lastVisit.replace(/<[^>]+>/g, '')
+                })}'
+              ></div>
+              <div>
+                <div class="font-semibold text-gray-800">${patient.details.name || 'N/A'}</div>
+                <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : '0000'}</div>
+              </div>
             </div>
             <!-- Age/Gender -->
             <div class="col-span-2 text-gray-600">${patient.details.age || 'N/A'} / ${patient.details.gender ? patient.details.gender.charAt(0) : 'N/A'}</div>
@@ -1094,9 +1075,18 @@ const tabContents = document.querySelectorAll(".tab-content");
 
     } catch (error) {
       console.error('Error fetching patient data:', error);
+      // Hide header on error as well
+      const patientsHeader = document.getElementById('patientsHeader');
+      if (patientsHeader) {
+        patientsHeader.classList.add('hidden');
+      }
       document.getElementById('patientsList').innerHTML = `
         <div class="p-4 text-center text-red-500">
-          Error loading patient data. Please try again later.
+          <p class="font-semibold">Error loading patient data</p>
+          <p class="text-sm mt-2">${error.message || 'Please try again later'}</p>
+          <button onclick="fetchAndDisplayPatients('${date}', '${searchTerm}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Retry
+          </button>
         </div>
       `;
     }
@@ -1314,6 +1304,15 @@ const tabContents = document.querySelectorAll(".tab-content");
     const oldClickHandler = document.onclick;
     document.onclick = null;
 
+    // Load initial data based on active tab
+    const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+    const currentDate = datePicker.value;
+    const searchTerm = searchInput.value.trim();
+    
+    if (activeTab === 'doctorsTab') {
+      fetchAndDisplayDoctors(currentDate);
+    }
+
     
     document.addEventListener('click', function(e) {
       
@@ -1451,20 +1450,18 @@ const tabContents = document.querySelectorAll(".tab-content");
       closeRescheduleModal();
       showAlert('Appointment rescheduled successfully!');
       
-      // Force refresh the appointments list after a short delay
-      setTimeout(async () => {
-        try {
-          const currentDate = datePicker.value;
-          const searchTerm = searchInput.value.trim();
-          console.log('Refreshing appointments list after reschedule...');
-          await renderAppointmentsList(currentDate, searchTerm);
-          console.log('Appointments list refreshed successfully');
-        } catch (refreshError) {
-          console.error('Error refreshing appointments list:', refreshError);
-          // If refresh fails, reload the page as fallback
-          window.location.reload();
-        }
-      }, 500);
+      // Immediately refresh the appointments list
+      try {
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        console.log('Refreshing appointments list after reschedule...');
+        await renderAppointmentsList(currentDate, searchTerm);
+        console.log('Appointments list refreshed successfully');
+      } catch (refreshError) {
+        console.error('Error refreshing appointments list:', refreshError);
+        // If refresh fails, reload the page as fallback
+        window.location.reload();
+      }
     } catch (err) {
       alert('Error rescheduling appointment: ' + err.message);
     }
@@ -1486,29 +1483,45 @@ const tabContents = document.querySelectorAll(".tab-content");
     cancelAppointmentData = app;
     document.getElementById('cancelModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
+    
+    // Reset button state when opening modal
+    const confirmButton = document.getElementById('confirmCancelBtn');
+    confirmButton.disabled = false;
+    confirmButton.textContent = 'Yes, Cancel';
+    confirmButton.classList.remove('opacity-75');
   }
+  
   function closeCancelModal() {
     document.getElementById('cancelModalOverlay').classList.add('hidden');
     document.body.classList.remove('blurred-bg');
     cancelAppointmentData = null;
+    
+    // Reset button state when closing modal
+    const confirmButton = document.getElementById('confirmCancelBtn');
+    confirmButton.disabled = false;
+    confirmButton.textContent = 'Yes, Cancel';
+    confirmButton.classList.remove('opacity-75');
   }
+  
   document.getElementById('closeCancelModal').onclick = closeCancelModal;
   document.getElementById('cancelCancelBtn').onclick = closeCancelModal;
   document.getElementById('cancelModalOverlay').onclick = function(e) {
     if (e.target === this) closeCancelModal();
   };
+  
   document.getElementById('confirmCancelBtn').onclick = async function() {
     if (!cancelAppointmentData || !cancelAppointmentData._id) {
       alert('Error: Missing appointment ID.');
       return;
     }
+    
+    // Show loading state
+    const confirmButton = document.getElementById('confirmCancelBtn');
+    confirmButton.disabled = true;
+    confirmButton.textContent = 'Canceling...';
+    confirmButton.classList.add('opacity-75');
+    
     try {
-      // Show loading state
-      const confirmButton = document.getElementById('confirmCancelBtn');
-      confirmButton.disabled = true;
-      confirmButton.textContent = 'Canceling...';
-      confirmButton.classList.add('opacity-75');
-
       // Make API call to cancel the appointment using PUT
       const response = await fetch(`/api/confirmations/${cancelAppointmentData._id}`, {
         method: 'PUT',
@@ -1531,27 +1544,24 @@ const tabContents = document.querySelectorAll(".tab-content");
       // Show success message
       showAlert('Appointment cancelled successfully!');
 
-      // Force refresh the appointments list after a short delay
-      setTimeout(async () => {
-        try {
-          const currentDate = datePicker.value;
-          const searchTerm = searchInput.value.trim();
-          console.log('Refreshing appointments list after cancellation...');
-          await renderAppointmentsList(currentDate, searchTerm);
-          console.log('Appointments list refreshed successfully');
-        } catch (refreshError) {
-          console.error('Error refreshing appointments list:', refreshError);
-          // If refresh fails, reload the page as fallback
-          window.location.reload();
-        }
-      }, 500);
+      // Immediately refresh the appointments list
+      try {
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        console.log('Refreshing appointments list after cancellation...');
+        await renderAppointmentsList(currentDate, searchTerm);
+        console.log('Appointments list refreshed successfully');
+      } catch (refreshError) {
+        console.error('Error refreshing appointments list:', refreshError);
+        // If refresh fails, reload the page as fallback
+        window.location.reload();
+      }
 
     } catch (error) {
       console.error('Error cancelling appointment:', error);
       alert('Error cancelling appointment: ' + error.message);
       
-      // Reset button state
-      const confirmButton = document.getElementById('confirmCancelBtn');
+      // Reset button state on error
       confirmButton.disabled = false;
       confirmButton.textContent = 'Yes, Cancel';
       confirmButton.classList.remove('opacity-75');
@@ -1595,8 +1605,38 @@ const tabContents = document.querySelectorAll(".tab-content");
       if(addDoctorForm) {
           addDoctorForm.addEventListener('submit', async (e) => {
               e.preventDefault();
-              alert('Backend functionality for adding a doctor needs to be implemented.');
-              closeModal();
+              const formData = new FormData(addDoctorForm);
+              const doctorData = {
+                  name: formData.get('name'),
+                  specialty: formData.get('specialty'),
+                  availability: formData.get('availability')
+              };
+
+              try {
+                  const response = await fetch('/api/doctors', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(doctorData)
+                  });
+
+                  if (!response.ok) {
+                      const errorData = await response.json();
+                      throw new Error(errorData.error || 'Failed to add doctor');
+                  }
+
+                  const newDoctor = await response.json();
+                  showAlert('Doctor added successfully!');
+                  closeModal();
+
+                  // Add the new doctor to the list without refetching
+                  addDoctorToList(newDoctor);
+
+              } catch (error) {
+                  console.error('Error adding doctor:', error);
+                  alert('Error adding doctor: ' + error.message);
+              }
           });
       }
   }
@@ -1617,6 +1657,169 @@ const tabContents = document.querySelectorAll(".tab-content");
       window.location.href = 'login.html';
     }
   };
+
+  // Patient Details Modal Logic
+  function openPatientDetailsModal(patient) {
+    console.log('Patient data for modal:', patient);
+    document.getElementById('modalPatientName').textContent = patient.name || 'N/A';
+    document.getElementById('modalPatientAgeGender').textContent = `${patient.age || 'N/A'} / ${patient.gender || 'N/A'}`;
+    document.getElementById('modalPatientBlood').textContent = patient.blood || 'N/A';
+    document.getElementById('modalPatientContact').textContent = patient.contact || 'N/A';
+    document.getElementById('modalPatientUpcoming').textContent = patient.upcomingDate || 'N/A';
+    document.getElementById('modalPatientLastVisit').textContent = patient.lastVisit || 'N/A';
+    document.getElementById('patientDetailsModalOverlay').classList.remove('hidden');
+    document.body.classList.add('blurred-bg');
+  }
+
+  function closePatientDetailsModal() {
+    document.getElementById('patientDetailsModalOverlay').classList.add('hidden');
+    document.body.classList.remove('blurred-bg');
+  }
+
+  document.getElementById('patientDetailsModalOverlay').onclick = function(e) {
+    if (e.target === this) closePatientDetailsModal();
+  };
+  document.getElementById('closePatientDetailsModal').onclick = closePatientDetailsModal;
+  document.getElementById('closePatientDetailsBtn').onclick = closePatientDetailsModal;
+
+  document.getElementById('patientsList').addEventListener('click', function(e) {
+    if (e.target.classList.contains('patient-placeholder')) {
+      const patientData = JSON.parse(e.target.getAttribute('data-patient'));
+      openPatientDetailsModal(patientData);
+    }
+  });
+
+  // Add the missing fetchAndDisplayDoctors function
+  // Pagination variables for doctors
+  let allDoctors = [];
+  let currentDoctorsPage = 1;
+  const doctorsPerPage = 5;
+
+  async function fetchAndDisplayDoctors(currentDate) {
+    try {
+      const response = await fetch('/api/doctors');
+      if (!response.ok) {
+        throw new Error('Failed to fetch doctors');
+      }
+      allDoctors = await response.json();
+      
+      // Reset to first page when fetching new data
+      currentDoctorsPage = 1;
+      
+      // Update the doctors list in the UI
+      renderDoctorsPage();
+    } catch (error) {
+      console.error('Error fetching doctors:', error);
+    }
+  }
+
+  // Function to add a single doctor to the list
+  function addDoctorToList(newDoctor) {
+    // Add the new doctor to the beginning of the list
+    allDoctors.unshift(newDoctor);
+    
+    // Reset to first page to show the new doctor
+    currentDoctorsPage = 1;
+    
+    // Re-render the page
+    renderDoctorsPage();
+  }
+
+  function renderDoctorsPage() {
+    const doctorsList = document.getElementById('doctorsList');
+    const paginationContainer = document.getElementById('doctorsPagination');
+    
+    if (!doctorsList) return;
+    
+    // Calculate pagination
+    const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
+    const endIndex = startIndex + doctorsPerPage;
+    const currentDoctors = allDoctors.slice(startIndex, endIndex);
+    
+    // Clear and populate doctors list
+    doctorsList.innerHTML = '';
+    
+    currentDoctors.forEach(doctor => {
+      const doctorElement = document.createElement('div');
+      doctorElement.className = 'grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200';
+      doctorElement.innerHTML = `
+        <!-- Doctor -->
+        <div class="col-span-3 flex items-center">
+          <span class="font-semibold text-gray-800 px-3">${doctor.name}</span>
+        </div>
+        <!-- Specialty -->
+        <div class="col-span-2 text-gray-600">${doctor.specialty || 'General Medicine'}</div>
+        <!-- Today's Appointments -->
+        <div class="col-span-2 text-gray-600">0</div>
+        <!-- Availability -->
+        <div class="col-span-3 text-gray-600">${doctor.availability || 'Available'}</div>
+        <!-- Actions -->
+        <div class="col-span-2 relative">
+          <button class="action-btn text-xl">...</button>
+          <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+          </div>
+        </div>
+      `;
+      doctorsList.appendChild(doctorElement);
+    });
+    
+    // Update pagination controls
+    updateDoctorsPagination();
+  }
+
+  function updateDoctorsPagination() {
+    const paginationContainer = document.getElementById('doctorsPagination');
+    const prevButton = document.getElementById('prevDoctorsPage');
+    const nextButton = document.getElementById('nextDoctorsPage');
+    const pageInfo = document.getElementById('doctorsPageInfo');
+    
+    if (!paginationContainer) return;
+    
+    const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+    
+    // Show/hide pagination based on whether there are multiple pages
+    if (totalPages > 1) {
+      paginationContainer.classList.remove('hidden');
+    } else {
+      paginationContainer.classList.add('hidden');
+    }
+    
+    // Update page info
+    pageInfo.textContent = `Page ${currentDoctorsPage} of ${totalPages}`;
+    
+    // Update button states
+    prevButton.disabled = currentDoctorsPage === 1;
+    nextButton.disabled = currentDoctorsPage === totalPages;
+  }
+
+  // Add pagination event listeners
+  document.addEventListener('DOMContentLoaded', function() {
+    const prevButton = document.getElementById('prevDoctorsPage');
+    const nextButton = document.getElementById('nextDoctorsPage');
+    
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        if (currentDoctorsPage > 1) {
+          currentDoctorsPage--;
+          renderDoctorsPage();
+        }
+      });
+    }
+    
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+        if (currentDoctorsPage < totalPages) {
+          currentDoctorsPage++;
+          renderDoctorsPage();
+        }
+      });
+    }
+  });
 </script>
 
 </body>
