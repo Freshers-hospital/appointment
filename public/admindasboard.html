@@ -16,16 +16,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
     /* New styles for the modern Flatpickr calendar */
+    
+
     .flatpickr-calendar {
-      background: #ffffff;
+      background: #f3f5f7;
       border-radius: 8px;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
       border: none;
       width: 320px;
     }
     .flatpickr-months {
-      background: linear-gradient(45deg, #d3b4e1, #a792c3);
-      color: white;
+      background: linear-gradient(45deg, #f1f4f5, #ffffff);
+      color: rgb(255, 254, 254);
       border-radius: 8px 8px 0 0;
       padding: 12px;
     }
@@ -43,7 +45,7 @@
     span.cur-month, span.cur-year, .numInput.cur-year {
       font-size: 1.25rem !important;
       font-weight: bold !important;
-      color: white !important;
+      color: rgb(22, 21, 21) !important;
     }
     .numInput.cur-year {
         background: transparent;
@@ -91,11 +93,12 @@
       background: #f3f4f6; /* bg-gray-100 */
     }
     .flatpickr-day.today {
-      border-color: #a792c3;
+      border-color: #4670e4;
+      
     }
     .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
       background: transparent;
-      border: 2px solid #e8a0bf;
+      /* border: 2px solid #e8a0bf; */
       color: #374151;
       box-shadow: none;
     }
@@ -158,6 +161,15 @@
     body {
       overflow-y: hidden;
     }
+    /* Only blur the background for doctor profile modal */
+    .doctor-profile-blur-bg > #doctorProfileModalOverlay {
+      z-index: 60;
+    }
+    .doctor-profile-blur-bg > *:not(#doctorProfileModalOverlay) {
+      filter: blur(4px) !important;
+      pointer-events: none;
+      user-select: none;
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -178,11 +190,11 @@
     <div class="flex items-center gap-4 px-20">
       <div class="relative">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
-        <input type="text" id="searchInput" placeholder="Search " class="pl-8 pr-4 py-0 border border-gray-300 w-48" />
+        <input type="text" id="searchInput" placeholder="Search " class="pl-8 pr-4 py-0 border border-gray-300 w-48 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-700" />
       </div>
       <div class="flex items-center gap-2">
         <label for="datePicker" class="font-semibold"></label>
-        <input type="text" id="datePicker" class="px-8 py-0 border border-gray-300" readonly />
+        <input type="text" id="datePicker" class="border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-700" readonly />
       </div>
     </div>
   </div>
@@ -640,6 +652,53 @@
     <div class="mt-4 flex justify-center">
       <button onclick="hideAlert()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">OK</button>
     </div>
+  </div>
+</div>
+
+<!-- Doctor Profile Modal (View/Edit) -->
+<div id="doctorProfileModalOverlay" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm hidden">
+  <div id="doctorProfileModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative z-60">
+    <button id="closeDoctorProfileModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 id="doctorProfileModalTitle" class="text-2xl font-bold mb-4">Doctor Profile</h2>
+    <form id="doctorProfileForm">
+      <div class="flex flex-col items-center mb-4">
+        <div class="relative mb-2">
+          <img id="doctorProfileImagePreview" src="" alt="Doctor Image" class="w-24 h-24 rounded-full object-cover border-2 border-gray-300" style="background:#f3f4f6;" />
+          <label for="doctorProfileImage" class="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-1 cursor-pointer" style="display:none;" id="doctorProfileImageEditIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13h3l8-8a2.828 2.828 0 00-4-4l-8 8v3h3z" /></svg>
+            <input type="file" id="doctorProfileImage" name="image" accept="image/*" class="hidden" />
+          </label>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Name</label>
+        <input type="text" id="doctorProfileName" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required readonly />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Specialty</label>
+        <input type="text" id="doctorProfileSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required readonly />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Availability</label>
+        <input type="text" id="doctorProfileAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" readonly />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Experience</label>
+        <input type="text" id="doctorProfileExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2" readonly />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Contact</label>
+        <input type="text" id="doctorProfileContact" name="contact" class="w-full border border-gray-300 rounded px-3 py-2" readonly />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-1">Email</label>
+        <input type="email" id="doctorProfileEmail" name="email" class="w-full border border-gray-300 rounded px-3 py-2" readonly />
+      </div>
+      <div class="flex justify-end gap-2 mt-6" id="doctorProfileEditActions" style="display:none;">
+        <button type="button" id="cancelEditDoctorProfile" class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
+        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Save</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -1617,6 +1676,177 @@ const tabContents = document.querySelectorAll(".tab-content");
       window.location.href = 'login.html';
     }
   };
+
+  // Doctor Profile Modal Logic
+  let currentDoctorProfile = null;
+  let isEditDoctorProfile = false;
+  let doctorProfileImageFile = null;
+
+  function openDoctorProfileModal(doctor, editMode = false) {
+    currentDoctorProfile = doctor;
+    isEditDoctorProfile = editMode;
+    document.getElementById('doctorProfileModalTitle').textContent = editMode ? 'Edit Doctor Profile' : 'Doctor Profile';
+    document.getElementById('doctorProfileName').value = doctor.name || '';
+    document.getElementById('doctorProfileSpecialty').value = doctor.specialty || '';
+    document.getElementById('doctorProfileAvailability').value = doctor.availability || '';
+    document.getElementById('doctorProfileExperience').value = doctor.experience || '';
+    document.getElementById('doctorProfileContact').value = doctor.contact || '';
+    document.getElementById('doctorProfileEmail').value = doctor.email || '';
+    doctorProfileImageFile = null;
+    // Set image preview
+    const imgPreview = document.getElementById('doctorProfileImagePreview');
+    imgPreview.src = doctor.image || doctor.imageUrl || doctor.imageURL || doctor.img || '';
+    imgPreview.style.display = imgPreview.src ? 'block' : 'none';
+    // Show/hide image edit icon
+    document.getElementById('doctorProfileImageEditIcon').style.display = editMode ? 'block' : 'none';
+    // Set fields to readonly or editable
+    [
+      'doctorProfileName',
+      'doctorProfileSpecialty',
+      'doctorProfileAvailability',
+      'doctorProfileExperience',
+      'doctorProfileContact',
+      'doctorProfileEmail'
+    ].forEach(id => {
+      document.getElementById(id).readOnly = !editMode;
+    });
+    document.getElementById('doctorProfileEditActions').style.display = editMode ? 'flex' : 'none';
+    document.getElementById('doctorProfileModalOverlay').classList.remove('hidden');
+    // Only blur the background, not the whole page
+    document.body.classList.add('doctor-profile-blur-bg');
+  }
+
+  function closeDoctorProfileModal() {
+    document.getElementById('doctorProfileModalOverlay').classList.add('hidden');
+    document.body.classList.remove('doctor-profile-blur-bg');
+    currentDoctorProfile = null;
+    isEditDoctorProfile = false;
+    doctorProfileImageFile = null;
+  }
+  document.getElementById('closeDoctorProfileModal').onclick = closeDoctorProfileModal;
+  document.getElementById('cancelEditDoctorProfile').onclick = closeDoctorProfileModal;
+  document.getElementById('doctorProfileModalOverlay').onclick = function(e) {
+    if (e.target === this) closeDoctorProfileModal();
+  };
+
+  document.getElementById('doctorProfileImage').onchange = function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      doctorProfileImageFile = file;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        document.getElementById('doctorProfileImagePreview').src = ev.target.result;
+        document.getElementById('doctorProfileImagePreview').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  document.getElementById('doctorProfileForm').onsubmit = async function(e) {
+    e.preventDefault();
+    if (!currentDoctorProfile) return;
+    // Gather updated data
+    const updatedDoctor = {
+      name: document.getElementById('doctorProfileName').value,
+      specialty: document.getElementById('doctorProfileSpecialty').value,
+      availability: document.getElementById('doctorProfileAvailability').value,
+      experience: document.getElementById('doctorProfileExperience').value,
+      contact: document.getElementById('doctorProfileContact').value,
+      email: document.getElementById('doctorProfileEmail').value
+    };
+    try {
+      let response;
+      if (doctorProfileImageFile) {
+        // Use FormData for image upload
+        const formData = new FormData();
+        Object.keys(updatedDoctor).forEach(key => formData.append(key, updatedDoctor[key]));
+        formData.append('image', doctorProfileImageFile);
+        response = await fetch(`/api/doctors/${currentDoctorProfile._id}`, {
+          method: 'PUT',
+          body: formData
+        });
+      } else {
+        response = await fetch(`/api/doctors/${currentDoctorProfile._id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedDoctor)
+        });
+      }
+      if (!response.ok) throw new Error('Failed to update doctor profile');
+      closeDoctorProfileModal();
+      showAlert('Doctor profile updated successfully!');
+      // Optionally refresh doctor list here
+    } catch (err) {
+      alert('Error saving doctor profile: ' + err.message);
+    }
+  };
+
+  // Attach event listeners to View Profile and Edit Profile
+  function attachDoctorProfileListeners() {
+    document.querySelectorAll('.action-menu a').forEach(link => {
+      if (link.textContent.trim() === 'View Profile') {
+        link.onclick = function(e) {
+          e.preventDefault();
+          // Find doctor data from row
+          const row = link.closest('.grid');
+          const name = row.querySelector('.font-semibold')?.textContent.trim();
+          const specialty = row.querySelectorAll('div')[1]?.textContent.trim();
+          const availability = row.querySelectorAll('div')[3]?.textContent.trim();
+          // Fetch more details from backend if needed
+          fetch(`/api/doctors?name=${encodeURIComponent(name)}`)
+            .then(res => res.json())
+            .then(doctors => {
+              const doctor = Array.isArray(doctors) ? doctors[0] : doctors;
+              openDoctorProfileModal({
+                _id: doctor._id,
+                name: doctor.name,
+                specialty: doctor.specialty,
+                availability: doctor.availability || availability,
+                experience: doctor.experience || '',
+                contact: doctor.contact || '',
+                email: doctor.email || '',
+                image: doctor.image || ''
+              }, false);
+            })
+            .catch(() => {
+              // Fallback to row data if fetch fails
+              openDoctorProfileModal({ name, specialty, availability }, false);
+            });
+        };
+      }
+      if (link.textContent.trim() === 'Edit Profile') {
+        link.onclick = function(e) {
+          e.preventDefault();
+          // Find doctor data from row
+          const row = link.closest('.grid');
+          const name = row.querySelector('.font-semibold')?.textContent.trim();
+          const specialty = row.querySelectorAll('div')[1]?.textContent.trim();
+          const availability = row.querySelectorAll('div')[3]?.textContent.trim();
+          // Fetch more details from backend if needed
+          fetch(`/api/doctors?name=${encodeURIComponent(name)}`)
+            .then(res => res.json())
+            .then(doctors => {
+              const doctor = Array.isArray(doctors) ? doctors[0] : doctors;
+              openDoctorProfileModal({
+                _id: doctor._id,
+                name: doctor.name,
+                specialty: doctor.specialty,
+                availability: doctor.availability || availability,
+                experience: doctor.experience || '',
+                contact: doctor.contact || '',
+                email: doctor.email || '',
+                image: doctor.image || ''
+              }, true);
+            })
+            .catch(() => {
+              // Fallback to row data if fetch fails
+              openDoctorProfileModal({ name, specialty, availability }, true);
+            });
+        };
+      }
+    });
+  }
+  attachDoctorProfileListeners();
 </script>
 
 </body>

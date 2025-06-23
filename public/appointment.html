@@ -1605,7 +1605,11 @@ function validateNameInput() {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(confirmationData)
+            body: JSON.stringify({
+              patientData: confirmationData.patientData,
+              doctorData: confirmationData.doctorData,
+              dateData: confirmationData.dateData
+            })
           });
         } else {
           response = await fetch('/api/confirmations', {
@@ -1659,7 +1663,21 @@ function validateNameInput() {
       
       document.getElementById('confirmTime').textContent = appointmentData.time;
       document.getElementById('confirmPatientName').textContent = patientData.name;
-      document.getElementById('confirmPatientAge').textContent = patientData.ageDisplay;
+      // --- FIX: Always show a displayable age ---
+      let ageDisplay = patientData.ageDisplay;
+      if (!ageDisplay) {
+        // Try to format from age value
+        if (patientData.age === '0.25') {
+          ageDisplay = 'below 1 year';
+        } else if (patientData.age === '101') {
+          ageDisplay = 'Above 100 years';
+        } else if (patientData.age) {
+          ageDisplay = patientData.age + (isNaN(patientData.age) ? '' : ' years');
+        } else {
+          ageDisplay = 'N/A';
+        }
+      }
+      document.getElementById('confirmPatientAge').textContent = ageDisplay;
       document.getElementById('confirmPatientGender').textContent = patientData.gender;
       document.getElementById('confirmPatientBlood').textContent = patientData.blood;
       document.getElementById('confirmPatientContact').textContent = patientData.contact;
@@ -1741,7 +1759,20 @@ function validateNameInput() {
       editData = JSON.parse(localStorage.getItem('editAppointment'));
       
       // Pre-fill patient data
-      localStorage.setItem('patientData', JSON.stringify(editData.patientData));
+      let patientData = editData.patientData;
+      // --- FIX: Ensure ageDisplay is set for confirmation page ---
+      if (patientData && !patientData.ageDisplay) {
+        if (patientData.age === '0.25') {
+          patientData.ageDisplay = 'below 1 year';
+        } else if (patientData.age === '101') {
+          patientData.ageDisplay = 'Above 100 years';
+        } else if (patientData.age) {
+          patientData.ageDisplay = patientData.age + (isNaN(patientData.age) ? '' : ' years');
+        } else {
+          patientData.ageDisplay = 'N/A';
+        }
+      }
+      localStorage.setItem('patientData', JSON.stringify(patientData));
       
       // Pre-fill doctor data
       localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
