@@ -767,6 +767,25 @@
     .flatpickr-months .flatpickr-next-month {
       right: 16px !important;
     }
+    /* Make the calendar a solid white card */
+    .flatpickr-calendar {
+      background: #fff !important;
+      border-radius: 16px !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08) !important;
+      border: none !important;
+      width: 320px !important;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 0 !important;
+    }
+    /* Remove the gradient from the days grid */
+    .flatpickr-days {
+      background: none !important;
+      border-radius: 0 0 16px 16px !important;
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      min-height: 240px !important;
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -829,6 +848,16 @@
     <div class="bg-white p-6 rounded-lg shadow">
       <!-- Appointments Content -->
       <div id="appointmentsTab" class="tab-content">
+        <!-- Add this above the appointments list/table -->
+        <div class="flex items-center gap-2 mb-4" id="appointmentsFilterBar">
+          <label for="appointmentStatusFilter" class="font-medium text-gray-700">Show:</label>
+          <select id="appointmentStatusFilter" class="border rounded px-2 py-1">
+            <option value="all">All Appointments</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="rescheduled">Rescheduled</option>
+            <option value="canceled">Cancelled</option>
+          </select>
+        </div>
         <div class="flex justify-between items-center mb-4">
           <div>
             <h3 class="text-xl font-semibold">Today's Appointments</h3>
@@ -1338,124 +1367,135 @@
     }
   }
 
-  // Global variables for pagination
+  // Appointments pagination variables
   let currentAppointmentsPage = 1;
-  const appointmentsPerPage = 7;
+  const appointmentsPerPage = 5;
   let allAppointmentsData = [];
-
-  // Global variables for patients pagination
+  // Patients pagination variables (ensure these are at the top-level script scope)
   let currentPatientsPage = 1;
   const patientsPerPage = 5;
   let allPatientsData = [];
 
-  async function renderAppointmentsList(date, filterDoctor = "") {
+  async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all") {
     try {
       appointmentsList.innerHTML = `
-        <div class="flex justify-center items-center p-4">
-          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-          <span class="ml-2 text-gray-600">Loading appointments...</span>
+        <div class=\"flex justify-center items-center p-4\">
+          <div class=\"animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500\"></div>
+          <span class=\"ml-2 text-gray-600\">Loading appointments...</span>
         </div>
       `;
 
       const appointments = await fetchAppointments(date, filterDoctor);
-      console.log('Appointments data:', appointments);
-      
-      // Store all appointments data for pagination
-      allAppointmentsData = appointments;
-      
-      // Ensure current page is valid after filtering
-      const maxPages = Math.ceil(appointments.length / appointmentsPerPage);
-      if (currentAppointmentsPage > maxPages && maxPages > 0) {
-        currentAppointmentsPage = maxPages;
-      } else if (maxPages === 0) {
+      // Apply status filter
+      let filteredAppointments = appointments;
+      if (statusFilter !== "all") {
+        filteredAppointments = appointments.filter(app => app.status === statusFilter);
+      }
+      allAppointmentsData = filteredAppointments; // Store for pagination
+
+      // Reset page if out of range
+      const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
+      if (currentAppointmentsPage > totalPages && totalPages > 0) {
+        currentAppointmentsPage = totalPages;
+      } else if (totalPages === 0) {
         currentAppointmentsPage = 1;
       }
-      
-      if (!appointments || appointments.length === 0) {
+
+      if (!filteredAppointments || filteredAppointments.length === 0) {
         const formattedDate = new Date(date).toLocaleDateString('en-US', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
           day: 'numeric'
         });
-        
         appointmentsList.innerHTML = `
-          <div class="p-4 text-center text-gray-500">
-            <div class="mb-4">
-              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <div class=\"p-4 text-center text-gray-500\">
+            <div class=\"mb-4\">
+              <svg class=\"w-12 h-12 mx-auto text-gray-400\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z\" />
               </svg>
             </div>
-            <p class="text-lg font-medium mb-2">No appointments found</p>
-            <p class="text-sm">${formattedDate}</p>
-            ${filterDoctor ? `<p class="text-sm mt-1">for Dr. ${filterDoctor}</p>` : ''}
+            <p class=\"text-lg font-medium mb-2\">No appointments found</p>
+            <p class=\"text-sm\">${formattedDate}</p>
+            ${filterDoctor ? `<p class=\"text-sm mt-1\">for Dr. ${filterDoctor}</p>` : ''}
           </div>
         `;
         return;
       }
 
-      // Calculate pagination
-      const totalPages = Math.ceil(appointments.length / appointmentsPerPage);
+      // Sort all filtered appointments by time (low to high) BEFORE pagination
+      filteredAppointments = filteredAppointments.slice().sort((a, b) => {
+        const parseTime = t => {
+          if (!t) return 0;
+          // Convert '9:30 AM' or '2:00 PM' to minutes since midnight
+          const [time, modifier] = t.split(' ');
+          let [hours, minutes] = time.split(':').map(Number);
+          if (modifier && modifier.toUpperCase() === 'PM' && hours !== 12) hours += 12;
+          if (modifier && modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
+          return hours * 60 + minutes;
+        };
+        return parseTime(a.dateData?.time) - parseTime(b.dateData?.time);
+      });
+
+      // Pagination logic
       const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
       const endIndex = startIndex + appointmentsPerPage;
-      const currentPageAppointments = appointments.slice(startIndex, endIndex);
+      const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
       // Table header
       let tableHTML = `
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow-sm">
+        <div class=\"overflow-x-auto\">
+          <table class=\"min-w-full bg-white rounded-lg shadow-sm\">
             <thead>
-              <tr class="bg-gray-50 text-gray-700 text-left">
-                <th class="px-4 py-3">Patient</th>
-                <th class="px-4 py-3">Doctor</th>
-                <th class="px-4 py-3">Time</th>
-                <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Actions</th>
+              <tr class=\"bg-gray-50 text-gray-700 text-left\">
+                <th class=\"px-4 py-3\">Patient</th>
+                <th class=\"px-4 py-3\">Doctor</th>
+                <th class=\"px-4 py-3\">Time</th>
+                <th class=\"px-4 py-3\">Status</th>
+                <th class=\"px-4 py-3\">Actions</th>
               </tr>
             </thead>
             <tbody>
-      `;
+    `;
 
-      // Table rows
+      // Table rows (paginated)
       tableHTML += currentPageAppointments.map((app, idx) => {
-        console.log('Processing appointment:', JSON.stringify(app, null, 2));
-
-        // Get doctor name from the appointment data
         const doctorName = app.doctorData?.name || '';
-        
-        // Check if appointment is already canceled
         const isCanceled = app.status === 'canceled';
-
+        const isRescheduled = app.status === 'rescheduled';
+        // Status badge logic
+        let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">confirmed</span>`;
+        if (isRescheduled) {
+          statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">rescheduled</span>`;
+        } else if (isCanceled) {
+          statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700\">canceled</span>`;
+        }
         return `
-          <tr class="border-b hover:bg-gray-50 transition-colors">
-            <td class="px-4 py-3">
-              <div class="font-semibold text-gray-900">${app.patientData?.name || 'N/A'}</div>
-              <div class="text-xs text-gray-500">${app.patientData?.contact || ''}</div>
+          <tr class=\"border-b hover:bg-gray-50 transition-colors\">
+            <td class=\"px-4 py-3\">
+              <div class=\"font-semibold text-gray-900\">${app.patientData?.name || 'N/A'}</div>
+              <div class=\"text-xs text-gray-500\">${app.patientData?.contact || ''}</div>
             </td>
-            <td class="px-4 py-3">
-              <div class="font-semibold text-blue-700">${doctorName}</div>
-              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ''}</div>
+            <td class=\"px-4 py-3\">
+              <div class=\"font-semibold text-blue-700\">${doctorName}</div>
+              <div class=\"text-xs text-gray-500\">${app.doctorData?.specialty || ''}</div>
             </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-1">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <td class=\"px-4 py-3\">
+              <div class=\"flex items-center gap-1\">
+                <svg class=\"w-4 h-4 text-gray-400\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\" /></svg>
                 <span>${app.dateData?.time || 'N/A'}</span>
               </div>
             </td>
-            <td class="px-4 py-3">
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${app.status === 'pending' ? 'bg-gray-200 text-gray-700' : 
-                app.status === 'canceled' ? 'bg-red-200 text-red-700' : 
-                'bg-black text-white'}">
-                ${app.status ? app.status : 'confirmed'}
-              </span>
+            <td class=\"px-4 py-3\">
+              ${statusLabel}
             </td>
-            <td class="px-4 py-3 relative">
-              <button class="action-btn text-xl focus:outline-none">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View Details</a>
-                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ''}
-                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ''}
-                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ''}
+            <td class=\"px-4 py-3 relative\">
+              <button class=\"action-btn text-xl focus:outline-none\">...</button>
+              <div class=\"action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20\">
+                <a href=\"#\" class=\"view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>View Details</a>
+                ${!isCanceled ? `<a href=\"#\" class=\"edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ''}
+                ${!isCanceled ? `<a href=\"#\" class=\"reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ''}
+                ${!isCanceled ? `<a href=\"#\" class=\"cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600\" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ''}
               </div>
             </td>
           </tr>
@@ -1464,24 +1504,24 @@
 
       tableHTML += `</tbody></table></div>`;
 
-      // Add pagination controls if needed
+      // Pagination controls
       if (totalPages > 1) {
         tableHTML += `
-          <div class="flex justify-between items-center mt-6 px-4">
-            <div class="text-sm text-gray-600">
-              Showing ${startIndex + 1} to ${Math.min(endIndex, appointments.length)} of ${appointments.length} appointments
+          <div class=\"flex justify-between items-center mt-6 px-4\">
+            <div class=\"text-sm text-gray-600\">
+              Showing ${startIndex + 1} to ${Math.min(endIndex, filteredAppointments.length)} of ${filteredAppointments.length} appointments
             </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="changeAppointmentsPage(${currentAppointmentsPage - 1})" 
-                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
+            <div class=\"flex items-center space-x-2\">
+              <button onclick=\"changeAppointmentsPage(${currentAppointmentsPage - 1})\" 
+                class=\"px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200\"
                 ${currentAppointmentsPage === 1 ? 'disabled' : ''}>
                 Previous
               </button>
-              <span class="text-sm text-gray-600">
+              <span class=\"text-sm text-gray-600\">
                 Page ${currentAppointmentsPage} of ${totalPages}
               </span>
-              <button onclick="changeAppointmentsPage(${currentAppointmentsPage + 1})" 
-                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
+              <button onclick=\"changeAppointmentsPage(${currentAppointmentsPage + 1})\" 
+                class=\"px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200\"
                 ${currentAppointmentsPage === totalPages ? 'disabled' : ''}>
                 Next
               </button>
@@ -1491,14 +1531,13 @@
       }
 
       appointmentsList.innerHTML = tableHTML;
-
     } catch (error) {
       console.error('Error in renderAppointmentsList:', error);
       appointmentsList.innerHTML = `
-        <div class="p-4 text-center text-red-500">
-          <p class="font-semibold">Error loading appointments</p>
-          <p class="text-sm mt-2">${error.message || 'Please try again later'}</p>
-          <button onclick="renderAppointmentsList('${date}', '${filterDoctor}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        <div class=\"p-4 text-center text-red-500\">
+          <p class=\"font-semibold\">Error loading appointments</p>
+          <p class=\"text-sm mt-2\">${error.message || 'Please try again later'}</p>
+          <button onclick=\"renderAppointmentsList('${date}', '${filterDoctor}', '${statusFilter}')\" class=\"mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600\">
             Retry
           </button>
         </div>
@@ -1506,151 +1545,15 @@
     }
   }
 
-  // Function to change appointments page
+  // Pagination page change handler for appointments
   function changeAppointmentsPage(newPage) {
-    if (newPage < 1 || newPage > Math.ceil(allAppointmentsData.length / appointmentsPerPage)) {
-      return;
-    }
-    
+    const totalPages = Math.ceil(allAppointmentsData.length / appointmentsPerPage);
+    if (newPage < 1 || newPage > totalPages) return;
     currentAppointmentsPage = newPage;
-    
-    // Re-render the appointments list with existing data
-    renderAppointmentsListFromData(allAppointmentsData);
-  }
-
-  // New function to render appointments from existing data (for pagination)
-  function renderAppointmentsListFromData(appointments) {
-    try {
-      if (!appointments || appointments.length === 0) {
-        const currentDate = datePicker.value;
-        const formattedDate = new Date(currentDate).toLocaleDateString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-        
-        appointmentsList.innerHTML = `
-          <div class="p-4 text-center text-gray-500">
-            <div class="mb-4">
-              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <p class="text-lg font-medium mb-2">No appointments found</p>
-            <p class="text-sm">${formattedDate}</p>
-          </div>
-        `;
-        return;
-      }
-
-      // Calculate pagination
-      const totalPages = Math.ceil(appointments.length / appointmentsPerPage);
-      const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
-      const endIndex = startIndex + appointmentsPerPage;
-      const currentPageAppointments = appointments.slice(startIndex, endIndex);
-
-      // Table header
-      let tableHTML = `
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow-sm">
-            <thead>
-              <tr class="bg-gray-50 text-gray-700 text-left">
-                <th class="px-4 py-3">Patient</th>
-                <th class="px-4 py-3">Doctor</th>
-                <th class="px-4 py-3">Time</th>
-                <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-
-      // Table rows
-      tableHTML += currentPageAppointments.map((app, idx) => {
-        console.log('Processing appointment:', JSON.stringify(app, null, 2));
-
-        // Get doctor name from the appointment data
-        const doctorName = app.doctorData?.name || '';
-        
-        // Check if appointment is already canceled
-        const isCanceled = app.status === 'canceled';
-
-        return `
-          <tr class="border-b hover:bg-gray-50 transition-colors">
-            <td class="px-4 py-3">
-              <div class="font-semibold text-gray-900">${app.patientData?.name || 'N/A'}</div>
-              <div class="text-xs text-gray-500">${app.patientData?.contact || ''}</div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="font-semibold text-blue-700">${doctorName}</div>
-              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ''}</div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-1">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>${app.dateData?.time || 'N/A'}</span>
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${app.status === 'pending' ? 'bg-gray-200 text-gray-700' : 
-                app.status === 'canceled' ? 'bg-red-200 text-red-700' : 
-                'bg-black text-white'}">
-                ${app.status ? app.status : 'confirmed'}
-              </span>
-            </td>
-            <td class="px-4 py-3 relative">
-              <button class="action-btn text-xl focus:outline-none">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View Details</a>
-                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ''}
-                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ''}
-                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ''}
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-
-      tableHTML += `</tbody></table></div>`;
-
-      // Add pagination controls if needed
-      if (totalPages > 1) {
-        tableHTML += `
-          <div class="flex justify-between items-center mt-6 px-4">
-            <div class="text-sm text-gray-600">
-              Showing ${startIndex + 1} to ${Math.min(endIndex, appointments.length)} of ${appointments.length} appointments
-            </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="changeAppointmentsPage(${currentAppointmentsPage - 1})" 
-                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
-                ${currentAppointmentsPage === 1 ? 'disabled' : ''}>
-                Previous
-              </button>
-              <span class="text-sm text-gray-600">
-                Page ${currentAppointmentsPage} of ${totalPages}
-              </span>
-              <button onclick="changeAppointmentsPage(${currentAppointmentsPage + 1})" 
-                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
-                ${currentAppointmentsPage === totalPages ? 'disabled' : ''}>
-                Next
-              </button>
-            </div>
-          </div>
-        `;
-      }
-
-      appointmentsList.innerHTML = tableHTML;
-
-    } catch (error) {
-      console.error('Error in renderAppointmentsListFromData:', error);
-      appointmentsList.innerHTML = `
-        <div class="p-4 text-center text-red-500">
-          <p class="font-semibold">Error rendering appointments</p>
-          <p class="text-sm mt-2">${error.message || 'Please try again later'}</p>
-        </div>
-      `;
-    }
+    // Re-render with current filters
+    const date = document.getElementById('datePicker').value;
+    const searchTerm = document.getElementById('searchInput').value.trim();
+    renderAppointmentsList(date, searchTerm);
   }
 
   // Handle search input changes with debounce
@@ -2213,28 +2116,13 @@ const tabContents = document.querySelectorAll(".tab-content");
           alert('Error: Appointment ID missing. Cannot edit this appointment.');
           return;
         }
-        const editData = {
-          _id: appointmentData._id,
-          patientData: {
-            name: appointmentData.patientData?.name || '',
-            age: appointmentData.patientData?.age || '',
-            gender: appointmentData.patientData?.gender || '',
-            blood: appointmentData.patientData?.blood || '',
-            contact: appointmentData.patientData?.contact || ''
-          },
-          doctorData: {
-            _id: appointmentData.doctorData?._id || '',
-            name: appointmentData.doctorData?.name || '',
-            specialty: appointmentData.doctorData?.specialty || ''
-          },
-          dateData: {
-            date: appointmentData.dateData?.date || '',
-            time: appointmentData.dateData?.time || ''
-          },
-          status: appointmentData.status || 'pending'
-        };
-        localStorage.setItem('editAppointment', JSON.stringify(editData));
-        window.location.href = 'appointment.html?edit=1';
+        // Remove nested _id fields to avoid backend issues
+        if (appointmentData.doctorData) delete appointmentData.doctorData._id;
+        if (appointmentData.patientData) delete appointmentData.patientData._id;
+        if (appointmentData.dateData) delete appointmentData.dateData._id;
+        // Store the cleaned appointment data in localStorage for editing
+        localStorage.setItem('editAppointment', JSON.stringify(appointmentData));
+        window.location.href = `appointment.html?edit=1&id=${appointmentData._id}`;
         e.target.closest('.action-menu').classList.add('hidden');
       }
       
@@ -2765,6 +2653,16 @@ const tabContents = document.querySelectorAll(".tab-content");
   }
 
   testPatientsPagination();
+
+  // Add event listener for status filter
+  if (document.getElementById('appointmentStatusFilter')) {
+    document.getElementById('appointmentStatusFilter').addEventListener('change', function() {
+      const status = this.value;
+      const currentDate = datePicker.value;
+      const searchTerm = searchInput.value.trim();
+      renderAppointmentsList(currentDate, searchTerm, status);
+    });
+  }
 </script>
 
 </body>
