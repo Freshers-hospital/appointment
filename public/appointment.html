@@ -114,7 +114,8 @@
       right: 0;
       bottom: 0;
       background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
+      /* Removed blur effect */
+      /* backdrop-filter: blur(4px); */
       display: none;
       justify-content: center;
       align-items: center;
@@ -194,7 +195,7 @@
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step1">1</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step1Text">Select doctor</p>
+          <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient Details</p>
         </div>
 
        
@@ -204,7 +205,7 @@
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step2">2</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step2Text">Date & Time</p>
+          <p class="mt-2 text-sm text-gray-400" id="step2Text">Select doctor</p>
         </div>
 
        
@@ -214,14 +215,14 @@
             <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step3">3</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step3Text">Confirmation</p>
+          <p class="mt-2 text-sm text-gray-400" id="step3Text">Date & Time</p>
         </div>
         <div class="flex-1 text-center">
           <div class="relative">
             <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4"></div>
             <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200" id="step4">4</div>
           </div>
-          <p class="mt-2 text-sm text-gray-400" id="step4Text">Complete</p>
+          <p class="mt-2 text-sm text-gray-400" id="step4Text">Confirmation</p>
         </div>
       </div>
     </div>
@@ -1562,6 +1563,23 @@ function validateNameInput() {
     }
 
     async function confirmBooking() {
+      // Defensive: check editAppointment validity at the start
+      if (getQueryParam('edit') === '1') {
+        let editData = null;
+        try {
+          editData = JSON.parse(localStorage.getItem('editAppointment'));
+        } catch (e) {
+          localStorage.removeItem('editAppointment');
+          showAlert('Error: Corrupted appointment data for editing.');
+          return;
+        }
+        if (!editData || !editData._id) {
+          localStorage.removeItem('editAppointment');
+          showAlert('Error: Missing or invalid appointment data for editing.');
+          return;
+        }
+      }
+
       try {
         const patientData = JSON.parse(localStorage.getItem('patientData'));
         const doctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
@@ -1573,21 +1591,47 @@ function validateNameInput() {
 
         const confirmationData = {
           patientData: {
-            name: patientData.name,
-            age: patientData.age,
-            gender: patientData.gender,
-            blood: patientData.blood,
-            contact: patientData.contact
+            name: (patientData.name || '').trim(),
+            age: Number(patientData.age),
+            gender: (patientData.gender || '').trim(),
+            blood: (patientData.blood || '').trim(),
+            contact: (patientData.contact || '').trim()
           },
           doctorData: {
-            name: doctorData.name,
-            specialty: doctorData.specialty
+            name: (doctorData.name || '').trim(),
+            specialty: (doctorData.specialty || '').trim()
           },
           dateData: {
-            date: appointmentData.date,
-            time: appointmentData.time
+            date: (appointmentData.date || '').trim(),
+            time: (appointmentData.time || '').trim()
           }
         };
+        console.log('Sending confirmationData:', confirmationData);
+
+        // Robust validation for missing/invalid fields
+        for (const key in confirmationData.patientData) {
+          if (
+            confirmationData.patientData[key] === '' ||
+            confirmationData.patientData[key] === null ||
+            confirmationData.patientData[key] === undefined ||
+            (key === 'age' && isNaN(confirmationData.patientData[key]))
+          ) {
+            showAlert('Missing or invalid patient data: ' + key);
+            return;
+          }
+        }
+        for (const key in confirmationData.doctorData) {
+          if (!confirmationData.doctorData[key]) {
+            showAlert('Missing doctor data: ' + key);
+            return;
+          }
+        }
+        for (const key in confirmationData.dateData) {
+          if (!confirmationData.dateData[key]) {
+            showAlert('Missing appointment date/time: ' + key);
+            return;
+          }
+        }
 
         // Disable the confirm button to prevent double submission
         const confirmButton = document.getElementById('confirmBookingBtn');
@@ -1600,12 +1644,20 @@ function validateNameInput() {
         let response;
         if (isEditMode) {
           const editData = JSON.parse(localStorage.getItem('editAppointment'));
+          if (!editData || !editData._id) {
+            showAlert('Error: Missing or invalid appointment data for editing.');
+            return; // THIS RETURN IS IMPORTANT!
+          }
           response = await fetch(`/api/confirmations/${editData._id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(confirmationData)
+            body: JSON.stringify({
+              action: 'reschedule',
+              date: confirmationData.dateData.date,
+              time: confirmationData.dateData.time
+            })
           });
         } else {
           response = await fetch('/api/confirmations', {
@@ -1622,11 +1674,20 @@ function validateNameInput() {
           throw new Error(errorData.error || 'Failed to book appointment');
         }
 
+        // Clear booked slots cache after reschedule so time slots update correctly
+        if (isEditMode && typeof bookedSlotsCache !== 'undefined') {
+          bookedSlotsCache.clear();
+        }
+
         // Update step 4 to show checkmark
         document.getElementById('step4').innerHTML = '✓';
         
         // Show success message with blur effect
         showAlert(isEditMode ? 'Appointment updated successfully!' : 'Appointment booked successfully!');
+        // Clear editAppointment from localStorage after successful edit
+        if (isEditMode) {
+          localStorage.removeItem('editAppointment');
+        }
       } catch (error) {
         // Re-enable the confirm button if there's an error
         const confirmButton = document.getElementById('confirmBookingBtn');
@@ -1659,7 +1720,7 @@ function validateNameInput() {
       
       document.getElementById('confirmTime').textContent = appointmentData.time;
       document.getElementById('confirmPatientName').textContent = patientData.name;
-      document.getElementById('confirmPatientAge').textContent = patientData.ageDisplay;
+      document.getElementById('confirmPatientAge').textContent = patientData.age;
       document.getElementById('confirmPatientGender').textContent = patientData.gender;
       document.getElementById('confirmPatientBlood').textContent = patientData.blood;
       document.getElementById('confirmPatientContact').textContent = patientData.contact;
@@ -1736,21 +1797,29 @@ function validateNameInput() {
     // Check for edit mode
     const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
     let editData = null;
-    
     if (isEditMode) {
-      editData = JSON.parse(localStorage.getItem('editAppointment'));
-      
-      // Pre-fill patient data
-      localStorage.setItem('patientData', JSON.stringify(editData.patientData));
-      
-      // Pre-fill doctor data
-      localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
-      
-      // Pre-fill appointment data
-      localStorage.setItem('appointmentData', JSON.stringify({
-        date: editData.dateData?.date,
-        time: editData.dateData?.time
-      }));
+      try {
+        editData = JSON.parse(localStorage.getItem('editAppointment'));
+        if (!editData || !editData._id) {
+          showAlert('Error: Missing or invalid appointment data for editing.');
+          localStorage.removeItem('editAppointment');
+          throw new Error('Invalid edit data');
+        }
+        // Pre-fill patient data
+        localStorage.setItem('patientData', JSON.stringify(editData.patientData));
+        // Pre-fill doctor data
+        localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
+        // Pre-fill appointment data
+        localStorage.setItem('appointmentData', JSON.stringify({
+          date: editData.dateData?.date,
+          time: editData.dateData?.time
+        }));
+      } catch (e) {
+        showAlert('Error: Corrupted appointment data for editing.');
+        localStorage.removeItem('editAppointment');
+        // Optionally, you can redirect to dashboard:
+        // window.location.href = 'admindasboard.html';
+      }
     }
 
     // Initialize the form with patient data when DOM is ready
@@ -1794,16 +1863,19 @@ function validateNameInput() {
               let ageValue = patientData.age;
               // If age is a number, convert to string
               if (typeof ageValue === 'number') ageValue = String(ageValue);
-              // If age is '100+ years', set to '100', if 'Above 100 years', set to '101'
-              if (ageValue === '100+ years') ageValue = '100';
-              if (ageValue === 'Above 100 years') ageValue = '101';
-              // If age is like '25 years', extract the number
-              if (typeof ageValue === 'string' && ageValue.endsWith(' years')) {
-                ageValue = ageValue.replace(' years', '');
+              if (typeof ageValue === 'string') {
+                // Extract just the number if it contains 'years'
+                const match = ageValue.match(/^([0-9.]+)/);
+                if (match) ageValue = match[1];
+                if (ageValue === '100+') ageValue = '100';
+                if (ageValue === 'Above 100') ageValue = '101';
               }
-              // If not found in options, set to ''
-              if (![...ageField.options].some(opt => opt.value === ageValue)) ageValue = '';
-              ageField.value = ageValue;
+              // Only set if it matches an option
+              if ([...ageField.options].some(opt => opt.value === ageValue)) {
+                ageField.value = ageValue;
+              } else {
+                ageField.value = '';
+              }
             }
             if (genderField) genderField.value = patientData.gender || '';
             if (bloodField) bloodField.value = patientData.blood || '';
