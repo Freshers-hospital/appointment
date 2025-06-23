@@ -50,4 +50,58 @@ router.get('/with-count', async (req, res) => {
   }
 });
 
+
+
+
+
+// POST /api/doctors → Create doctor
+router.post('/', async (req, res) => {
+  try {
+    const { name, specialty, availability } = req.body;
+    const doctor = new Doctor({ name, specialty, availability });
+    await doctor.save();
+    res.status(201).json(doctor);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to add doctor' });
+  }
+});
+
+
+
+// GET /api/doctors → return all doctors
+router.get('/', async (_req, res) => {
+  try {
+    const doctors = await Doctor.find().sort({ name: 1 });
+    res.json(doctors);
+  } catch (err) {
+    console.error('Error fetching doctors:', err);
+    res.status(500).json({ error: 'Failed to fetch doctors' });
+  }
+});
+
+
+
+
+
+router.post("/", async (req, res) => {
+  try {
+    const { name, specialty, availability, timeSlots = [] } = req.body;
+    const doctor = new Doctor({ name, specialty, availability, timeSlots });
+    await doctor.save();
+    res.status(201).json(doctor);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to add doctor' });
+  }
+});
+
+
+
+
+
+
+
+
+
 module.exports = router;

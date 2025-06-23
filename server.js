@@ -21,6 +21,7 @@ const dynamicdoctor = require('./routes/dynamicdoctorRoutes');
 
 
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -33,6 +34,7 @@ app.use("/api/confirmations", confirmationRoutes);
 app.use("/api/logins", loginRoutes);
 
 app.use('/api/doctors', doctorsRouter);  
+
 
 
 app.use("/api/leaves", leaveRoutes);
