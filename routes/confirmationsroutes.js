@@ -179,6 +179,13 @@ router.put('/:id', async (req, res) => {
     if (!confirmation) {
       return res.status(404).json({ error: 'Confirmation not found' });
     }
+    // Defensive: check for required fields
+    if (!confirmation.doctor || !confirmation.doctor._id) {
+      return res.status(400).json({ error: 'Doctor information is missing or invalid.' });
+    }
+    if (!confirmation.date || !confirmation.date._id) {
+      return res.status(400).json({ error: 'Date information is missing or invalid.' });
+    }
 
     // Defensive: check for required fields
     if (action === 'reschedule' && (!date || !time)) {
@@ -224,7 +231,7 @@ router.put('/:id', async (req, res) => {
     
     res.status(400).json({ error: 'Invalid action or missing data' });
   } catch (error) {
-    console.error('Error in PUT /api/confirmations/:id:', error);
+    console.error('Error in PUT /api/confirmations/:id:', error, req.body);
     res.status(500).json({ error: error.message });
   }
 });
