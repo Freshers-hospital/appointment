@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const dotenv = require("dotenv");
+
 dotenv.config();
+
 const mongoURI = process.env.DATABASE_URL;
 console.log( mongoURI);
 console.log(typeof(mongoURI));
