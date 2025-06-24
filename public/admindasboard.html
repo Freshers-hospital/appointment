@@ -196,35 +196,28 @@
       <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
       <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
     </div>
-    <div class="flex items-center gap-4 px-20">
-      <div class="relative">
+    <div class="flex items-center gap-4 px-20 ">
+      <!-- Search Input -->
+      <div class="relative w-60 ">
         <img src="/search.webp" alt="Search" class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
-        <input type="text" id="searchInput" placeholder="Search " class="text-left py-2 rounded w-full bg-gray-100 border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 w-60 pl-8 pr-4" />
+        <input type="text" id="searchInput" placeholder="Search" class="pl-8 py-[20px] h-12 rounded w-full bg-gray-100 border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400" />
       </div>
-      <div class="relative w-60 mx-auto">
-        <!-- Fake placeholder group, absolutely centered -->
-        <div id="calendarPlaceholderGroup"
-             class="absolute inset-0 flex items-center justify-center pointer-events-none h-full">
+      <!-- Date Picker Display -->
+      <div class="relative w-60 mt-5">
+        <div id="datePickerDisplay" class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-gray-100 border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb"/>
             <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18"/>
           </svg>
-          <span class="text-gray-500" id="calendarPlaceholderText">2025-06-23</span>
+          <span id="datePickerText" class="text-gray-700">2025-06-23</span>
         </div>
-        <input
-          type="text"
-          id="datePicker"
-          class="text-center py-2 rounded w-full placeholder-transparent bg-gray-100 border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400"
-          placeholder="2025-06-23"
-          readonly
-          autocomplete="off"
-        />
+        <input type="text" id="datePicker" style="position:absolute; left:-9999px;" readonly autocomplete="off" />
       </div>
     </div>
   </div>
 
   <!-- Tabs -->
-  <div class="px-20 mt-6">
+  <div class="px-20 mt-4">
     <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
       <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active" data-tab="appointmentsTab">Appointments</button>
       <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
@@ -244,12 +237,12 @@
             <option value="all">All Appointments</option>
             <option value="confirmed">Confirmed</option>
             <option value="rescheduled">Rescheduled</option>
-            <option value="canceled">Cancelled</option>
+            <option value="cancelled">Cancelled</option>
           </select>
         </div>
         <div class="flex justify-between items-center mb-4">
           <div>
-            <h3 class="text-xl font-semibold">Today's Appointments</h3>
+            <h3 class="text-xl font-semibold" id="appointmentsTitle">Today's Appointments</h3>
             <p class="text-gray-500" id="selectedDate">No date selected</p>
           </div>
           <a href="appointment.html"><button id="addBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Appointment</button></a>
@@ -353,7 +346,7 @@
     <!-- Card Header -->
     <div class="text-center mb-6">
       <h2 class="text-2xl font-bold text-gray-800">Viewing Details</h2>
-      <div class="mt-4 text-lg font-semibold text-blue-600" id="modalPatientName"></div>
+      <div class="mt-4 text-lg font-semibold text-blue-600" id="modalAppointmentPatientName"></div>
       <div class="mt-2 text-md font-medium text-gray-600" id="modalDoctorName"></div>
       <div class="mt-2 text-sm text-gray-500" id="modalDateTime"></div>
     </div>
@@ -633,16 +626,48 @@
     dateFormat: "Y-m-d",
     allowInput: false,
     defaultDate: "2025-06-23",
-    inline: false, // popup mode
+    static: true,
     onChange: function(selectedDates, dateStr) {
-      document.getElementById('calendarPlaceholderText').textContent = dateStr || "2025-06-23";
+      console.log('[Flatpickr] Date selected:', dateStr);
+      document.getElementById('datePickerText').textContent = dateStr;
+      // Update the date display to show the selected date
+      const selectedDateDisplay = document.getElementById('selectedDate');
+      if (selectedDateDisplay) {
+        const selectedDateObj = new Date(dateStr);
+        selectedDateDisplay.textContent = selectedDateObj.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      }
+      // Update lists based on active tab
       const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
       const searchTerm = document.getElementById('searchInput').value.trim();
+      console.log('[Flatpickr] Active tab:', activeTab, 'Search term:', searchTerm);
       if (activeTab === 'appointmentsTab') {
-        renderAppointmentsList(dateStr, searchTerm);
+        if (typeof renderAppointmentsList === 'function') {
+          console.log('[Flatpickr] Calling renderAppointmentsList');
+          renderAppointmentsList(dateStr, searchTerm);
+        } else {
+          console.error('[Flatpickr] renderAppointmentsList is not a function!');
+        }
       } else if (activeTab === 'patientsTab') {
-        fetchAndDisplayPatients(dateStr, searchTerm);
+        if (typeof fetchAndDisplayPatients === 'function') {
+          console.log('[Flatpickr] Calling fetchAndDisplayPatients');
+          fetchAndDisplayPatients(dateStr, searchTerm);
+        } else {
+          console.error('[Flatpickr] fetchAndDisplayPatients is not a function!');
+        }
       }
+    }
+  });
+  document.getElementById('datePickerDisplay').addEventListener('click', function() {
+    console.log('[Flatpickr] datePickerDisplay clicked');
+    if (document.getElementById('datePicker')._flatpickr) {
+      document.getElementById('datePicker')._flatpickr.open();
+      console.log('[Flatpickr] Calendar opened');
+    } else {
+      console.error('[Flatpickr] Flatpickr instance not found!');
     }
   });
 
@@ -759,12 +784,9 @@
       throw error;
     }
   }
-
-  // Appointments pagination variables
   let currentAppointmentsPage = 1;
   const appointmentsPerPage = 5;
   let allAppointmentsData = [];
-  // Patients pagination variables (ensure these are at the top-level script scope)
   let currentPatientsPage = 1;
   const patientsPerPage = 5;
   let allPatientsData = [];
@@ -779,14 +801,31 @@
       `;
 
       const appointments = await fetchAppointments(date, filterDoctor);
-      // Apply status filter
       let filteredAppointments = appointments;
+      
+      // Debug: Log all unique status values in appointments
+      const uniqueStatuses = [...new Set(appointments.map(app => app.status))];
+      console.log('All unique status values in appointments:', uniqueStatuses);
+      console.log('Status filter selected:', statusFilter);
+      
       if (statusFilter !== "all") {
-        filteredAppointments = appointments.filter(app => app.status === statusFilter);
+        filteredAppointments = appointments.filter(app => {
+          const appointmentStatus = app.status || 'confirmed'; // Default to confirmed if no status
+          
+          // Handle both spellings of cancelled/canceled
+          let matches = false;
+          if (statusFilter.toLowerCase() === 'cancelled') {
+            matches = appointmentStatus.toLowerCase() === 'cancelled' || appointmentStatus.toLowerCase() === 'canceled';
+          } else {
+            matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
+          }
+          
+          console.log(`Appointment status: "${appointmentStatus}" vs filter: "${statusFilter}" - matches: ${matches}`);
+          return matches;
+        });
+        console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
       }
-      allAppointmentsData = filteredAppointments; // Store for pagination
-
-      // Reset page if out of range
+      allAppointmentsData = filteredAppointments; 
       const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
       if (currentAppointmentsPage > totalPages && totalPages > 0) {
         currentAppointmentsPage = totalPages;
@@ -816,7 +855,7 @@
         return;
       }
 
-      // Sort all filtered appointments by time (low to high) BEFORE pagination
+      
       filteredAppointments = filteredAppointments.slice().sort((a, b) => {
         const parseTime = t => {
           if (!t) return 0;
@@ -854,7 +893,7 @@
       // Table rows (paginated)
       tableHTML += currentPageAppointments.map((app, idx) => {
         const doctorName = app.doctorData?.name || '';
-        const isCanceled = app.status === 'canceled';
+        const isCanceled = app.status === 'canceled' || app.status === 'cancelled';
         const isRescheduled = app.status === 'rescheduled';
         // Status badge logic
         let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">confirmed</span>`;
@@ -1803,11 +1842,11 @@ const tabContents = document.querySelectorAll(".tab-content");
   // Patient Details Modal Logic
   function openPatientDetailsModal(patient) {
     // Always show the patient name, try all possible sources
-    let name = patient.name || (patient.details && patient.details.name) || (patient.details && patient.details[0] && patient.details[0].name) || 'N/A';
-    let age = patient.age || (patient.details && patient.details.age) || (patient.details && patient.details[0] && patient.details[0].age) || 'N/A';
-    let gender = patient.gender || (patient.details && patient.details.gender) || (patient.details && patient.details[0] && patient.details[0].gender) || 'N/A';
-    let blood = patient.blood || (patient.details && patient.details.blood) || (patient.details && patient.details[0] && patient.details[0].blood) || 'N/A';
-    let contact = patient.contact || (patient.details && patient.details.contact) || (patient.details && patient.details[0] && patient.details[0].contact) || 'N/A';
+    let name = patient.name || (patient.details && patient.details.name) || 'N/A';
+    let age = patient.age || (patient.details && patient.details.age) || 'N/A';
+    let gender = patient.gender || (patient.details && patient.details.gender) || 'N/A';
+    let blood = patient.blood || (patient.details && patient.details.blood) || 'N/A';
+    let contact = patient.contact || (patient.details && patient.details.contact) || 'N/A';
     document.getElementById('modalPatientName').textContent = name;
     document.getElementById('modalPatientAgeGender').textContent = `${age} / ${gender}`;
     document.getElementById('modalPatientBlood').textContent = blood;
@@ -1832,6 +1871,7 @@ const tabContents = document.querySelectorAll(".tab-content");
   document.getElementById('patientsList').addEventListener('click', function(e) {
     if (e.target.classList.contains('patient-placeholder')) {
       const patientData = JSON.parse(e.target.getAttribute('data-patient'));
+      console.log('Patient data for modal:', patientData); // Debug log
       openPatientDetailsModal(patientData);
     }
   });
