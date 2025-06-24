@@ -1311,48 +1311,6 @@ const tabContents = document.querySelectorAll(".tab-content");
     }
   };
 
-
-/* ─── Fetch doctors and refresh both table & dropdown ─────────────── */
-async function getDoctors() {
-  const res = await fetch('/api/doctors');
-  if (!res.ok) throw new Error('Failed to fetch doctors');
-  return res.json();
-}
-
-/* ─── Render rows inside the Doctors tab table ────────────────────── */
-async function renderDoctorsTable() {
-  try {
-    const doctors = await getDoctors();
-    const tbody   = document.getElementById('doctorsTableBody');
-
-    tbody.innerHTML = doctors.map(doc => `
-      <tr class="border-t doctor-row">
-        <td class="px-6 py-2 font-semibold">Dr. ${doc.name}</td>
-        <td class="px-6 py-2">${doc.specialty}</td>
-        <td class="px-6 py-2">—</td>
-        <td class="px-6 py-2">${doc.availability}</td>
-        <td class="px-4 py-2 relative">
-          <button class="action-btn text-xl">…</button>
-          <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100">View Profile</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Edit Profile</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100">View Availability</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Manage Availability</a>
-          </div>
-        </td>
-      </tr>
-    `).join('');
-
-    attachManageAvailabilityListeners(); // keep “…” menus working
-  } catch (err) {
-    console.error(err);
-    alert('Failed to refresh doctors list: ' + err.message);
-  }
-}
-
-
-
-
   // Attach event listeners to all Manage Availability links/buttons
   function attachManageAvailabilityListeners() {
     document.querySelectorAll('.action-menu a').forEach(link => {
@@ -1507,11 +1465,7 @@ async function renderDoctorsTable() {
   };
 
 
-  document.addEventListener('DOMContentLoaded', async function() {
-
-      await renderDoctorsTable();   // fills Doctors tab on load
-  await loadDoctors();          // fills doctor dropdown
-
+  document.addEventListener('DOMContentLoaded', function() {
  
     const oldClickHandler = document.onclick;
     document.onclick = null;
