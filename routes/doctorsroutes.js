@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Doctor = require('../models/doctor');
+const Doctor = require('../models/doctorModel');
 
-// POST - Add a new doctor
+
 router.post('/', async (req, res) => {
   try {
     const { name, specialty, availability } = req.body;
@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET - List all doctors
 router.get('/', async (req, res) => {
   try {
     const doctors = await Doctor.find();
