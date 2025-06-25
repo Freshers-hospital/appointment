@@ -114,8 +114,7 @@
       right: 0;
       bottom: 0;
       background-color: rgba(0, 0, 0, 0.5);
-      /* Removed blur effect */
-      /* backdrop-filter: blur(4px); */
+    
       display: none;
       justify-content: center;
       align-items: center;
@@ -456,7 +455,7 @@
       <p class="text-gray-600 mb-6">Select your preferred appointment date and time</p>
       
       <div class="grid grid-cols-2 gap-8">
-        <!-- Calendar -->
+      
         <div class="border rounded-lg p-4">
           <div class="flex justify-between items-center mb-4">
             <button type="button" onclick="changeMonth(-1)" class="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-md transition-colors duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
@@ -489,7 +488,7 @@
           </div>
         </div>
 
-        <!-- Time Slots -->
+      
         <div>
           <div id="noTime" class="flex flex-col items-center justify-center h-64 text-gray-500 border rounded-lg p-4">
             <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -518,14 +517,13 @@
     </div>
   </section>
 
-  <!-- Confirmation Section -->
   <section id="confirmationSection" class="section">
     <div class="max-w-4xl mx-auto mt-8">
       <div class="bg-white rounded-lg shadow-sm p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Confirm Your Appointment</h2>
         <p class="text-gray-500 text-sm mb-6">Please review your appointment details before confirming.</p>
         <div class="grid grid-cols-1 gap-4 mb-4">
-          <!-- Doctor Info -->
+       
           <div class="border rounded-lg p-4 bg-gray-50 mb-2">
             <p class="text-gray-800 font-semibold text-lg mb-2">Doctor Information</p>
             <div class="space-y-2">
@@ -564,7 +562,7 @@
             <div><span class="text-gray-500">Phone:</span> <span class="text-gray-800 ml-1" id="confirmPatientContact"></span></div>
           </div>
         </div>
-        <!-- Action Buttons -->
+       
         <div class="flex justify-between mt-6">
           <button onclick="goBackToDateTime()" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">
             Back
@@ -798,14 +796,14 @@ function validateNameInput() {
       };
       localStorage.setItem('selectedDoctor', JSON.stringify(doctorData));
       
-      // Check if we're in edit mode
+    
       const isEditMode = getQueryParam('edit') === '1';
       
       if (isEditMode) {
-        // In edit mode, auto-advance to date/time section
+     
         goToDateTimeSection();
       } else {
-        // Normal mode - enable next button
+   
         document.getElementById('doctorNextBtn').disabled = false;
         document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
         document.getElementById('doctorNextBtn').classList.add('bg-blue-600');
@@ -932,15 +930,15 @@ function validateNameInput() {
     function goBack() {
       const currentSection = document.querySelector('.section.active').id;
       if (currentSection === 'doctorSection') {
-        // Check if we're in edit mode
+       
         const isEditMode = getQueryParam('edit') === '1';
         if (isEditMode) {
-          // If in edit mode, redirect to admin dashboard
+         
           window.location.href = 'admindasboard.html';
           return;
         }
         
-        // If not in edit mode, proceed with normal flow
+      
         showSection('patientSection');
         updateStepper(1);
         
@@ -973,7 +971,6 @@ function validateNameInput() {
 
       const nextButton = document.getElementById('patientNextBtn');
 
-      // Check if all fields are filled
       if (name && age && gender && blood && contact.length === 10) {
         nextButton.disabled = false;
         nextButton.classList.remove('bg-gray-400');
@@ -987,22 +984,20 @@ function validateNameInput() {
       }
     }
 
-    // Initialize form validation on page load
     document.addEventListener('DOMContentLoaded', () => {
-      // Disable next button initially
+     
       const nextButton = document.getElementById('patientNextBtn');
       nextButton.disabled = true;
       nextButton.classList.add('bg-gray-400');
       nextButton.classList.remove('bg-blue-600');
 
-      // Add required attribute to all form fields
       document.getElementById('patient-name').required = true;
       document.getElementById('age').required = true;
       document.getElementById('patient-gender').required = true;
       document.getElementById('blood-group').required = true;
       document.getElementById('contact-number').required = true;
 
-      // Add validation on input and change events
+    
       const formInputs = [
         'patient-name',
         'age',
@@ -1017,11 +1012,9 @@ function validateNameInput() {
           element.addEventListener(eventType, () => {
             checkPatientForm();
             
-            // Add visual feedback for invalid fields
             if (!element.value) {
               element.classList.add('border-red-500');
               
-              // Show error message if field is empty after interaction
               let errorDiv = element.nextElementSibling;
               if (!errorDiv || !errorDiv.classList.contains('error-message')) {
                 errorDiv = document.createElement('div');
@@ -1032,7 +1025,6 @@ function validateNameInput() {
             } else {
               element.classList.remove('border-red-500');
               
-              // Remove error message if field is filled
               const errorDiv = element.nextElementSibling;
               if (errorDiv && errorDiv.classList.contains('error-message')) {
                 errorDiv.remove();
@@ -1042,7 +1034,6 @@ function validateNameInput() {
         });
       });
 
-      // Special validation for contact number
       const contactInput = document.getElementById('contact-number');
       contactInput.addEventListener('blur', () => {
         if (contactInput.value && contactInput.value.length !== 10) {
@@ -1057,7 +1048,6 @@ function validateNameInput() {
         }
       });
 
-      // Special validation for name (only letters and spaces)
       const nameInput = document.getElementById('patient-name');
       
     });
@@ -1243,7 +1233,7 @@ function validateNameInput() {
         const isWithinBookingWindow = isAvailableMonth(thisDate);
         const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
         
-        // NEW: Disable today if all slots are past
+        
         let isTodayAllSlotsPast = false;
         if (
           selectedDoctor &&
@@ -1545,25 +1535,24 @@ function validateNameInput() {
       showSection('dateTimeSection');
       updateStepper(2);
       
-      // Restore the previously selected date and time
+      
       const appointmentData = JSON.parse(localStorage.getItem('appointmentData') || '{}');
       if (appointmentData.date && appointmentData.time) {
         selectedDate = appointmentData.date;
         selectedTime = appointmentData.time;
         
-        // Re-render the calendar with the selected date
         const [month, day, year] = selectedDate.split('/');
         currentDate = new Date(year, month - 1, day);
         renderCalendar(currentDate);
         updateMonthNavigation();
         
-        // Update time slots to show the selected time
+        
         updateTimeSlots();
       }
     }
 
     async function confirmBooking() {
-      // Defensive: check editAppointment validity at the start
+     
       if (getQueryParam('edit') === '1') {
         let editData = null;
         try {
@@ -1608,7 +1597,6 @@ function validateNameInput() {
         };
         console.log('Sending confirmationData:', confirmationData);
 
-        // Robust validation for missing/invalid fields
         for (const key in confirmationData.patientData) {
           if (
             confirmationData.patientData[key] === '' ||
@@ -1633,20 +1621,19 @@ function validateNameInput() {
           }
         }
 
-        // Disable the confirm button to prevent double submission
+    
         const confirmButton = document.getElementById('confirmBookingBtn');
         confirmButton.disabled = true;
         confirmButton.textContent = 'Confirming...';
         confirmButton.classList.add('opacity-75');
 
-        // --- EDIT MODE LOGIC ---
         const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
         let response;
         if (isEditMode) {
           const editData = JSON.parse(localStorage.getItem('editAppointment'));
           if (!editData || !editData._id) {
             showAlert('Error: Missing or invalid appointment data for editing.');
-            return; // THIS RETURN IS IMPORTANT!
+            return; 
           }
           response = await fetch(`/api/confirmations/${editData._id}`, {
             method: 'PUT',
@@ -1674,22 +1661,22 @@ function validateNameInput() {
           throw new Error(errorData.error || 'Failed to book appointment');
         }
 
-        // Clear booked slots cache after reschedule so time slots update correctly
+        
         if (isEditMode && typeof bookedSlotsCache !== 'undefined') {
           bookedSlotsCache.clear();
         }
 
-        // Update step 4 to show checkmark
+        
         document.getElementById('step4').innerHTML = '✓';
         
-        // Show success message with blur effect
+        
         showAlert(isEditMode ? 'Appointment updated successfully!' : 'Appointment booked successfully!');
-        // Clear editAppointment from localStorage after successful edit
+       
         if (isEditMode) {
           localStorage.removeItem('editAppointment');
         }
       } catch (error) {
-        // Re-enable the confirm button if there's an error
+       
         const confirmButton = document.getElementById('confirmBookingBtn');
         confirmButton.disabled = false;
         confirmButton.textContent = 'Confirm Appointment';
@@ -1788,13 +1775,13 @@ function validateNameInput() {
       }
     }
 
-    // --- EDIT MODE LOGIC ---
+  
     function getQueryParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
     }
 
-    // Check for edit mode
+  
     const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
     let editData = null;
     if (isEditMode) {
@@ -1805,11 +1792,11 @@ function validateNameInput() {
           localStorage.removeItem('editAppointment');
           throw new Error('Invalid edit data');
         }
-        // Pre-fill patient data
+        
         localStorage.setItem('patientData', JSON.stringify(editData.patientData));
-        // Pre-fill doctor data
+        
         localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
-        // Pre-fill appointment data
+       
         localStorage.setItem('appointmentData', JSON.stringify({
           date: editData.dateData?.date,
           time: editData.dateData?.time
@@ -1817,32 +1804,29 @@ function validateNameInput() {
       } catch (e) {
         showAlert('Error: Corrupted appointment data for editing.');
         localStorage.removeItem('editAppointment');
-        // Optionally, you can redirect to dashboard:
-        // window.location.href = 'admindasboard.html';
+       
       }
     }
 
-    // Initialize the form with patient data when DOM is ready
+  
     document.addEventListener('DOMContentLoaded', () => {
       if (isEditMode && editData) {
-        // Update page title for edit mode
+       
         const pageTitle = document.getElementById('pageTitle');
         if (pageTitle) {
           pageTitle.textContent = 'Edit Appointment';
         }
         
-        // Hide stepper for edit mode
+        
         const stepperContainer = document.getElementById('stepperContainer');
         if (stepperContainer) {
           stepperContainer.style.display = 'none';
         }
         
-        // Pre-fill patient form fields
         const patientData = editData.patientData;
         if (patientData) {
           console.log('Setting patient data in edit mode:', patientData);
-          
-          // Function to populate form fields
+         
           const populateFormFields = () => {
             const nameField = document.getElementById('patient-name');
             const ageField = document.getElementById('age');
@@ -1861,16 +1845,16 @@ function validateNameInput() {
             if (nameField) nameField.value = patientData.name || '';
             if (ageField) {
               let ageValue = patientData.age;
-              // If age is a number, convert to string
+           
               if (typeof ageValue === 'number') ageValue = String(ageValue);
               if (typeof ageValue === 'string') {
-                // Extract just the number if it contains 'years'
+                
                 const match = ageValue.match(/^([0-9.]+)/);
                 if (match) ageValue = match[1];
                 if (ageValue === '100+') ageValue = '100';
                 if (ageValue === 'Above 100') ageValue = '101';
               }
-              // Only set if it matches an option
+              
               if ([...ageField.options].some(opt => opt.value === ageValue)) {
                 ageField.value = ageValue;
               } else {
@@ -1881,7 +1865,7 @@ function validateNameInput() {
             if (bloodField) bloodField.value = patientData.blood || '';
             if (contactField) contactField.value = patientData.contact || '';
             
-            // Enable the next button since we have data
+           
             const nextBtn = document.getElementById('patientNextBtn');
             if (nextBtn) {
               nextBtn.disabled = false;
@@ -1890,25 +1874,25 @@ function validateNameInput() {
             }
           };
           
-          // Try to populate immediately
+         
           populateFormFields();
           
-          // Also try after a short delay to ensure everything is loaded
+         
           setTimeout(populateFormFields, 200);
           setTimeout(populateFormFields, 500);
         }
 
-        // Skip to select doctor step
+       
         showSection('doctorSection');
         displayDoctors();
         
-        // Hide back and next buttons in doctor section for edit mode
+      
         const doctorBackBtn = document.getElementById('doctorBackBtn');
         const doctorNextBtn = document.getElementById('doctorNextBtn');
         if (doctorBackBtn) doctorBackBtn.style.display = 'none';
         if (doctorNextBtn) doctorNextBtn.style.display = 'none';
         
-        // Pre-select the current doctor
+       
         setTimeout(() => {
           const doctorData = editData.doctorData;
           if (doctorData && doctorData.name) {
@@ -1924,7 +1908,7 @@ function validateNameInput() {
       }
     });
 
-    // Cancel Modal Logic
+ 
     function openCancelModal(app) {
       cancelAppointmentData = app;
       document.getElementById('cancelModalOverlay').classList.remove('hidden');
@@ -1950,13 +1934,13 @@ function validateNameInput() {
       }
 
       try {
-        // Show loading state
+        
         const confirmButton = document.getElementById('confirmCancelBtn');
         confirmButton.disabled = true;
         confirmButton.textContent = 'Canceling...';
         confirmButton.classList.add('opacity-75');
 
-        // Make API call to delete the appointment
+       
         const response = await fetch(`/api/confirmations/${cancelAppointmentData._id}`, {
           method: 'DELETE',
           headers: {
@@ -1969,13 +1953,13 @@ function validateNameInput() {
           throw new Error(errorData.error || 'Failed to cancel appointment');
         }
 
-        // Close the modal
+       
         closeCancelModal();
 
-        // Show success message
+       
         showAlert('Appointment cancelled successfully!');
 
-        // Refresh the appointments list
+       
         const currentDate = datePicker.value;
         const searchTerm = searchInput.value.trim();
         await renderAppointmentsList(currentDate, searchTerm);
@@ -1984,7 +1968,7 @@ function validateNameInput() {
         console.error('Error cancelling appointment:', error);
         alert('Error cancelling appointment: ' + error.message);
         
-        // Reset button state
+       
         const confirmButton = document.getElementById('confirmCancelBtn');
         confirmButton.disabled = false;
         confirmButton.textContent = 'Yes, Cancel';
