@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// MongoDB connection
 
-// API Routes
+
+
 app.use("/api/confirmations", confirmationRoutes);
 app.use("/api/logins", loginRoutes);
 app.use("/api/doctors", doctorsRoutes);

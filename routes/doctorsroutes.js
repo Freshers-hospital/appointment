@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Doctor = require('../models/doctor');
 
-// POST - Add a new doctor
 router.post('/', async (req, res) => {
   try {
-    const { name, specialty, availability } = req.body;
-    const doctor = new Doctor({ name, specialty, availability });
+    console.log('Add Doctor POST body:', req.body); 
+    const { name, specialty, availability, experience, qualification, education, image } = req.body;
+    const doctor = new Doctor({ name, specialty, availability, experience, qualification, education, image });
     await doctor.save();
     res.status(201).json(doctor);
   } catch (error) {
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET - List all doctors
+
 router.get('/', async (req, res) => {
   try {
     const doctors = await Doctor.find();
