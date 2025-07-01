@@ -186,6 +186,11 @@
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
+<script>
+  if (!localStorage.getItem('admin_jwt')) {
+    window.location.href = 'login.html';
+  }
+</script>
 
 <nav class="bg-white shadow py-2 px-[110px]">
   <div class="flex justify-between items-center w-full">
@@ -639,8 +644,9 @@
   flatpickr("#datePicker", {
     dateFormat: "Y-m-d",
     allowInput: false,
-    defaultDate: "2025-06-23",
-    static: true,
+   defaultDate: "2025-06-23",
+
+  static: true,
     onReady: function(selectedDates, dateStr, instance) {
       
       const monthElem = instance.calendarContainer.querySelector('.flatpickr-current-month');
