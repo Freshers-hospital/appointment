@@ -11,25 +11,27 @@ const port = process.env.PORT;
 
 const confirmationRoutes = require("./routes/confirmationsroutes");
 
-const loginRoutes = require("./routes/loginsroute");
+const doctorsRoutes = require("./routes/doctorsroutes");
+const { router: adminRoutes } = require('./routes/adminroutes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// MongoDB connection
 
-// API Routes
+
+
 app.use("/api/confirmations", confirmationRoutes);
 
-app.use("/api/logins", loginRoutes);
+app.use("/api/doctors", doctorsRoutes);
+app.use("/api/admin", adminRoutes);
 
-// Serve main HTML
+
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "login.html"));
+    res.sendFile(path.join(__dirname, "public", "adminregister.html"));
 });
 
-// Start server
+
 
 mongoose.connect(mongoURI).then(() => {
     app.listen(port, () => {
@@ -39,4 +41,3 @@ mongoose.connect(mongoURI).then(() => {
     console.error("MongoDB connection error:", err);
     process.exit(1);
 }); 
-
