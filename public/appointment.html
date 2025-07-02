@@ -2018,6 +2018,15 @@ function validateNameInput() {
         }
       });
     });
+
+    if (document.getElementById('appointmentStatusFilter')) {
+      document.getElementById('appointmentStatusFilter').addEventListener('change', function() {
+        const status = this.value;
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        renderAppointmentsList(currentDate, searchTerm, status);
+      });
+    }
   </script>
 </body>
 </html>
