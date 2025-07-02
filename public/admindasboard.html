@@ -983,9 +983,9 @@
      
       tableHTML += currentPageAppointments.map((app, idx) => {
         const doctorName = app.doctorData?.name || '';
-        const isCanceled = app.status === 'canceled' || app.status === 'cancelled';
-        const isRescheduled = app.status === 'rescheduled';
-        
+        const normalizedStatus = (app.status || '').trim().toLowerCase();
+        const isCanceled = normalizedStatus === 'canceled' || normalizedStatus === 'cancelled';
+        const isRescheduled = normalizedStatus === 'rescheduled';
         let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">confirmed</span>`;
         if (isRescheduled) {
           statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">rescheduled</span>`;
@@ -1164,7 +1164,6 @@ const tabContents = document.querySelectorAll(".tab-content");
     try {
       const response = await fetch('/api/confirmations');
       if (!response.ok) throw new Error('Failed to fetch patient data');
-      
       const allAppointments = await response.json();
       const patientsListContainer = document.getElementById('patientsList');
       const patientsHeader = document.getElementById('patientsHeader');
@@ -1175,57 +1174,21 @@ const tabContents = document.querySelectorAll(".tab-content");
         day: 'numeric',
         year: 'numeric'
       }) : null;
-      
-      
-      const patientsMap = new Map();
-      allAppointments.forEach(app => {
-       
-        if (!app.patientData || !app.patientData.name) {
-          return;
-        }
-        const patientKey = `${app.patientData.name}-${app.patientData.contact}`;
-        if (!patientsMap.has(patientKey)) {
-          patientsMap.set(patientKey, {
-            details: app.patientData,
-            appointments: []
-          });
-        }
-        if (app.dateData && app.dateData.date) {
-          patientsMap.get(patientKey).appointments.push({
-            date: app.dateData.date,
-            status: app.status || 'confirmed'
-          });
-        }
-      });
-      
-     
-      const finalPatientList = [];
-      for (const [patientKey, patientData] of patientsMap.entries()) {
-        const patientName = patientData.details.name || '';
+
+      // Instead of grouping, just filter and list all appointments
+      let filteredAppointments = allAppointments.filter(app => {
+        if (!app.patientData || !app.patientData.name) return false;
+        const patientName = app.patientData.name || '';
         const matchesSearch = !searchTerm || patientName.toLowerCase().includes(searchTerm.toLowerCase());
+        const hasAppointmentOnDate = formattedSelectedDate ? (app.dateData && app.dateData.date === formattedSelectedDate) : true;
+        return matchesSearch && hasAppointmentOnDate;
+      });
 
-        
-        const hasAppointmentOnDate = formattedSelectedDate 
-          ? patientData.appointments.some(a => a.date === formattedSelectedDate)
-          : true; 
-        
-        if (matchesSearch && hasAppointmentOnDate) {
-          finalPatientList.push(patientData);
-        }
-      }
-
-    
-      allPatientsData = finalPatientList;
-      
-      
+      allPatientsData = filteredAppointments;
       currentPatientsPage = 1;
 
-      if (finalPatientList.length === 0) {
-       
-        if (patientsHeader) {
-          patientsHeader.style.display = 'none';
-        }
-        
+      if (filteredAppointments.length === 0) {
+        if (patientsHeader) patientsHeader.style.display = 'none';
         let message = 'No patients found';
         if (searchTerm) message += ` for "${searchTerm}"`;
         if (formattedSelectedDate) message += ` with appointments on ${new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
@@ -1242,22 +1205,12 @@ const tabContents = document.querySelectorAll(".tab-content");
         `;
         return;
       }
-
-      
-      if (patientsHeader) {
-        patientsHeader.style.display = 'grid';
-      }
-
-      
+      if (patientsHeader) patientsHeader.style.display = 'grid';
       renderPatientsListWithPagination();
-
     } catch (error) {
       console.error('Error fetching patient data:', error);
-      
       const patientsHeader = document.getElementById('patientsHeader');
-      if (patientsHeader) {
-        patientsHeader.style.display = 'none';
-      }
+      if (patientsHeader) patientsHeader.style.display = 'none';
       document.getElementById('patientsList').innerHTML = `
         <div class="p-4 text-center text-red-500">
           <p class="font-semibold">Error loading patient data</p>
@@ -1270,88 +1223,51 @@ const tabContents = document.querySelectorAll(".tab-content");
     }
   }
 
-  
   function renderPatientsListWithPagination() {
     const patientsListContainer = document.getElementById('patientsList');
     const patientsHeader = document.getElementById('patientsHeader');
-    
-    if (patientsHeader) {
-      patientsHeader.style.display = 'none';
-    }
+    if (patientsHeader) patientsHeader.style.display = 'none';
     if (!allPatientsData || allPatientsData.length === 0) {
       patientsListContainer.innerHTML = '<div class="p-4 text-center text-gray-500">No patients found</div>';
       return;
     }
-    
-    if (patientsHeader) {
-      patientsHeader.style.display = 'grid';
-    }
-    
-   
+    if (patientsHeader) patientsHeader.style.display = 'grid';
     const totalPages = Math.ceil(allPatientsData.length / patientsPerPage);
     const startIndex = (currentPatientsPage - 1) * patientsPerPage;
     const endIndex = startIndex + patientsPerPage;
     const currentPagePatients = allPatientsData.slice(startIndex, endIndex);
-
-   
     let patientsHTML = '';
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    currentPagePatients.forEach(patient => {
-      const sortedAppointments = patient.appointments
-        .map(a => new Date(a.date))
-        .sort((a, b) => a - b);
-      
-      const futureAppointments = sortedAppointments.filter(d => d >= today);
-      const pastAppointments = sortedAppointments.filter(d => d < today);
-
-      const upcomingDate = futureAppointments.length > 0
-        ? futureAppointments[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-        : '<span class="text-gray-400">N/A</span>';
-      
-      const lastVisit = pastAppointments.length > 0
-        ? pastAppointments[pastAppointments.length - 1].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-        : '<span class="text-gray-400">N/A</span>';
-
-      // Check if all appointments are cancelled
-      const allCancelled = patient.appointments.length > 0 && patient.appointments.every(a => (a.status || '').toLowerCase() === 'canceled' || (a.status || '').toLowerCase() === 'cancelled');
-
+    currentPagePatients.forEach(app => {
+      const patient = app.patientData || {};
+      const upcomingDate = app.dateData?.date || '<span class="text-gray-400">N/A</span>';
+      const lastVisit = app.dateData?.date || '<span class="text-gray-400">N/A</span>';
       patientsHTML += `
         <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-          <!-- Patient -->
           <div class="col-span-3 flex items-center">
             <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0 cursor-pointer patient-placeholder" 
               data-patient='${JSON.stringify({
-                name: patient.details.name || 'N/A',
-                age: patient.details.age || 'N/A',
-                gender: patient.details.gender || 'N/A',
-                blood: patient.details.blood || 'N/A',
-                contact: patient.details.contact || 'N/A',
-                upcomingDate: upcomingDate.replace(/<[^>]+>/g, ''),
-                lastVisit: lastVisit.replace(/<[^>]+>/g, '')
+                name: patient.name || 'N/A',
+                age: patient.age || 'N/A',
+                gender: patient.gender || 'N/A',
+                blood: patient.blood || 'N/A',
+                contact: patient.contact || 'N/A',
+                upcomingDate: upcomingDate,
+                lastVisit: lastVisit
               })}'
             ></div>
             <div>
-              <div class="font-semibold ${allCancelled ? 'text-red-600' : 'text-gray-800'}">${patient.details.name || 'N/A'}</div>
-              <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : '0000'}</div>
+              <div class="font-semibold text-gray-800">${patient.name || 'N/A'}</div>
+              <div class="text-xs text-gray-500">PAT-${patient.contact ? String(patient.contact).slice(-4) : '0000'}</div>
             </div>
           </div>
-          <!-- Age/Gender -->
-          <div class="col-span-2 text-gray-600">${patient.details.age || 'N/A'} / ${patient.details.gender ? patient.details.gender.charAt(0) : 'N/A'}</div>
-          <!-- Blood Group -->
-          <div class="col-span-1 text-gray-600">${patient.details.blood || 'N/A'}</div>
-          <!-- Contact -->
-          <div class="col-span-2 text-gray-600">${patient.details.contact || 'N/A'}</div>
-          <!-- Upcoming Date -->
+          <div class="col-span-2 text-gray-600">${patient.age || 'N/A'} / ${patient.gender ? patient.gender.charAt(0) : 'N/A'}</div>
+          <div class="col-span-1 text-gray-600">${patient.blood || 'N/A'}</div>
+          <div class="col-span-2 text-gray-600">${patient.contact || 'N/A'}</div>
           <div class="col-span-2 text-gray-600">${upcomingDate}</div>
-          <!-- Last Visit -->
           <div class="col-span-2 text-gray-600">${lastVisit}</div>
         </div>
       `;
     });
-
-    
     if (totalPages > 1) {
       patientsHTML += `
         <div class="flex justify-between items-center mt-6 px-4">
@@ -1376,7 +1292,6 @@ const tabContents = document.querySelectorAll(".tab-content");
         </div>
       `;
     }
-
     patientsListContainer.innerHTML = patientsHTML;
   }
 
@@ -2296,7 +2211,7 @@ document.getElementById('doctorsList').addEventListener('click', function(e) {
   }
 });
 
-// Add after renderDoctorsPage and after DOMContentLoaded
+
 if (document.getElementById('doctorsList')) {
   document.getElementById('doctorsList').addEventListener('click', function(e) {
     if (e.target.classList.contains('doctor-photo-placeholder')) {
