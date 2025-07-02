@@ -1710,7 +1710,7 @@ const tabContents = document.querySelectorAll(".tab-content");
           btn.classList.add('bg-red-100','text-red-600','cursor-not-allowed');
           btn.disabled = true;
         } else {
-          btn.classList.add('bg-green-100','hover:bg-green-200','cursor-pointer');
+          btn.classList.add('bg-white','text-black','hover:bg-gray-100','cursor-pointer');
           btn.onclick = ()=>{
             rescheduleSelectedTime = time;
             Array.from(container.children).forEach(c=>c.classList.remove('selected','bg-green-500','text-white'));
