@@ -554,18 +554,11 @@
     <form id="rescheduleForm">
       <div class="mb-4">
         <label class="block text-gray-700 mb-1">New Date</label>
-        <input
-          type="text"
-          id="rescheduleDate"
-          class="text-center py-2 rounded w-full bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          placeholder="Select new date"
-          readonly
-          autocomplete="off"
-        />
+        <div id="rescheduleCalendarContainer"></div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 mb-1">New Time</label>
-        <input type="time" id="rescheduleTime" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        <div id="rescheduleTimeSlotsContainer"></div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 mb-1">Reason for Rescheduling</label>
@@ -573,7 +566,7 @@
       </div>
       <div class="flex justify-end gap-2 mt-6">
         <button type="button" id="cancelRescheduleBtn" class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
-        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Reschedule</button>
+        <button type="submit" id="confirmRescheduleBtn" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Confirm</button>
       </div>
     </form>
   </div>
@@ -829,7 +822,7 @@
   document.getElementById('selectedDate').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   document.getElementById('datePickerText').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  async function fetchAppointments(date, searchDoctorName = '', status = 'all') {
+  async function fetchAppointments(date, searchDoctorName = '', status = 'all', specialty = '') {
     try {
       const formattedDate = new Date(date).toLocaleDateString('en-US', {
         month: 'numeric',
@@ -888,7 +881,7 @@
   const patientsPerPage = 5;
   let allPatientsData = [];
 
-  async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all") {
+  async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
     try {
       appointmentsList.innerHTML = `
         <div class=\"flex justify-center items-center p-4\">
@@ -897,7 +890,7 @@
         </div>
       `;
 
-      const appointments = await fetchAppointments(date, filterDoctor, statusFilter);
+      const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
       let filteredAppointments = appointments;
       
       
@@ -1082,7 +1075,8 @@
     
     const date = document.getElementById('datePicker').value;
     const searchTerm = document.getElementById('searchInput').value.trim();
-    renderAppointmentsList(date, searchTerm);
+    const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+    renderAppointmentsList(date, searchTerm, status);
   }
 
   
@@ -1092,17 +1086,15 @@
     searchTimeout = setTimeout(() => {
       const currentDate = datePicker.value;
       const searchTerm = searchInput.value.trim();
+      const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
       console.log('Search term changed:', searchTerm);
-      
-     
       currentAppointmentsPage = 1;
       currentPatientsPage = 1;
-      
       
       const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
       
       if (activeTab === 'appointmentsTab') {
-        renderAppointmentsList(currentDate, searchTerm);
+        renderAppointmentsList(currentDate, searchTerm, status);
       } else if (activeTab === 'patientsTab') {
         fetchAndDisplayPatients(currentDate, searchTerm);
       }
@@ -1114,10 +1106,11 @@
     if (e.key === "Escape") {
       searchInput.value = "";
       const currentDate = datePicker.value;
-      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+       const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
       
       if (activeTab === 'appointmentsTab') {
-        renderAppointmentsList(currentDate, "");
+        renderAppointmentsList(currentDate, "", status);
       } else if (activeTab === 'patientsTab') {
         fetchAndDisplayPatients(currentDate, "");
       }
@@ -1125,7 +1118,7 @@
   });
 
   
-  renderAppointmentsList(today);
+  renderAppointmentsList(today, '', document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all');
 
   
 const tabs = document.querySelectorAll(".tab");
@@ -1152,10 +1145,12 @@ const tabContents = document.querySelectorAll(".tab-content");
       
       const date = datePicker.value;
       const searchTerm = searchInput.value.trim();
+      const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+    
 
       
       if (targetId === 'appointmentsTab') {
-        renderAppointmentsList(date, searchTerm);
+        renderAppointmentsList(date, searchTerm, status );
       } else if (targetId === 'patientsTab') {
         fetchAndDisplayPatients(date, searchTerm);
       } else if (targetId === 'doctorsTab') {
@@ -1686,71 +1681,25 @@ const tabContents = document.querySelectorAll(".tab-content");
   let cancelAppointmentData = null;
 
   
+  let rescheduleSelectedDate = null;
+  let rescheduleSelectedTime = null;
+
   function openRescheduleModal(app) {
     rescheduleAppointmentData = app;
     document.getElementById('reschedulePatientName').textContent = `Reschedule appointment for ${app.patientData?.name || ''}`;
-    
-    document.getElementById('rescheduleDate').value = app.dateData?.date ? new Date(app.dateData.date).toISOString().split('T')[0] : '';
-    document.getElementById('rescheduleTime').value = app.dateData?.time || '';
     document.getElementById('rescheduleReason').value = '';
     document.getElementById('rescheduleModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
+    
+    renderRescheduleCalendar(app);
   }
-
-  
-  document.getElementById('rescheduleForm').onsubmit = async function(e) {
-    e.preventDefault();
-    if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
-      alert('Error: Missing appointment ID.');
-      return;
-    }
-    const newDate = document.getElementById('rescheduleDate').value;
-    const newTime = document.getElementById('rescheduleTime').value;
-    if (!newDate || !newTime) {
-      alert('Please select both date and time.');
-      return;
-    }
-    try {
-      
-      const formattedDate = new Date(newDate).toLocaleDateString('en-US', {
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric'
-      });
-      const response = await fetch(`/api/confirmations/${rescheduleAppointmentData._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'reschedule',
-          date: formattedDate,
-          time: newTime
-        })
-      });
-      if (!response.ok) throw new Error('Failed to reschedule appointment');
-      closeRescheduleModal();
-      showAlert('Appointment rescheduled successfully!');
-      
-      
-      try {
-        const currentDate = datePicker.value;
-        const searchTerm = searchInput.value.trim();
-        console.log('Refreshing appointments list after reschedule...');
-        await renderAppointmentsList(currentDate, searchTerm);
-        console.log('Appointments list refreshed successfully');
-      } catch (refreshError) {
-        console.error('Error refreshing appointments list:', refreshError);
-       
-        window.location.reload();
-      }
-    } catch (err) {
-      alert('Error rescheduling appointment: ' + err.message);
-    }
-  };
 
   function closeRescheduleModal() {
     document.getElementById('rescheduleModalOverlay').classList.add('hidden');
     document.body.classList.remove('blurred-bg');
     rescheduleAppointmentData = null;
+    rescheduleSelectedDate = null;
+    rescheduleSelectedTime = null;
   }
   document.getElementById('closeRescheduleModal').onclick = closeRescheduleModal;
   document.getElementById('cancelRescheduleBtn').onclick = closeRescheduleModal;
@@ -1758,6 +1707,145 @@ const tabContents = document.querySelectorAll(".tab-content");
     if (e.target === this) closeRescheduleModal();
   };
 
+  async function renderRescheduleCalendar(app) {
+    const container = document.getElementById('rescheduleCalendarContainer');
+    container.innerHTML = '';
+    const today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let selectedDate = null;
+    let doctorName = app.doctorData?.name || app.doctorName || '';
+
+    function renderCalendar(month, year) {
+      container.innerHTML = '';
+      const monthName = new Date(year, month).toLocaleString('default', { month: 'long' });
+      const header = document.createElement('div');
+      header.className = 'flex justify-between items-center mb-2';
+      header.innerHTML = `
+        <button type="button" class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded" id="reschedulePrevMonth">&lt;</button>
+        <span class="font-semibold">${monthName} ${year}</span>
+        <button type="button" class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded" id="rescheduleNextMonth">&gt;</button>
+      `;
+      container.appendChild(header);
+      const daysRow = document.createElement('div');
+      daysRow.className = 'grid grid-cols-7 text-center text-xs text-gray-600 mb-1';
+      daysRow.innerHTML = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div>${d}</div>`).join('');
+      container.appendChild(daysRow);
+      const daysGrid = document.createElement('div');
+      daysGrid.className = 'grid grid-cols-7 gap-1';
+      // Days
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+      for(let i=0;i<firstDay;i++){
+        daysGrid.appendChild(document.createElement('div'));
+      }
+      for(let day=1;day<=daysInMonth;day++){
+        const dateObj = new Date(year, month, day);
+        const dateStr = `${month+1}/${day}/${year}`;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'calendar-day h-8 w-8 flex items-center justify-center rounded-full font-medium';
+        btn.textContent = day;
+        if(dateObj < today){
+          btn.classList.add('text-gray-300','cursor-not-allowed');
+          btn.disabled = true;
+        } else {
+          btn.classList.add('bg-green-100','text-gray-800','hover:bg-green-200','cursor-pointer');
+          btn.onclick = () => {
+            rescheduleSelectedDate = dateStr;
+            selectedDate = dateStr;
+            renderRescheduleTimeSlots(doctorName, dateStr);
+            Array.from(daysGrid.children).forEach(c=>c.classList.remove('selected','bg-green-500','text-white'));
+            btn.classList.add('selected','bg-green-500','text-white');
+          };
+        }
+        daysGrid.appendChild(btn);
+      }
+      container.appendChild(daysGrid);
+      document.getElementById('reschedulePrevMonth').onclick = ()=>{
+        if(month>today.getMonth()||year>today.getFullYear()){
+          if(month===0){currentMonth=11;currentYear--;}else{currentMonth--;}renderCalendar(currentMonth,currentYear);}
+      };
+      document.getElementById('rescheduleNextMonth').onclick = ()=>{
+        if(month<today.getMonth()+2||year>today.getFullYear()){
+          if(month===11){currentMonth=0;currentYear++;}else{currentMonth++;}renderCalendar(currentMonth,currentYear);}
+      };
+    }
+    renderCalendar(currentMonth,currentYear);
+  }
+
+  async function renderRescheduleTimeSlots(doctorName, dateStr) {
+    const container = document.getElementById('rescheduleTimeSlotsContainer');
+    container.innerHTML = '<div class="text-gray-500">Loading time slots...</div>';
+    
+    let slots = [];
+    try {
+      const response = await fetch(`/api/confirmations/booked-slots?doctorName=${encodeURIComponent(doctorName)}&date=${encodeURIComponent(dateStr)}`);
+      const data = await response.json();
+      const bookedTimes = data.bookedTimes || [];
+      
+      slots = ["9:00 AM","9:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM","12:00 PM","12:30 PM","2:00 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM"];
+      container.innerHTML = '';
+      slots.forEach(time => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-slot p-2 m-1 border rounded';
+        btn.textContent = time;
+        if(bookedTimes.includes(time)){
+          btn.classList.add('bg-red-100','text-red-600','cursor-not-allowed');
+          btn.disabled = true;
+        } else {
+          btn.classList.add('bg-green-100','hover:bg-green-200','cursor-pointer');
+          btn.onclick = ()=>{
+            rescheduleSelectedTime = time;
+            Array.from(container.children).forEach(c=>c.classList.remove('selected','bg-green-500','text-white'));
+            btn.classList.add('selected','bg-green-500','text-white');
+          };
+        }
+        container.appendChild(btn);
+      });
+    } catch (e) {
+      container.innerHTML = '<div class="text-red-500">Failed to load time slots.</div>';
+    }
+  }
+
+  document.getElementById('rescheduleForm').onsubmit = async function(e) {
+    e.preventDefault();
+    if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
+      alert('Error: Missing appointment ID.');
+      return;
+    }
+    if (!rescheduleSelectedDate || !rescheduleSelectedTime) {
+      alert('Please select both date and time.');
+      return;
+    }
+    try {
+      const formattedDate = rescheduleSelectedDate;
+      const response = await fetch(`/api/confirmations/${rescheduleAppointmentData._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'reschedule',
+          date: formattedDate,
+          time: rescheduleSelectedTime,
+          reason: document.getElementById('rescheduleReason').value
+        })
+      });
+      if (!response.ok) throw new Error('Failed to reschedule appointment');
+      closeRescheduleModal();
+      showAlert('Appointment rescheduled successfully!');
+      try {
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+        await renderAppointmentsList(currentDate, searchTerm, status);
+      } catch (refreshError) {
+        window.location.reload();
+      }
+    } catch (err) {
+      alert('Error rescheduling appointment: ' + err.message);
+    }
+  };
 
   function openCancelModal(app) {
     cancelAppointmentData = app;
@@ -2254,6 +2342,8 @@ flatpickr("#availabilityEnd", {
   allowInput: false,
   static: true,
 });
+
+
 </script>
 
 
