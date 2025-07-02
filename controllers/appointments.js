@@ -1,4 +1,3 @@
-
 const moment       = require('moment-timezone');
 const Appointment  = require('../models/appointment');
 const Doctor       = require('../models/doctor');
