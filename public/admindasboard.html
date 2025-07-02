@@ -183,6 +183,33 @@
     .flatpickr-current-month {
       justify-content: center !important;
     }
+
+    #availabilityModal {
+      border-radius: 1.25rem !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+      padding: 2rem !important;
+      background: #fff !important;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    #availabilityModal h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+    #availabilityModal input[type="text"] {
+      font-size: 1.125rem;
+      border-radius: 0.75rem;
+    }
+    #availabilityModal button[type="submit"] {
+      background: #2563eb;
+      color: #fff;
+      font-size: 1.125rem;
+      border-radius: 0.75rem;
+    }
+    #availabilityModal button[type="button"] {
+      font-size: 1.125rem;
+      border-radius: 0.75rem;
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -322,30 +349,35 @@
   </div>
 </div>
 <div id="availabilityModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-  <div id="availabilityModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-    <h2 class="text-2xl font-bold mb-4">Manage Availability</h2>
-    <form id="availabilityForm">
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Date</label>
-        <input type="date" id="availabilityDate" name="date" class="w-full border border-gray-300 rounded px-3 py-2" required />
-      </div>
-      <div class="mb-4 flex gap-2 items-center">
-        <div class="flex-1">
-          <label class="block text-gray-700 mb-2">Time</label>
-          <input type="time" id="availabilityStart" name="start" class="w-full border border-gray-300 rounded px-3 py-2" required />
-        </div>
-        <span class="mx-2">-</span>
-        <div class="flex-1">
-          <label class="block text-gray-700 mb-2 invisible">End</label>
-          <input type="time" id="availabilityEnd" name="end" class="w-full border border-gray-300 rounded px-3 py-2" required />
+  <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+    <h2 class="text-3xl font-bold mb-6">Manage Availability</h2>
+    <form id="availabilityForm" class="space-y-6">
+      <div>
+        <label class="block text-lg font-semibold mb-2">Date</label>
+        <div class="relative">
+          <input type="text" id="availabilityDate" name="date" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg pr-12 focus:ring-2 focus:ring-blue-200" placeholder="MM/DD/YYYY" required readonly />
+          <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb"/>
+              <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18"/>
+            </svg>
+          </span>
         </div>
       </div>
-      <div class="flex justify-end gap-2 mt-6">
-        <button type="button" id="cancelAvailability" class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
-        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Save</button>
+      <div>
+        <label class="block text-lg font-semibold mb-2">Time</label>
+        <div class="flex gap-2">
+          <input type="text" id="availabilityStart" name="start" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="10:00 AM" required />
+          <span class="flex items-center text-lg font-semibold">-</span>
+          <input type="text" id="availabilityEnd" name="end" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="05:00 PM" required />
+        </div>
+      </div>
+      <div class="flex justify-between gap-4 pt-2">
+        <button type="button" id="cancelAvailability" class="w-1/2 px-4 py-3 rounded-lg border border-gray-300 bg-white text-black text-lg font-semibold hover:bg-gray-100">Cancel</button>
+        <button type="submit" class="w-1/2 px-4 py-3 rounded-lg bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700">Save</button>
       </div>
     </form>
-    <button id="closeAvailabilityModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
   </div>
 </div>
 
@@ -522,18 +554,11 @@
     <form id="rescheduleForm">
       <div class="mb-4">
         <label class="block text-gray-700 mb-1">New Date</label>
-        <input
-          type="text"
-          id="rescheduleDate"
-          class="text-center py-2 rounded w-full bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          placeholder="Select new date"
-          readonly
-          autocomplete="off"
-        />
+        <div id="rescheduleCalendarContainer"></div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 mb-1">New Time</label>
-        <input type="time" id="rescheduleTime" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        <div id="rescheduleTimeSlotsContainer"></div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 mb-1">Reason for Rescheduling</label>
@@ -541,7 +566,7 @@
       </div>
       <div class="flex justify-end gap-2 mt-6">
         <button type="button" id="cancelRescheduleBtn" class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
-        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Reschedule</button>
+        <button type="submit" id="confirmRescheduleBtn" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Confirm</button>
       </div>
     </form>
   </div>
@@ -632,6 +657,40 @@
   </div>
 </div>
 
+<div id="editDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div id="editDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <button id="closeEditDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Edit Doctor Profile</h2>
+    <form id="editDoctorForm">
+      <div class="mb-4">
+        <label for="editDoctorName" class="block text-gray-700 text-sm font-semibold mb-2">Doctor</label>
+        <input type="text" id="editDoctorName" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required />
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="mb-4">
+          <label for="editDoctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialty</label>
+          <input type="text" id="editDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label for="editDoctorExperience" class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
+          <input type="text" id="editDoctorExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label for="editDoctorQualification" class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+          <input type="text" id="editDoctorQualification" name="qualification" class="w-full border border-gray-300 rounded px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label for="editDoctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
+          <input type="text" id="editDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
+        </div>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
   const datePicker = document.getElementById("datePicker");
@@ -644,7 +703,7 @@
   flatpickr("#datePicker", {
     dateFormat: "Y-m-d",
     allowInput: false,
-   defaultDate: "2025-06-23",
+    defaultDate: new Date(),
 
   static: true,
     onReady: function(selectedDates, dateStr, instance) {
@@ -749,7 +808,7 @@
   .flatpickr-months .flatpickr-prev-month,
   .flatpickr-months .flatpickr-next-month {
     color: #fff;
-    fill: #fff;
+    fill: #fff;y
   }
   `;
   document.head.appendChild(style);
@@ -761,8 +820,9 @@
   const today = new Date();
   document.getElementById('datePicker').value = today.toISOString().split('T')[0];
   document.getElementById('selectedDate').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('datePickerText').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  async function fetchAppointments(date, searchDoctorName = '') {
+  async function fetchAppointments(date, searchDoctorName = '', status = 'all', specialty = '') {
     try {
       const formattedDate = new Date(date).toLocaleDateString('en-US', {
         month: 'numeric',
@@ -770,18 +830,15 @@
         year: 'numeric'
       });
 
-      console.log('Fetching appointments for date:', formattedDate, 'with doctor filter:', searchDoctorName);
-
-      const url = `/api/confirmations`;
+      let url = '/api/confirmations';
+      if (status && status !== 'all') {
+        url += `?status=${encodeURIComponent(status)}`;
+      }
       const response = await fetch(url);
-      
       if (!response.ok) {
         throw new Error(`Failed to fetch appointments: ${response.status}`);
       }
-      
       const data = await response.json();
-      console.log('Total appointments fetched:', data.length);
-      
       
       if (data.length > 0) {
         console.log('First appointment details:', JSON.stringify(data[0], null, 2));
@@ -824,7 +881,7 @@
   const patientsPerPage = 5;
   let allPatientsData = [];
 
-  async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all") {
+  async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
     try {
       appointmentsList.innerHTML = `
         <div class=\"flex justify-center items-center p-4\">
@@ -833,7 +890,7 @@
         </div>
       `;
 
-      const appointments = await fetchAppointments(date, filterDoctor);
+      const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
       let filteredAppointments = appointments;
       
       
@@ -1018,7 +1075,8 @@
     
     const date = document.getElementById('datePicker').value;
     const searchTerm = document.getElementById('searchInput').value.trim();
-    renderAppointmentsList(date, searchTerm);
+    const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+    renderAppointmentsList(date, searchTerm, status);
   }
 
   
@@ -1028,17 +1086,15 @@
     searchTimeout = setTimeout(() => {
       const currentDate = datePicker.value;
       const searchTerm = searchInput.value.trim();
+      const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
       console.log('Search term changed:', searchTerm);
-      
-     
       currentAppointmentsPage = 1;
       currentPatientsPage = 1;
-      
       
       const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
       
       if (activeTab === 'appointmentsTab') {
-        renderAppointmentsList(currentDate, searchTerm);
+        renderAppointmentsList(currentDate, searchTerm, status);
       } else if (activeTab === 'patientsTab') {
         fetchAndDisplayPatients(currentDate, searchTerm);
       }
@@ -1050,10 +1106,11 @@
     if (e.key === "Escape") {
       searchInput.value = "";
       const currentDate = datePicker.value;
-      const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
+      const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+       const activeTab = document.querySelector('.tab.tab-active').getAttribute('data-tab');
       
       if (activeTab === 'appointmentsTab') {
-        renderAppointmentsList(currentDate, "");
+        renderAppointmentsList(currentDate, "", status);
       } else if (activeTab === 'patientsTab') {
         fetchAndDisplayPatients(currentDate, "");
       }
@@ -1061,7 +1118,7 @@
   });
 
   
-  renderAppointmentsList(today);
+  renderAppointmentsList(today, '', document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all');
 
   
 const tabs = document.querySelectorAll(".tab");
@@ -1088,10 +1145,12 @@ const tabContents = document.querySelectorAll(".tab-content");
       
       const date = datePicker.value;
       const searchTerm = searchInput.value.trim();
+      const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+    
 
       
       if (targetId === 'appointmentsTab') {
-        renderAppointmentsList(date, searchTerm);
+        renderAppointmentsList(date, searchTerm, status );
       } else if (targetId === 'patientsTab') {
         fetchAndDisplayPatients(date, searchTerm);
       } else if (targetId === 'doctorsTab') {
@@ -1121,10 +1180,9 @@ const tabContents = document.querySelectorAll(".tab-content");
       const patientsMap = new Map();
       allAppointments.forEach(app => {
        
-        if (!app.patientData || !app.patientData.name || app.status === 'canceled') {
+        if (!app.patientData || !app.patientData.name) {
           return;
         }
-       
         const patientKey = `${app.patientData.name}-${app.patientData.contact}`;
         if (!patientsMap.has(patientKey)) {
           patientsMap.set(patientKey, {
@@ -1256,6 +1314,9 @@ const tabContents = document.querySelectorAll(".tab-content");
         ? pastAppointments[pastAppointments.length - 1].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
         : '<span class="text-gray-400">N/A</span>';
 
+      // Check if all appointments are cancelled
+      const allCancelled = patient.appointments.length > 0 && patient.appointments.every(a => (a.status || '').toLowerCase() === 'canceled' || (a.status || '').toLowerCase() === 'cancelled');
+
       patientsHTML += `
         <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
           <!-- Patient -->
@@ -1272,7 +1333,7 @@ const tabContents = document.querySelectorAll(".tab-content");
               })}'
             ></div>
             <div>
-              <div class="font-semibold text-gray-800">${patient.details.name || 'N/A'}</div>
+              <div class="font-semibold ${allCancelled ? 'text-red-600' : 'text-gray-800'}">${patient.details.name || 'N/A'}</div>
               <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : '0000'}</div>
             </div>
           </div>
@@ -1620,71 +1681,25 @@ const tabContents = document.querySelectorAll(".tab-content");
   let cancelAppointmentData = null;
 
   
+  let rescheduleSelectedDate = null;
+  let rescheduleSelectedTime = null;
+
   function openRescheduleModal(app) {
     rescheduleAppointmentData = app;
     document.getElementById('reschedulePatientName').textContent = `Reschedule appointment for ${app.patientData?.name || ''}`;
-    
-    document.getElementById('rescheduleDate').value = app.dateData?.date ? new Date(app.dateData.date).toISOString().split('T')[0] : '';
-    document.getElementById('rescheduleTime').value = app.dateData?.time || '';
     document.getElementById('rescheduleReason').value = '';
     document.getElementById('rescheduleModalOverlay').classList.remove('hidden');
     document.body.classList.add('blurred-bg');
+    
+    renderRescheduleCalendar(app);
   }
-
-  
-  document.getElementById('rescheduleForm').onsubmit = async function(e) {
-    e.preventDefault();
-    if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
-      alert('Error: Missing appointment ID.');
-      return;
-    }
-    const newDate = document.getElementById('rescheduleDate').value;
-    const newTime = document.getElementById('rescheduleTime').value;
-    if (!newDate || !newTime) {
-      alert('Please select both date and time.');
-      return;
-    }
-    try {
-      
-      const formattedDate = new Date(newDate).toLocaleDateString('en-US', {
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric'
-      });
-      const response = await fetch(`/api/confirmations/${rescheduleAppointmentData._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'reschedule',
-          date: formattedDate,
-          time: newTime
-        })
-      });
-      if (!response.ok) throw new Error('Failed to reschedule appointment');
-      closeRescheduleModal();
-      showAlert('Appointment rescheduled successfully!');
-      
-      
-      try {
-        const currentDate = datePicker.value;
-        const searchTerm = searchInput.value.trim();
-        console.log('Refreshing appointments list after reschedule...');
-        await renderAppointmentsList(currentDate, searchTerm);
-        console.log('Appointments list refreshed successfully');
-      } catch (refreshError) {
-        console.error('Error refreshing appointments list:', refreshError);
-       
-        window.location.reload();
-      }
-    } catch (err) {
-      alert('Error rescheduling appointment: ' + err.message);
-    }
-  };
 
   function closeRescheduleModal() {
     document.getElementById('rescheduleModalOverlay').classList.add('hidden');
     document.body.classList.remove('blurred-bg');
     rescheduleAppointmentData = null;
+    rescheduleSelectedDate = null;
+    rescheduleSelectedTime = null;
   }
   document.getElementById('closeRescheduleModal').onclick = closeRescheduleModal;
   document.getElementById('cancelRescheduleBtn').onclick = closeRescheduleModal;
@@ -1692,6 +1707,145 @@ const tabContents = document.querySelectorAll(".tab-content");
     if (e.target === this) closeRescheduleModal();
   };
 
+  async function renderRescheduleCalendar(app) {
+    const container = document.getElementById('rescheduleCalendarContainer');
+    container.innerHTML = '';
+    const today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let selectedDate = null;
+    let doctorName = app.doctorData?.name || app.doctorName || '';
+
+    function renderCalendar(month, year) {
+      container.innerHTML = '';
+      const monthName = new Date(year, month).toLocaleString('default', { month: 'long' });
+      const header = document.createElement('div');
+      header.className = 'flex justify-between items-center mb-2';
+      header.innerHTML = `
+        <button type="button" class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded" id="reschedulePrevMonth">&lt;</button>
+        <span class="font-semibold">${monthName} ${year}</span>
+        <button type="button" class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded" id="rescheduleNextMonth">&gt;</button>
+      `;
+      container.appendChild(header);
+      const daysRow = document.createElement('div');
+      daysRow.className = 'grid grid-cols-7 text-center text-xs text-gray-600 mb-1';
+      daysRow.innerHTML = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div>${d}</div>`).join('');
+      container.appendChild(daysRow);
+      const daysGrid = document.createElement('div');
+      daysGrid.className = 'grid grid-cols-7 gap-1';
+      // Days
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+      for(let i=0;i<firstDay;i++){
+        daysGrid.appendChild(document.createElement('div'));
+      }
+      for(let day=1;day<=daysInMonth;day++){
+        const dateObj = new Date(year, month, day);
+        const dateStr = `${month+1}/${day}/${year}`;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'calendar-day h-8 w-8 flex items-center justify-center rounded-full font-medium';
+        btn.textContent = day;
+        if(dateObj < today){
+          btn.classList.add('text-gray-300','cursor-not-allowed');
+          btn.disabled = true;
+        } else {
+          btn.classList.add('bg-green-100','text-gray-800','hover:bg-green-200','cursor-pointer');
+          btn.onclick = () => {
+            rescheduleSelectedDate = dateStr;
+            selectedDate = dateStr;
+            renderRescheduleTimeSlots(doctorName, dateStr);
+            Array.from(daysGrid.children).forEach(c=>c.classList.remove('selected','bg-green-500','text-white'));
+            btn.classList.add('selected','bg-green-500','text-white');
+          };
+        }
+        daysGrid.appendChild(btn);
+      }
+      container.appendChild(daysGrid);
+      document.getElementById('reschedulePrevMonth').onclick = ()=>{
+        if(month>today.getMonth()||year>today.getFullYear()){
+          if(month===0){currentMonth=11;currentYear--;}else{currentMonth--;}renderCalendar(currentMonth,currentYear);}
+      };
+      document.getElementById('rescheduleNextMonth').onclick = ()=>{
+        if(month<today.getMonth()+2||year>today.getFullYear()){
+          if(month===11){currentMonth=0;currentYear++;}else{currentMonth++;}renderCalendar(currentMonth,currentYear);}
+      };
+    }
+    renderCalendar(currentMonth,currentYear);
+  }
+
+  async function renderRescheduleTimeSlots(doctorName, dateStr) {
+    const container = document.getElementById('rescheduleTimeSlotsContainer');
+    container.innerHTML = '<div class="text-gray-500">Loading time slots...</div>';
+    
+    let slots = [];
+    try {
+      const response = await fetch(`/api/confirmations/booked-slots?doctorName=${encodeURIComponent(doctorName)}&date=${encodeURIComponent(dateStr)}`);
+      const data = await response.json();
+      const bookedTimes = data.bookedTimes || [];
+      
+      slots = ["9:00 AM","9:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM","12:00 PM","12:30 PM","2:00 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM"];
+      container.innerHTML = '';
+      slots.forEach(time => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-slot p-2 m-1 border rounded';
+        btn.textContent = time;
+        if(bookedTimes.includes(time)){
+          btn.classList.add('bg-red-100','text-red-600','cursor-not-allowed');
+          btn.disabled = true;
+        } else {
+          btn.classList.add('bg-green-100','hover:bg-green-200','cursor-pointer');
+          btn.onclick = ()=>{
+            rescheduleSelectedTime = time;
+            Array.from(container.children).forEach(c=>c.classList.remove('selected','bg-green-500','text-white'));
+            btn.classList.add('selected','bg-green-500','text-white');
+          };
+        }
+        container.appendChild(btn);
+      });
+    } catch (e) {
+      container.innerHTML = '<div class="text-red-500">Failed to load time slots.</div>';
+    }
+  }
+
+  document.getElementById('rescheduleForm').onsubmit = async function(e) {
+    e.preventDefault();
+    if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
+      alert('Error: Missing appointment ID.');
+      return;
+    }
+    if (!rescheduleSelectedDate || !rescheduleSelectedTime) {
+      alert('Please select both date and time.');
+      return;
+    }
+    try {
+      const formattedDate = rescheduleSelectedDate;
+      const response = await fetch(`/api/confirmations/${rescheduleAppointmentData._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'reschedule',
+          date: formattedDate,
+          time: rescheduleSelectedTime,
+          reason: document.getElementById('rescheduleReason').value
+        })
+      });
+      if (!response.ok) throw new Error('Failed to reschedule appointment');
+      closeRescheduleModal();
+      showAlert('Appointment rescheduled successfully!');
+      try {
+        const currentDate = datePicker.value;
+        const searchTerm = searchInput.value.trim();
+        const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+        await renderAppointmentsList(currentDate, searchTerm, status);
+      } catch (refreshError) {
+        window.location.reload();
+      }
+    } catch (err) {
+      alert('Error rescheduling appointment: ' + err.message);
+    }
+  };
 
   function openCancelModal(app) {
     cancelAppointmentData = app;
@@ -1973,7 +2127,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     const endIndex = startIndex + doctorsPerPage;
     const currentDoctors = allDoctors.slice(startIndex, endIndex);
     doctorsList.innerHTML = '';
-    currentDoctors.forEach(doctor => {
+    currentDoctors.forEach((doctor, idx) => {
       let infoLine = '';
       if (doctor.experience && doctor.qualification) {
         infoLine = `${doctor.experience} yrs exp. · ${doctor.qualification}`;
@@ -1987,38 +2141,40 @@ const tabContents = document.querySelectorAll(".tab-content");
       if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
         count = todaysAppointmentsCountMap[doctorName];
       }
+      
       doctorsList.innerHTML += `
         <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-          <div class="col-span-3 flex flex-col justify-center">
-            <span class="font-semibold text-gray-800">${doctor.name}</span>
-            <span class="text-xs text-gray-500">${infoLine}</span>
-        </div>
-        <div class="col-span-2 text-gray-600">${doctor.specialty || 'General Medicine'}</div>
+          <div class="col-span-3 flex items-center">
+            <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
+            <div>
+              <div class="font-semibold text-gray-800">${doctor.name}</div>
+              <div class="text-xs text-gray-500">${infoLine}</div>
+            </div>
+          </div>
+          <div class="col-span-2 text-gray-600">${doctor.specialty || 'General Medicine'}</div>
           <div class="col-span-2 text-gray-600">${count}</div>
-        <div class="col-span-3 text-gray-600">${doctor.availability || 'Available'}</div>
-        <div class="col-span-2 relative">
-          <button class="action-btn text-xl">...</button>
-          <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+          <div class="col-span-3 text-gray-600">${doctor.availability || 'Available'}</div>
+          <div class="col-span-2 relative">
+            <button class="action-btn text-xl">...</button>
+            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
             </div>
           </div>
         </div>
       `;
     });
     updateDoctorsPagination(totalPages);
-  }
- function updateDoctorsPagination(totalPages) {
+  } 
+
+  function updateDoctorsPagination(totalPages) {
     const paginationContainer = document.getElementById('doctorsPagination');
     const prevButton = document.getElementById('prevDoctorsPage');
     const nextButton = document.getElementById('nextDoctorsPage');
     const pageInfo = document.getElementById('doctorsPageInfo');
-    
     if (!paginationContainer) return;
-    
-    
     if (totalPages > 1) {
       paginationContainer.classList.remove('hidden');
     } else {
@@ -2086,7 +2242,7 @@ const tabContents = document.querySelectorAll(".tab-content");
             </tr>
           </thead>
           <tbody>
-            <!-- Render patient rows here -->
+         
           </tbody>
         </table>
       </div>
@@ -2106,7 +2262,90 @@ const tabContents = document.querySelectorAll(".tab-content");
       renderAppointmentsList(currentDate, searchTerm, status);
     });
   }
+
+  let currentDoctorForEdit = null;
+
+function openEditDoctorModal(doctor) {
+  currentDoctorForEdit = doctor;
+  document.getElementById('editDoctorName').value = doctor.name || '';
+  document.getElementById('editDoctorSpecialty').value = doctor.specialty || '';
+  document.getElementById('editDoctorExperience').value = doctor.experience || '';
+  document.getElementById('editDoctorQualification').value = doctor.qualification || '';
+  document.getElementById('editDoctorAvailability').value = doctor.availability || '';
+  document.getElementById('editDoctorModalOverlay').classList.remove('hidden');
+  document.body.classList.add('blurred-bg');
+}
+
+function closeEditDoctorModal() {
+  document.getElementById('editDoctorModalOverlay').classList.add('hidden');
+  document.body.classList.remove('blurred-bg');
+  currentDoctorForEdit = null;
+}
+
+document.getElementById('closeEditDoctorModal').onclick = closeEditDoctorModal;
+document.getElementById('editDoctorModalOverlay').onclick = function(e) {
+  if (e.target === this) closeEditDoctorModal();
+};
+
+document.getElementById('doctorsList').addEventListener('click', function(e) {
+  if (e.target.classList.contains('edit-doctor-profile-btn')) {
+    e.preventDefault();
+    const doctor = JSON.parse(e.target.getAttribute('data-doctor'));
+    openEditDoctorModal(doctor);
+    e.target.closest('.action-menu').classList.add('hidden');
+  }
+});
+
+// Add after renderDoctorsPage and after DOMContentLoaded
+if (document.getElementById('doctorsList')) {
+  document.getElementById('doctorsList').addEventListener('click', function(e) {
+    if (e.target.classList.contains('doctor-photo-placeholder')) {
+      const idx = e.target.getAttribute('data-doctor-index');
+      const input = document.querySelector(`.doctor-photo-input[data-doctor-index="${idx}"]`);
+      if (input) input.click();
+    }
+  });
+  document.getElementById('doctorsList').addEventListener('change', function(e) {
+    if (e.target.classList.contains('doctor-photo-input')) {
+      const idx = e.target.getAttribute('data-doctor-index');
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          allDoctors[idx].photoUrl = ev.target.result;
+          renderDoctorsPage();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  });
+}
+
+flatpickr("#availabilityDate", {
+  dateFormat: "m/d/Y",
+  allowInput: false,
+  static: true,
+});
+flatpickr("#availabilityStart", {
+  enableTime: true,
+  noCalendar: true,
+  dateFormat: "h:i K",
+  time_24hr: false,
+  allowInput: false,
+  static: true,
+});
+flatpickr("#availabilityEnd", {
+  enableTime: true,
+  noCalendar: true,
+  dateFormat: "h:i K",
+  time_24hr: false,
+  allowInput: false,
+  static: true,
+});
+
+
 </script>
+
 
 </body>
 </html>
