@@ -114,7 +114,8 @@
       right: 0;
       bottom: 0;
       background-color: rgba(0, 0, 0, 0.5);
-    
+      /* Removed blur effect */
+      /* backdrop-filter: blur(4px); */
       display: none;
       justify-content: center;
       align-items: center;
@@ -455,7 +456,7 @@
       <p class="text-gray-600 mb-6">Select your preferred appointment date and time</p>
       
       <div class="grid grid-cols-2 gap-8">
-      
+        <!-- Calendar -->
         <div class="border rounded-lg p-4">
           <div class="flex justify-between items-center mb-4">
             <button type="button" onclick="changeMonth(-1)" class="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-md transition-colors duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
@@ -488,7 +489,7 @@
           </div>
         </div>
 
-      
+        <!-- Time Slots -->
         <div>
           <div id="noTime" class="flex flex-col items-center justify-center h-64 text-gray-500 border rounded-lg p-4">
             <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -516,14 +517,12 @@
       </div>
     </div>
   </section>
-
   <section id="confirmationSection" class="section">
     <div class="max-w-4xl mx-auto mt-8">
       <div class="bg-white rounded-lg shadow-sm p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Confirm Your Appointment</h2>
         <p class="text-gray-500 text-sm mb-6">Please review your appointment details before confirming.</p>
         <div class="grid grid-cols-1 gap-4 mb-4">
-       
           <div class="border rounded-lg p-4 bg-gray-50 mb-2">
             <p class="text-gray-800 font-semibold text-lg mb-2">Doctor Information</p>
             <div class="space-y-2">
@@ -562,7 +561,7 @@
             <div><span class="text-gray-500">Phone:</span> <span class="text-gray-800 ml-1" id="confirmPatientContact"></span></div>
           </div>
         </div>
-       
+        
         <div class="flex justify-between mt-6">
           <button onclick="goBackToDateTime()" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">
             Back
@@ -674,43 +673,29 @@ function validateNameInput() {
         checkPatientForm();
       });
     });
-    const doctors = [
-      { name: "Dr. Sarah Johnson", specialty: "Cardiology", experience: "15 years" },
-      { name: "Dr. Michael Chen", specialty: "Dermatology", experience: "10 years" },
-      { name: "Dr. Emily Rodriguez", specialty: "Neurology", experience: "12 years" },
-      { name: "Dr. James Wilson", specialty: "Orthopedics", experience: "20 years" },
-      { name: "Dr. Srivani", specialty: "ENT", experience: "12 years" },
-      { name: "Dr. Aswini", specialty: "General Surgery", experience: "6.9 years" },
-      { name: "Dr. Akhila", specialty: "Gynecologist", experience: "8 years" },
-      { name: "Dr. Vinod", specialty: "Pediatrics", experience: "10 years" },
-      { name: "Dr. Kiran", specialty: "Radiology", experience: "11 years" },
-      { name: "Dr. keerthi", specialty: "Oncologist", experience: "12 years" },
-      { name: "Dr. Vedanshi", specialty: "Gastroenterologist", experience: "10 years" },
-      { name: "Dr. Vivek", specialty: "Dentist", experience: "15 years" },
-      { name: "Dr. Om", specialty: "Andrologist", experience: "16 years" }
-    ];
 
-    const doctorsPerPage = 4;
+    let doctors = [];
+    let lastFilteredDoctors = [];
     let currentPage = 1;
+    const doctorsPerPage = 4;
 
-    function createDoctorCard(doctor) {
-      return `
-        <div class="flex justify-between items-center border p-4 rounded-md doctor" data-specialty="${doctor.specialty}">
-          <div>
-            <p class="font-bold text-lg">${doctor.name}</p>
-            <p class="text-gray-600">${doctor.specialty}</p>
-            <p class="text-sm text-gray-500">${doctor.experience.split(' ')[0]} yrs</p>
-          </div>
-          <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}')" 
-            class="select-btn bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition-colors duration-200"
-            data-doctor="${doctor.name}">
-            Select
-          </button>
-        </div>
-      `;
+    async function fetchDoctorsFromDB() {
+      const response = await fetch('/api/doctors');
+      if (!response.ok) throw new Error('Failed to fetch doctors');
+      return await response.json();
     }
 
-    let lastFilteredDoctors = doctors;
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        doctors = await fetchDoctorsFromDB();
+        lastFilteredDoctors = doctors;
+        currentPage = 1;
+        displayDoctors();
+        updatePagination(lastFilteredDoctors.length);
+      } catch (err) {
+        alert('Failed to load doctors: ' + err.message);
+      }
+    });
 
     function filterDoctors() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -719,7 +704,7 @@ function validateNameInput() {
       currentPage = 1;
       lastFilteredDoctors = doctors.filter(doctor => {
         const matchesSearch = doctor.name.toLowerCase().includes(searchTerm) || 
-                            doctor.specialty.toLowerCase().includes(searchTerm);
+                            (doctor.specialty && doctor.specialty.toLowerCase().includes(searchTerm));
         const matchesSpecialty = !specialty || doctor.specialty === specialty;
         return matchesSearch && matchesSpecialty;
       });
@@ -727,28 +712,34 @@ function validateNameInput() {
       displayDoctors(lastFilteredDoctors);
     }
 
+    function getDoctorDisplayName(name) {
+      if (!name) return '';
+      return name.trim().toLowerCase().startsWith('dr.') ? name.trim() : `Dr. ${name.trim()}`;
+    }
+
     function displayDoctors(filteredDoctors = lastFilteredDoctors) {
       const doctorList = document.getElementById('doctorList');
       const start = (currentPage - 1) * doctorsPerPage;
       const end = start + doctorsPerPage;
       const paginatedDoctors = filteredDoctors.slice(start, end);
-      
       const selectedDoctorData = JSON.parse(localStorage.getItem('selectedDoctor'));
-      
+
       doctorList.innerHTML = paginatedDoctors.map(doctor => {
         const isSelected = selectedDoctorData && selectedDoctorData.name === doctor.name;
         const buttonClass = isSelected ? 
           'select-btn bg-blue-500 hover:bg-blue-600 text-white' : 
           'select-btn bg-black text-white hover:bg-gray-800';
-        
+        const experience = doctor.experience ? `${doctor.experience} yrs` : '';
+        const qualification = doctor.qualification ? `${doctor.qualification}` : '';
+        const infoLine = experience && qualification ? `${experience} · ${qualification}` : (experience || qualification);
         return `
           <div class="flex justify-between items-center border p-4 rounded-md doctor" data-specialty="${doctor.specialty}">
             <div>
-              <p class="font-bold text-lg">${doctor.name}</p>
-              <p class="text-gray-600">${doctor.specialty}</p>
-              <p class="text-sm text-gray-500">${doctor.experience} experience</p>
+              <p class="font-bold text-lg">${getDoctorDisplayName(doctor.name)}</p>
+              <p class="text-gray-600">${doctor.specialty || ''}</p>
+              <p class="text-sm text-gray-500">${infoLine}</p>
             </div>
-            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}')" 
+            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}')" 
               class="${buttonClass} px-4 py-2 rounded transition-colors duration-200"
               data-doctor="${doctor.name}">
               Select
@@ -756,7 +747,7 @@ function validateNameInput() {
           </div>
         `;
       }).join('');
-      
+
       updatePagination(filteredDoctors.length);
       if (selectedDoctorData) {
         document.getElementById('doctorNextBtn').disabled = false;
@@ -787,23 +778,21 @@ function validateNameInput() {
       }
     }
 
-    function selectDoctor(name, specialty, experience) {
+    function selectDoctor(name, specialty, experience, qualification) {
       
       const doctorData = {
         name: name,
         specialty: specialty,
-        experience: experience
+        experience: experience,
+        qualification: qualification
       };
       localStorage.setItem('selectedDoctor', JSON.stringify(doctorData));
-      
-    
       const isEditMode = getQueryParam('edit') === '1';
-      
       if (isEditMode) {
-     
+        
         goToDateTimeSection();
       } else {
-   
+       
         document.getElementById('doctorNextBtn').disabled = false;
         document.getElementById('doctorNextBtn').classList.remove('bg-gray-400');
         document.getElementById('doctorNextBtn').classList.add('bg-blue-600');
@@ -916,32 +905,23 @@ function validateNameInput() {
    
     function goToDoctorSection() {
       showSection('doctorSection');
-      updateStepper(1);
-      
-     
-      const line1 = document.getElementById('line1');
-      if (line1) {
-        line1.className = 'absolute top-5 left-1/2 w-full h-1 bg-blue-600';
-      }
-      
+      updateStepper(2); 
       displayDoctors();
     }
 
     function goBack() {
       const currentSection = document.querySelector('.section.active').id;
       if (currentSection === 'doctorSection') {
-       
+        
         const isEditMode = getQueryParam('edit') === '1';
         if (isEditMode) {
-         
+          
           window.location.href = 'admindasboard.html';
           return;
         }
         
-      
         showSection('patientSection');
-        updateStepper(1);
-        
+        updateStepper(1); 
         const patientData = JSON.parse(localStorage.getItem('patientData') || '{}');
         if (patientData) {
           document.getElementById('patient-name').value = patientData.name || '';
@@ -949,7 +929,6 @@ function validateNameInput() {
           document.getElementById('patient-gender').value = patientData.gender || '';
           document.getElementById('blood-group').value = patientData.blood || '';
           document.getElementById('contact-number').value = patientData.contact || '';
-          
           checkPatientForm();
         }
       }
@@ -957,20 +936,49 @@ function validateNameInput() {
 
     function goToDateTimeSection() {
       showSection('dateTimeSection');
-      updateStepper(2);
+      updateStepper(3); 
       initializeDateTime();
     }
 
-    
+    function goBackToDoctor() {
+      showSection('doctorSection');
+      updateStepper(2); 
+    }
+
+    function goToConfirmation() {
+      if (selectedDate && selectedTime) {
+        const appointmentData = {
+          date: selectedDate,
+          time: selectedTime
+        };
+        localStorage.setItem('appointmentData', JSON.stringify(appointmentData));
+        showSection('confirmationSection');
+        updateStepper(4); 
+        initializeConfirmation();
+      }
+    }
+
+    function goBackToDateTime() {
+      showSection('dateTimeSection');
+      updateStepper(3); 
+      const appointmentData = JSON.parse(localStorage.getItem('appointmentData') || '{}');
+      if (appointmentData.date && appointmentData.time) {
+        selectedDate = appointmentData.date;
+        selectedTime = appointmentData.time;
+        const [month, day, year] = selectedDate.split('/');
+        currentDate = new Date(year, month - 1, day);
+        renderCalendar(currentDate);
+        updateMonthNavigation();
+        updateTimeSlots();
+      }
+    }
     function checkPatientForm() {
       const name = document.getElementById('patient-name').value.trim();
       const age = document.getElementById('age').value;
       const gender = document.getElementById('patient-gender').value;
       const blood = document.getElementById('blood-group').value;
       const contact = document.getElementById('contact-number').value;
-
       const nextButton = document.getElementById('patientNextBtn');
-
       if (name && age && gender && blood && contact.length === 10) {
         nextButton.disabled = false;
         nextButton.classList.remove('bg-gray-400');
@@ -983,21 +991,16 @@ function validateNameInput() {
         return false;
       }
     }
-
     document.addEventListener('DOMContentLoaded', () => {
-     
       const nextButton = document.getElementById('patientNextBtn');
       nextButton.disabled = true;
       nextButton.classList.add('bg-gray-400');
       nextButton.classList.remove('bg-blue-600');
-
       document.getElementById('patient-name').required = true;
       document.getElementById('age').required = true;
       document.getElementById('patient-gender').required = true;
       document.getElementById('blood-group').required = true;
       document.getElementById('contact-number').required = true;
-
-    
       const formInputs = [
         'patient-name',
         'age',
@@ -1011,10 +1014,9 @@ function validateNameInput() {
         ['input', 'change', 'blur'].forEach(eventType => {
           element.addEventListener(eventType, () => {
             checkPatientForm();
-            
             if (!element.value) {
               element.classList.add('border-red-500');
-              
+
               let errorDiv = element.nextElementSibling;
               if (!errorDiv || !errorDiv.classList.contains('error-message')) {
                 errorDiv = document.createElement('div');
@@ -1025,6 +1027,7 @@ function validateNameInput() {
             } else {
               element.classList.remove('border-red-500');
               
+             
               const errorDiv = element.nextElementSibling;
               if (errorDiv && errorDiv.classList.contains('error-message')) {
                 errorDiv.remove();
@@ -1034,6 +1037,7 @@ function validateNameInput() {
         });
       });
 
+     
       const contactInput = document.getElementById('contact-number');
       contactInput.addEventListener('blur', () => {
         if (contactInput.value && contactInput.value.length !== 10) {
@@ -1048,6 +1052,7 @@ function validateNameInput() {
         }
       });
 
+      
       const nameInput = document.getElementById('patient-name');
       
     });
@@ -1100,7 +1105,7 @@ function validateNameInput() {
         "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
         "12:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"
       ],
-      "Dr. Vivek": [
+      "Dr. vivek": [
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
         "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"
       ],
@@ -1233,7 +1238,7 @@ function validateNameInput() {
         const isWithinBookingWindow = isAvailableMonth(thisDate);
         const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
         
-        
+       
         let isTodayAllSlotsPast = false;
         if (
           selectedDoctor &&
@@ -1514,7 +1519,7 @@ function validateNameInput() {
 
     function goBackToDoctor() {
       showSection('doctorSection');
-      updateStepper(2);
+      updateStepper(2); 
     }
 
     function goToConfirmation() {
@@ -1524,18 +1529,16 @@ function validateNameInput() {
           time: selectedTime
         };
         localStorage.setItem('appointmentData', JSON.stringify(appointmentData));
-        
         showSection('confirmationSection');
-        updateStepper(3);
+        updateStepper(4); 
         initializeConfirmation();
       }
     }
 
     function goBackToDateTime() {
       showSection('dateTimeSection');
-      updateStepper(2);
-      
-      
+      updateStepper(3); 
+     
       const appointmentData = JSON.parse(localStorage.getItem('appointmentData') || '{}');
       if (appointmentData.date && appointmentData.time) {
         selectedDate = appointmentData.date;
@@ -1546,13 +1549,12 @@ function validateNameInput() {
         renderCalendar(currentDate);
         updateMonthNavigation();
         
-        
         updateTimeSlots();
       }
     }
 
     async function confirmBooking() {
-     
+      
       if (getQueryParam('edit') === '1') {
         let editData = null;
         try {
@@ -1621,7 +1623,7 @@ function validateNameInput() {
           }
         }
 
-    
+        
         const confirmButton = document.getElementById('confirmBookingBtn');
         confirmButton.disabled = true;
         confirmButton.textContent = 'Confirming...';
@@ -1666,17 +1668,17 @@ function validateNameInput() {
           bookedSlotsCache.clear();
         }
 
-        
+       
         document.getElementById('step4').innerHTML = '✓';
         
-        
-        showAlert(isEditMode ? 'Appointment updated successfully!' : 'Appointment booked successfully!');
        
+        showAlert(isEditMode ? 'Appointment updated successfully!' : 'Appointment booked successfully!');
+        
         if (isEditMode) {
           localStorage.removeItem('editAppointment');
         }
       } catch (error) {
-       
+        
         const confirmButton = document.getElementById('confirmBookingBtn');
         confirmButton.disabled = false;
         confirmButton.textContent = 'Confirm Appointment';
@@ -1775,13 +1777,13 @@ function validateNameInput() {
       }
     }
 
-  
+    
     function getQueryParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
     }
 
-  
+    
     const isEditMode = getQueryParam('edit') === '1' && localStorage.getItem('editAppointment');
     let editData = null;
     if (isEditMode) {
@@ -1794,9 +1796,9 @@ function validateNameInput() {
         }
         
         localStorage.setItem('patientData', JSON.stringify(editData.patientData));
-        
-        localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
        
+        localStorage.setItem('selectedDoctor', JSON.stringify(editData.doctorData));
+        
         localStorage.setItem('appointmentData', JSON.stringify({
           date: editData.dateData?.date,
           time: editData.dateData?.time
@@ -1808,25 +1810,27 @@ function validateNameInput() {
       }
     }
 
-  
+   
     document.addEventListener('DOMContentLoaded', () => {
       if (isEditMode && editData) {
-       
+        
         const pageTitle = document.getElementById('pageTitle');
         if (pageTitle) {
           pageTitle.textContent = 'Edit Appointment';
         }
         
-        
+      
         const stepperContainer = document.getElementById('stepperContainer');
         if (stepperContainer) {
           stepperContainer.style.display = 'none';
         }
         
+      
         const patientData = editData.patientData;
         if (patientData) {
           console.log('Setting patient data in edit mode:', patientData);
-         
+          
+          
           const populateFormFields = () => {
             const nameField = document.getElementById('patient-name');
             const ageField = document.getElementById('age');
@@ -1845,7 +1849,7 @@ function validateNameInput() {
             if (nameField) nameField.value = patientData.name || '';
             if (ageField) {
               let ageValue = patientData.age;
-           
+            
               if (typeof ageValue === 'number') ageValue = String(ageValue);
               if (typeof ageValue === 'string') {
                 
@@ -1865,7 +1869,7 @@ function validateNameInput() {
             if (bloodField) bloodField.value = patientData.blood || '';
             if (contactField) contactField.value = patientData.contact || '';
             
-           
+            
             const nextBtn = document.getElementById('patientNextBtn');
             if (nextBtn) {
               nextBtn.disabled = false;
@@ -1877,16 +1881,16 @@ function validateNameInput() {
          
           populateFormFields();
           
-         
+          
           setTimeout(populateFormFields, 200);
           setTimeout(populateFormFields, 500);
         }
 
-       
+        
         showSection('doctorSection');
         displayDoctors();
         
-      
+       
         const doctorBackBtn = document.getElementById('doctorBackBtn');
         const doctorNextBtn = document.getElementById('doctorNextBtn');
         if (doctorBackBtn) doctorBackBtn.style.display = 'none';
@@ -1908,7 +1912,7 @@ function validateNameInput() {
       }
     });
 
- 
+    
     function openCancelModal(app) {
       cancelAppointmentData = app;
       document.getElementById('cancelModalOverlay').classList.remove('hidden');
@@ -1956,7 +1960,6 @@ function validateNameInput() {
        
         closeCancelModal();
 
-       
         showAlert('Appointment cancelled successfully!');
 
        
@@ -1968,13 +1971,53 @@ function validateNameInput() {
         console.error('Error cancelling appointment:', error);
         alert('Error cancelling appointment: ' + error.message);
         
-       
+        
         const confirmButton = document.getElementById('confirmCancelBtn');
         confirmButton.disabled = false;
         confirmButton.textContent = 'Yes, Cancel';
         confirmButton.classList.remove('opacity-75');
       }
     };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const doctorList = document.getElementById('doctorList');
+      const nextBtn = document.getElementById('doctorNextBtn');
+     
+      fetch('/api/doctors')
+        .then(res => res.json())
+        .then(doctors => {
+          if (!doctors.length) {
+            doctorList.innerHTML = '<div class="text-gray-500">No doctors available.</div>';
+            return;
+          }
+          doctorList.innerHTML = doctors.map(doctor => `
+            <div class="border p-4 rounded flex items-center gap-4 bg-white shadow">
+              <input type="radio" name="selectedDoctor" value="${doctor._id}" id="doctor-${doctor._id}" class="mr-2" required>
+              <label for="doctor-${doctor._id}" class="flex-1 cursor-pointer">
+                <div class="font-bold text-lg">${doctor.name}</div>
+                <div class="text-sm text-gray-600">${doctor.specialty || ''}</div>
+                <div class="text-xs text-gray-500 mt-1">
+                  ${doctor.experience ? `${doctor.experience} years exp` : ''}
+                  ${doctor.qualification ? `• ${doctor.qualification}` : ''}
+                  ${doctor.availability ? `<br>Available: ${doctor.availability}` : ''}
+                </div>
+              </label>
+            </div>
+          `).join('');
+        })
+        .catch(err => {
+          doctorList.innerHTML = '<div class="text-red-500">Failed to load doctors.</div>';
+        });
+
+     
+      doctorList.addEventListener('change', function(e) {
+        if (e.target && e.target.name === 'selectedDoctor') {
+          nextBtn.disabled = false;
+          nextBtn.classList.remove('bg-gray-400');
+          nextBtn.classList.add('bg-blue-600');
+        }
+      });
+    });
   </script>
 </body>
 </html>
