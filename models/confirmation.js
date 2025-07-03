@@ -5,7 +5,7 @@ const confirmationSchema = new mongoose.Schema({
   doctor: { type: mongoose.Schema.Types.ObjectId, ref: 'Doctor', required: true },
   doctorName: { type: String, required: true },  
   date: { type: mongoose.Schema.Types.ObjectId, ref: 'Date', required: true },
-  status: { type: String, enum: ['confirmed', 'pending', 'canceled'], default: 'confirmed' }
+  status: { type: String, enum: ['confirmed', 'pending', 'rescheduled','canceled'], default: 'confirmed' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Confirmation', confirmationSchema);
