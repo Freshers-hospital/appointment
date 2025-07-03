@@ -16,16 +16,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
   
-    .flatpickr-calendar {
-      border-radius: 16px !important;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08) !important;
-      border: none !important;
-      width: 320px !important;
-      background: #fff !important;
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-    .flatpickr-months {
-      background: #fff !important;
+    .flatpickr-calendar {border-radius: 16px !important;box-shadow: 0 2px 16px rgba(0,0,0,0.08) !important;border: none !important;width: 320px !important;background: #fff !important; font-family: 'Segoe UI', Arial, sans-serif; }
+    .flatpickr-months {background: #fff !important;
       color: #222 !important;
       border-radius: 16px 16px 0 0 !important;
       padding: 12px 0 0 0 !important;
@@ -900,18 +892,14 @@
       
       if (statusFilter !== "all") {
         filteredAppointments = appointments.filter(app => {
-          const appointmentStatus = app.status || 'confirmed'; 
-          
-          
-          let matches = false;
-          if (statusFilter.toLowerCase() === 'cancelled') {
-            matches = appointmentStatus.toLowerCase() === 'cancelled' || appointmentStatus.toLowerCase() === 'canceled';
-          } else {
-            matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
+          // Treat missing/empty/null status as 'confirmed'
+          let appointmentStatus = (app.status && app.status.trim()) ? app.status.toLowerCase() : 'confirmed';
+          let filterStatus = statusFilter.toLowerCase();
+
+          if (filterStatus === 'cancelled') {
+            return appointmentStatus === 'cancelled' || appointmentStatus === 'canceled';
           }
-          
-          console.log(`Appointment status: "${appointmentStatus}" vs filter: "${statusFilter}" - matches: ${matches}`);
-          return matches;
+          return appointmentStatus === filterStatus;
         });
         console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
       }
@@ -1241,8 +1229,13 @@ const tabContents = document.querySelectorAll(".tab-content");
       const patient = app.patientData || {};
       const upcomingDate = app.dateData?.date || '<span class="text-gray-400">N/A</span>';
       const lastVisit = app.dateData?.date || '<span class="text-gray-400">N/A</span>';
+      const isCanceled = (app.status || '').toLowerCase() === 'cancelled' || (app.status || '').toLowerCase() === 'canceled';
+      let rowClass = "grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200";
+      if (isCanceled) {
+        rowClass += " text-red-800 font-semibold";
+      }
       patientsHTML += `
-        <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+        <div class="${rowClass}">
           <div class="col-span-3 flex items-center">
             <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0 cursor-pointer patient-placeholder" 
               data-patient='${JSON.stringify({
@@ -1648,7 +1641,7 @@ const tabContents = document.querySelectorAll(".tab-content");
       container.appendChild(daysRow);
       const daysGrid = document.createElement('div');
       daysGrid.className = 'grid grid-cols-7 gap-1';
-      // Days
+    
       const firstDay = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month+1, 0).getDate();
       for(let i=0;i<firstDay;i++){
@@ -2174,6 +2167,7 @@ const tabContents = document.querySelectorAll(".tab-content");
       const status = this.value;
       const currentDate = datePicker.value;
       const searchTerm = searchInput.value.trim();
+      console.log('Dropdown changed:', status);
       renderAppointmentsList(currentDate, searchTerm, status);
     });
   }
