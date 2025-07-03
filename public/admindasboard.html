@@ -1294,7 +1294,6 @@
 
                     patientsHTML += `
         <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-          <!-- Patient -->
           <div class="col-span-3 flex items-center">
             <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0 cursor-pointer patient-placeholder" 
               data-patient='${JSON.stringify({
@@ -1320,7 +1319,6 @@
           <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
           <!-- Upcoming Date -->
           <div class="col-span-2 text-gray-600">${upcomingDate}</div>
-          <!-- Last Visit -->
           <div class="col-span-2 text-gray-600">${lastVisit}</div>
         </div>
       `;
