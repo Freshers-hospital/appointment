@@ -1314,7 +1314,7 @@ const tabContents = document.querySelectorAll(".tab-content");
         ? pastAppointments[pastAppointments.length - 1].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
         : '<span class="text-gray-400">N/A</span>';
 
-      // Check if all appointments are cancelled
+
       const allCancelled = patient.appointments.length > 0 && patient.appointments.every(a => (a.status || '').toLowerCase() === 'canceled' || (a.status || '').toLowerCase() === 'cancelled');
 
       patientsHTML += `
@@ -1703,9 +1703,16 @@ const tabContents = document.querySelectorAll(".tab-content");
   }
   document.getElementById('closeRescheduleModal').onclick = closeRescheduleModal;
   document.getElementById('cancelRescheduleBtn').onclick = closeRescheduleModal;
-  document.getElementById('rescheduleModalOverlay').onclick = function(e) {
-    if (e.target === this) closeRescheduleModal();
-  };
+  // document.getElementById('rescheduleModalOverlay').onclick = function(e) {
+  //   if (e.target === this) closeRescheduleModal();
+  document.getElementById('closeRescheduleModal').onclick = closeRescheduleModal;
+document.getElementById('cancelRescheduleBtn').onclick = closeRescheduleModal;
+document.getElementById('confirmRescheduleBtn').onclick = function() {
+
+  closeRescheduleModal();
+};
+
+  
 
   async function renderRescheduleCalendar(app) {
     const container = document.getElementById('rescheduleCalendarContainer');
