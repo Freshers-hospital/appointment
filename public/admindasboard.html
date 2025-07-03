@@ -1288,7 +1288,6 @@
                             ? pastAppointments[pastAppointments.length - 1].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
                             : '<span class="text-gray-400">N/A</span>';
 
-                    // Check if all appointments are cancelled
                     const allCancelled =
                         patient.appointments.length > 0 && patient.appointments.every((a) => (a.status || "").toLowerCase() === "canceled" || (a.status || "").toLowerCase() === "cancelled");
 
@@ -1999,7 +1998,7 @@
             document.getElementById("patientsList").addEventListener("click", function (e) {
                 if (e.target.classList.contains("patient-placeholder")) {
                     const patientData = JSON.parse(e.target.getAttribute("data-patient"));
-                    console.log("Patient data for modal:", patientData); 
+                    console.log("Patient data for modal:", patientData);
                     openPatientDetailsModal(patientData);
                 }
             });
