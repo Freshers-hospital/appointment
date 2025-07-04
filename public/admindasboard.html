@@ -1050,15 +1050,14 @@
 
   
   function changeAppointmentsPage(newPage) {
-    const totalPages = Math.ceil(allAppointmentsData.length / appointmentsPerPage);
-    if (newPage < 1 || newPage > totalPages) return;
+    if (newPage < 1) return;
     currentAppointmentsPage = newPage;
-    
     const date = document.getElementById('datePicker').value;
     const searchTerm = document.getElementById('searchInput').value.trim();
     const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
     renderAppointmentsList(date, searchTerm, status);
   }
+  window.changeAppointmentsPage = changeAppointmentsPage;
 
   
   let searchTimeout;
@@ -2160,7 +2159,7 @@ const tabContents = document.querySelectorAll(".tab-content");
     const status = this.value;
     const currentDate = datePicker.value;
     const searchTerm = searchInput.value.trim();
-    currentAppointmentsPage = 1; 
+    currentAppointmentsPage = 1;
     console.log('Dropdown changed:', status);
     renderAppointmentsList(currentDate, searchTerm, status);
   });
