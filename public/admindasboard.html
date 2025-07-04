@@ -204,7 +204,7 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-blue-50 font-sans">
 <script>
   if (!localStorage.getItem('admin_jwt')) {
     window.location.href = 'login.html';
@@ -222,7 +222,7 @@
   </div>
 </nav>
 
-<div class="p-8">
+<div class="p-4">
   <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
     <div>
       <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
@@ -882,9 +882,9 @@
         </div>
       `;
 
+      // Always fetch fresh data
       const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
       let filteredAppointments = appointments;
-      
       
       const uniqueStatuses = [...new Set(appointments.map(app => app.status))];
       console.log('All unique status values in appointments:', uniqueStatuses);
@@ -892,10 +892,8 @@
       
       if (statusFilter !== "all") {
         filteredAppointments = appointments.filter(app => {
-          // Treat missing/empty/null status as 'confirmed'
           let appointmentStatus = (app.status && app.status.trim()) ? app.status.toLowerCase() : 'confirmed';
           let filterStatus = statusFilter.toLowerCase();
-
           if (filterStatus === 'cancelled') {
             return appointmentStatus === 'cancelled' || appointmentStatus === 'canceled';
           }
@@ -903,7 +901,8 @@
         });
         console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
       }
-      allAppointmentsData = filteredAppointments; 
+      // Remove allAppointmentsData assignment
+      // allAppointmentsData = filteredAppointments; 
       const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
       if (currentAppointmentsPage > totalPages && totalPages > 0) {
         currentAppointmentsPage = totalPages;
@@ -933,11 +932,9 @@
         return;
       }
 
-      
       filteredAppointments = filteredAppointments.slice().sort((a, b) => {
         const parseTime = t => {
           if (!t) return 0;
-          
           const [time, modifier] = t.split(' ');
           let [hours, minutes] = time.split(':').map(Number);
           if (modifier && modifier.toUpperCase() === 'PM' && hours !== 12) hours += 12;
@@ -947,12 +944,10 @@
         return parseTime(a.dateData?.time) - parseTime(b.dateData?.time);
       });
 
-     
       const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
       const endIndex = startIndex + appointmentsPerPage;
       const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
-     
       let tableHTML = `
         <div class=\"overflow-x-auto\">
           <table class=\"min-w-full bg-white rounded-lg shadow-sm\">
@@ -968,7 +963,6 @@
             <tbody>
     `;
 
-     
       tableHTML += currentPageAppointments.map((app, idx) => {
         const doctorName = app.doctorData?.name || '';
         const normalizedStatus = (app.status || '').trim().toLowerCase();
@@ -1014,7 +1008,6 @@
 
       tableHTML += `</tbody></table></div>`;
 
-      
       if (totalPages > 1) {
         tableHTML += `
           <div class=\"flex justify-between items-center mt-6 px-4\">
@@ -2163,14 +2156,15 @@ const tabContents = document.querySelectorAll(".tab-content");
 
  
   if (document.getElementById('appointmentStatusFilter')) {
-    document.getElementById('appointmentStatusFilter').addEventListener('change', function() {
-      const status = this.value;
-      const currentDate = datePicker.value;
-      const searchTerm = searchInput.value.trim();
-      console.log('Dropdown changed:', status);
-      renderAppointmentsList(currentDate, searchTerm, status);
-    });
-  }
+  document.getElementById('appointmentStatusFilter').addEventListener('change', function () {
+    const status = this.value;
+    const currentDate = datePicker.value;
+    const searchTerm = searchInput.value.trim();
+    currentAppointmentsPage = 1; 
+    console.log('Dropdown changed:', status);
+    renderAppointmentsList(currentDate, searchTerm, status);
+  });
+}
 
   let currentDoctorForEdit = null;
 
