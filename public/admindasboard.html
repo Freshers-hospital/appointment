@@ -874,6 +874,7 @@
             let allPatientsData = [];
 
             async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
+                console.log("renderAppointmentsList called with statusFilter:", statusFilter);
                 try {
                     appointmentsList.innerHTML = `
         <div class=\"flex justify-center items-center p-4\">
@@ -1107,9 +1108,9 @@
                 if (e.target.classList.contains("reschedule-btn")) {
                     e.preventDefault();
                     const appointment = JSON.parse(e.target.dataset.appointment);
-                    window.selectedAppointment = appointment; // ✅ Set selected appointment
+                    window.selectedAppointment = appointment;
                     document.getElementById("rescheduleModalOverlay").classList.remove("hidden");
-                    // Optional: populate calendar/time if needed
+                    
                 }
             });
 
@@ -2187,6 +2188,7 @@
                     const status = this.value;
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
+                    console.log("Dropdown changed", status); 
                     renderAppointmentsList(currentDate, searchTerm, status);
                 });
             }
@@ -2319,6 +2321,42 @@
                     document.getElementById("rescheduleModalOverlay").classList.remove("hidden");
                 }
             });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const statusFilter = document.getElementById("appointmentStatusFilter");
+                if (statusFilter) {
+                    statusFilter.addEventListener("change", function () {
+                        const status = this.value;
+                        const currentDate = datePicker.value;
+                        const searchTerm = searchInput.value.trim();
+                        console.log("Dropdown changed", status);
+                        renderAppointmentsList(currentDate, searchTerm, status);
+                    });
+                }
+               
+            });
+             
+        
+        
         </script>
+        <script>
+             
+        console.log("[DEBUG] Script loaded at end of HTML");
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusFilter = document.getElementById("appointmentStatusFilter");
+            console.log("Attaching event to:", statusFilter);
+            if (statusFilter) {
+                statusFilter.addEventListener("change", function () {
+                    const status = this.value;
+                    const currentDate = datePicker.value;
+                    const searchTerm = searchInput.value.trim();
+                    console.log("Dropdown changed", status); 
+                    renderAppointmentsList(currentDate, searchTerm, status);
+                });
+            }
+        });
+        
+        </script>
+        
     </body>
 </html>
