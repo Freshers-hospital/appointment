@@ -379,11 +379,11 @@
                                 id="contact-number"
                                 name="contact"
                                 placeholder="Enter 10-digit number"
-                                pattern="[0-9]{10}"
+                                pattern="^[6-9][0-9]{9}$"
                                 inputmode="numeric"
                                 maxlength="10"
                                 required
-                                title="Please enter a valid 10-digit phone number"
+                                title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9"
                                 autocomplete="off"
                             />
                         </div>
@@ -463,7 +463,6 @@
                 <p class="text-gray-600 mb-6">Select your preferred appointment date and time</p>
 
                 <div class="grid grid-cols-2 gap-8">
-                
                     <div class="border rounded-lg p-4">
                         <div class="flex justify-between items-center mb-4">
                             <button
@@ -504,7 +503,6 @@
                         </div>
                     </div>
 
-             
                     <div>
                         <div id="noTime" class="flex flex-col items-center justify-center h-64 text-gray-500 border rounded-lg p-4">
                             <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -672,15 +670,23 @@
                         e.preventDefault();
                     }
                 });
+
                 contactInput.addEventListener("input", function () {
-                    let value = this.value;
-                    value = value.replace(/[^0-9]/g, "");
+                    let value = this.value.replace(/\D/g, ""); // remove non-digits
+
+                    // ✅ Ensure first digit is 6–9 only
+                    if (value.length === 1 && !/[6-9]/.test(value[0])) {
+                        value = ""; // Clear if invalid first digit
+                    }
+
                     if (value.length > 10) {
                         value = value.slice(0, 10);
                     }
+
                     this.value = value;
                     checkPatientForm();
                 });
+
                 contactInput.addEventListener("paste", function (e) {
                     e.preventDefault();
                     const text = (e.originalEvent || e).clipboardData.getData("text/plain");
