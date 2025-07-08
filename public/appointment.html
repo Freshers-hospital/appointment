@@ -1079,6 +1079,7 @@
                 "Dr. James Wilson": ["11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"],
                 "Dr. Srivani": ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM"],
                 "Dr. Aswini": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
+                "Dr. Dinesh": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
                 "Dr. Akhila": ["9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"],
                 "Dr. Vinod": ["10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
                 "Dr. Kiran": ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"],
@@ -1699,40 +1700,37 @@
                     localStorage.removeItem("selectedDoctor");
                     localStorage.removeItem("patientData");
                     localStorage.removeItem("lastBookedPatient");
-
-                    showSection("patientSection");
-                    updateStepper(1);
-
-                    document.getElementById("patientForm").reset();
-                    document.getElementById("patient-name").value = "";
-                    document.getElementById("age").value = "";
-                    document.getElementById("patient-gender").value = "";
-                    document.getElementById("blood-group").value = "";
-                    document.getElementById("contact-number").value = "";
-
-                    const doctorButtons = document.querySelectorAll(".select-btn");
-                    doctorButtons.forEach((button) => {
-                        button.classList.remove("bg-blue-500", "hover:bg-blue-600");
-                        button.classList.add("bg-black", "hover:bg-gray-800");
-                    });
-
-                    selectedDate = null;
-                    selectedTime = null;
-                    currentDate = new Date();
-
-                    document.getElementById("patientNextBtn").classList.add("bg-gray-400");
-                    document.getElementById("patientNextBtn").classList.remove("bg-blue-600");
-                    document.getElementById("patientNextBtn").disabled = true;
-
-                    document.getElementById("doctorNextBtn").disabled = true;
-                    document.getElementById("doctorNextBtn").classList.add("bg-gray-400");
-                    document.getElementById("doctorNextBtn").classList.remove("bg-blue-600");
-
-                    document.getElementById("dateTimeNextBtn").disabled = true;
-                    document.getElementById("dateTimeNextBtn").classList.add("bg-gray-400");
-                    document.getElementById("dateTimeNextBtn").classList.remove("bg-blue-600");
-
-                    window.location.reload();
+                   
+                    if (getQueryParam("edit") === "1") {
+                        window.location.href = "admindasboard.html";
+                    } else {
+                        showSection("patientSection");
+                        updateStepper(1);
+                        document.getElementById("patientForm").reset();
+                        document.getElementById("patient-name").value = "";
+                        document.getElementById("age").value = "";
+                        document.getElementById("patient-gender").value = "";
+                        document.getElementById("blood-group").value = "";
+                        document.getElementById("contact-number").value = "";
+                        const doctorButtons = document.querySelectorAll(".select-btn");
+                        doctorButtons.forEach((button) => {
+                            button.classList.remove("bg-blue-500", "hover:bg-blue-600");
+                            button.classList.add("bg-black", "hover:bg-gray-800");
+                        });
+                        selectedDate = null;
+                        selectedTime = null;
+                        currentDate = new Date();
+                        document.getElementById("patientNextBtn").classList.add("bg-gray-400");
+                        document.getElementById("patientNextBtn").classList.remove("bg-blue-600");
+                        document.getElementById("patientNextBtn").disabled = true;
+                        document.getElementById("doctorNextBtn").disabled = true;
+                        document.getElementById("doctorNextBtn").classList.add("bg-gray-400");
+                        document.getElementById("doctorNextBtn").classList.remove("bg-blue-600");
+                        document.getElementById("dateTimeNextBtn").disabled = true;
+                        document.getElementById("dateTimeNextBtn").classList.add("bg-gray-400");
+                        document.getElementById("dateTimeNextBtn").classList.remove("bg-blue-600");
+                        window.location.reload();
+                    }
                 }
             }
 
