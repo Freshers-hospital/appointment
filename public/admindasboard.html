@@ -132,7 +132,7 @@
             .blurred-bg
                 > *:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(
                     #addDoctorModalOverlay
-                ):not(#patientDetailsModalOverlay) {
+                ):not(#patientDetailsModalOverlay):not(#successModalOverlay) {
                 filter: blur(4px);
                 pointer-events: none;
                 user-select: none;
@@ -249,7 +249,7 @@
                             type="text"
                             id="searchInput"
                             placeholder="Search"
-                            class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-600 placeholder:text-lg"
+                            class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg"
                         />
                     </div>
 
@@ -262,7 +262,7 @@
                                 <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
                                 <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
                             </svg>
-                            <span id="datePickerText" class="text-gray-700">2025-06-23</span>
+                            <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
                         </div>
                         <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly autocomplete="off" />
                     </div>
@@ -386,13 +386,13 @@
                         <button type="submit" class="w-1/2 px-4 py-3 rounded-lg bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700">Save</button>
                     </div>
                 </form>
-                <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             </div>
         </div>
 
         <div id="appointmentDetailsModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="appointmentDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeAppointmentDetailsModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeAppointmentDetailsModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
 
                 <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-800">Viewing Details</h2>
@@ -423,14 +423,14 @@
                 </div>
 
                 <div class="flex justify-end mt-6">
-                    <button id="closeAppointmentDetailsBtn" class="px-4 py-2 rounded border border-gray-300 bg-white text-gray-700 font-semibold hover:bg-gray-50">Close</button>
+                    <button id="closeAppointmentDetailsBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
                 </div>
             </div>
         </div>
 
         <div id="assignDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="assignDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeAssignDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeAssignDoctorModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold mb-4">Assign Doctor</h2>
                 <div class="mb-4">
                     <p class="text-gray-600 mb-2">Patient: <span id="assignPatientName" class="font-semibold"></span></p>
@@ -453,11 +453,11 @@
 
         <div id="viewDetailsModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="viewDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl relative">
-                <button id="closeViewDetailsModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeViewDetailsModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
 
                 <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-800">Appointment Details</h2>
-                    <div class="mt-4 text-lg font-semibold text-blue-600" id="viewDetailsPatient"></div>
+                    <div class="mt-4 text-2xl font-semibold text-blue-600" id="viewDetailsPatient"></div>
                     <div class="mt-2 text-md font-medium text-gray-600" id="viewDetailsDoctor"></div>
                     <div class="mt-2 text-sm text-gray-500" id="viewDetailsDateTime"></div>
                 </div>
@@ -531,14 +531,14 @@
                 </div>
 
                 <div class="flex justify-end mt-6">
-                    <button id="okViewDetailsModal" class="px-6 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Close</button>
+                    <button id="okViewDetailsModal" class="px-6 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
                 </div>
             </div>
         </div>
 
         <div id="rescheduleModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="rescheduleModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeRescheduleModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeRescheduleModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl font-bold mb-2">Reschedule Appointment</h2>
                 <div class="mb-4 text-gray-600" id="reschedulePatientName"></div>
                 <form id="rescheduleForm">
@@ -564,7 +564,7 @@
 
         <div id="cancelModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="cancelModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeCancelModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeCancelModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl font-bold mb-4 text-red-600">Cancel Appointment</h2>
                 <div class="mb-6 text-gray-700">Are you sure you want to cancel this appointment?</div>
                 <div class="flex justify-end gap-2">
@@ -576,7 +576,7 @@
 
         <div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeAddDoctorModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeAddDoctorModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
                 <form id="addDoctorForm">
                     <div class="mb-4">
@@ -637,7 +637,7 @@
 
         <div id="patientDetailsModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closePatientDetailsModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closePatientDetailsModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="font-semibold text-gray-600">Name</div>
@@ -654,14 +654,14 @@
                     <div id="modalPatientLastVisit" class="text-gray-900"></div>
                 </div>
                 <div class="flex justify-end mt-6">
-                    <button id="closePatientDetailsBtn" class="px-4 py-2 rounded border border-gray-300 bg-white text-gray-700 font-semibold hover:bg-gray-50">Close</button>
+                    <button id="closePatientDetailsBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
                 </div>
             </div>
         </div>
 
         <div id="editDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="editDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeEditDoctorModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                <button id="closeEditDoctorModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Edit Doctor Profile</h2>
                 <form id="editDoctorForm">
                     <div class="mb-4">
@@ -691,6 +691,21 @@
                     </div>
                 </form>
             </div>
+        </div>
+
+        
+        <div id="successModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
+            <div class="mb-4">
+              <div class="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+            </div>
+            <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
+            <button id="successModalOkBtn" class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
+          </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1789,7 +1804,7 @@
                     });
                     if (!response.ok) throw new Error("Failed to reschedule appointment");
                     closeRescheduleModal();
-                    showAlert("Appointment rescheduled successfully!");
+                    showSuccessModal("Appointment rescheduled successfully!");
                     try {
                         const currentDate = datePicker.value;
                         const searchTerm = searchInput.value.trim();
@@ -1860,7 +1875,7 @@
 
                     closeCancelModal();
 
-                    showAlert("Appointment cancelled successfully!");
+                    showSuccessModal("Appointment cancelled successfully!");
 
                     try {
                         const currentDate = datePicker.value;
@@ -1942,7 +1957,7 @@
                                 throw new Error(errorData.error || "Failed to add doctor");
                             }
 
-                            showAlert("Doctor added successfully!");
+                            showSuccessModal("Doctor added successfully!");
                             closeModal();
 
                             await fetchAndDisplayDoctors();
@@ -1954,14 +1969,20 @@
                 }
             }
 
-            function showAlert(message) {
-                document.getElementById("alertMessage").textContent = message;
-                document.getElementById("overlay").style.display = "flex";
+            function showSuccessModal(message) {
+                document.getElementById("successModalMessage").textContent = message;
+                document.getElementById("successModalOverlay").classList.remove("hidden");
+                document.body.classList.add("blurred-bg");
             }
 
-            function hideAlert() {
-                document.getElementById("overlay").style.display = "none";
+            function hideSuccessModal() {
+                document.getElementById("successModalOverlay").classList.add("hidden");
+                document.body.classList.remove("blurred-bg");
             }
+            document.getElementById("successModalOkBtn").onclick = hideSuccessModal;
+            document.getElementById("successModalOverlay").onclick = function(e) {
+                if (e.target === this) hideSuccessModal();
+            };
 
             document.getElementById("signOutBtn").onclick = function () {
                 if (confirm("Are you sure you want to sign out?")) {
