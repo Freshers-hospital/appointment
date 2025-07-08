@@ -338,7 +338,7 @@
                             <div class="col-span-2">Age/Gender</div>
                             <div class="col-span-1">Blood</div>
                             <div class="col-span-2">Contact</div>
-                            <div class="col-span-2">Upcoming Date</div>
+                            <div class="col-span-2">Appointment Date</div>
                             <div class="col-span-2">Last Visit</div>
                         </div>
 
@@ -599,7 +599,7 @@
                             <input type="text" id="doctorExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
                         </div>
                         <div class="mb-4">
-                            <label for="doctorQualification" class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+                            <label for="doctorQualification" class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
                             <input
                                 type="text"
                                 id="doctorQualification"
@@ -648,8 +648,10 @@
                     <div id="modalPatientBlood" class="text-gray-900"></div>
                     <div class="font-semibold text-gray-600">Contact</div>
                     <div id="modalPatientContact" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Upcoming Date</div>
+
+                    <div class="font-semibold text-gray-600">Appointment Date</div>
                     <div id="modalPatientUpcoming" class="text-gray-900"></div>
+
                     <div class="font-semibold text-gray-600">Last Visit</div>
                     <div id="modalPatientLastVisit" class="text-gray-900"></div>
                 </div>
@@ -678,7 +680,8 @@
                             <input type="text" id="editDoctorExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2" />
                         </div>
                         <div class="mb-4">
-                            <label for="editDoctorQualification" class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+                            <label for="editDoctorQualification" class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
+
                             <input type="text" id="editDoctorQualification" name="qualification" class="w-full border border-gray-300 rounded px-3 py-2" />
                         </div>
                         <div class="mb-4">
@@ -1125,7 +1128,6 @@
                     const appointment = JSON.parse(e.target.dataset.appointment);
                     window.selectedAppointment = appointment;
                     document.getElementById("rescheduleModalOverlay").classList.remove("hidden");
-                    
                 }
             });
 
@@ -2209,7 +2211,7 @@
                     const status = this.value;
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
-                    console.log("Dropdown changed", status); 
+                    console.log("Dropdown changed", status);
                     renderAppointmentsList(currentDate, searchTerm, status);
                 });
             }
@@ -2354,31 +2356,23 @@
                         renderAppointmentsList(currentDate, searchTerm, status);
                     });
                 }
-                
-               
             });
-             
-        
-        
         </script>
         <script>
-             
-        console.log("[DEBUG] Script loaded at end of HTML");
-        document.addEventListener("DOMContentLoaded", function () {
-            const statusFilter = document.getElementById("appointmentStatusFilter");
-            console.log("Attaching event to:", statusFilter);
-            if (statusFilter) {
-                statusFilter.addEventListener("change", function () {
-                    const status = this.value;
-                    const currentDate = datePicker.value;
-                    const searchTerm = searchInput.value.trim();
-                    console.log("Dropdown changed", status); 
-                    renderAppointmentsList(currentDate, searchTerm, status);
-                });
-            }
-        });
-        
+            console.log("[DEBUG] Script loaded at end of HTML");
+            document.addEventListener("DOMContentLoaded", function () {
+                const statusFilter = document.getElementById("appointmentStatusFilter");
+                console.log("Attaching event to:", statusFilter);
+                if (statusFilter) {
+                    statusFilter.addEventListener("change", function () {
+                        const status = this.value;
+                        const currentDate = datePicker.value;
+                        const searchTerm = searchInput.value.trim();
+                        console.log("Dropdown changed", status);
+                        renderAppointmentsList(currentDate, searchTerm, status);
+                    });
+                }
+            });
         </script>
-        
     </body>
 </html>
