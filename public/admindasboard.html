@@ -1768,7 +1768,7 @@
                     container.appendChild(daysRow);
                     const daysGrid = document.createElement("div");
                     daysGrid.className = "grid grid-cols-7 gap-1";
-                    // Days
+            
                     const firstDay = new Date(year, month, 1).getDay();
                     const daysInMonth = new Date(year, month + 1, 0).getDate();
                     for (let i = 0; i < firstDay; i++) {
@@ -2494,10 +2494,9 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const qualificationGrid = document.getElementById("qualificationGrid");
 
-                // Add click listener for "+" button
                 qualificationGrid.addEventListener("click", function (e) {
                     if (e.target && e.target.id === "addQualificationBtn") {
-                        // Create new row with input and minus button
+                       
                         const newField = document.createElement("div");
                         newField.className = "flex items-center gap-2 mt-2";
 
@@ -2521,7 +2520,7 @@
                         qualificationGrid.appendChild(newField);
                     }
 
-                    // Handle minus button click
+                   
                     if (e.target && e.target.classList.contains("removeQualificationBtn")) {
                         const row = e.target.closest("div");
                         if (row) {
@@ -2535,7 +2534,7 @@
                 const qualificationGrid = document.getElementById("qualificationGrid");
 
                 qualificationGrid.addEventListener("click", function (e) {
-                    // When "+" is clicked
+                    
                     if (e.target.closest(".addQualificationBtn")) {
                         const newRow = document.createElement("div");
                         newRow.className = "flex items-center gap-2 mt-2";
@@ -2559,13 +2558,13 @@
                         qualificationGrid.appendChild(newRow);
                     }
 
-                    // When "-" is clicked
                     if (e.target.closest(".removeQualificationBtn")) {
                         const row = e.target.closest("div");
                         if (row) row.remove();
                     }
                 });
             });
+            
         </script>
         <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
           <div id="viewDoctorProfileModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
@@ -2621,6 +2620,22 @@
               }
             });
           }
+        </script>
+        <script>
+            console.log("[DEBUG] Script loaded at end of HTML");
+            document.addEventListener("DOMContentLoaded", function () {
+                const statusFilter = document.getElementById("appointmentStatusFilter");
+                console.log("Attaching event to:", statusFilter);
+                if (statusFilter) {
+                    statusFilter.addEventListener("change", function () {
+                        const status = this.value;
+                        const currentDate = datePicker.value;
+                        const searchTerm = searchInput.value.trim();
+                        console.log("Dropdown changed", status);
+                        renderAppointmentsList(currentDate, searchTerm, status);
+                    });
+                }
+            });
         </script>
     </body>
 </html>
