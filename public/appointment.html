@@ -744,11 +744,17 @@
                 const end = start + doctorsPerPage;
                 const paginatedDoctors = filteredDoctors.slice(start, end);
                 const selectedDoctorData = JSON.parse(localStorage.getItem("selectedDoctor"));
+                const isEditMode = getQueryParam("edit") === "1";
 
                 doctorList.innerHTML = paginatedDoctors
                     .map((doctor) => {
                         const isSelected = selectedDoctorData && selectedDoctorData.name === doctor.name;
-                        const buttonClass = isSelected ? "select-btn bg-blue-500 hover:bg-blue-600 text-white" : "select-btn bg-black text-white hover:bg-gray-800";
+                        const buttonClass = isSelected && isEditMode
+                            ? "select-btn bg-gray-400 text-white cursor-not-allowed opacity-60"
+                            : isSelected
+                                ? "select-btn bg-blue-500 hover:bg-blue-600 text-white"
+                                : "select-btn bg-black text-white hover:bg-gray-800";
+                        const disabledAttr = isEditMode && isSelected ? "disabled" : "";
                         const experience = doctor.experience ? `${doctor.experience} yrs` : "";
                         const qualification = doctor.qualification ? `${doctor.qualification}` : "";
                         const infoLine = experience && qualification ? `${experience} · ${qualification}` : experience || qualification;
@@ -761,7 +767,7 @@
             </div>
             <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}')" 
               class="${buttonClass} px-4 py-2 rounded transition-colors duration-200"
-              data-doctor="${doctor.name}">
+              data-doctor="${doctor.name}" ${disabledAttr}>
               Select
             </button>
           </div>
@@ -1072,23 +1078,6 @@
                 const nameInput = document.getElementById("patient-name");
             });
 
-            const doctorTimeSlots = {
-                "Dr. Sarah Johnson": ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. Michael Chen": ["10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"],
-                "Dr. Emily Rodriguez": ["9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. James Wilson": ["11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"],
-                "Dr. Srivani": ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM"],
-                "Dr. Aswini": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. Dinesh": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. Akhila": ["9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"],
-                "Dr. Vinod": ["10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. Kiran": ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"],
-                "Dr. keerthi": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. Vedanshi": ["9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-                "Dr. vivek": ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"],
-                "Dr. Om": ["10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"],
-            };
-
             const doctorUnavailableDates = {
                 "Dr. Sarah Johnson": ["6/26/2025"],
                 "Dr. Michael Chen": ["6/28/2025"],
@@ -1206,7 +1195,7 @@
 
                     let isTodayAllSlotsPast = false;
                     if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                        const slots = doctorTimeSlots[selectedDoctor.name] || [];
+                        const slots = generateTimeSlots(selectedDoctor.availability);
                         isTodayAllSlotsPast = slots.every((slot) => isTimeSlotPast(slot));
                     }
 
@@ -1303,7 +1292,7 @@
                 if (!selectedDoctor || !selectedDate) return;
 
                 const bookedSlots = await getBookedSlots(selectedDoctor.name, selectedDate);
-                let doctorAvailableSlots = doctorTimeSlots[selectedDoctor.name] || [];
+                let doctorAvailableSlots = generateTimeSlots(selectedDoctor.availability);
 
                 doctorAvailableSlots = doctorAvailableSlots.sort((a, b) => {
                     const timeA = a.split(" - ")[0];
@@ -1967,6 +1956,38 @@
                     const searchTerm = searchInput.value.trim();
                     renderAppointmentsList(currentDate, searchTerm, status);
                 });
+            }
+
+            // Add dynamic time slot generation functions
+            function generateTimeSlots(availability, intervalMinutes = 30) {
+                if (!availability) return [];
+                // Example: "9:00 AM - 5:00 PM"
+                const [start, end] = availability.split('-').map(s => s.trim());
+                const slots = [];
+                let current = parseTime(start);
+                const endTime = parseTime(end);
+                while (current < endTime) {
+                    slots.push(formatTime(current));
+                    current = new Date(current.getTime() + intervalMinutes * 60000);
+                }
+                return slots;
+            }
+            function parseTime(timeStr) {
+                // "9:00 AM" => Date object on 1970-01-01
+                const [time, modifier] = timeStr.split(' ');
+                let [hours, minutes] = time.split(':').map(Number);
+                if (modifier === 'PM' && hours !== 12) hours += 12;
+                if (modifier === 'AM' && hours === 12) hours = 0;
+                const date = new Date(1970, 0, 1, hours, minutes);
+                return date;
+            }
+            function formatTime(date) {
+                let hours = date.getHours();
+                const minutes = date.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                return `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
             }
         </script>
     </body>

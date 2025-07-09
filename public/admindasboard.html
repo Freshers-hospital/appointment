@@ -132,7 +132,7 @@
             .blurred-bg
                 > *:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(
                     #addDoctorModalOverlay
-                ):not(#patientDetailsModalOverlay):not(#successModalOverlay) {
+                ):not(#patientDetailsModalOverlay):not(#successModalOverlay):not(#viewDoctorProfileModalOverlay) {
                 filter: blur(4px);
                 pointer-events: none;
                 user-select: none;
@@ -215,6 +215,31 @@
             #availabilityModal button[type="button"] {
                 font-size: 1.125rem;
                 border-radius: 0.75rem;
+            }
+
+            .action-menu {
+                position: absolute;
+                right: 0;
+                margin-top: 0.5rem;
+                width: 12rem;
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.375rem;
+                box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+                padding-top: 0.25rem;
+                padding-bottom: 0.25rem;
+                z-index: 20;
+                /* Remove scroll and max-height for small number of actions */
+                max-height: none !important;
+                overflow-y: visible !important;
+            }
+
+            .bg-white.p-6.rounded-lg.shadow,
+            .px-20 {
+              overflow: visible !important;
+            }
+            .overflow-x-auto {
+              overflow-y: visible !important;
             }
         </style>
     </head>
@@ -468,11 +493,11 @@
                         <div class="border rounded-lg p-4 bg-white">
                             <h3 class="text-gray-800 font-semibold text-lg mb-3">Doctor Information</h3>
                             <div class="space-y-2">
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Name:</span>
                                     <span id="viewDetailsDoctorName" class="font-medium text-gray-900"></span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Specialty:</span>
                                     <span id="viewDetailsDoctorSpecialty" class="font-medium text-gray-900"></span>
                                 </div>
@@ -482,15 +507,15 @@
                         <div class="border rounded-lg p-4 bg-white">
                             <h3 class="text-gray-800 font-semibold text-lg mb-3">Appointment Information</h3>
                             <div class="space-y-2">
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Date:</span>
                                     <span id="viewDetailsDate" class="font-medium text-gray-900"></span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Time:</span>
                                     <span id="viewDetailsTime" class="font-medium text-gray-900"></span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Status:</span>
                                     <span id="viewDetailsStatus" class="font-medium text-gray-900"></span>
                                 </div>
@@ -500,15 +525,15 @@
                         <div class="border rounded-lg p-4 bg-white">
                             <h3 class="text-gray-800 font-semibold text-lg mb-3">Personal Details</h3>
                             <div class="space-y-2">
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Name:</span>
                                     <span id="viewDetailsPatientName" class="font-medium text-gray-900"></span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Age:</span>
                                     <span id="viewDetailsAge" class="font-medium text-gray-900"></span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Gender:</span>
                                     <span id="viewDetailsGender" class="font-medium text-gray-900"></span>
                                 </div>
@@ -518,11 +543,11 @@
                         <div class="border rounded-lg p-4 bg-white">
                             <h3 class="text-gray-800 font-semibold text-lg mb-3">Contact Information</h3>
                             <div class="space-y-2">
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Phone:</span>
                                     <span id="viewDetailsContact" class="font-medium text-gray-900"></span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-baseline gap-2">
                                     <span class="text-gray-500">Blood Group:</span>
                                     <span id="viewDetailsBlood" class="font-medium text-gray-900"></span>
                                 </div>
@@ -733,17 +758,49 @@
         </div>
 
         <div id="successModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
-                <div class="mb-4">
-                    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto">
-                        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                    </div>
-                </div>
-                <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
-                <button id="successModalOkBtn" class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
+          <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
+            <div class="mb-4">
+              <div class="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
             </div>
+            <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
+            <button id="successModalOkBtn" class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
+          </div>
+        </div>
+
+        <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div id="editDoctorProfileModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Edit Doctor Profile</h2>
+            <form id="editDoctorProfileForm" class="space-y-4">
+              <div>
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Name</label>
+                <input type="text" id="editProfileDoctorName" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required />
+              </div>
+              <div>
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Specialty</label>
+                <input type="text" id="editProfileDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
+              </div>
+              <div>
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
+                <input type="text" id="editProfileDoctorExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2" />
+              </div>
+              <div>
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
+                <input type="text" id="editProfileDoctorQualification" name="qualification" class="w-full border border-gray-300 rounded px-3 py-2" />
+              </div>
+              <div>
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
+                <input type="text" id="editProfileDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
+              </div>
+              <div class="flex justify-end mt-6">
+                <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Save</button>
+              </div>
+            </form>
+          </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1463,22 +1520,6 @@
                 }
             };
 
-            function attachManageAvailabilityListeners() {
-                document.querySelectorAll(".action-menu a").forEach((link) => {
-                    if (link.textContent.trim() === "Manage Availability") {
-                        link.onclick = function (e) {
-                            e.preventDefault();
-
-                            const row = link.closest("tr");
-                            let doctorName = row ? row.querySelector("td.font-semibold, td.font-medium")?.textContent.trim() : "";
-                            openAvailabilityModal(doctorName);
-                        };
-                    }
-                });
-            }
-
-            attachManageAvailabilityListeners();
-
             function openAppointmentDetailsModal(app) {
                 const doctorName = app.doctorData?.name || app.doctor?.name || app.doctorName || app.assignedDoctor?.name || app.assigned_doctor?.name || "Not Assigned";
 
@@ -2152,10 +2193,9 @@
           <div class="col-span-2 relative">
             <button class="action-btn text-xl">...</button>
             <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Profile</a>
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Edit Profile</a>
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">View Availability</a>
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700">Manage Availability</a>
+              <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
+              <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
+              <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
             </div>
           </div>
         </div>
@@ -2398,6 +2438,59 @@
                 }
             });
 
+            let currentDoctorForEditProfile = null;
+            if (document.getElementById("doctorsList")) {
+              document.getElementById("doctorsList").addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                  e.preventDefault();
+                  const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                  currentDoctorForEditProfile = doctor;
+                  document.getElementById("editProfileDoctorName").value = doctor.name || "";
+                  document.getElementById("editProfileDoctorSpecialty").value = doctor.specialty || "";
+                  document.getElementById("editProfileDoctorExperience").value = doctor.experience || "";
+                  document.getElementById("editProfileDoctorQualification").value = doctor.qualification || "";
+                  document.getElementById("editProfileDoctorAvailability").value = doctor.availability || "";
+                  document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
+                  document.body.classList.add("blurred-bg");
+                  e.target.closest(".action-menu").classList.add("hidden");
+                }
+              });
+            }
+            document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
+            document.getElementById("editDoctorProfileModalOverlay").onclick = function (e) {
+              if (e.target === this) closeEditDoctorProfileModal();
+            };
+            function closeEditDoctorProfileModal() {
+              document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+              document.body.classList.remove("blurred-bg");
+              currentDoctorForEditProfile = null;
+            }
+            document.getElementById("editDoctorProfileForm").onsubmit = async function (e) {
+              e.preventDefault();
+              if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) return;
+              const updatedDoctor = {
+                name: document.getElementById("editProfileDoctorName").value,
+                specialty: document.getElementById("editProfileDoctorSpecialty").value,
+                experience: document.getElementById("editProfileDoctorExperience").value,
+                qualification: document.getElementById("editProfileDoctorQualification").value,
+                availability: document.getElementById("editProfileDoctorAvailability").value,
+              };
+              try {
+                const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(updatedDoctor),
+                });
+                if (!response.ok) throw new Error("Failed to update doctor");
+                closeEditDoctorProfileModal();
+                await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+              } catch (err) {
+                alert("Error updating doctor: " + err.message);
+              }
+            };
+        </script>
+        <script>
+            console.log("[DEBUG] Script loaded at end of HTML");
             document.addEventListener("DOMContentLoaded", function () {
                 const qualificationGrid = document.getElementById("qualificationGrid");
 
@@ -2473,6 +2566,61 @@
                     }
                 });
             });
+        </script>
+        <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div id="viewDoctorProfileModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeViewDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Doctor Profile</h2>
+            <div class="space-y-4 text-center">
+              <div><span class="font-semibold text-gray-600">Name:</span> <span id="profileDoctorName" class="text-gray-900"></span></div>
+              <div><span class="font-semibold text-gray-600">Specialty:</span> <span id="profileDoctorSpecialty" class="text-gray-900"></span></div>
+              <div><span class="font-semibold text-gray-600">Experience:</span> <span id="profileDoctorExperience" class="text-gray-900"></span></div>
+              <div><span class="font-semibold text-gray-600">Expertise:</span> <span id="profileDoctorQualification" class="text-gray-900"></span></div>
+              <div><span class="font-semibold text-gray-600">Availability:</span> <span id="profileDoctorAvailability" class="text-gray-900"></span></div>
+            </div>
+            <div class="flex justify-end mt-6">
+              <button id="closeViewDoctorProfileBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
+            </div>
+          </div>
+        </div>
+        <script>
+          if (document.getElementById("doctorsList")) {
+            document.getElementById("doctorsList").addEventListener("click", function (e) {
+              if (e.target.classList.contains("view-profile-btn")) {
+                e.preventDefault();
+                const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                document.getElementById("profileDoctorName").textContent = doctor.name || "";
+                document.getElementById("profileDoctorSpecialty").textContent = doctor.specialty || "";
+                document.getElementById("profileDoctorExperience").textContent = doctor.experience || "";
+                document.getElementById("profileDoctorQualification").textContent = doctor.qualification || "";
+                document.getElementById("profileDoctorAvailability").textContent = doctor.availability || "";
+                document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
+                document.body.classList.add("blurred-bg");
+                e.target.closest(".action-menu").classList.add("hidden");
+              }
+            });
+          }
+          document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
+          document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
+          document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
+            if (e.target === this) closeViewDoctorProfileModal();
+          };
+          function closeViewDoctorProfileModal() {
+            document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+          }
+        </script>
+        <script>
+          if (document.getElementById("doctorsList")) {
+            document.getElementById("doctorsList").addEventListener("click", function (e) {
+              if (e.target.classList.contains("manage-availability-btn")) {
+                e.preventDefault();
+                const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                openAvailabilityModal(doctor.name);
+                e.target.closest(".action-menu").classList.add("hidden");
+              }
+            });
+          }
         </script>
     </body>
 </html>
