@@ -574,6 +574,7 @@
             </div>
         </div>
 
+        <!-- ✅ FULL Add Doctor Modal with Working + and - -->
         <div id="addDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
                 <button id="closeAddDoctorModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
@@ -620,9 +621,7 @@
 
                         <div class="mb-4 col-span-2">
                             <label class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
-
-                            <div id="qualificationGrid" class="grid grid-cols-2 gap-4">
-                                <!-- First field -->
+                            <div id="qualificationGrid" class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <input
                                         type="text"
@@ -633,8 +632,7 @@
                                     />
                                     <button
                                         type="button"
-                                        id="addQualificationBtn"
-                                        class="w-[42px] h-[42px] bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
+                                        class="addQualificationBtn w-[42px] h-[42px] bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
                                         title="Add"
                                     >
                                         +
@@ -643,18 +641,19 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-4 col-span-2">
                             <label for="doctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
                             <input
                                 type="text"
                                 id="doctorAvailability"
                                 name="availability"
-                                placeholder="e.g., 9:00 AM - 5:00 PM"
                                 class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                placeholder="e.g., 9:00 AM - 5:00 PM"
                                 required
                             />
                         </div>
                     </div>
+
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
                     </div>
@@ -1975,7 +1974,7 @@
 
                         const firstName = formData.get("firstName")?.trim() || "";
                         const lastName = formData.get("lastName")?.trim() || "";
-                        const fullName = `${firstName} ${lastName}`.trim();
+                      const fullName = `Dr. ${firstName} ${lastName}`;
 
                         const doctorData = {
                             name: fullName,
@@ -2397,6 +2396,85 @@
                     });
                 }
             });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const qualificationGrid = document.getElementById("qualificationGrid");
+
+                // Add click listener for "+" button
+                qualificationGrid.addEventListener("click", function (e) {
+                    if (e.target && e.target.id === "addQualificationBtn") {
+                        // Create new row with input and minus button
+                        const newField = document.createElement("div");
+                        newField.className = "flex items-center gap-2 mt-2";
+
+                        newField.innerHTML = `
+                <input
+                    type="text"
+                    name="qualification"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., Cardiology"
+                    required
+                />
+                <button
+                    type="button"
+                    class="removeQualificationBtn w-[42px] h-[42px] bg-red-600 hover:bg-red-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
+                    title="Remove"
+                >
+                    &minus;
+                </button>
+            `;
+
+                        qualificationGrid.appendChild(newField);
+                    }
+
+                    // Handle minus button click
+                    if (e.target && e.target.classList.contains("removeQualificationBtn")) {
+                        const row = e.target.closest("div");
+                        if (row) {
+                            qualificationGrid.removeChild(row);
+                        }
+                    }
+                });
+            });
+
+
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+  const qualificationGrid = document.getElementById("qualificationGrid");
+
+  qualificationGrid.addEventListener("click", function (e) {
+    // When "+" is clicked
+    if (e.target.closest(".addQualificationBtn")) {
+      const newRow = document.createElement("div");
+      newRow.className = "flex items-center gap-2 mt-2";
+
+      newRow.innerHTML = `
+        <input
+          type="text"
+          name="qualification"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="e.g., Neurology"
+          required
+        />
+        <button
+          type="button"
+          class="removeQualificationBtn w-[42px] h-[42px] bg-red-600 hover:bg-red-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
+          title="Remove"
+        >
+          &minus;
+        </button>
+      `;
+      qualificationGrid.appendChild(newRow);
+    }
+
+    // When "-" is clicked
+    if (e.target.closest(".removeQualificationBtn")) {
+      const row = e.target.closest("div");
+      if (row) row.remove();
+    }
+  });
+});
         </script>
     </body>
 </html>
