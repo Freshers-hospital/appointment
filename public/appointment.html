@@ -114,8 +114,7 @@
                 right: 0;
                 bottom: 0;
                 background-color: rgba(0, 0, 0, 0.5);
-                /* Removed blur effect */
-                /* backdrop-filter: blur(4px); */
+
                 display: none;
                 justify-content: center;
                 align-items: center;
@@ -672,11 +671,10 @@
                 });
 
                 contactInput.addEventListener("input", function () {
-                    let value = this.value.replace(/\D/g, ""); // remove non-digits
+                    let value = this.value.replace(/\D/g, "");
 
-                    // ✅ Ensure first digit is 6–9 only
                     if (value.length === 1 && !/[6-9]/.test(value[0])) {
-                        value = ""; // Clear if invalid first digit
+                        value = "";
                     }
 
                     if (value.length > 10) {
@@ -749,9 +747,10 @@
                 doctorList.innerHTML = paginatedDoctors
                     .map((doctor) => {
                         const isSelected = selectedDoctorData && selectedDoctorData.name === doctor.name;
-                        const buttonClass = isSelected && isEditMode
-                            ? "select-btn bg-gray-400 text-white cursor-not-allowed opacity-60"
-                            : isSelected
+                        const buttonClass =
+                            isSelected && isEditMode
+                                ? "select-btn bg-gray-400 text-white cursor-not-allowed opacity-60"
+                                : isSelected
                                 ? "select-btn bg-blue-500 hover:bg-blue-600 text-white"
                                 : "select-btn bg-black text-white hover:bg-gray-800";
                         const disabledAttr = isEditMode && isSelected ? "disabled" : "";
@@ -1084,22 +1083,6 @@
                 "Dr. Srivani": ["6/29/2025"],
             };
 
-            const doctorRestrictions = {
-                "Dr. Sarah Johnson": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Michael Chen": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Emily Rodriguez": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. James Wilson": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Srivani": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Aswini": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Akhila": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Vinod": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Kiran": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. keerthi": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Vedanshi": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Vivek": { lunchBreak: "1:00-2:00 PM" },
-                "Dr. Om": { lunchBreak: "1:00-2:00 PM" },
-            };
-
             let currentDate = new Date();
             let selectedDate = null;
             let selectedTime = null;
@@ -1195,7 +1178,8 @@
 
                     let isTodayAllSlotsPast = false;
                     if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                        const slots = generateTimeSlots(selectedDoctor.availability);
+                        const slots = generateTimeSlots();
+
                         isTodayAllSlotsPast = slots.every((slot) => isTimeSlotPast(slot));
                     }
 
@@ -1689,7 +1673,7 @@
                     localStorage.removeItem("selectedDoctor");
                     localStorage.removeItem("patientData");
                     localStorage.removeItem("lastBookedPatient");
-                   
+
                     if (getQueryParam("edit") === "1") {
                         window.location.href = "admindasboard.html";
                     } else {
@@ -1958,11 +1942,10 @@
                 });
             }
 
-            // Add dynamic time slot generation functions
             function generateTimeSlots(availability, intervalMinutes = 30) {
                 if (!availability) return [];
-                // Example: "9:00 AM - 5:00 PM"
-                const [start, end] = availability.split('-').map(s => s.trim());
+
+                const [start, end] = availability.split("-").map((s) => s.trim());
                 const slots = [];
                 let current = parseTime(start);
                 const endTime = parseTime(end);
@@ -1973,21 +1956,45 @@
                 return slots;
             }
             function parseTime(timeStr) {
-                // "9:00 AM" => Date object on 1970-01-01
-                const [time, modifier] = timeStr.split(' ');
-                let [hours, minutes] = time.split(':').map(Number);
-                if (modifier === 'PM' && hours !== 12) hours += 12;
-                if (modifier === 'AM' && hours === 12) hours = 0;
+                const [time, modifier] = timeStr.split(" ");
+                let [hours, minutes] = time.split(":").map(Number);
+                if (modifier === "PM" && hours !== 12) hours += 12;
+                if (modifier === "AM" && hours === 12) hours = 0;
                 const date = new Date(1970, 0, 1, hours, minutes);
                 return date;
             }
             function formatTime(date) {
                 let hours = date.getHours();
                 const minutes = date.getMinutes();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const ampm = hours >= 12 ? "PM" : "AM";
                 hours = hours % 12;
                 hours = hours ? hours : 12;
-                return `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+                return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm}`;
+            }
+
+            function generateTimeSlots() {
+                const slots = [];
+                const startHour = 9;
+                const endHour = 17;
+
+                for (let hour = startHour; hour < endHour; hour++) {
+                    for (let minute of [0, 30]) {
+                        const timeInMinutes = hour * 60 + minute;
+
+                        if (timeInMinutes >= 780 && timeInMinutes < 840) continue;
+
+                        slots.push(convertTo12Hour(hour, minute));
+                    }
+                }
+
+                return slots;
+            }
+
+            function convertTo12Hour(hour, minute = 0) {
+                const period = hour >= 12 ? "PM" : "AM";
+                const adjustedHour = hour % 12 === 0 ? 12 : hour % 12;
+                const paddedMinute = minute.toString().padStart(2, "0");
+                return `${adjustedHour}:${paddedMinute} ${period}`;
             }
         </script>
     </body>
