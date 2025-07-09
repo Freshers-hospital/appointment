@@ -310,7 +310,8 @@
 
                         <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                             <div class="col-span-3">Doctor</div>
-                            <div class="col-span-2">Specialty</div>
+                            <div class="col-span-2">Specialization</div>
+
                             <div class="col-span-2">Today's Appointments</div>
                             <div class="col-span-3">Availability</div>
                             <div class="col-span-2">Actions</div>
@@ -1974,7 +1975,7 @@
 
                         const firstName = formData.get("firstName")?.trim() || "";
                         const lastName = formData.get("lastName")?.trim() || "";
-                      const fullName = `Dr. ${firstName} ${lastName}`;
+                        const fullName = `Dr. ${firstName} ${lastName}`;
 
                         const doctorData = {
                             name: fullName,
@@ -2437,19 +2438,16 @@
                 });
             });
 
-
-
-
             document.addEventListener("DOMContentLoaded", function () {
-  const qualificationGrid = document.getElementById("qualificationGrid");
+                const qualificationGrid = document.getElementById("qualificationGrid");
 
-  qualificationGrid.addEventListener("click", function (e) {
-    // When "+" is clicked
-    if (e.target.closest(".addQualificationBtn")) {
-      const newRow = document.createElement("div");
-      newRow.className = "flex items-center gap-2 mt-2";
+                qualificationGrid.addEventListener("click", function (e) {
+                    // When "+" is clicked
+                    if (e.target.closest(".addQualificationBtn")) {
+                        const newRow = document.createElement("div");
+                        newRow.className = "flex items-center gap-2 mt-2";
 
-      newRow.innerHTML = `
+                        newRow.innerHTML = `
         <input
           type="text"
           name="qualification"
@@ -2465,16 +2463,16 @@
           &minus;
         </button>
       `;
-      qualificationGrid.appendChild(newRow);
-    }
+                        qualificationGrid.appendChild(newRow);
+                    }
 
-    // When "-" is clicked
-    if (e.target.closest(".removeQualificationBtn")) {
-      const row = e.target.closest("div");
-      if (row) row.remove();
-    }
-  });
-});
+                    // When "-" is clicked
+                    if (e.target.closest(".removeQualificationBtn")) {
+                        const row = e.target.closest("div");
+                        if (row) row.remove();
+                    }
+                });
+            });
         </script>
     </body>
 </html>
