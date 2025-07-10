@@ -1475,19 +1475,41 @@
             window.changePatientsPage = changePatientsPage;
 
             let currentDoctor = null;
+            let currentDoctorId = null;
 
-            function openAvailabilityModal(doctorName) {
+            // Patch: Ensure allDoctors is loaded before opening the modal
+            async function openAvailabilityModal(doctorName) {
+                // If allDoctors is not loaded, fetch it first
+                if (!window.allDoctors || !Array.isArray(window.allDoctors) || window.allDoctors.length === 0) {
+                    try {
+                        const response = await fetch('/api/doctors');
+                        if (response.ok) {
+                            window.allDoctors = await response.json();
+                        }
+                    } catch (err) { window.allDoctors = []; }
+                }
+                // Find doctorId from allDoctors
                 currentDoctor = doctorName;
+                currentDoctorId = null;
+                if (window.allDoctors && Array.isArray(window.allDoctors)) {
+                    const found = window.allDoctors.find(d => d.name === doctorName);
+                    if (found && found._id) currentDoctorId = found._id;
+                }
                 document.getElementById("availabilityModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
-
                 document.getElementById("availabilityForm").reset();
+                // Set date to today by default
+                const today = new Date();
+                document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
+                // Trigger fetch for today
+                fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
             }
 
             function closeAvailabilityModal() {
                 document.getElementById("availabilityModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
                 currentDoctor = null;
+                currentDoctorId = null;
             }
 
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
@@ -1496,27 +1518,63 @@
                 if (e.target === this) closeAvailabilityModal();
             };
 
+            // Initialize flatpickr for date and time fields
+            flatpickr("#availabilityDate", {
+                dateFormat: "Y-m-d",
+                allowInput: false,
+                static: true,
+                onChange: function(selectedDates, dateStr) {
+                    fetchAndFillAvailabilityForDate(dateStr);
+                }
+            });
+            flatpickr("#availabilityStart", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "h:i K",
+                time_24hr: false,
+                allowInput: false,
+                static: true,
+            });
+            flatpickr("#availabilityEnd", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "h:i K",
+                time_24hr: false,
+                allowInput: false,
+                static: true,
+            });
+
+            async function fetchAndFillAvailabilityForDate(dateStr) {
+                if (!currentDoctorId) return;
+                try {
+                    const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        document.getElementById("availabilityStart").value = data.start || "";
+                        document.getElementById("availabilityEnd").value = data.end || "";
+                    } else {
+                        document.getElementById("availabilityStart").value = "";
+                        document.getElementById("availabilityEnd").value = "";
+                    }
+                } catch (err) {
+                    document.getElementById("availabilityStart").value = "";
+                    document.getElementById("availabilityEnd").value = "";
+                }
+            }
+
             document.getElementById("availabilityForm").onsubmit = async function (e) {
                 e.preventDefault();
                 const date = document.getElementById("availabilityDate").value;
                 const start = document.getElementById("availabilityStart").value;
                 const end = document.getElementById("availabilityEnd").value;
-                if (!currentDoctor) return;
-
-                const payload = {
-                    doctor: currentDoctor,
-                    date,
-                    start,
-                    end,
-                };
+                if (!currentDoctorId) return;
                 try {
-                    const response = await fetch("/api/doctor-availability", {
+                    const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(payload),
+                        body: JSON.stringify({ date, start, end })
                     });
                     if (!response.ok) throw new Error("Failed to save availability");
-
                     closeAvailabilityModal();
                 } catch (err) {
                     alert("Error saving availability: " + err.message);
@@ -2157,7 +2215,7 @@
 
                 renderDoctorsPage();
             }
-            function renderDoctorsPage() {
+            async function renderDoctorsPage() {
                 const doctorsList = document.getElementById("doctorsList");
                 const paginationContainer = document.getElementById("doctorsPagination");
                 if (!doctorsList) return;
@@ -2166,6 +2224,22 @@
                 const endIndex = startIndex + doctorsPerPage;
                 const currentDoctors = allDoctors.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
+                const selectedDate = document.getElementById("datePicker").value;
+                // Fetch per-date availability for all doctors in parallel
+                const availabilityPromises = currentDoctors.map(async (doctor) => {
+                    let displayAvailability = doctor.availability || "Available";
+                    try {
+                        const res = await fetch(`/api/doctors/${doctor._id}/availability?date=${selectedDate}`);
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data.start && data.end) {
+                                displayAvailability = `${data.start} - ${data.end}`;
+                            }
+                        }
+                    } catch (err) {}
+                    return displayAvailability;
+                });
+                const availabilities = await Promise.all(availabilityPromises);
                 currentDoctors.forEach((doctor, idx) => {
                     let infoLine = "";
                     if (doctor.experience && doctor.qualification) {
@@ -2180,29 +2254,28 @@
                     if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
                         count = todaysAppointmentsCountMap[doctorName];
                     }
-
                     doctorsList.innerHTML += `
-        <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-          <div class="col-span-3 flex items-center">
-            <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-            <div>
-              <div class="font-semibold text-gray-800">${doctor.name}</div>
-              <div class="text-xs text-gray-500">${infoLine}</div>
-            </div>
-          </div>
-          <div class="col-span-2 text-gray-600">${doctor.specialty || "General Medicine"}</div>
-          <div class="col-span-2 text-gray-600">${count}</div>
-          <div class="col-span-3 text-gray-600">${doctor.availability || "Available"}</div>
-          <div class="col-span-2 relative">
-            <button class="action-btn text-xl">...</button>
-            <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-              <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
-              <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
-              <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
-            </div>
-          </div>
-        </div>
-      `;
+<div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+  <div class="col-span-3 flex items-center">
+    <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
+    <div>
+      <div class="font-semibold text-gray-800">${doctor.name}</div>
+      <div class="text-xs text-gray-500">${infoLine}</div>
+    </div>
+  </div>
+  <div class="col-span-2 text-gray-600">${doctor.specialty || "General Medicine"}</div>
+  <div class="col-span-2 text-gray-600">${count}</div>
+  <div class="col-span-3 text-gray-600">${availabilities[idx]}</div>
+  <div class="col-span-2 relative">
+    <button class="action-btn text-xl">...</button>
+    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+      <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
+      <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
+      <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+    </div>
+  </div>
+</div>
+`;
                 });
                 updateDoctorsPagination(totalPages);
             }
