@@ -6,9 +6,14 @@ const DateModel = require('../models/date');
 
 router.post('/', async (req, res) => {
   try {
-    console.log('Add Doctor POST body:', req.body); 
-    const { name, specialty, availability, experience, qualification, education, image } = req.body;
-    const doctor = new Doctor({ name, specialty, availability, experience, qualification, education, image });
+    const { firstName, lastName, ...rest } = req.body;
+    // Check for duplicate doctor
+    const existing = await Doctor.findOne({ firstName, lastName });
+    if (existing) {
+      return res.status(400).json({ error: 'Duplicate doctor: A doctor with this name already exists.' });
+    }
+    // Save name field for UI display
+    const doctor = new Doctor({ firstName, lastName, ...rest, name: `Dr. ${firstName} ${lastName}` });
     await doctor.save();
     res.status(201).json(doctor);
   } catch (error) {

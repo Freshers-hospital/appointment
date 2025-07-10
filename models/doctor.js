@@ -16,5 +16,7 @@ const doctorSchema = new mongoose.Schema({
   image: { type: String }
 }, { timestamps: true });
 
+doctorSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
+
 module.exports = mongoose.model('Doctor', doctorSchema);
 
