@@ -222,7 +222,6 @@
                 z-index: 9999 !important;
                 right: auto;
                 margin-top: 0;
-               
             }
 
             .bg-white.p-6.rounded-lg.shadow,
@@ -633,7 +632,7 @@
                         </div>
                     </div>
 
-                    <div id="doctorErrorMsg" style="display:none; color:red; margin-top:8px;"></div>
+                    <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
                     </div>
@@ -688,7 +687,7 @@
                         <p id="profileDoctorName" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-gray-500 text-sm mb-1">Specialty</p>
+                        <p class="text-gray-500 text-sm mb-1">Specialization</p>
                         <p id="profileDoctorSpecialty" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -708,6 +707,61 @@
                 <div class="flex justify-center mt-6">
                     <button id="closeViewDoctorProfileBtn" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Close</button>
                 </div>
+            </div>
+        </div>
+
+        <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
+                <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
+
+                <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Profile Image Upload -->
+                    <div class="sm:col-span-2 flex flex-col items-center mb-2">
+                        <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
+                        <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover mb-2 border shadow" />
+                        <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+                        <button type="button" onclick="document.getElementById('editDoctorPhoto').click()" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-sm font-medium">
+                            Choose Photo
+                        </button>
+                    </div>
+
+                    <!-- Name -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Name</label>
+                        <input type="text" id="editDoctorName" name="name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
+                    </div>
+
+                    <!-- Specialization -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Specialization</label>
+                        <input type="text" id="editDoctorSpecialization" name="specialty" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
+                    </div>
+
+                    <!-- Experience -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Experience</label>
+                        <input type="text" id="editDoctorExperience" name="experience" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Availability -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Availability</label>
+                        <input type="text" id="editDoctorAvailability" name="availability" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Qualification -->
+                    <div class="sm:col-span-2">
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Qualification</label>
+                        <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="sm:col-span-2 flex justify-between pt-4 gap-4">
+                        <button type="button" id="cancelEditDoctorBtn" class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
+                        <button type="submit" class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -1438,26 +1492,28 @@
                 // If allDoctors is not loaded, fetch it first
                 if (!window.allDoctors || !Array.isArray(window.allDoctors) || window.allDoctors.length === 0) {
                     try {
-                        const response = await fetch('/api/doctors');
+                        const response = await fetch("/api/doctors");
                         if (response.ok) {
                             window.allDoctors = await response.json();
                         }
-                    } catch (err) { window.allDoctors = []; }
+                    } catch (err) {
+                        window.allDoctors = [];
+                    }
                 }
                 // Find doctorId from allDoctors
                 currentDoctor = doctorName;
                 currentDoctorId = null;
                 if (window.allDoctors && Array.isArray(window.allDoctors)) {
-                    const found = window.allDoctors.find(d => d.name === doctorName);
+                    const found = window.allDoctors.find((d) => d.name === doctorName);
                     if (found && found._id) currentDoctorId = found._id;
                 }
                 document.getElementById("availabilityModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
                 document.getElementById("availabilityForm").reset();
-                
+
                 const today = new Date();
                 document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
-               
+
                 fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
             }
 
@@ -1475,14 +1531,13 @@
             //     if (e.target === this) closeAvailabilityModal();
             // };
 
-           
             flatpickr("#availabilityDate", {
                 dateFormat: "Y-m-d",
                 allowInput: false,
                 static: true,
-                onChange: function(selectedDates, dateStr) {
+                onChange: function (selectedDates, dateStr) {
                     fetchAndFillAvailabilityForDate(dateStr);
-                }
+                },
             });
             flatpickr("#availabilityStart", {
                 enableTime: true,
@@ -1529,7 +1584,7 @@
                     const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ date, start, end })
+                        body: JSON.stringify({ date, start, end }),
                     });
                     if (!response.ok) throw new Error("Failed to save availability");
                     closeAvailabilityModal();
@@ -1572,7 +1627,7 @@
                 document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
             };
-           
+
             // document.getElementById("viewDetailsModalOverlay").onclick = function (e) {
             //     if (e.target === this) {
             //         document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
@@ -2036,33 +2091,59 @@
                         const formData = new FormData(addDoctorForm);
                         const firstName = formData.get("firstName")?.trim() || "";
                         const lastName = formData.get("lastName")?.trim() || "";
-                        const fullName = `Dr. ${firstName} ${lastName}`;
+                        const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
+
+                        try {
+                            // Fetch existing doctors
+                            const res = await fetch("/api/doctors");
+                            const existingDoctors = await res.json();
+
+                            // Check if doctor already exists by name
+                            const isDuplicate = existingDoctors.some((doc) => {
+                                const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+                                return existingName === fullName;
+                            });
+
+                            if (isDuplicate) {
+                                showDoctorError("Doctor already exists: duplicate name.");
+                                return;
+                            }
+                        } catch (err) {
+                            showDoctorError("Error checking existing doctors.");
+                            return;
+                        }
+
+                        // Build doctor object
                         const doctorData = {
                             firstName,
                             lastName,
-                            name: fullName,
+                            name: `Dr. ${firstName} ${lastName}`,
                             specialty: formData.get("specialty"),
                             experience: formData.get("experience"),
                             qualification: formData.get("qualification"),
                             availability: formData.get("availability"),
                         };
+
+                        // Submit doctor
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(doctorData),
                             });
+
                             if (!response.ok) {
                                 const errorData = await response.json();
-                                showDoctorError(errorData.error || "Failed to add doctor");
+                                showDoctorError(errorData.error || "Failed to add doctor.");
                                 return;
                             }
-                            showDoctorError(""); // Clear error
+
+                            showDoctorError("");
                             showSuccessModal("Doctor added successfully!");
                             closeModal();
                             await fetchAndDisplayDoctors();
                         } catch (error) {
-                            showDoctorError("Error adding doctor: " + (error.message || "Network error"));
+                            showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
                         }
                     });
                 }
@@ -2665,47 +2746,83 @@
         <script>
             // Action menu positioning logic
             function setupActionMenus() {
-                document.querySelectorAll('.action-btn').forEach(btn => {
-                    btn.onclick = function(e) {
-                        document.querySelectorAll('.action-menu').forEach(menu => menu.classList.add('hidden'));
+                document.querySelectorAll(".action-btn").forEach((btn) => {
+                    btn.onclick = function (e) {
+                        document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
                         const menu = btn.nextElementSibling;
                         if (menu) {
                             const rect = btn.getBoundingClientRect();
-                            
-                            menu.style.visibility = 'hidden';
-                            menu.style.display = 'block';
-                            menu.style.top = '-9999px';
-                            menu.style.left = '-9999px';
+
+                            menu.style.visibility = "hidden";
+                            menu.style.display = "block";
+                            menu.style.top = "-9999px";
+                            menu.style.left = "-9999px";
 
                             const menuHeight = menu.offsetHeight;
                             let top = rect.top + window.scrollY;
-                            
+
                             if (rect.bottom + menuHeight > window.innerHeight) {
                                 top = rect.top + window.scrollY - menuHeight;
-                                
+
                                 if (top < window.scrollY) {
                                     top = window.scrollY;
                                 }
                             }
                             let left = rect.left + window.scrollX + 4;
 
-                            menu.style.top = top + 'px';
-                            menu.style.left = left + 'px';
-                            menu.style.visibility = 'visible';
-                            menu.style.display = 'block';
-                            menu.classList.remove('hidden');
+                            menu.style.top = top + "px";
+                            menu.style.left = left + "px";
+                            menu.style.visibility = "visible";
+                            menu.style.display = "block";
+                            menu.classList.remove("hidden");
                         }
                         e.stopPropagation();
                     };
                 });
-                document.addEventListener('click', function() {
-                    document.querySelectorAll('.action-menu').forEach(menu => menu.classList.add('hidden'));
+                document.addEventListener("click", function () {
+                    document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
                 });
             }
-           
-        </script>
 
-       
-        
+            // 1. Function to open modal and fill fields
+            function openEditDoctorModal(doctor) {
+                document.getElementById("editDoctorName").value = doctor.name || "";
+                document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+                document.getElementById("editDoctorExperience").value = doctor.experience || "";
+                document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+                document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+                document.getElementById("editDoctorPhotoPreview").src = doctor.photoUrl || "/default-profile.png";
+                document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
+            }
+
+            // 2. Close buttons
+            document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
+                document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+            });
+            document.getElementById("cancelEditDoctorBtn").addEventListener("click", () => {
+                document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+            });
+
+            // 3. Photo preview when uploading
+            document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById("editDoctorPhotoPreview").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // 4. Listen for edit button clicks
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                    e.preventDefault();
+                    const doctorData = JSON.parse(e.target.dataset.doctor);
+                    openEditDoctorModal(doctorData);
+                }
+            });
+        </script>
     </body>
 </html>
