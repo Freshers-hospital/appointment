@@ -218,19 +218,11 @@
             }
 
             .action-menu {
-                position: absolute;
-                right: 0;
-                margin-top: 0.5rem;
-                width: 12rem;
-                background: white;
-                border: 1px solid #e5e7eb;
-                border-radius: 0.375rem;
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-                padding-top: 0.25rem;
-                padding-bottom: 0.25rem;
-                z-index: 20;
-                max-height: none !important;
-                overflow-y: visible !important;
+                position: fixed !important;
+                z-index: 9999 !important;
+                right: auto;
+                margin-top: 0;
+               
             }
 
             .bg-white.p-6.rounded-lg.shadow,
@@ -607,14 +599,14 @@
                         </div>
 
                         <div class="mb-4 col-span-2">
-                            <label class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
+                            <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
                             <div id="qualificationGrid" class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <input
                                         type="text"
                                         name="qualification"
                                         class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                        placeholder="e.g., Cardiology"
+                                        placeholder="e.g., Mbbs,Phd..."
                                         required
                                     />
                                     <button
@@ -708,7 +700,7 @@
                         <p id="profileDoctorAvailability" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
                     <div class="sm:col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-gray-500 text-sm mb-1">Expertise</p>
+                        <p class="text-gray-500 text-sm mb-1">Qualification</p>
                         <p id="profileDoctorQualification" class="text-gray-800 font-semibold text-base break-words"></p>
                     </div>
                 </div>
@@ -739,22 +731,16 @@
                 <form id="availabilityForm" class="space-y-6">
                     <div>
                         <label class="block text-lg font-semibold mb-2">Date</label>
-                        <div class="relative">
+                        <div class="flex justify-center">
                             <input
                                 type="text"
                                 id="availabilityDate"
                                 name="date"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg pr-12 focus:ring-2 focus:ring-blue-200"
+                                class="w-64 max-w-xs border border-gray-300 rounded-lg px-4 py-3 text-lg focus:ring-2 focus:ring-blue-200"
                                 placeholder="MM/DD/YYYY"
                                 required
                                 readonly
                             />
-                            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                                </svg>
-                            </span>
                         </div>
                     </div>
                     <div>
@@ -1468,10 +1454,10 @@
                 document.getElementById("availabilityModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
                 document.getElementById("availabilityForm").reset();
-                // Set date to today by default
+                
                 const today = new Date();
                 document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
-                // Trigger fetch for today
+               
                 fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
             }
 
@@ -1484,11 +1470,12 @@
 
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
             document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
-            document.getElementById("availabilityModalOverlay").onclick = function (e) {
-                if (e.target === this) closeAvailabilityModal();
-            };
+            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            // document.getElementById("availabilityModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closeAvailabilityModal();
+            // };
 
-            // Initialize flatpickr for date and time fields
+           
             flatpickr("#availabilityDate", {
                 dateFormat: "Y-m-d",
                 allowInput: false,
@@ -1585,13 +1572,13 @@
                 document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
             };
-
-            document.getElementById("viewDetailsModalOverlay").onclick = function (e) {
-                if (e.target === this) {
-                    document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
-                    document.body.classList.remove("blurred-bg");
-                }
-            };
+           
+            // document.getElementById("viewDetailsModalOverlay").onclick = function (e) {
+            //     if (e.target === this) {
+            //         document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
+            //         document.body.classList.remove("blurred-bg");
+            //     }
+            // };
 
             let currentAppointmentForAssignment = null;
 
@@ -1637,9 +1624,10 @@
 
             document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
             document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
-            document.getElementById("assignDoctorModalOverlay").onclick = function (e) {
-                if (e.target === this) closeAssignDoctorModal();
-            };
+            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            // document.getElementById("assignDoctorModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closeAssignDoctorModal();
+            // };
 
             document.getElementById("assignDoctorForm").onsubmit = async function (e) {
                 e.preventDefault();
@@ -1769,9 +1757,10 @@
             }
             document.getElementById("closeRescheduleModal").onclick = closeRescheduleModal;
             document.getElementById("cancelRescheduleBtn").onclick = closeRescheduleModal;
-            document.getElementById("rescheduleModalOverlay").onclick = function (e) {
-                if (e.target === this) closeRescheduleModal();
-            };
+            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            // document.getElementById("rescheduleModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closeRescheduleModal();
+            // };
 
             async function renderRescheduleCalendar(app) {
                 const container = document.getElementById("rescheduleCalendarContainer");
@@ -1951,9 +1940,10 @@
 
             document.getElementById("closeCancelModal").onclick = closeCancelModal;
             document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
-            document.getElementById("cancelModalOverlay").onclick = function (e) {
-                if (e.target === this) closeCancelModal();
-            };
+            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            // document.getElementById("cancelModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closeCancelModal();
+            // };
 
             document.getElementById("confirmCancelBtn").onclick = async function () {
                 if (!cancelAppointmentData || !cancelAppointmentData._id) {
@@ -2033,11 +2023,11 @@
                     closeAddDoctorModal.addEventListener("click", closeModal);
                 }
 
-                addDoctorModalOverlay.addEventListener("click", (e) => {
-                    if (e.target === addDoctorModalOverlay) {
-                        closeModal();
-                    }
-                });
+                // addDoctorModalOverlay.addEventListener("click", (e) => {
+                //     if (e.target === addDoctorModalOverlay) {
+                //         closeModal();
+                //     }
+                // });
 
                 const addDoctorForm = document.getElementById("addDoctorForm");
                 if (addDoctorForm) {
@@ -2131,9 +2121,9 @@
                 document.body.classList.remove("blurred-bg");
             }
 
-            document.getElementById("patientDetailsModalOverlay").onclick = function (e) {
-                if (e.target === this) closePatientDetailsModal();
-            };
+            // document.getElementById("patientDetailsModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closePatientDetailsModal();
+            // };
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
@@ -2634,9 +2624,9 @@
             }
             document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
-            document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
-                if (e.target === this) closeViewDoctorProfileModal();
-            };
+            // document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closeViewDoctorProfileModal();
+            // };
             function closeViewDoctorProfileModal() {
                 document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
@@ -2671,5 +2661,51 @@
                 }
             });
         </script>
+
+        <script>
+            // Action menu positioning logic
+            function setupActionMenus() {
+                document.querySelectorAll('.action-btn').forEach(btn => {
+                    btn.onclick = function(e) {
+                        document.querySelectorAll('.action-menu').forEach(menu => menu.classList.add('hidden'));
+                        const menu = btn.nextElementSibling;
+                        if (menu) {
+                            const rect = btn.getBoundingClientRect();
+                            
+                            menu.style.visibility = 'hidden';
+                            menu.style.display = 'block';
+                            menu.style.top = '-9999px';
+                            menu.style.left = '-9999px';
+
+                            const menuHeight = menu.offsetHeight;
+                            let top = rect.top + window.scrollY;
+                            
+                            if (rect.bottom + menuHeight > window.innerHeight) {
+                                top = rect.top + window.scrollY - menuHeight;
+                                
+                                if (top < window.scrollY) {
+                                    top = window.scrollY;
+                                }
+                            }
+                            let left = rect.left + window.scrollX;
+
+                            menu.style.top = top + 'px';
+                            menu.style.left = left + 'px';
+                            menu.style.visibility = 'visible';
+                            menu.style.display = 'block';
+                            menu.classList.remove('hidden');
+                        }
+                        e.stopPropagation();
+                    };
+                });
+                document.addEventListener('click', function() {
+                    document.querySelectorAll('.action-menu').forEach(menu => menu.classList.add('hidden'));
+                });
+            }
+           
+        </script>
+
+       
+        
     </body>
 </html>
