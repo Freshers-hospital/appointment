@@ -699,6 +699,7 @@
 
         <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
+                <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
 
                 <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1473,9 +1474,9 @@
             let currentDoctor = null;
             let currentDoctorId = null;
 
-            // Patch: Ensure allDoctors is loaded before opening the modal
+            
             async function openAvailabilityModal(doctorName) {
-                // If allDoctors is not loaded, fetch it first
+                
                 if (!window.allDoctors || !Array.isArray(window.allDoctors) || window.allDoctors.length === 0) {
                     try {
                         const response = await fetch("/api/doctors");
@@ -1486,7 +1487,7 @@
                         window.allDoctors = [];
                     }
                 }
-                // Find doctorId from allDoctors
+                
                 currentDoctor = doctorName;
                 currentDoctorId = null;
                 if (window.allDoctors && Array.isArray(window.allDoctors)) {
@@ -1512,7 +1513,7 @@
 
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
             document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            
             // document.getElementById("availabilityModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeAvailabilityModal();
             // };
@@ -1665,7 +1666,7 @@
 
             document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
             document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            
             // document.getElementById("assignDoctorModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeAssignDoctorModal();
             // };
@@ -1981,7 +1982,7 @@
 
             document.getElementById("closeCancelModal").onclick = closeCancelModal;
             document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+           
             // document.getElementById("cancelModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeCancelModal();
             // };
@@ -2080,11 +2081,11 @@
                         const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
 
                         try {
-                            // Fetch existing doctors
+                           
                             const res = await fetch("/api/doctors");
                             const existingDoctors = await res.json();
 
-                            // Check if doctor already exists by name
+                           
                             const isDuplicate = existingDoctors.some((doc) => {
                                 const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
                                 return existingName === fullName;
@@ -2099,7 +2100,7 @@
                             return;
                         }
 
-                        // Build doctor object
+                      
                         const doctorData = {
                             firstName,
                             lastName,
@@ -2110,7 +2111,7 @@
                             availability: formData.get("availability"),
                         };
 
-                        // Submit doctor
+                
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
@@ -2258,7 +2259,7 @@
                 const currentDoctors = allDoctors.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
                 const selectedDate = document.getElementById("datePicker").value;
-                // Fetch per-date availability for all doctors in parallel
+                
                 const availabilityPromises = currentDoctors.map(async (doctor) => {
                     let displayAvailability = doctor.availability || "Available";
                     try {
@@ -2689,6 +2690,7 @@
                     }
                 });
             }
+            document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
             // document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeViewDoctorProfileModal();
@@ -2729,7 +2731,7 @@
         </script>
 
         <script>
-            // Action menu positioning logic
+         
             function setupActionMenus() {
                 document.querySelectorAll(".action-btn").forEach((btn) => {
                     btn.onclick = function (e) {
@@ -2753,7 +2755,7 @@
                                     top = window.scrollY;
                                 }
                             }
-                            let left = rect.left + window.scrollX + 4;
+                            let left = rect.left + window.scrollX;
 
                             menu.style.top = top + "px";
                             menu.style.left = left + "px";
@@ -2769,7 +2771,7 @@
                 });
             }
 
-            // 1. Function to open modal and fill fields
+            
             function openEditDoctorModal(doctor) {
                 document.getElementById("editDoctorName").value = doctor.name || "";
                 document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
@@ -2780,7 +2782,7 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             }
 
-            // 2. Close buttons
+           
             document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
@@ -2788,7 +2790,7 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
 
-            // 3. Photo preview when uploading
+            
             document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
                 const file = event.target.files[0];
                 if (file) {
@@ -2800,12 +2802,21 @@
                 }
             });
 
-            // 4. Listen for edit button clicks
+           
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("edit-doctor-profile-btn")) {
                     e.preventDefault();
                     const doctorData = JSON.parse(e.target.dataset.doctor);
                     openEditDoctorModal(doctorData);
+                }
+            });
+        </script>
+        <script>
+            console.log("[DEBUG] Script loaded at end of HTML");
+            document.addEventListener("DOMContentLoaded", function () {
+                var closeBtn = document.getElementById("closeViewDoctorProfileBtn");
+                if (closeBtn) {
+                    closeBtn.onclick = closeViewDoctorProfileModal;
                 }
             });
         </script>
