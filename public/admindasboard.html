@@ -599,24 +599,13 @@
 
                         <div class="mb-4 col-span-2">
                             <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
-                            <div id="qualificationGrid" class="flex flex-col gap-2">
-                                <div class="flex items-center gap-2">
-                                    <input
-                                        type="text"
-                                        name="qualification"
-                                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                        placeholder="e.g., Mbbs,Phd..."
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        class="addQualificationBtn w-[42px] h-[42px] bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
-                                        title="Add"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
+                            <input
+                                type="text"
+                                name="qualification"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                placeholder="e.g., Mbbs,Phd..."
+                                required
+                            />
                         </div>
 
                         <div class="mb-4 col-span-2">
@@ -677,8 +666,6 @@
 
         <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-                <button id="closeViewDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-
                 <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -712,7 +699,6 @@
 
         <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
-                <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
 
                 <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2703,7 +2689,6 @@
                     }
                 });
             }
-            document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
             // document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeViewDoctorProfileModal();
