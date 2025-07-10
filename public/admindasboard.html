@@ -377,48 +377,6 @@
                 </div>
             </div>
         </div>
-        <div id="availabilityModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
-                <h2 class="text-3xl font-bold mb-6">Manage Availability</h2>
-                <form id="availabilityForm" class="space-y-6">
-                    <div>
-                        <label class="block text-lg font-semibold mb-2">Date</label>
-                        <div class="relative">
-                            <input
-                                type="text"
-                                id="availabilityDate"
-                                name="date"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg pr-12 focus:ring-2 focus:ring-blue-200"
-                                placeholder="MM/DD/YYYY"
-                                required
-                                readonly
-                            />
-                            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-lg font-semibold mb-2">Time</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="availabilityStart" name="start" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="10:00 AM" required />
-                            <span class="flex items-center text-lg font-semibold">-</span>
-                            <input type="text" id="availabilityEnd" name="end" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="05:00 PM" required />
-                        </div>
-                    </div>
-                    <div class="flex justify-between gap-4 pt-2">
-                        <button type="button" id="cancelAvailability" class="w-1/2 px-4 py-3 rounded-lg border border-gray-300 bg-white text-black text-lg font-semibold hover:bg-gray-100">
-                            Cancel
-                        </button>
-                        <button type="submit" class="w-1/2 px-4 py-3 rounded-lg bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700">Save</button>
-                    </div>
-                </form>
-                <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-            </div>
-        </div>
 
         <div id="appointmentDetailsModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="appointmentDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
@@ -725,38 +683,38 @@
             </div>
         </div>
 
-        <div id="editDoctorModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="editDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeEditDoctorModal" class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-                <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Edit Doctor Profile</h2>
-                <form id="editDoctorForm">
-                    <div class="mb-4">
-                        <label for="editDoctorName" class="block text-gray-700 text-sm font-semibold mb-2">Doctor</label>
-                        <input type="text" id="editDoctorName" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required />
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="mb-4">
-                            <label for="editDoctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialty</label>
-                            <input type="text" id="editDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
-                        </div>
-                        <div class="mb-4">
-                            <label for="editDoctorExperience" class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
-                            <input type="text" id="editDoctorExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2" />
-                        </div>
-                        <div class="mb-4">
-                            <label for="editDoctorQualification" class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
+        <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+                <button id="closeViewDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
 
-                            <input type="text" id="editDoctorQualification" name="qualification" class="w-full border border-gray-300 rounded px-3 py-2" />
-                        </div>
-                        <div class="mb-4">
-                            <label for="editDoctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
-                            <input type="text" id="editDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
-                        </div>
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">Name</p>
+                        <p id="profileDoctorName" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
-                    <div class="flex justify-end mt-4">
-                        <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Save</button>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">Specialty</p>
+                        <p id="profileDoctorSpecialty" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
-                </form>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">Experience</p>
+                        <p id="profileDoctorExperience" class="text-gray-800 font-semibold text-base truncate"></p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">Availability</p>
+                        <p id="profileDoctorAvailability" class="text-gray-800 font-semibold text-base truncate"></p>
+                    </div>
+                    <div class="sm:col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">Expertise</p>
+                        <p id="profileDoctorQualification" class="text-gray-800 font-semibold text-base break-words"></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-6">
+                    <button id="closeViewDoctorProfileBtn" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Close</button>
+                </div>
             </div>
         </div>
 
@@ -774,35 +732,46 @@
             </div>
         </div>
 
-        <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="editDoctorProfileModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-                <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Edit Doctor Profile</h2>
-                <form id="editDoctorProfileForm" class="space-y-4">
+        <div id="availabilityModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+                <h2 class="text-3xl font-bold mb-6">Manage Availability</h2>
+                <form id="availabilityForm" class="space-y-6">
                     <div>
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Name</label>
-                        <input type="text" id="editProfileDoctorName" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required />
+                        <label class="block text-lg font-semibold mb-2">Date</label>
+                        <div class="relative">
+                            <input
+                                type="text"
+                                id="availabilityDate"
+                                name="date"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg pr-12 focus:ring-2 focus:ring-blue-200"
+                                placeholder="MM/DD/YYYY"
+                                required
+                                readonly
+                            />
+                            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+                                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+                                </svg>
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Specialty</label>
-                        <input type="text" id="editProfileDoctorSpecialty" name="specialty" class="w-full border border-gray-300 rounded px-3 py-2" required />
+                        <label class="block text-lg font-semibold mb-2">Time</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="availabilityStart" name="start" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="10:00 AM" required />
+                            <span class="flex items-center text-lg font-semibold">-</span>
+                            <input type="text" id="availabilityEnd" name="end" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="05:00 PM" required />
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
-                        <input type="text" id="editProfileDoctorExperience" name="experience" class="w-full border border-gray-300 rounded px-3 py-2" />
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Expertise</label>
-                        <input type="text" id="editProfileDoctorQualification" name="qualification" class="w-full border border-gray-300 rounded px-3 py-2" />
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
-                        <input type="text" id="editProfileDoctorAvailability" name="availability" class="w-full border border-gray-300 rounded px-3 py-2" required />
-                    </div>
-                    <div class="flex justify-end mt-6">
-                        <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Save</button>
+                    <div class="flex justify-between gap-4 pt-2">
+                        <button type="button" id="cancelAvailability" class="w-1/2 px-4 py-3 rounded-lg border border-gray-300 bg-white text-black text-lg font-semibold hover:bg-gray-100">
+                            Cancel
+                        </button>
+                        <button type="submit" class="w-1/2 px-4 py-3 rounded-lg bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700">Save</button>
                     </div>
                 </form>
+                <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             </div>
         </div>
 
@@ -1829,7 +1798,7 @@
                     container.appendChild(daysRow);
                     const daysGrid = document.createElement("div");
                     daysGrid.className = "grid grid-cols-7 gap-1";
-            
+
                     const firstDay = new Date(year, month, 1).getDay();
                     const daysInMonth = new Date(year, month + 1, 0).getDate();
                     for (let i = 0; i < firstDay; i++) {
@@ -2572,7 +2541,6 @@
 
                 qualificationGrid.addEventListener("click", function (e) {
                     if (e.target && e.target.id === "addQualificationBtn") {
-                      
                         const newField = document.createElement("div");
                         newField.className = "flex items-center gap-2 mt-2";
 
@@ -2596,7 +2564,6 @@
                         qualificationGrid.appendChild(newField);
                     }
 
-                  
                     if (e.target && e.target.classList.contains("removeQualificationBtn")) {
                         const row = e.target.closest("div");
                         if (row) {
@@ -2610,7 +2577,6 @@
                 const qualificationGrid = document.getElementById("qualificationGrid");
 
                 qualificationGrid.addEventListener("click", function (e) {
-                    
                     if (e.target.closest(".addQualificationBtn")) {
                         const newRow = document.createElement("div");
                         newRow.className = "flex items-center gap-2 mt-2";
@@ -2640,24 +2606,8 @@
                     }
                 });
             });
-            
         </script>
-        <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="viewDoctorProfileModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeViewDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-                <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Doctor Profile</h2>
-                <div class="space-y-4 text-center">
-                    <div><span class="font-semibold text-gray-600">Name:</span> <span id="profileDoctorName" class="text-gray-900"></span></div>
-                    <div><span class="font-semibold text-gray-600">Specialty:</span> <span id="profileDoctorSpecialty" class="text-gray-900"></span></div>
-                    <div><span class="font-semibold text-gray-600">Experience:</span> <span id="profileDoctorExperience" class="text-gray-900"></span></div>
-                    <div><span class="font-semibold text-gray-600">Expertise:</span> <span id="profileDoctorQualification" class="text-gray-900"></span></div>
-                    <div><span class="font-semibold text-gray-600">Availability:</span> <span id="profileDoctorAvailability" class="text-gray-900"></span></div>
-                </div>
-                <div class="flex justify-end mt-6">
-                    <button id="closeViewDoctorProfileBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
-                </div>
-            </div>
-        </div>
+
         <script>
             if (document.getElementById("doctorsList")) {
                 document.getElementById("doctorsList").addEventListener("click", function (e) {
