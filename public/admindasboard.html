@@ -222,7 +222,6 @@
                 z-index: 9999 !important;
                 right: auto;
                 margin-top: 0;
-               
             }
 
             .bg-white.p-6.rounded-lg.shadow,
@@ -633,7 +632,7 @@
                         </div>
                     </div>
 
-                    <div id="doctorErrorMsg" style="display:none; color:red; margin-top:8px;"></div>
+                    <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
                     </div>
@@ -688,7 +687,7 @@
                         <p id="profileDoctorName" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-gray-500 text-sm mb-1">Specialty</p>
+                        <p class="text-gray-500 text-sm mb-1">Specialization</p>
                         <p id="profileDoctorSpecialty" class="text-gray-800 font-semibold text-base truncate"></p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -1438,26 +1437,28 @@
                 // If allDoctors is not loaded, fetch it first
                 if (!window.allDoctors || !Array.isArray(window.allDoctors) || window.allDoctors.length === 0) {
                     try {
-                        const response = await fetch('/api/doctors');
+                        const response = await fetch("/api/doctors");
                         if (response.ok) {
                             window.allDoctors = await response.json();
                         }
-                    } catch (err) { window.allDoctors = []; }
+                    } catch (err) {
+                        window.allDoctors = [];
+                    }
                 }
                 // Find doctorId from allDoctors
                 currentDoctor = doctorName;
                 currentDoctorId = null;
                 if (window.allDoctors && Array.isArray(window.allDoctors)) {
-                    const found = window.allDoctors.find(d => d.name === doctorName);
+                    const found = window.allDoctors.find((d) => d.name === doctorName);
                     if (found && found._id) currentDoctorId = found._id;
                 }
                 document.getElementById("availabilityModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
                 document.getElementById("availabilityForm").reset();
-                
+
                 const today = new Date();
                 document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
-               
+
                 fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
             }
 
@@ -1475,14 +1476,13 @@
             //     if (e.target === this) closeAvailabilityModal();
             // };
 
-           
             flatpickr("#availabilityDate", {
                 dateFormat: "Y-m-d",
                 allowInput: false,
                 static: true,
-                onChange: function(selectedDates, dateStr) {
+                onChange: function (selectedDates, dateStr) {
                     fetchAndFillAvailabilityForDate(dateStr);
-                }
+                },
             });
             flatpickr("#availabilityStart", {
                 enableTime: true,
@@ -1529,7 +1529,7 @@
                     const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ date, start, end })
+                        body: JSON.stringify({ date, start, end }),
                     });
                     if (!response.ok) throw new Error("Failed to save availability");
                     closeAvailabilityModal();
@@ -1572,7 +1572,7 @@
                 document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
             };
-           
+
             // document.getElementById("viewDetailsModalOverlay").onclick = function (e) {
             //     if (e.target === this) {
             //         document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
@@ -2036,33 +2036,59 @@
                         const formData = new FormData(addDoctorForm);
                         const firstName = formData.get("firstName")?.trim() || "";
                         const lastName = formData.get("lastName")?.trim() || "";
-                        const fullName = `Dr. ${firstName} ${lastName}`;
+                        const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
+
+                        try {
+                            // Fetch existing doctors
+                            const res = await fetch("/api/doctors");
+                            const existingDoctors = await res.json();
+
+                            // Check if doctor already exists by name
+                            const isDuplicate = existingDoctors.some((doc) => {
+                                const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+                                return existingName === fullName;
+                            });
+
+                            if (isDuplicate) {
+                                showDoctorError("Doctor already exists: duplicate name.");
+                                return;
+                            }
+                        } catch (err) {
+                            showDoctorError("Error checking existing doctors.");
+                            return;
+                        }
+
+                        // Build doctor object
                         const doctorData = {
                             firstName,
                             lastName,
-                            name: fullName,
+                            name: `Dr. ${firstName} ${lastName}`,
                             specialty: formData.get("specialty"),
                             experience: formData.get("experience"),
                             qualification: formData.get("qualification"),
                             availability: formData.get("availability"),
                         };
+
+                        // Submit doctor
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(doctorData),
                             });
+
                             if (!response.ok) {
                                 const errorData = await response.json();
-                                showDoctorError(errorData.error || "Failed to add doctor");
+                                showDoctorError(errorData.error || "Failed to add doctor.");
                                 return;
                             }
-                            showDoctorError(""); // Clear error
+
+                            showDoctorError("");
                             showSuccessModal("Doctor added successfully!");
                             closeModal();
                             await fetchAndDisplayDoctors();
                         } catch (error) {
-                            showDoctorError("Error adding doctor: " + (error.message || "Network error"));
+                            showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
                         }
                     });
                 }
@@ -2665,47 +2691,43 @@
         <script>
             // Action menu positioning logic
             function setupActionMenus() {
-                document.querySelectorAll('.action-btn').forEach(btn => {
-                    btn.onclick = function(e) {
-                        document.querySelectorAll('.action-menu').forEach(menu => menu.classList.add('hidden'));
+                document.querySelectorAll(".action-btn").forEach((btn) => {
+                    btn.onclick = function (e) {
+                        document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
                         const menu = btn.nextElementSibling;
                         if (menu) {
                             const rect = btn.getBoundingClientRect();
-                            
-                            menu.style.visibility = 'hidden';
-                            menu.style.display = 'block';
-                            menu.style.top = '-9999px';
-                            menu.style.left = '-9999px';
+
+                            menu.style.visibility = "hidden";
+                            menu.style.display = "block";
+                            menu.style.top = "-9999px";
+                            menu.style.left = "-9999px";
 
                             const menuHeight = menu.offsetHeight;
                             let top = rect.top + window.scrollY;
-                            
+
                             if (rect.bottom + menuHeight > window.innerHeight) {
                                 top = rect.top + window.scrollY - menuHeight;
-                                
+
                                 if (top < window.scrollY) {
                                     top = window.scrollY;
                                 }
                             }
                             let left = rect.left + window.scrollX;
 
-                            menu.style.top = top + 'px';
-                            menu.style.left = left + 'px';
-                            menu.style.visibility = 'visible';
-                            menu.style.display = 'block';
-                            menu.classList.remove('hidden');
+                            menu.style.top = top + "px";
+                            menu.style.left = left + "px";
+                            menu.style.visibility = "visible";
+                            menu.style.display = "block";
+                            menu.classList.remove("hidden");
                         }
                         e.stopPropagation();
                     };
                 });
-                document.addEventListener('click', function() {
-                    document.querySelectorAll('.action-menu').forEach(menu => menu.classList.add('hidden'));
+                document.addEventListener("click", function () {
+                    document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
                 });
             }
-           
         </script>
-
-       
-        
     </body>
 </html>
