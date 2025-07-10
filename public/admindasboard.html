@@ -641,6 +641,7 @@
                         </div>
                     </div>
 
+                    <div id="doctorErrorMsg" style="display:none; color:red; margin-top:8px;"></div>
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
                     </div>
@@ -2043,42 +2044,48 @@
                     addDoctorForm.addEventListener("submit", async (e) => {
                         e.preventDefault();
                         const formData = new FormData(addDoctorForm);
-
                         const firstName = formData.get("firstName")?.trim() || "";
                         const lastName = formData.get("lastName")?.trim() || "";
                         const fullName = `Dr. ${firstName} ${lastName}`;
-
                         const doctorData = {
+                            firstName,
+                            lastName,
                             name: fullName,
                             specialty: formData.get("specialty"),
                             experience: formData.get("experience"),
                             qualification: formData.get("qualification"),
                             availability: formData.get("availability"),
                         };
-
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
+                                headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(doctorData),
                             });
-
                             if (!response.ok) {
                                 const errorData = await response.json();
-                                throw new Error(errorData.error || "Failed to add doctor");
+                                showDoctorError(errorData.error || "Failed to add doctor");
+                                return;
                             }
-
+                            showDoctorError(""); // Clear error
                             showSuccessModal("Doctor added successfully!");
                             closeModal();
-
                             await fetchAndDisplayDoctors();
                         } catch (error) {
-                            console.error("Error adding doctor:", error);
-                            alert("Error adding doctor: " + error.message);
+                            showDoctorError("Error adding doctor: " + (error.message || "Network error"));
                         }
                     });
+                }
+            }
+            function showDoctorError(msg) {
+                const errorDiv = document.getElementById("doctorErrorMsg");
+                if (!errorDiv) return;
+                if (msg) {
+                    errorDiv.textContent = msg;
+                    errorDiv.style.display = "block";
+                } else {
+                    errorDiv.textContent = "";
+                    errorDiv.style.display = "none";
                 }
             }
 

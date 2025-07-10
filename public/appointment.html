@@ -400,22 +400,7 @@
 
                 <div class="flex justify-between items-center mb-6">
                     <input type="text" id="searchInput" placeholder="Search doctors or specialties..." class="w-2/3 p-2 border rounded-md" onkeyup="filterDoctors()" />
-                    <select id="specialtyFilter" class="p-2 border rounded-md" onchange="filterDoctors()">
-                        <option value="">All Specialties</option>
-                        <option value="Cardiology">Cardiology</option>
-                        <option value="Dermatology">Dermatology</option>
-                        <option value="Neurology">Neurology</option>
-                        <option value="Orthopedics">Orthopedics</option>
-                        <option value="ENT">ENT</option>
-                        <option value="General Surgery">General Surgery</option>
-                        <option value="Gynecologist">Gynecologist</option>
-                        <option value="Pediatrics">Pediatrics</option>
-                        <option value="Radiology">Radiology</option>
-                        <option value="Oncologist">Oncologist</option>
-                        <option value="Gastroenterologist">Gastroenterologist</option>
-                        <option value="Dentist">Dentist</option>
-                        <option value="Andrologist">Andrologist</option>
-                    </select>
+                    <select id="specialtyFilter" class="p-2 border rounded-md" onchange="filterDoctors()"></select>
                 </div>
 
                 <div id="doctorList" class="space-y-4"></div>
@@ -705,9 +690,29 @@
                 return await response.json();
             }
 
+            function populateSpecialtyDropdown(doctors) {
+                const specialtySet = new Set();
+                doctors.forEach(doc => {
+                    if (doc.specialty) specialtySet.add(doc.specialty);
+                });
+                const specialtyFilter = document.getElementById("specialtyFilter");
+                specialtyFilter.innerHTML = "";
+                const allOption = document.createElement("option");
+                allOption.value = "";
+                allOption.textContent = "All Specialties";
+                specialtyFilter.appendChild(allOption);
+                Array.from(specialtySet).sort().forEach(specialty => {
+                    const option = document.createElement("option");
+                    option.value = specialty;
+                    option.textContent = specialty;
+                    specialtyFilter.appendChild(option);
+                });
+            }
+
             window.addEventListener("DOMContentLoaded", async () => {
                 try {
                     doctors = await fetchDoctorsFromDB();
+                    populateSpecialtyDropdown(doctors);
                     lastFilteredDoctors = doctors;
                     currentPage = 1;
                     displayDoctors();
