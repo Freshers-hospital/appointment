@@ -805,14 +805,11 @@
             }
 
             function selectDoctor(name, specialty, experience, qualification) {
-                // Find the doctor object from the loaded doctors array
-                const doctorObj = doctors.find(d => d.name === name && d.specialty === specialty);
                 const doctorData = {
                     name: name,
                     specialty: specialty,
                     experience: experience,
                     qualification: qualification,
-                    _id: doctorObj ? doctorObj._id : undefined
                 };
                 localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
                 const isEditMode = getQueryParam("edit") === "1";
@@ -1273,49 +1270,83 @@
             }
 
             async function updateTimeSlots() {
-                if (!selectedDoctor || !selectedDate) return;
-                // 1. Fetch per-date availability for the selected doctor
-                let doctorId = selectedDoctor._id || selectedDoctor.id;
-                let start = "9:00 AM", end = "5:00 PM";
-                try {
-                    if (doctorId) {
-                        const res = await fetch(`/api/doctors/${doctorId}/availability?date=${selectedDate}`);
-                        if (res.ok) {
-                            const data = await res.json();
-                            if (data.start && data.end) {
-                                start = data.start;
-                                end = data.end;
-                            }
-                        }
-                    }
-                } catch (err) {}
-                // Use allTimeSlots for the grid
                 const timeSlotsContainer = document.querySelector("#timeSlots .grid");
                 timeSlotsContainer.innerHTML = "";
-                allTimeSlots.forEach(slot => {
-                    const btn = document.createElement("button");
-                    if (slot === "1:00 PM - 2:00 PM") {
-                        btn.textContent = "1:00 PM - 2:00 PM  Lunch Break";
-                        btn.disabled = true;
-                        btn.className = "time-slot unavailable bg-gray-100 text-gray-500";
-                    } else {
-                        btn.textContent = slot;
-                        btn.className = "time-slot bg-white border text-gray-800 hover:bg-blue-50";
-                        btn.onclick = () => {
-                            document.querySelectorAll(".time-slot.selected").forEach(b => b.classList.remove("selected", "bg-blue-600", "text-white"));
-                            btn.classList.add("selected", "bg-blue-600", "text-white");
-                            selectedTime = slot;
-                            const nextBtn = document.getElementById("dateTimeNextBtn");
-                            nextBtn.disabled = false;
-                            nextBtn.classList.remove("bg-gray-400");
-                            nextBtn.classList.add("bg-blue-600");
-                        };
-                    }
-                    if (selectedTime === slot) {
-                        btn.classList.add("selected", "bg-blue-600", "text-white");
-                    }
-                    timeSlotsContainer.appendChild(btn);
+
+                if (!selectedDoctor || !selectedDate) return;
+
+                const bookedSlots = await getBookedSlots(selectedDoctor.name, selectedDate);
+                let doctorAvailableSlots = generateTimeSlots(selectedDoctor.availability);
+
+                doctorAvailableSlots = doctorAvailableSlots.sort((a, b) => {
+                    const timeA = a.split(" - ")[0];
+                    const timeB = b.split(" - ")[0];
+                    return convertTo24Hour(timeA) - convertTo24Hour(timeB);
                 });
+
+                doctorAvailableSlots.forEach((time) => {
+                    if (time === "1:00 PM - 2:00 PM") return;
+
+                    const timeSlot = document.createElement("div");
+                    const isBooked = bookedSlots.includes(time);
+                    const isPastTime = isTimeSlotPast(time);
+
+                    if (isBooked) {
+                        timeSlot.className = "time-slot p-2 text-center border rounded bg-red-100 text-red-600 cursor-not-allowed";
+                        timeSlot.innerHTML = `${time}<br><span class="text-sm">Booked</span>`;
+                    } else if (isPastTime) {
+                        timeSlot.className = "time-slot p-2 text-center border rounded bg-gray-300 text-gray-600 cursor-not-allowed";
+                        timeSlot.textContent = time;
+                    } else {
+                        timeSlot.className = "time-slot p-2 text-center border rounded cursor-pointer hover:bg-gray-100";
+                        timeSlot.textContent = time;
+
+                        const savedAppointment = JSON.parse(localStorage.getItem("appointmentData") || "{}");
+                        if (savedAppointment.date === selectedDate && savedAppointment.time === time) {
+                            timeSlot.classList.add("selected", "bg-green-500", "text-white");
+                            selectedTime = time;
+                            document.getElementById("dateTimeNextBtn").disabled = false;
+                            document.getElementById("dateTimeNextBtn").classList.remove("bg-gray-400");
+                            document.getElementById("dateTimeNextBtn").classList.add("bg-blue-600");
+                        }
+
+                        timeSlot.addEventListener("click", () => {
+                            document.querySelectorAll(".time-slot.selected").forEach((slot) => {
+                                slot.classList.remove("selected", "bg-green-500", "text-white");
+                            });
+
+                            timeSlot.classList.add("selected", "bg-green-500", "text-white");
+                            selectedTime = time;
+
+                            document.getElementById("dateTimeNextBtn").disabled = false;
+                            document.getElementById("dateTimeNextBtn").classList.remove("bg-gray-400");
+                            document.getElementById("dateTimeNextBtn").classList.add("bg-blue-600");
+                        });
+                    }
+
+                    timeSlotsContainer.appendChild(timeSlot);
+                });
+
+                const lunchSlot = document.createElement("div");
+                lunchSlot.className = "time-slot p-2 text-center border rounded bg-gray-100 text-gray-600 cursor-not-allowed col-span-3";
+                lunchSlot.innerHTML = `1:00 PM - 2:00 PM <span style="margin-left:12px;" class="text-sm">Lunch Break</span>`;
+                lunchSlot.setAttribute("data-tooltip", "Lunch Break");
+
+                const slots = Array.from(timeSlotsContainer.children);
+                const lunchIndex = slots.findIndex((slot) => {
+                    const time = slot.textContent.split(" - ")[0];
+                    return convertTo24Hour(time) >= convertTo24Hour("1:00 PM");
+                });
+
+                if (lunchIndex !== -1) {
+                    timeSlotsContainer.insertBefore(lunchSlot, slots[lunchIndex]);
+                } else {
+                    timeSlotsContainer.appendChild(lunchSlot);
+                }
+
+                document.getElementById("timeSlots").classList.remove("hidden");
+                document.getElementById("noTime").classList.add("hidden");
+                document.getElementById("loadingTime").classList.add("hidden");
             }
 
             function selectDate(date, element) {
