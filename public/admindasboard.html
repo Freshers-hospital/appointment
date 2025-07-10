@@ -599,24 +599,13 @@
 
                         <div class="mb-4 col-span-2">
                             <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
-                            <div id="qualificationGrid" class="flex flex-col gap-2">
-                                <div class="flex items-center gap-2">
-                                    <input
-                                        type="text"
-                                        name="qualification"
-                                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                        placeholder="e.g., Mbbs,Phd..."
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        class="addQualificationBtn w-[42px] h-[42px] bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
-                                        title="Add"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
+                            <input
+                                type="text"
+                                name="qualification"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                placeholder="e.g., Mbbs,Phd..."
+                                required
+                            />
                         </div>
 
                         <div class="mb-4 col-span-2">
@@ -677,8 +666,6 @@
 
         <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-                <button id="closeViewDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-
                 <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -716,7 +703,7 @@
                 <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
 
                 <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                   
+                    <!-- Profile Image Upload -->
                     <div class="sm:col-span-2 flex flex-col items-center mb-2">
                         <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
                         <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover mb-2 border shadow" />
@@ -726,36 +713,37 @@
                         </button>
                     </div>
 
-                
+                    <!-- Name -->
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Name</label>
                         <input type="text" id="editDoctorName" name="name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                   
+                    <!-- Specialization -->
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Specialization</label>
                         <input type="text" id="editDoctorSpecialization" name="specialty" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                    
+                    <!-- Experience -->
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Experience</label>
                         <input type="text" id="editDoctorExperience" name="experience" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                 
+                    <!-- Availability -->
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Availability</label>
                         <input type="text" id="editDoctorAvailability" name="availability" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                    
+                    <!-- Qualification -->
                     <div class="sm:col-span-2">
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Qualification</label>
                         <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
                     </div>
 
+                    <!-- Action Buttons -->
                     <div class="sm:col-span-2 flex justify-between pt-4 gap-4">
                         <button type="button" id="cancelEditDoctorBtn" class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
                         <button type="submit" class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save Changes</button>
@@ -2201,7 +2189,9 @@
                 document.body.classList.remove("blurred-bg");
             }
 
-           
+            // document.getElementById("patientDetailsModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closePatientDetailsModal();
+            // };
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
@@ -2702,7 +2692,9 @@
             }
             document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
-          
+            // document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
+            //     if (e.target === this) closeViewDoctorProfileModal();
+            // };
             function closeViewDoctorProfileModal() {
                 document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
