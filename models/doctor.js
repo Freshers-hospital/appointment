@@ -7,6 +7,11 @@ const doctorSchema = new mongoose.Schema({
   experience: { type: String },
   qualification: { type: String },
   availability: { type: String, required: true },
+  availabilityByDate: {
+    type: Map,
+    of: new mongoose.Schema({ start: String, end: String }, { _id: false }),
+    default: {}
+  },
   education: { type: String },
   image: { type: String }
 }, { timestamps: true });
