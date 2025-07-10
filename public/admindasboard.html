@@ -710,6 +710,61 @@
             </div>
         </div>
 
+        <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
+                <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
+
+                <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Profile Image Upload -->
+                    <div class="sm:col-span-2 flex flex-col items-center mb-2">
+                        <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
+                        <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover mb-2 border shadow" />
+                        <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+                        <button type="button" onclick="document.getElementById('editDoctorPhoto').click()" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-sm font-medium">
+                            Choose Photo
+                        </button>
+                    </div>
+
+                    <!-- Name -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Name</label>
+                        <input type="text" id="editDoctorName" name="name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
+                    </div>
+
+                    <!-- Specialization -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Specialization</label>
+                        <input type="text" id="editDoctorSpecialization" name="specialty" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
+                    </div>
+
+                    <!-- Experience -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Experience</label>
+                        <input type="text" id="editDoctorExperience" name="experience" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Availability -->
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Availability</label>
+                        <input type="text" id="editDoctorAvailability" name="availability" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Qualification -->
+                    <div class="sm:col-span-2">
+                        <label class="text-sm font-semibold text-gray-600 block mb-1">Qualification</label>
+                        <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="sm:col-span-2 flex justify-between pt-4 gap-4">
+                        <button type="button" id="cancelEditDoctorBtn" class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
+                        <button type="submit" class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div id="successModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
                 <div class="mb-4">
@@ -2728,6 +2783,46 @@
                     document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
                 });
             }
+
+            // 1. Function to open modal and fill fields
+            function openEditDoctorModal(doctor) {
+                document.getElementById("editDoctorName").value = doctor.name || "";
+                document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+                document.getElementById("editDoctorExperience").value = doctor.experience || "";
+                document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+                document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+                document.getElementById("editDoctorPhotoPreview").src = doctor.photoUrl || "/default-profile.png";
+                document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
+            }
+
+            // 2. Close buttons
+            document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
+                document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+            });
+            document.getElementById("cancelEditDoctorBtn").addEventListener("click", () => {
+                document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+            });
+
+            // 3. Photo preview when uploading
+            document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById("editDoctorPhotoPreview").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // 4. Listen for edit button clicks
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                    e.preventDefault();
+                    const doctorData = JSON.parse(e.target.dataset.doctor);
+                    openEditDoctorModal(doctorData);
+                }
+            });
         </script>
     </body>
 </html>
