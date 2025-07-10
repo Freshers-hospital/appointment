@@ -1486,8 +1486,9 @@
             let currentDoctor = null;
             let currentDoctorId = null;
 
+            
             async function openAvailabilityModal(doctorName) {
-               
+                
                 if (!window.allDoctors || !Array.isArray(window.allDoctors) || window.allDoctors.length === 0) {
                     try {
                         const response = await fetch("/api/doctors");
@@ -1498,7 +1499,7 @@
                         window.allDoctors = [];
                     }
                 }
-              
+                
                 currentDoctor = doctorName;
                 currentDoctorId = null;
                 if (window.allDoctors && Array.isArray(window.allDoctors)) {
@@ -1524,7 +1525,7 @@
 
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
             document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            
             // document.getElementById("availabilityModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeAvailabilityModal();
             // };
@@ -1677,7 +1678,7 @@
 
             document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
             document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+            
             // document.getElementById("assignDoctorModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeAssignDoctorModal();
             // };
@@ -1993,7 +1994,7 @@
 
             document.getElementById("closeCancelModal").onclick = closeCancelModal;
             document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
+           
             // document.getElementById("cancelModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeCancelModal();
             // };
@@ -2092,11 +2093,11 @@
                         const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
 
                         try {
-                          
+                           
                             const res = await fetch("/api/doctors");
                             const existingDoctors = await res.json();
 
-                            
+                           
                             const isDuplicate = existingDoctors.some((doc) => {
                                 const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
                                 return existingName === fullName;
@@ -2111,7 +2112,7 @@
                             return;
                         }
 
-                        // Build doctor object
+                      
                         const doctorData = {
                             firstName,
                             lastName,
@@ -2122,7 +2123,7 @@
                             availability: formData.get("availability"),
                         };
 
-                        
+                
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
@@ -2268,7 +2269,7 @@
                 const currentDoctors = allDoctors.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
                 const selectedDate = document.getElementById("datePicker").value;
-              
+                
                 const availabilityPromises = currentDoctors.map(async (doctor) => {
                     let displayAvailability = doctor.availability || "Available";
                     try {
@@ -2738,7 +2739,7 @@
         </script>
 
         <script>
-     
+         
             function setupActionMenus() {
                 document.querySelectorAll(".action-btn").forEach((btn) => {
                     btn.onclick = function (e) {
@@ -2778,6 +2779,7 @@
                 });
             }
 
+            
             function openEditDoctorModal(doctor) {
                 document.getElementById("editDoctorName").value = doctor.name || "";
                 document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
@@ -2788,6 +2790,7 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             }
 
+           
             document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
@@ -2813,6 +2816,15 @@
                     e.preventDefault();
                     const doctorData = JSON.parse(e.target.dataset.doctor);
                     openEditDoctorModal(doctorData);
+                }
+            });
+        </script>
+        <script>
+            console.log("[DEBUG] Script loaded at end of HTML");
+            document.addEventListener("DOMContentLoaded", function () {
+                var closeBtn = document.getElementById("closeViewDoctorProfileBtn");
+                if (closeBtn) {
+                    closeBtn.onclick = closeViewDoctorProfileModal;
                 }
             });
         </script>
