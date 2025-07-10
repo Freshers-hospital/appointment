@@ -599,13 +599,24 @@
 
                         <div class="mb-4 col-span-2">
                             <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
-                            <input
-                                type="text"
-                                name="qualification"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                placeholder="e.g., Mbbs,Phd..."
-                                required
-                            />
+                            <div id="qualificationGrid" class="flex flex-col gap-2">
+                                <div class="flex items-center gap-2">
+                                    <input
+                                        type="text"
+                                        name="qualification"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                        placeholder="e.g., Mbbs,Phd..."
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        class="addQualificationBtn w-[42px] h-[42px] bg-green-600 hover:bg-green-700 text-white rounded-lg text-lg font-bold flex items-center justify-center"
+                                        title="Add"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-4 col-span-2">
@@ -666,6 +677,8 @@
 
         <div id="viewDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+                <button id="closeViewDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+
                 <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -699,10 +712,11 @@
 
         <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
+                <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
 
                 <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Profile Image Upload -->
+                   
                     <div class="sm:col-span-2 flex flex-col items-center mb-2">
                         <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
                         <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover mb-2 border shadow" />
@@ -712,37 +726,36 @@
                         </button>
                     </div>
 
-                    <!-- Name -->
+                
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Name</label>
                         <input type="text" id="editDoctorName" name="name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                    <!-- Specialization -->
+                   
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Specialization</label>
                         <input type="text" id="editDoctorSpecialization" name="specialty" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                    <!-- Experience -->
+                    
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Experience</label>
                         <input type="text" id="editDoctorExperience" name="experience" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                    <!-- Availability -->
+                 
                     <div>
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Availability</label>
                         <input type="text" id="editDoctorAvailability" name="availability" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                    <!-- Qualification -->
+                    
                     <div class="sm:col-span-2">
                         <label class="text-sm font-semibold text-gray-600 block mb-1">Qualification</label>
                         <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="sm:col-span-2 flex justify-between pt-4 gap-4">
                         <button type="button" id="cancelEditDoctorBtn" class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
                         <button type="submit" class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save Changes</button>
@@ -1473,9 +1486,8 @@
             let currentDoctor = null;
             let currentDoctorId = null;
 
-            // Patch: Ensure allDoctors is loaded before opening the modal
             async function openAvailabilityModal(doctorName) {
-                // If allDoctors is not loaded, fetch it first
+               
                 if (!window.allDoctors || !Array.isArray(window.allDoctors) || window.allDoctors.length === 0) {
                     try {
                         const response = await fetch("/api/doctors");
@@ -1486,7 +1498,7 @@
                         window.allDoctors = [];
                     }
                 }
-                // Find doctorId from allDoctors
+              
                 currentDoctor = doctorName;
                 currentDoctorId = null;
                 if (window.allDoctors && Array.isArray(window.allDoctors)) {
@@ -2080,11 +2092,11 @@
                         const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
 
                         try {
-                            // Fetch existing doctors
+                          
                             const res = await fetch("/api/doctors");
                             const existingDoctors = await res.json();
 
-                            // Check if doctor already exists by name
+                            
                             const isDuplicate = existingDoctors.some((doc) => {
                                 const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
                                 return existingName === fullName;
@@ -2110,7 +2122,7 @@
                             availability: formData.get("availability"),
                         };
 
-                        // Submit doctor
+                        
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
@@ -2188,9 +2200,7 @@
                 document.body.classList.remove("blurred-bg");
             }
 
-            // document.getElementById("patientDetailsModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closePatientDetailsModal();
-            // };
+           
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
@@ -2258,7 +2268,7 @@
                 const currentDoctors = allDoctors.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
                 const selectedDate = document.getElementById("datePicker").value;
-                // Fetch per-date availability for all doctors in parallel
+              
                 const availabilityPromises = currentDoctors.map(async (doctor) => {
                     let displayAvailability = doctor.availability || "Available";
                     try {
@@ -2689,10 +2699,9 @@
                     }
                 });
             }
+            document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
-            // document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closeViewDoctorProfileModal();
-            // };
+          
             function closeViewDoctorProfileModal() {
                 document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
@@ -2729,7 +2738,7 @@
         </script>
 
         <script>
-            // Action menu positioning logic
+     
             function setupActionMenus() {
                 document.querySelectorAll(".action-btn").forEach((btn) => {
                     btn.onclick = function (e) {
@@ -2753,7 +2762,7 @@
                                     top = window.scrollY;
                                 }
                             }
-                            let left = rect.left + window.scrollX + 4;
+                            let left = rect.left + window.scrollX;
 
                             menu.style.top = top + "px";
                             menu.style.left = left + "px";
@@ -2769,7 +2778,6 @@
                 });
             }
 
-            // 1. Function to open modal and fill fields
             function openEditDoctorModal(doctor) {
                 document.getElementById("editDoctorName").value = doctor.name || "";
                 document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
@@ -2780,7 +2788,6 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             }
 
-            // 2. Close buttons
             document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
@@ -2788,7 +2795,7 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
 
-            // 3. Photo preview when uploading
+            
             document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
                 const file = event.target.files[0];
                 if (file) {
@@ -2800,7 +2807,7 @@
                 }
             });
 
-            // 4. Listen for edit button clicks
+           
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("edit-doctor-profile-btn")) {
                     e.preventDefault();
