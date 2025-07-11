@@ -3,6 +3,20 @@ const router = express.Router();
 const Doctor = require('../models/doctor');
 const Confirmation = require('../models/confirmation');
 const DateModel = require('../models/date');
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../uploads/'));
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split('.').pop();
+    cb(null, `doctor_${Date.now()}.${ext}`);
+  }
+});
+const upload = multer({ storage });
 
 router.post('/', async (req, res) => {
   try {
@@ -73,6 +87,26 @@ router.post('/:doctorId/availability', async (req, res) => {
     res.json({ message: 'Availability updated', date, start, end });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.put('/:doctorId', upload.single('photo'), async (req, res) => {
+  try {
+    const doctorId = req.params.doctorId;
+    const updateData = req.body;
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] === '') delete updateData[key];
+    });
+    const updatedDoctor = await Doctor.findByIdAndUpdate(doctorId, updateData, { new: true });
+    if (!updatedDoctor) return res.status(404).json({ error: 'Doctor not found' });
+    res.json(updatedDoctor);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update doctor' });
   }
 });
 

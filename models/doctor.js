@@ -15,7 +15,11 @@ const doctorSchema = new mongoose.Schema({
     default: {}
   },
   education: { type: String },
-  image: { type: String }
+  image: { type: String },
+  age: { type: Number },
+  gender: { type: String },
+  phone: { type: String },
+  address: { type: String }
 }, { timestamps: true });
 
 doctorSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
