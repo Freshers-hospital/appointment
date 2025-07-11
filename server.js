@@ -14,17 +14,28 @@ const confirmationRoutes = require("./routes/confirmationsroutes");
 const doctorsRoutes = require("./routes/doctorsroutes");
 const { router: adminRoutes } = require('./routes/adminroutes');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use("/api/confirmations", confirmationRoutes);
 
 app.use("/api/doctors", doctorsRoutes);
 app.use("/api/admin", adminRoutes);
+
+app.post('/test-upload', upload.single('photo'), (req, res) => {
+  console.log('Test upload file:', req.file);
+  if (req.file) {
+    res.send('File uploaded: ' + req.file.path);
+  } else {
+    res.status(400).send('No file uploaded');
+  }
+});
 
 
 app.get("/", (req, res) => {
