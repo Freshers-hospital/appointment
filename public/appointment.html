@@ -769,7 +769,7 @@
               <p class="text-gray-600">${doctor.specialty || ""}</p>
               <p class="text-sm text-gray-500">${infoLine}</p>
             </div>
-            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? JSON.stringify(doctor.availabilityByDate).replace(/'/g, "&apos;") : ""}')" 
+            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? Object.keys(doctor.availabilityByDate) : ""}')" 
               class="${buttonClass} px-4 py-2 rounded transition-colors duration-200"
               data-doctor="${doctor.name}" ${disabledAttr}>
               Select
