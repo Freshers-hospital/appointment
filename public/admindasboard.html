@@ -719,11 +719,19 @@
                 <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl font-bold text-center mb-4 text-gray-800">Edit Doctor Profile</h2>
 
-                <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="sm:col-span-2 flex flex-col items-center bg-gray-50 p-3 rounded-lg shadow-sm">
-                        <label class="text-sm font-semibold text-gray-600 mb-1">Profile Photo</label>
-
-                       <img id="editDoctorPhotoPreview" src="" alt="" class="w-20 h-20 rounded-full object-cover mb-2 border shadow" />
+                <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  
+                    <div class="sm:col-span-2 flex flex-col items-center mb-2">
+                        <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
+                        <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem;">
+                          <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover border shadow" style="display: none; position: absolute; top: 0; left: 0;" />
+                          <div id="editDoctorDefaultIcon" style="position: absolute; top: 0; left: 0; width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; background: #f3f4f6; border-radius: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                              <path stroke="currentColor" stroke-width="2" d="M4 20c0-4 4-7 8-7s8 3 8 7" fill="none"/>
+                            </svg>
+                          </div>
+                        </div>
                         <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
                         <button type="button" onclick="document.getElementById('editDoctorPhoto').click()" class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
                             Choose Photo
@@ -1148,7 +1156,7 @@
             <td class=\"px-4 py-3 relative\">
               <button class=\"action-btn text-xl focus:outline-none\">...</button>
               <div class=\"action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20\">
-                <a href=\"#\" class=\"view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>View Details</a>
+                <a href=\"#\" class=\"view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>View profile</a>
                 ${!isCanceled ? `<a href=\"#\" class=\"edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
                 ${!isCanceled ? `<a href=\"#\" class=\"reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
                 ${!isCanceled ? `<a href=\"#\" class=\"cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600\" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
@@ -2313,8 +2321,8 @@
                     doctorsList.innerHTML += `
 <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
   <div class="col-span-3 flex items-center">
-    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200">
-      ${doctor.image ? `<img src="${doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />` : ""}
+    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx}" style="cursor:pointer;">
+      ${doctor.image ? `<img src="${doctor.image.startsWith('/uploads/') ? doctor.image : '/uploads/' + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />` : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`}
     </div>
     <div>
       <div class="font-semibold text-gray-800">${doctor.name}</div>
@@ -2443,8 +2451,19 @@
                 document.getElementById("editDoctorGender").value = doctor.gender || "";
                 document.getElementById("editDoctorPhone").value = doctor.phone || "";
                 document.getElementById("editDoctorAddress").value = doctor.address || "";
+                // Photo logic
+                const photoPreview = document.getElementById("editDoctorPhotoPreview");
+                const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+                if (doctor.image) {
+                  photoPreview.src = doctor.image;
+                  photoPreview.style.display = "block";
+                  defaultIcon.style.display = "none";
+                } else {
+                  photoPreview.src = "";
+                  photoPreview.style.display = "none";
+                  defaultIcon.style.display = "flex";
+                }
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
-                document.body.classList.add("blurred-bg");
             }
 
             function closeEditDoctorModal() {
@@ -2644,6 +2663,21 @@
                     alert("Error updating doctor: " + err.message);
                 }
             };
+
+            document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+                const file = event.target.files[0];
+                const photoPreview = document.getElementById("editDoctorPhotoPreview");
+                const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = function (e) {
+                    photoPreview.src = e.target.result;
+                    photoPreview.style.display = "block";
+                    defaultIcon.style.display = "none";
+                  };
+                  reader.readAsDataURL(file);
+                }
+            });
         </script>
         <script>
             console.log("[DEBUG] Script loaded at end of HTML");
@@ -2966,7 +3000,61 @@
                 }
             });
         </script>
-
-
+        <!-- Add modal and hidden file input at the end of body -->
+        <input type="file" id="doctorPhotoInput" style="display:none" accept="image/*" />
+        <div id="doctorPhotoModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+          <img id="doctorPhotoModalImg" src="" style="max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 2px 16px #0008;" />
+        </div>
+        <script>
+        // ... existing code ...
+        document.getElementById("doctorsList").addEventListener("click", function (e) {
+          if (e.target.closest(".doctor-photo-placeholder")) {
+            const photoDiv = e.target.closest(".doctor-photo-placeholder");
+            const doctorId = photoDiv.getAttribute("data-doctor-id");
+            const idx = photoDiv.getAttribute("data-doctor-index");
+            const doctor = allDoctors[parseInt(idx)];
+            const imgTag = photoDiv.querySelector("img");
+            const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
+            if (imageUrl.includes("default-profile.png")) {
+              // No photo: open file picker
+              const fileInput = document.getElementById("doctorPhotoInput");
+              fileInput.value = "";
+              fileInput.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                  const formData = new FormData();
+                  formData.append('photo', file);
+                  fetch(`/api/doctors/${doctorId}`, {
+                    method: 'PUT',
+                    body: formData
+                  })
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data.image) {
+                      // Update the doctor image in the UI
+                      allDoctors[parseInt(idx)].image = '/uploads/' + data.image;
+                      renderDoctorsPage();
+                    } else {
+                      alert('Upload failed');
+                    }
+                  })
+                  .catch(() => alert('Upload error'));
+                }
+              };
+              fileInput.click();
+            } else {
+              // Photo exists: show in modal
+              const modal = document.getElementById('doctorPhotoModal');
+              const modalImg = document.getElementById('doctorPhotoModalImg');
+              modalImg.src = imageUrl;
+              modal.style.display = 'flex';
+              modal.onclick = function() {
+                modal.style.display = 'none';
+              };
+            }
+          }
+        });
+        // ... existing code ...
+        </script>
     </body>
 </html>
