@@ -715,9 +715,9 @@
         </div>
 
         <div id="editDoctorProfileModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
+            <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg max-h-screen overflow-y-auto relative">
                 <button id="closeEditDoctorProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-                <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Edit Doctor Profile</h2>
+                <h2 class="text-xl font-bold text-center mb-4 text-gray-800">Edit Doctor Profile</h2>
 
                 <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   
@@ -733,45 +733,39 @@
                           </div>
                         </div>
                         <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
-                        <button type="button" onclick="document.getElementById('editDoctorPhoto').click()" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-sm font-medium">
+                        <button type="button" onclick="document.getElementById('editDoctorPhoto').click()" class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
                             Choose Photo
                         </button>
                     </div>
 
-                    
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Name</label>
-                        <input type="text" id="editDoctorName" name="name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Name</label>
+                        <input type="text" id="editDoctorName" name="name" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                   
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Specialization</label>
-                        <input type="text" id="editDoctorSpecialization" name="specialty" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+                        <input type="text" id="editDoctorSpecialization" name="specialty" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                   
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Experience</label>
-                        <input type="text" id="editDoctorExperience" name="experience" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
+                        <input type="text" id="editDoctorExperience" name="experience" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                  
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Availability</label>
-                        <input type="text" id="editDoctorAvailability" name="availability" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Availability</label>
+                        <input type="text" id="editDoctorAvailability" name="availability" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                    
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Age</label>
-                        <input type="number" id="editDoctorAge" name="age" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" min="1" max="120" />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Age</label>
+                        <input type="number" id="editDoctorAge" name="age" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" min="1" max="120" />
                     </div>
 
-                   
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Gender</label>
-                        <select id="editDoctorGender" name="gender" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500">
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Gender</label>
+                        <select id="editDoctorGender" name="gender" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -779,28 +773,24 @@
                         </select>
                     </div>
 
-                   
-                    <div>
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Phone Number</label>
-                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
+                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                    
-                    <div >
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Address</label>
-                        <input type="text" id="editDoctorAddress" name="address" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
+                        <input type="text" id="editDoctorAddress" name="address" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
-                    
-                    <div class="sm:col-span-2">
-                        <label class="text-sm font-semibold text-gray-600 block mb-1">Qualification</label>
-                        <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
+                    <div class="sm:col-span-2 bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Address</label>
+                        <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
                     </div>
 
-                    
-                    <div class="sm:col-span-2 flex justify-between pt-4 gap-4">
+                    <div class="sm:col-span-2 flex justify-between pt-3 gap-3">
                         <button type="button" id="cancelEditDoctorBtn" class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
-                        <button type="submit" class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save Changes</button>
+                        <button type="submit" class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save</button>
                     </div>
                 </form>
             </div>
@@ -1528,7 +1518,6 @@
             let currentDoctor = null;
             let currentDoctorId = null;
 
-            
             async function openAvailabilityModal(doctor) {
                 if (!doctor || !doctor._id) return;
                 currentDoctor = doctor;
@@ -1551,7 +1540,7 @@
 
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
             document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
-            
+
             // document.getElementById("availabilityModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeAvailabilityModal();
             // };
@@ -1613,7 +1602,7 @@
                     });
                     if (!response.ok) throw new Error("Failed to save availability");
                     closeAvailabilityModal();
-                   
+
                     const datePicker = document.getElementById("datePicker");
                     if (datePicker) {
                         await fetchAndDisplayDoctors(datePicker.value);
@@ -1711,7 +1700,7 @@
 
             document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
             document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
-            
+
             // document.getElementById("assignDoctorModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeAssignDoctorModal();
             // };
@@ -2027,7 +2016,7 @@
 
             document.getElementById("closeCancelModal").onclick = closeCancelModal;
             document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
-           
+
             // document.getElementById("cancelModalOverlay").onclick = function (e) {
             //     if (e.target === this) closeCancelModal();
             // };
@@ -2126,11 +2115,9 @@
                         const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
 
                         try {
-                           
                             const res = await fetch("/api/doctors");
                             const existingDoctors = await res.json();
 
-                           
                             const isDuplicate = existingDoctors.some((doc) => {
                                 const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
                                 return existingName === fullName;
@@ -2145,7 +2132,6 @@
                             return;
                         }
 
-                      
                         const doctorData = {
                             firstName,
                             lastName,
@@ -2156,7 +2142,6 @@
                             availability: formData.get("availability"),
                         };
 
-                
                         try {
                             const response = await fetch("/api/doctors", {
                                 method: "POST",
@@ -2304,7 +2289,7 @@
                 const currentDoctors = allDoctors.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
                 const selectedDate = document.getElementById("datePicker").value;
-                
+
                 const availabilityPromises = currentDoctors.map(async (doctor) => {
                     let displayAvailability = doctor.availability || "Available";
                     try {
@@ -2664,7 +2649,7 @@
                 try {
                     const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
                         method: "PUT",
-                        body: formData
+                        body: formData,
                     });
                     if (!response.ok) {
                         const errorData = await response.json().catch(() => ({}));
@@ -2830,7 +2815,6 @@
         </script>
 
         <script>
-         
             function setupActionMenus() {
                 document.querySelectorAll(".action-btn").forEach((btn) => {
                     btn.onclick = function (e) {
@@ -2870,7 +2854,6 @@
                 });
             }
 
-            
             function openEditDoctorModal(doctor) {
                 document.getElementById("editDoctorName").value = doctor.name || "";
                 document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
@@ -2881,7 +2864,6 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             }
 
-           
             document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
@@ -2889,7 +2871,6 @@
                 document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
             });
 
-            
             document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
                 const file = event.target.files[0];
                 if (file) {
@@ -2901,7 +2882,6 @@
                 }
             });
 
-           
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("edit-doctor-profile-btn")) {
                     e.preventDefault();
@@ -2920,19 +2900,16 @@
             });
         </script>
         <script>
-            
             document.addEventListener("DOMContentLoaded", function () {
                 let currentDoctorForEditProfile = null;
 
-               
                 if (document.getElementById("doctorsList")) {
                     document.getElementById("doctorsList").addEventListener("click", function (e) {
                         if (e.target.classList.contains("edit-doctor-profile-btn")) {
                             e.preventDefault();
                             const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
                             currentDoctorForEditProfile = doctor;
-                            
-                            
+
                             document.getElementById("editDoctorName").value = doctor.name || "";
                             document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
                             document.getElementById("editDoctorExperience").value = doctor.experience || "";
@@ -2942,8 +2919,7 @@
                             document.getElementById("editDoctorGender").value = doctor.gender || "";
                             document.getElementById("editDoctorPhone").value = doctor.phone || "";
                             document.getElementById("editDoctorAddress").value = doctor.address || "";
-                            
-                            
+
                             document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
                             document.body.classList.add("blurred-bg");
                             e.target.closest(".action-menu").classList.add("hidden");
@@ -2951,14 +2927,12 @@
                     });
                 }
 
-                
                 function closeEditDoctorProfileModal() {
                     document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
                     document.body.classList.remove("blurred-bg");
                     currentDoctorForEditProfile = null;
                 }
 
-              
                 if (document.getElementById("closeEditDoctorProfileModal")) {
                     document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
                 }
@@ -2966,56 +2940,52 @@
                     document.getElementById("cancelEditDoctorBtn").onclick = closeEditDoctorProfileModal;
                 }
 
-               
                 if (document.getElementById("editDoctorForm")) {
                     document.getElementById("editDoctorForm").onsubmit = async function (e) {
                         e.preventDefault();
-                        
+
                         if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
                             alert("No doctor selected for editing.");
                             return;
                         }
 
-                       const formData = new FormData();
-formData.append("name", document.getElementById("editDoctorName").value);
-formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
-formData.append("experience", document.getElementById("editDoctorExperience").value);
-formData.append("qualification", document.getElementById("editDoctorQualification").value);
-formData.append("availability", document.getElementById("editDoctorAvailability").value);
-formData.append("age", document.getElementById("editDoctorAge").value);
-formData.append("gender", document.getElementById("editDoctorGender").value);
-formData.append("phone", document.getElementById("editDoctorPhone").value);
-formData.append("address", document.getElementById("editDoctorAddress").value);
+                        const formData = new FormData();
+                        formData.append("name", document.getElementById("editDoctorName").value);
+                        formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
+                        formData.append("experience", document.getElementById("editDoctorExperience").value);
+                        formData.append("qualification", document.getElementById("editDoctorQualification").value);
+                        formData.append("availability", document.getElementById("editDoctorAvailability").value);
+                        formData.append("age", document.getElementById("editDoctorAge").value);
+                        formData.append("gender", document.getElementById("editDoctorGender").value);
+                        formData.append("phone", document.getElementById("editDoctorPhone").value);
+                        formData.append("address", document.getElementById("editDoctorAddress").value);
 
-const photoInput = document.getElementById("editDoctorPhoto");
-if (photoInput.files.length > 0) {
-    formData.append("photo", photoInput.files[0]);
-}
+                        const photoInput = document.getElementById("editDoctorPhoto");
+                        if (photoInput.files.length > 0) {
+                            formData.append("photo", photoInput.files[0]);
+                        }
 
-try {
-    const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
-        method: "PUT",
-        body: formData, 
-    });
+                        try {
+                            const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
+                                method: "PUT",
+                                body: formData,
+                            });
 
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || "Failed to update doctor");
-    }
+                            if (!response.ok) {
+                                const errorData = await response.json().catch(() => ({}));
+                                throw new Error(errorData.error || "Failed to update doctor");
+                            }
 
-    closeEditDoctorProfileModal();
-    await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-    showSuccessModal("Doctor profile updated successfully!");
-
-} catch (err) {
-    console.error("Error updating doctor:", err);
-    alert("Error updating doctor: " + err.message);
-}
-
+                            closeEditDoctorProfileModal();
+                            await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+                            showSuccessModal("Doctor profile updated successfully!");
+                        } catch (err) {
+                            console.error("Error updating doctor:", err);
+                            alert("Error updating doctor: " + err.message);
+                        }
                     };
                 }
 
-                
                 if (document.getElementById("editDoctorPhoto")) {
                     document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
                         const file = event.target.files[0];
