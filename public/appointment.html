@@ -821,9 +821,8 @@
                 experience: experience,
                 qualification: qualification,
                 availability: availability,
-                availabilityByDate: availabilityByDate ,
+                availabilityByDate: availabilityByDate ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null,
             };
-      
             localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
             const isEditMode = getQueryParam("edit") === "1";
             if (isEditMode) {
@@ -1978,6 +1977,7 @@
         }
         function generateTimeSlots(availability, intervalMinutes = 30) {
             if (!availability) return [];
+            console.log("availability", availability)
             const [start, end] = availability.split("-").map((s) => s.trim());
             const slots = [];
             let current = parseTime(start);
@@ -1986,6 +1986,7 @@
                 slots.push(formatTime(current));
                 current = new Date(current.getTime() + intervalMinutes * 60000);
             }
+            console.log("slots", slots)
             return slots;
         }
 
