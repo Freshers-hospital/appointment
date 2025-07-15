@@ -816,7 +816,7 @@
                     experience: experience,
                     qualification: qualification,
                     availability: availability,
-                    availabilityByDate: availabilityByDate,
+                    availabilityByDate: availabilityByDate ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null,
                 };
                 localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
                 const isEditMode = getQueryParam("edit") === "1";
@@ -1998,24 +1998,7 @@
                 return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm}`;
             }
 
-            function generateTimeSlots() {
-                const slots = [];
-                const startHour = 9;
-                const endHour = 17;
-
-                for (let hour = startHour; hour < endHour; hour++) {
-                    for (let minute of [0, 30]) {
-                        const timeInMinutes = hour * 60 + minute;
-
-                        if (timeInMinutes >= 780 && timeInMinutes < 840) continue;
-
-                        slots.push(convertTo12Hour(hour, minute));
-                    }
-                }
-
-                return slots;
-            }
-
+            
             function convertTo12Hour(hour, minute = 0) {
                 const period = hour >= 12 ? "PM" : "AM";
                 const adjustedHour = hour % 12 === 0 ? 12 : hour % 12;

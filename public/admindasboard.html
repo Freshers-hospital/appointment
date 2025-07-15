@@ -1599,7 +1599,8 @@
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ date, start, end }),
-                    });
+                     });
+                     console.log('currentDoctorId',currentDoctorId,date, start, end);
                     if (!response.ok) throw new Error("Failed to save availability");
                     closeAvailabilityModal();
 
@@ -2451,7 +2452,7 @@
                 document.getElementById("editDoctorGender").value = doctor.gender || "";
                 document.getElementById("editDoctorPhone").value = doctor.phone || "";
                 document.getElementById("editDoctorAddress").value = doctor.address || "";
-                // Photo logic
+             
                 const photoPreview = document.getElementById("editDoctorPhotoPreview");
                 const defaultIcon = document.getElementById("editDoctorDefaultIcon");
                 if (doctor.image) {
@@ -3004,13 +3005,13 @@
                 }
             });
         </script>
-        <!-- Add modal and hidden file input at the end of body -->
+       
         <input type="file" id="doctorPhotoInput" style="display:none" accept="image/*" />
         <div id="doctorPhotoModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
           <img id="doctorPhotoModalImg" src="" style="max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 2px 16px #0008;" />
         </div>
         <script>
-        // ... existing code ...
+        
         document.getElementById("doctorsList").addEventListener("click", function (e) {
           if (e.target.closest(".doctor-photo-placeholder")) {
             const photoDiv = e.target.closest(".doctor-photo-placeholder");
@@ -3020,7 +3021,7 @@
             const imgTag = photoDiv.querySelector("img");
             const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
             if (imageUrl.includes("default-profile.png")) {
-              // No photo: open file picker
+             
               const fileInput = document.getElementById("doctorPhotoInput");
               fileInput.value = "";
               fileInput.onchange = function(event) {
@@ -3035,7 +3036,7 @@
                   .then(res => res.json())
                   .then(data => {
                     if (data.image) {
-                      // Update the doctor image in the UI
+                     
                       allDoctors[parseInt(idx)].image = '/uploads/' + data.image;
                       renderDoctorsPage();
                     } else {
@@ -3047,7 +3048,7 @@
               };
               fileInput.click();
             } else {
-              // Photo exists: show in modal
+             
               const modal = document.getElementById('doctorPhotoModal');
               const modalImg = document.getElementById('doctorPhotoModalImg');
               modalImg.src = imageUrl;
