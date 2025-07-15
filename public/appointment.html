@@ -1286,12 +1286,12 @@
                 let availabilityToUse = selectedDoctor.availability;
                 if (selectedDoctor.availabilityByDate) {
                     let dateKey = selectedDate;
-                    // Try both MM/DD/YYYY and YYYY-MM-DD formats
+                  
                     if (selectedDoctor.availabilityByDate[dateKey]) {
                         const dayAvail = selectedDoctor.availabilityByDate[dateKey];
                         availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
                     } else {
-                        // Try to convert MM/DD/YYYY to YYYY-MM-DD
+                      
                         const parts = dateKey.split('/');
                         if (parts.length === 3) {
                             const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;

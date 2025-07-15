@@ -775,17 +775,17 @@
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
-                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" pattern="^[6-9][0-9]{9}$" maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
-                        <input type="text" id="editDoctorAddress" name="address" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                        <input type="text" id="editDoctorQualification" name="qualification" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
                     <div class="sm:col-span-2 bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Address</label>
-                        <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
+                        <textarea id="editDoctorAddress" name="address" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
                     </div>
 
                     <div class="sm:col-span-2 flex justify-between pt-3 gap-3">
@@ -2455,13 +2455,13 @@
                 const photoPreview = document.getElementById("editDoctorPhotoPreview");
                 const defaultIcon = document.getElementById("editDoctorDefaultIcon");
                 if (doctor.image) {
-                  photoPreview.src = doctor.image;
-                  photoPreview.style.display = "block";
-                  defaultIcon.style.display = "none";
+                    photoPreview.src = doctor.image;
+                    photoPreview.style.display = "block";
+                    defaultIcon.style.display = "none";
                 } else {
-                  photoPreview.src = "";
-                  photoPreview.style.display = "none";
-                  defaultIcon.style.display = "flex";
+                    photoPreview.src = "";
+                    photoPreview.style.display = "none";
+                    defaultIcon.style.display = "flex";
                 }
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             }
@@ -2669,13 +2669,17 @@
                 const photoPreview = document.getElementById("editDoctorPhotoPreview");
                 const defaultIcon = document.getElementById("editDoctorDefaultIcon");
                 if (file) {
-                  const reader = new FileReader();
-                  reader.onload = function (e) {
-                    photoPreview.src = e.target.result;
-                    photoPreview.style.display = "block";
-                    defaultIcon.style.display = "none";
-                  };
-                  reader.readAsDataURL(file);
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        photoPreview.src = e.target.result;
+                        photoPreview.style.display = "block";
+                        defaultIcon.style.display = "none";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    photoPreview.src = "";
+                    photoPreview.style.display = "none";
+                    defaultIcon.style.display = "flex";
                 }
             });
         </script>
@@ -3054,7 +3058,46 @@
             }
           }
         });
-        // ... existing code ...
+       
+        </script>
+        <script>
+       
+        const editDoctorPhone = document.getElementById('editDoctorPhone');
+        if (editDoctorPhone) {
+          editDoctorPhone.addEventListener('input', function () {
+           
+            let value = this.value.replace(/\D/g, '');
+           
+            if (value.length === 1 && !/[6-9]/.test(value[0])) {
+              value = '';
+            }
+            
+            if (value.length > 10) value = value.slice(0, 10);
+            this.value = value;
+          });
+          editDoctorPhone.addEventListener('paste', function (e) {
+            e.preventDefault();
+            const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+            let cleaned = text.replace(/\D/g, '').slice(0, 10);
+            if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = '';
+            this.value = cleaned;
+          });
+        }
+       
+        const editDoctorForm = document.getElementById('editDoctorForm');
+        if (editDoctorForm) {
+          editDoctorForm.addEventListener('submit', function (e) {
+            const phone = editDoctorPhone.value;
+            const phonePattern = /^[6-9][0-9]{9}$/;
+            if (!phonePattern.test(phone)) {
+              alert('Phone number must be 10 digits and start with 6, 7, 8, or 9.');
+              editDoctorPhone.focus();
+              e.preventDefault();
+              return false;
+            }
+          });
+        }
+        
         </script>
     </body>
 </html>
