@@ -769,7 +769,7 @@
               <p class="text-gray-600">${doctor.specialty || ""}</p>
               <p class="text-sm text-gray-500">${infoLine}</p>
             </div>
-            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? Object.keys(doctor.availabilityByDate) : ""}')" 
+            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? JSON.stringify(doctor.availabilityByDate).replace(/"/g, '&quot;') : ""}')" 
               class="${buttonClass} px-4 py-2 rounded transition-colors duration-200"
               data-doctor="${doctor.name}" ${disabledAttr}>
               Select
@@ -816,7 +816,7 @@
                     experience: experience,
                     qualification: qualification,
                     availability: availability,
-                    availabilityByDate: availabilityByDate,
+                    availabilityByDate: availabilityByDate ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null,
                 };
                 localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
                 const isEditMode = getQueryParam("edit") === "1";
@@ -1286,12 +1286,12 @@
                 let availabilityToUse = selectedDoctor.availability;
                 if (selectedDoctor.availabilityByDate) {
                     let dateKey = selectedDate;
-                    // Try both MM/DD/YYYY and YYYY-MM-DD formats
+                  
                     if (selectedDoctor.availabilityByDate[dateKey]) {
                         const dayAvail = selectedDoctor.availabilityByDate[dateKey];
                         availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
                     } else {
-                        // Try to convert MM/DD/YYYY to YYYY-MM-DD
+                      
                         const parts = dateKey.split('/');
                         if (parts.length === 3) {
                             const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
@@ -1998,24 +1998,7 @@
                 return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm}`;
             }
 
-            function generateTimeSlots() {
-                const slots = [];
-                const startHour = 9;
-                const endHour = 17;
-
-                for (let hour = startHour; hour < endHour; hour++) {
-                    for (let minute of [0, 30]) {
-                        const timeInMinutes = hour * 60 + minute;
-
-                        if (timeInMinutes >= 780 && timeInMinutes < 840) continue;
-
-                        slots.push(convertTo12Hour(hour, minute));
-                    }
-                }
-
-                return slots;
-            }
-
+            
             function convertTo12Hour(hour, minute = 0) {
                 const period = hour >= 12 ? "PM" : "AM";
                 const adjustedHour = hour % 12 === 0 ? 12 : hour % 12;
