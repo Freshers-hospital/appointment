@@ -4,7 +4,14 @@ const bcrypt = require('bcrypt');
 const adminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email:    { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+
+  role: {
+    type: Number,
+    required: true,
+    enum: [1, 2],    // 1: Admin, 2: Super Admin
+    default: 1
+  }
 });
 
 adminSchema.pre('save', async function(next) {
@@ -13,8 +20,9 @@ adminSchema.pre('save', async function(next) {
   next();
 });
 
+
 adminSchema.methods.comparePassword = function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model('Admin', adminSchema); 
+module.exports = mongoose.model('Admin', adminSchema);
