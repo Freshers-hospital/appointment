@@ -60,7 +60,7 @@ router.get('/:doctorId/availability', async (req, res) => {
     const doctor = await Doctor.findById(doctorId);
     if (!doctor) return res.status(404).json({ error: 'Doctor not found' });
 
-   
+    let start, end;
     if (doctor.availabilityByDate && doctor.availabilityByDate.get(date)) {
       start = doctor.availabilityByDate.get(date).start;
       end = doctor.availabilityByDate.get(date).end;
