@@ -102,6 +102,13 @@ router.put('/:doctorId', upload.single('photo'), async (req, res) => {
   try {
     const doctorId = req.params.doctorId;
     const updateData = req.body;
+    // Phone validation
+    if (updateData.phone) {
+      const phonePattern = /^[6-9][0-9]{9}$/;
+      if (!phonePattern.test(updateData.phone)) {
+        return res.status(400).json({ error: 'Phone number must be 10 digits and start with 6, 7, 8, or 9.' });
+      }
+    }
     if (req.file) {
       updateData.image = `/uploads/${req.file.filename}`;
     }

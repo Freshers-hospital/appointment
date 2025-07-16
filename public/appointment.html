@@ -775,6 +775,7 @@
               <p class="text-sm text-gray-500">${infoLine}</p>
             </div>
             <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? JSON.stringify(doctor.availabilityByDate).replace(/"/g, '&quot;') : ""}')" 
+            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? JSON.stringify(doctor.availabilityByDate).replace(/"/g, '&quot;') : ""}')" 
               class="${buttonClass} px-4 py-2 rounded transition-colors duration-200"
               data-doctor="${doctor.name}" ${disabledAttr}>
               Select
@@ -821,7 +822,7 @@
                 experience: experience,
                 qualification: qualification,
                 availability: availability,
-                availabilityByDate: availabilityByDate ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null,
+                availabilityByDate: availabilityByDate ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null,
             };
             localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
             const isEditMode = getQueryParam("edit") === "1";
@@ -1182,18 +1183,16 @@
                 const thisDate = new Date(year, month, day);
                 thisDate.setHours(0, 0, 0, 0);
                 const dateString = formatDateString(thisDate);
-                //  const availabilityArray = JSON.parse(localStorage.getItem("availabilityArray"));
                 const isPast = thisDate < today;
                 const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
                 const isWithinBookingWindow = isAvailableMonth(thisDate);
                 const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
-                //  const doctorAvailability = availabilityArray.find(avail => avail.date === "2025-07-16")
-                //  console.log("doctorAvailability",selectedDate,doctorAvailability,availabilityArray)
                 let isTodayAllSlotsPast = false;
                 if (selectedDoctor && thisDate.getTime() === today.getTime()) {
                     const slots = generateTimeSlots();
 
                     isTodayAllSlotsPast = slots.every((slot) => isTimeSlotPast(slot));
+                  
                 }
 
                 let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
@@ -1292,12 +1291,12 @@
             let availabilityToUse = selectedDoctor.availability;
             if (selectedDoctor.availabilityByDate) {
                 let dateKey = selectedDate;
-                // Try both MM/DD/YYYY and YYYY-MM-DD formats
+
                 if (selectedDoctor.availabilityByDate[dateKey]) {
                     const dayAvail = selectedDoctor.availabilityByDate[dateKey];
                     availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
                 } else {
-                    // Try to convert MM/DD/YYYY to YYYY-MM-DD
+
                     const parts = dateKey.split('/');
                     if (parts.length === 3) {
                         const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
@@ -1975,8 +1974,8 @@
         }
         function generateTimeSlots(availability, intervalMinutes = 30) {
             if (!availability) return [];
-            console.log("availability", availability)
             const [start, end] = availability.split("-").map((s) => s.trim());
+
             const slots = [];
             let current = parseTime(start);
             const endTime = parseTime(end);
@@ -1984,10 +1983,9 @@
                 slots.push(formatTime(current));
                 current = new Date(current.getTime() + intervalMinutes * 60000);
             }
-            console.log("slots", slots)
             return slots;
         }
-
+       
         function parseTime(timeStr) {
             const [time, modifier] = timeStr.split(" ");
             let [hours, minutes] = time.split(":").map(Number);
@@ -2004,6 +2002,8 @@
             hours = hours ? hours : 12;
             return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm}`;
         }
+
+
         function convertTo12Hour(hour, minute = 0) {
             const period = hour >= 12 ? "PM" : "AM";
             const adjustedHour = hour % 12 === 0 ? 12 : hour % 12;

@@ -5,13 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Dashboard - MediCare</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            if (typeof tailwind === "undefined") {
-                const script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js";
-                document.head.appendChild(script);
-            }
-        </script>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
         <style>
@@ -175,12 +168,6 @@
                 color: #222 !important;
                 border-radius: 50% !important;
                 border: none !important;
-            }
-
-            .flatpickr-day.selected {
-                background: #1677ff !important;
-                color: #fff !important;
-                border-radius: 50% !important;
             }
 
             .flatpickr-current-month .numInputWrapper,
@@ -720,17 +707,30 @@
                 <h2 class="text-xl font-bold text-center mb-4 text-gray-800">Edit Doctor Profile</h2>
 
                 <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  
                     <div class="sm:col-span-2 flex flex-col items-center mb-2">
                         <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
-                        <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem;">
-                          <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover border shadow" style="display: none; position: absolute; top: 0; left: 0;" />
-                          <div id="editDoctorDefaultIcon" style="position: absolute; top: 0; left: 0; width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; background: #f3f4f6; border-radius: 50%;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                              <path stroke="currentColor" stroke-width="2" d="M4 20c0-4 4-7 8-7s8 3 8 7" fill="none"/>
-                            </svg>
-                          </div>
+                        <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem">
+                            <img id="editDoctorPhotoPreview" src="" alt="" class="w-24 h-24 rounded-full object-cover border shadow" style="display: none; position: absolute; top: 0; left: 0" />
+                            <div
+                                id="editDoctorDefaultIcon"
+                                style="
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 96px;
+                                    height: 96px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    background: #f3f4f6;
+                                    border-radius: 50%;
+                                "
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none" />
+                                    <path stroke="currentColor" stroke-width="2" d="M4 20c0-4 4-7 8-7s8 3 8 7" fill="none" />
+                                </svg>
+                            </div>
                         </div>
                         <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
                         <button type="button" onclick="document.getElementById('editDoctorPhoto').click()" class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
@@ -775,17 +775,17 @@
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
-                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" pattern="^[6-9][0-9]{9}$" maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
-                        <input type="text" id="editDoctorAddress" name="address" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                        <input type="text" id="editDoctorQualification" name="qualification" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
                     <div class="sm:col-span-2 bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Address</label>
-                        <textarea id="editDoctorQualification" name="qualification" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
+                        <textarea id="editDoctorAddress" name="address" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
                     </div>
 
                     <div class="sm:col-span-2 flex justify-between pt-3 gap-3">
@@ -811,38 +811,53 @@
         </div>
 
         <div id="availabilityModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
-                <h2 class="text-3xl font-bold mb-6">Manage Availability</h2>
-                <form id="availabilityForm" class="space-y-6">
-                    <div>
-                        <label class="block text-lg font-semibold mb-2">Date</label>
-                        <div class="flex justify-center">
-                            <input
-                                type="text"
-                                id="availabilityDate"
-                                name="date"
-                                class="w-64 max-w-xs border border-gray-300 rounded-lg px-4 py-3 text-lg focus:ring-2 focus:ring-blue-200"
-                                placeholder="MM/DD/YYYY"
-                                required
-                                readonly
-                            />
-                        </div>
+            <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+
+                <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
+                        <p class="text-gray-500 text-sm mb-1">Select Date</p>
+                        <input
+                            type="text"
+                            id="availabilityDate"
+                            name="date"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="MM/DD/YYYY"
+                            required
+                            readonly
+                        />
                     </div>
-                    <div>
-                        <label class="block text-lg font-semibold mb-2">Time</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="availabilityStart" name="start" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="10:00 AM" required />
-                            <span class="flex items-center text-lg font-semibold">-</span>
-                            <input type="text" id="availabilityEnd" name="end" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg text-center" placeholder="05:00 PM" required />
-                        </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">Start Time</p>
+                        <input
+                            type="text"
+                            id="availabilityStart"
+                            name="start"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="10:00 AM"
+                            required
+                        />
                     </div>
-                    <div class="flex justify-between gap-4 pt-2">
-                        <button type="button" id="cancelAvailability" class="w-1/2 px-4 py-3 rounded-lg border border-gray-300 bg-white text-black text-lg font-semibold hover:bg-gray-100">
-                            Cancel
-                        </button>
-                        <button type="submit" class="w-1/2 px-4 py-3 rounded-lg bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700">Save</button>
+
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-gray-500 text-sm mb-1">End Time</p>
+                        <input
+                            type="text"
+                            id="availabilityEnd"
+                            name="end"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="05:00 PM"
+                            required
+                        />
+                    </div>
+
+                    <div class="col-span-2 flex justify-center gap-4 mt-4">
+                        <button type="button" id="cancelAvailability" class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Save</button>
                     </div>
                 </form>
+
                 <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             </div>
         </div>
@@ -914,55 +929,6 @@
                     console.error("[Flatpickr] Flatpickr instance not found!");
                 }
             });
-
-            const style = document.createElement("style");
-            style.innerHTML = `
-  .flatpickr-calendar {
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: none;
-    width: 320px;
-    background: #18141f;
-  }
-  .flatpickr-months {
-    background: #18141f;
-    color: #fff;
-    border-radius: 12px 12px 0 0;
-    padding: 12px;
-  }
-  .flatpickr-current-month .flatpickr-monthDropdown-months,
-  .flatpickr-current-month .numInputWrapper {
-    color: #fff;
-    font-weight: 500;
-  }
-  .flatpickr-day {
-    color: #bdb6d7;
-    font-weight: 500;
-  }
-  .flatpickr-day.selected, .flatpickr-day.today {
-    background: #a084e8;
-    color: #fff;
-    border-radius: 50%;
-  }
-  .flatpickr-day:hover {
-    background: #e0d7fa;
-    color: #18141f;
-  }
-  .flatpickr-weekdays {
-    background: #18141f;
-    color: #bdb6d7;
-    font-weight: 600;
-  }
-  .flatpickr-weekday {
-    color: #bdb6d7;
-  }
-  .flatpickr-months .flatpickr-prev-month,
-  .flatpickr-months .flatpickr-next-month {
-    color: #fff;
-    fill: #fff;y
-  }
-  `;
-            document.head.appendChild(style);
 
             document.getElementById("datePicker").style.color = "transparent";
 
@@ -1128,11 +1094,11 @@
                             const isCanceled = app.status === "canceled" || app.status === "cancelled";
                             const isRescheduled = app.status === "rescheduled";
 
-                            let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">confirmed</span>`;
+                            let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">Confirmed</span>`;
                             if (isRescheduled) {
-                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">rescheduled</span>`;
+                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">Rescheduled</span>`;
                             } else if (isCanceled) {
-                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700\">canceled</span>`;
+                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700\">Cancelled</span>`;
                             }
                             return `
           <tr class=\"border-b hover:bg-gray-50 transition-colors\">
@@ -1541,10 +1507,6 @@
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
             document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
 
-            // document.getElementById("availabilityModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closeAvailabilityModal();
-            // };
-
             flatpickr("#availabilityDate", {
                 dateFormat: "Y-m-d",
                 allowInput: false,
@@ -1599,7 +1561,8 @@
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ date, start, end }),
-                    });
+                     });
+                     console.log('currentDoctorId',currentDoctorId,date, start, end);
                     if (!response.ok) throw new Error("Failed to save availability");
                     closeAvailabilityModal();
 
@@ -1649,13 +1612,6 @@
                 document.body.classList.remove("blurred-bg");
             };
 
-            // document.getElementById("viewDetailsModalOverlay").onclick = function (e) {
-            //     if (e.target === this) {
-            //         document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
-            //         document.body.classList.remove("blurred-bg");
-            //     }
-            // };
-
             let currentAppointmentForAssignment = null;
 
             async function loadDoctors() {
@@ -1700,10 +1656,6 @@
 
             document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
             document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
-
-            // document.getElementById("assignDoctorModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closeAssignDoctorModal();
-            // };
 
             document.getElementById("assignDoctorForm").onsubmit = async function (e) {
                 e.preventDefault();
@@ -1833,10 +1785,6 @@
             }
             document.getElementById("closeRescheduleModal").onclick = closeRescheduleModal;
             document.getElementById("cancelRescheduleBtn").onclick = closeRescheduleModal;
-            // COMMENTED OUT: Prevent closing modals by clicking the overlay background
-            // document.getElementById("rescheduleModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closeRescheduleModal();
-            // };
 
             async function renderRescheduleCalendar(app) {
                 const container = document.getElementById("rescheduleCalendarContainer");
@@ -2017,10 +1965,6 @@
             document.getElementById("closeCancelModal").onclick = closeCancelModal;
             document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
 
-            // document.getElementById("cancelModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closeCancelModal();
-            // };
-
             document.getElementById("confirmCancelBtn").onclick = async function () {
                 if (!cancelAppointmentData || !cancelAppointmentData._id) {
                     alert("Error: Missing appointment ID.");
@@ -2098,12 +2042,6 @@
                 if (closeAddDoctorModal) {
                     closeAddDoctorModal.addEventListener("click", closeModal);
                 }
-
-                // addDoctorModalOverlay.addEventListener("click", (e) => {
-                //     if (e.target === addDoctorModalOverlay) {
-                //         closeModal();
-                //     }
-                // });
 
                 const addDoctorForm = document.getElementById("addDoctorForm");
                 if (addDoctorForm) {
@@ -2219,9 +2157,6 @@
                 document.body.classList.remove("blurred-bg");
             }
 
-            // document.getElementById("patientDetailsModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closePatientDetailsModal();
-            // };
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
@@ -2321,8 +2256,14 @@
                     doctorsList.innerHTML += `
 <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
   <div class="col-span-3 flex items-center">
-    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx}" style="cursor:pointer;">
-      ${doctor.image ? `<img src="${doctor.image.startsWith('/uploads/') ? doctor.image : '/uploads/' + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />` : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`}
+    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${
+                        startIndex + idx
+                    }" style="cursor:pointer;">
+      ${
+          doctor.image
+              ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
+              : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+      }
     </div>
     <div>
       <div class="font-semibold text-gray-800">${doctor.name}</div>
@@ -2451,17 +2392,23 @@
                 document.getElementById("editDoctorGender").value = doctor.gender || "";
                 document.getElementById("editDoctorPhone").value = doctor.phone || "";
                 document.getElementById("editDoctorAddress").value = doctor.address || "";
-                // Photo logic
+             
                 const photoPreview = document.getElementById("editDoctorPhotoPreview");
                 const defaultIcon = document.getElementById("editDoctorDefaultIcon");
                 if (doctor.image) {
-                  photoPreview.src = doctor.image;
-                  photoPreview.style.display = "block";
-                  defaultIcon.style.display = "none";
+                    photoPreview.src = doctor.image;
+                    photoPreview.style.display = "block";
+                    defaultIcon.style.display = "none";
+                    photoPreview.src = doctor.image;
+                    photoPreview.style.display = "block";
+                    defaultIcon.style.display = "none";
                 } else {
-                  photoPreview.src = "";
-                  photoPreview.style.display = "none";
-                  defaultIcon.style.display = "flex";
+                    photoPreview.src = "";
+                    photoPreview.style.display = "none";
+                    defaultIcon.style.display = "flex";
+                    photoPreview.src = "";
+                    photoPreview.style.display = "none";
+                    defaultIcon.style.display = "flex";
                 }
                 document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             }
@@ -2669,13 +2616,17 @@
                 const photoPreview = document.getElementById("editDoctorPhotoPreview");
                 const defaultIcon = document.getElementById("editDoctorDefaultIcon");
                 if (file) {
-                  const reader = new FileReader();
-                  reader.onload = function (e) {
-                    photoPreview.src = e.target.result;
-                    photoPreview.style.display = "block";
-                    defaultIcon.style.display = "none";
-                  };
-                  reader.readAsDataURL(file);
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        photoPreview.src = e.target.result;
+                        photoPreview.style.display = "block";
+                        defaultIcon.style.display = "none";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    photoPreview.src = "";
+                    photoPreview.style.display = "none";
+                    defaultIcon.style.display = "flex";
                 }
             });
         </script>
@@ -2776,9 +2727,7 @@
             }
             document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
-            // document.getElementById("viewDoctorProfileModalOverlay").onclick = function (e) {
-            //     if (e.target === this) closeViewDoctorProfileModal();
-            // };
+
             function closeViewDoctorProfileModal() {
                 document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
@@ -3000,13 +2949,13 @@
                 }
             });
         </script>
-        <!-- Add modal and hidden file input at the end of body -->
+       
         <input type="file" id="doctorPhotoInput" style="display:none" accept="image/*" />
         <div id="doctorPhotoModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
           <img id="doctorPhotoModalImg" src="" style="max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 2px 16px #0008;" />
         </div>
         <script>
-        // ... existing code ...
+        
         document.getElementById("doctorsList").addEventListener("click", function (e) {
           if (e.target.closest(".doctor-photo-placeholder")) {
             const photoDiv = e.target.closest(".doctor-photo-placeholder");
@@ -3016,7 +2965,7 @@
             const imgTag = photoDiv.querySelector("img");
             const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
             if (imageUrl.includes("default-profile.png")) {
-              // No photo: open file picker
+             
               const fileInput = document.getElementById("doctorPhotoInput");
               fileInput.value = "";
               fileInput.onchange = function(event) {
@@ -3031,7 +2980,7 @@
                   .then(res => res.json())
                   .then(data => {
                     if (data.image) {
-                      // Update the doctor image in the UI
+                     
                       allDoctors[parseInt(idx)].image = '/uploads/' + data.image;
                       renderDoctorsPage();
                     } else {
@@ -3043,7 +2992,7 @@
               };
               fileInput.click();
             } else {
-              // Photo exists: show in modal
+             
               const modal = document.getElementById('doctorPhotoModal');
               const modalImg = document.getElementById('doctorPhotoModalImg');
               modalImg.src = imageUrl;
@@ -3054,7 +3003,46 @@
             }
           }
         });
-        // ... existing code ...
+       
+        </script>
+        <script>
+       
+        const editDoctorPhone = document.getElementById('editDoctorPhone');
+        if (editDoctorPhone) {
+          editDoctorPhone.addEventListener('input', function () {
+           
+            let value = this.value.replace(/\D/g, '');
+           
+            if (value.length === 1 && !/[6-9]/.test(value[0])) {
+              value = '';
+            }
+            
+            if (value.length > 10) value = value.slice(0, 10);
+            this.value = value;
+          });
+          editDoctorPhone.addEventListener('paste', function (e) {
+            e.preventDefault();
+            const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+            let cleaned = text.replace(/\D/g, '').slice(0, 10);
+            if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = '';
+            this.value = cleaned;
+          });
+        }
+       
+        const editDoctorForm = document.getElementById('editDoctorForm');
+        if (editDoctorForm) {
+          editDoctorForm.addEventListener('submit', function (e) {
+            const phone = editDoctorPhone.value;
+            const phonePattern = /^[6-9][0-9]{9}$/;
+            if (!phonePattern.test(phone)) {
+              alert('Phone number must be 10 digits and start with 6, 7, 8, or 9.');
+              editDoctorPhone.focus();
+              e.preventDefault();
+              return false;
+            }
+          });
+        }
+        
         </script>
     </body>
 </html>
