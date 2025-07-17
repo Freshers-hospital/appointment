@@ -285,18 +285,32 @@
                 </div>
             </div>
 
+        
             <div class="px-20">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="bg-white p-6 rounded-xl shadow">
                     <div id="appointmentsTab" class="tab-content">
-                        <div class="flex items-center gap-2 mb-4" id="appointmentsFilterBar">
-                            <label for="appointmentStatusFilter" class="font-medium text-gray-700">Show:</label>
-                            <select id="appointmentStatusFilter" class="border rounded px-2 py-1">
-                                <option value="all">All Appointments</option>
-                                <option value="confirmed">Confirmed</option>
-                                <option value="rescheduled">Rescheduled</option>
-                                <option value="cancelled">Cancelled</option>
-                            </select>
+                        <div class="flex items-center space-x-4 mb-4" id="appointmentsFilterBar">
+                            <label for="appointmentStatusFilter" class="font-semibold text-gray-900 text-base"> Show: </label>
+
+                            <div class="relative">
+                                <select
+                                    id="appointmentStatusFilter"
+                                    class="block w-56 appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-10 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-gray-400"
+                                >
+                                    <option value="all">All Appointments</option>
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="rescheduled">Rescheduled</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+
+                                <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="flex justify-between items-center mb-4">
                             <div>
                                 <h3 class="text-xl font-semibold" id="appointmentsTitle">Today's Appointments</h3>
@@ -775,7 +789,16 @@
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
-                        <input type="tel" id="editDoctorPhone" name="phone" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" pattern="^[6-9][0-9]{9}$" maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
+                        <input
+                            type="tel"
+                            id="editDoctorPhone"
+                            name="phone"
+                            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500"
+                            pattern="^[6-9][0-9]{9}$"
+                            maxlength="10"
+                            title="Phone number must be 10 digits and start with 6, 7, 8, or 9."
+                            required
+                        />
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
@@ -1561,8 +1584,8 @@
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ date, start, end }),
-                     });
-                     console.log('currentDoctorId',currentDoctorId,date, start, end);
+                    });
+                    console.log("currentDoctorId", currentDoctorId, date, start, end);
                     if (!response.ok) throw new Error("Failed to save availability");
                     closeAvailabilityModal();
 
@@ -2392,7 +2415,7 @@
                 document.getElementById("editDoctorGender").value = doctor.gender || "";
                 document.getElementById("editDoctorPhone").value = doctor.phone || "";
                 document.getElementById("editDoctorAddress").value = doctor.address || "";
-             
+
                 const photoPreview = document.getElementById("editDoctorPhotoPreview");
                 const defaultIcon = document.getElementById("editDoctorDefaultIcon");
                 if (doctor.image) {
@@ -2949,100 +2972,95 @@
                 }
             });
         </script>
-       
-        <input type="file" id="doctorPhotoInput" style="display:none" accept="image/*" />
-        <div id="doctorPhotoModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
-          <img id="doctorPhotoModalImg" src="" style="max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 2px 16px #0008;" />
+
+        <input type="file" id="doctorPhotoInput" style="display: none" accept="image/*" />
+        <div
+            id="doctorPhotoModal"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999"
+        >
+            <img id="doctorPhotoModalImg" src="" style="max-width: 90vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 2px 16px #0008" />
         </div>
         <script>
-        
-        document.getElementById("doctorsList").addEventListener("click", function (e) {
-          if (e.target.closest(".doctor-photo-placeholder")) {
-            const photoDiv = e.target.closest(".doctor-photo-placeholder");
-            const doctorId = photoDiv.getAttribute("data-doctor-id");
-            const idx = photoDiv.getAttribute("data-doctor-index");
-            const doctor = allDoctors[parseInt(idx)];
-            const imgTag = photoDiv.querySelector("img");
-            const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
-            if (imageUrl.includes("default-profile.png")) {
-             
-              const fileInput = document.getElementById("doctorPhotoInput");
-              fileInput.value = "";
-              fileInput.onchange = function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                  const formData = new FormData();
-                  formData.append('photo', file);
-                  fetch(`/api/doctors/${doctorId}`, {
-                    method: 'PUT',
-                    body: formData
-                  })
-                  .then(res => res.json())
-                  .then(data => {
-                    if (data.image) {
-                     
-                      allDoctors[parseInt(idx)].image = '/uploads/' + data.image;
-                      renderDoctorsPage();
+            document.getElementById("doctorsList").addEventListener("click", function (e) {
+                if (e.target.closest(".doctor-photo-placeholder")) {
+                    const photoDiv = e.target.closest(".doctor-photo-placeholder");
+                    const doctorId = photoDiv.getAttribute("data-doctor-id");
+                    const idx = photoDiv.getAttribute("data-doctor-index");
+                    const doctor = allDoctors[parseInt(idx)];
+                    const imgTag = photoDiv.querySelector("img");
+                    const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
+                    if (imageUrl.includes("default-profile.png")) {
+                        const fileInput = document.getElementById("doctorPhotoInput");
+                        fileInput.value = "";
+                        fileInput.onchange = function (event) {
+                            const file = event.target.files[0];
+                            if (file) {
+                                const formData = new FormData();
+                                formData.append("photo", file);
+                                fetch(`/api/doctors/${doctorId}`, {
+                                    method: "PUT",
+                                    body: formData,
+                                })
+                                    .then((res) => res.json())
+                                    .then((data) => {
+                                        if (data.image) {
+                                            allDoctors[parseInt(idx)].image = "/uploads/" + data.image;
+                                            renderDoctorsPage();
+                                        } else {
+                                            alert("Upload failed");
+                                        }
+                                    })
+                                    .catch(() => alert("Upload error"));
+                            }
+                        };
+                        fileInput.click();
                     } else {
-                      alert('Upload failed');
+                        const modal = document.getElementById("doctorPhotoModal");
+                        const modalImg = document.getElementById("doctorPhotoModalImg");
+                        modalImg.src = imageUrl;
+                        modal.style.display = "flex";
+                        modal.onclick = function () {
+                            modal.style.display = "none";
+                        };
                     }
-                  })
-                  .catch(() => alert('Upload error'));
                 }
-              };
-              fileInput.click();
-            } else {
-             
-              const modal = document.getElementById('doctorPhotoModal');
-              const modalImg = document.getElementById('doctorPhotoModalImg');
-              modalImg.src = imageUrl;
-              modal.style.display = 'flex';
-              modal.onclick = function() {
-                modal.style.display = 'none';
-              };
-            }
-          }
-        });
-       
+            });
         </script>
         <script>
-       
-        const editDoctorPhone = document.getElementById('editDoctorPhone');
-        if (editDoctorPhone) {
-          editDoctorPhone.addEventListener('input', function () {
-           
-            let value = this.value.replace(/\D/g, '');
-           
-            if (value.length === 1 && !/[6-9]/.test(value[0])) {
-              value = '';
+            const editDoctorPhone = document.getElementById("editDoctorPhone");
+            if (editDoctorPhone) {
+                editDoctorPhone.addEventListener("input", function () {
+                    let value = this.value.replace(/\D/g, "");
+
+                    if (value.length === 1 && !/[6-9]/.test(value[0])) {
+                        value = "";
+                    }
+
+                    if (value.length > 10) value = value.slice(0, 10);
+                    this.value = value;
+                });
+                editDoctorPhone.addEventListener("paste", function (e) {
+                    e.preventDefault();
+                    const text = (e.originalEvent || e).clipboardData.getData("text/plain");
+                    let cleaned = text.replace(/\D/g, "").slice(0, 10);
+                    if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = "";
+                    this.value = cleaned;
+                });
             }
-            
-            if (value.length > 10) value = value.slice(0, 10);
-            this.value = value;
-          });
-          editDoctorPhone.addEventListener('paste', function (e) {
-            e.preventDefault();
-            const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-            let cleaned = text.replace(/\D/g, '').slice(0, 10);
-            if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = '';
-            this.value = cleaned;
-          });
-        }
-       
-        const editDoctorForm = document.getElementById('editDoctorForm');
-        if (editDoctorForm) {
-          editDoctorForm.addEventListener('submit', function (e) {
-            const phone = editDoctorPhone.value;
-            const phonePattern = /^[6-9][0-9]{9}$/;
-            if (!phonePattern.test(phone)) {
-              alert('Phone number must be 10 digits and start with 6, 7, 8, or 9.');
-              editDoctorPhone.focus();
-              e.preventDefault();
-              return false;
+
+            const editDoctorForm = document.getElementById("editDoctorForm");
+            if (editDoctorForm) {
+                editDoctorForm.addEventListener("submit", function (e) {
+                    const phone = editDoctorPhone.value;
+                    const phonePattern = /^[6-9][0-9]{9}$/;
+                    if (!phonePattern.test(phone)) {
+                        alert("Phone number must be 10 digits and start with 6, 7, 8, or 9.");
+                        editDoctorPhone.focus();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
             }
-          });
-        }
-        
         </script>
     </body>
 </html>
