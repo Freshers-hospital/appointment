@@ -258,6 +258,7 @@
         if (!localStorage.getItem("admin_jwt")) {
             window.location.href = "login.html";
         }
+
     </script>
 
     <nav class="bg-white shadow py-2 px-[110px]">
@@ -269,21 +270,25 @@
                 </svg>
                 <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
             </div>
-            <button id="signOutBtn" title="Sign Out"
-                class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 flex items-center justify-center transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 17l5-5m0 0l-5-5m5 5H9m4 5v1a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h4a2 2 0 012 2v1" />
-                </svg>
-            </button>
-        </div>
+            <div class="flex items-center">
+                <div id="showAdmin"></div>
+                    <button id="signOutBtn" title="Sign Out"
+                        class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 flex items-center justify-center transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 17l5-5m0 0l-5-5m5 5H9m4 5v1a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h4a2 2 0 012 2v1" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
     </nav>
 
     <div class="p-8">
         <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
             <div>
                 <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
+                <div id="addAdmin" class="text-lg text-blue-500"></div>
                 <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
             </div>
             <div class="flex items-center gap-4 px-20">
@@ -321,18 +326,32 @@
             </div>
         </div>
 
+
         <div class="px-20">
-            <div class="bg-white p-6 rounded-lg shadow">
+            <div class="bg-white p-6 rounded-xl shadow">
                 <div id="appointmentsTab" class="tab-content">
-                    <div class="flex items-center gap-2 mb-4" id="appointmentsFilterBar">
-                        <label for="appointmentStatusFilter" class="font-medium text-gray-700">Show:</label>
-                        <select id="appointmentStatusFilter" class="border rounded px-2 py-1">
-                            <option value="all">All Appointments</option>
-                            <option value="confirmed">Confirmed</option>
-                            <option value="rescheduled">Rescheduled</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
+                    <div class="flex items-center space-x-4 mb-4" id="appointmentsFilterBar">
+                        <label for="appointmentStatusFilter" class="font-semibold text-gray-900 text-base"> Show:
+                        </label>
+
+                        <div class="relative">
+                            <select id="appointmentStatusFilter"
+                                class="block w-56 appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-10 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-gray-400">
+                                <option value="all">All Appointments</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="rescheduled">Rescheduled</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+
+                            <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="text-xl font-semibold" id="appointmentsTitle">Today's Appointments</h3>
@@ -1627,7 +1646,7 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ date, start, end }),
                 });
-                console.log('currentDoctorId', currentDoctorId, date, start, end);
+                console.log("currentDoctorId", currentDoctorId, date, start, end);
                 if (!response.ok) throw new Error("Failed to save availability");
                 closeAvailabilityModal();
 
@@ -3013,14 +3032,13 @@
         });
     </script>
 
-    <input type="file" id="doctorPhotoInput" style="display:none" accept="image/*" />
+    <input type="file" id="doctorPhotoInput" style="display: none" accept="image/*" />
     <div id="doctorPhotoModal"
-        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999">
         <img id="doctorPhotoModalImg" src=""
-            style="max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 2px 16px #0008;" />
+            style="max-width: 90vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 2px 16px #0008" />
     </div>
     <script>
-
         document.getElementById("doctorsList").addEventListener("click", function (e) {
             if (e.target.closest(".doctor-photo-placeholder")) {
                 const photoDiv = e.target.closest(".doctor-photo-placeholder");
@@ -3030,85 +3048,94 @@
                 const imgTag = photoDiv.querySelector("img");
                 const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
                 if (imageUrl.includes("default-profile.png")) {
-
                     const fileInput = document.getElementById("doctorPhotoInput");
                     fileInput.value = "";
                     fileInput.onchange = function (event) {
                         const file = event.target.files[0];
                         if (file) {
                             const formData = new FormData();
-                            formData.append('photo', file);
+                            formData.append("photo", file);
                             fetch(`/api/doctors/${doctorId}`, {
-                                method: 'PUT',
-                                body: formData
+                                method: "PUT",
+                                body: formData,
                             })
-                                .then(res => res.json())
-                                .then(data => {
+                                .then((res) => res.json())
+                                .then((data) => {
                                     if (data.image) {
-
-                                        allDoctors[parseInt(idx)].image = '/uploads/' + data.image;
+                                        allDoctors[parseInt(idx)].image = "/uploads/" + data.image;
                                         renderDoctorsPage();
                                     } else {
-                                        alert('Upload failed');
+                                        alert("Upload failed");
                                     }
                                 })
-                                .catch(() => alert('Upload error'));
+                                .catch(() => alert("Upload error"));
                         }
                     };
                     fileInput.click();
                 } else {
-
-                    const modal = document.getElementById('doctorPhotoModal');
-                    const modalImg = document.getElementById('doctorPhotoModalImg');
+                    const modal = document.getElementById("doctorPhotoModal");
+                    const modalImg = document.getElementById("doctorPhotoModalImg");
                     modalImg.src = imageUrl;
-                    modal.style.display = 'flex';
+                    modal.style.display = "flex";
                     modal.onclick = function () {
-                        modal.style.display = 'none';
+                        modal.style.display = "none";
                     };
                 }
             }
         });
-
     </script>
     <script>
-
-        const editDoctorPhone = document.getElementById('editDoctorPhone');
+        const editDoctorPhone = document.getElementById("editDoctorPhone");
         if (editDoctorPhone) {
-            editDoctorPhone.addEventListener('input', function () {
-
-                let value = this.value.replace(/\D/g, '');
+            editDoctorPhone.addEventListener("input", function () {
+                let value = this.value.replace(/\D/g, "");
 
                 if (value.length === 1 && !/[6-9]/.test(value[0])) {
-                    value = '';
+                    value = "";
                 }
 
                 if (value.length > 10) value = value.slice(0, 10);
                 this.value = value;
             });
-            editDoctorPhone.addEventListener('paste', function (e) {
+            editDoctorPhone.addEventListener("paste", function (e) {
                 e.preventDefault();
-                const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-                let cleaned = text.replace(/\D/g, '').slice(0, 10);
-                if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = '';
+                const text = (e.originalEvent || e).clipboardData.getData("text/plain");
+                let cleaned = text.replace(/\D/g, "").slice(0, 10);
+                if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = "";
                 this.value = cleaned;
             });
         }
 
-        const editDoctorForm = document.getElementById('editDoctorForm');
+        const editDoctorForm = document.getElementById("editDoctorForm");
         if (editDoctorForm) {
-            editDoctorForm.addEventListener('submit', function (e) {
+            editDoctorForm.addEventListener("submit", function (e) {
                 const phone = editDoctorPhone.value;
                 const phonePattern = /^[6-9][0-9]{9}$/;
                 if (!phonePattern.test(phone)) {
-                    alert('Phone number must be 10 digits and start with 6, 7, 8, or 9.');
+                    alert("Phone number must be 10 digits and start with 6, 7, 8, or 9.");
                     editDoctorPhone.focus();
                     e.preventDefault();
                     return false;
                 }
             });
         }
-
+    </script>
+    <script>
+     
+            const role = localStorage.getItem("role");
+            if (role === "2") {
+                const addAdminBtn = document.createElement("button");
+                addAdminBtn.textContent = "Add Admin";
+                addAdminBtn.className = "mr-4 bg-black text-sm text-white px-2 py-1 rounded hover:bg-black-200";
+                addAdminBtn.onclick = function () {
+                    window.location.href = "adminregister.html";
+                };
+                document.getElementById("showAdmin").appendChild(addAdminBtn);
+            }
+      
     </script>
 </body>
+
+</html>
 
 </html>
