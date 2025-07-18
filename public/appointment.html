@@ -1174,21 +1174,37 @@
                     const dayDiv = document.createElement("div");
                     dayDiv.textContent = day;
 
-                    const thisDate = new Date(year, month, day);
-                    thisDate.setHours(0, 0, 0, 0);
-                    const dateString = formatDateString(thisDate);
-
-                    const isPast = thisDate < today;
-                    const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
-                    const isWithinBookingWindow = isAvailableMonth(thisDate);
-                    const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
-
-                    let isTodayAllSlotsPast = false;
-                    if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                        const slots = generateTimeSlots();
-
-                        isTodayAllSlotsPast = slots.every((slot) => isTimeSlotPast(slot));
+                const thisDate = new Date(year, month, day);
+                thisDate.setHours(0, 0, 0, 0);
+                const dateString = formatDateString(thisDate);
+                const isPast = thisDate < today;
+                const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
+                const isWithinBookingWindow = isAvailableMonth(thisDate);
+                const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
+                let isTodayAllSlotsPast = false;
+                if (selectedDoctor && thisDate.getTime() === today.getTime()) {
+                    // FIX: Use correct availability for today
+                    let availabilityToUse = selectedDoctor.availability;
+                    if (selectedDoctor.availabilityByDate) {
+                        let dateKey = formatDateString(today);
+                        if (selectedDoctor.availabilityByDate[dateKey]) {
+                            const dayAvail = selectedDoctor.availabilityByDate[dateKey];
+                            availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                        } else {
+                            // Try Y-M-D format if needed
+                            const parts = dateKey.split('/');
+                            if (parts.length === 3) {
+                                const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+                                if (selectedDoctor.availabilityByDate[ymd]) {
+                                    const dayAvail = selectedDoctor.availabilityByDate[ymd];
+                                    availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                                }
+                            }
+                        }
                     }
+                    const slots = generateTimeSlots(availabilityToUse);
+                    isTodayAllSlotsPast = slots.length > 0 && slots.every((slot) => isTimeSlotPast(slot));
+                }
 
                     let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
 
