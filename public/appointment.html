@@ -703,7 +703,7 @@
 
             function populateSpecialtyDropdown(doctors) {
                 const specialtySet = new Set();
-                doctors.forEach(doc => {
+                doctors.forEach((doc) => {
                     if (doc.specialty) specialtySet.add(doc.specialty);
                 });
                 const specialtyFilter = document.getElementById("specialtyFilter");
@@ -712,12 +712,14 @@
                 allOption.value = "";
                 allOption.textContent = "All Specialties";
                 specialtyFilter.appendChild(allOption);
-                Array.from(specialtySet).sort().forEach(specialty => {
-                    const option = document.createElement("option");
-                    option.value = specialty;
-                    option.textContent = specialty;
-                    specialtyFilter.appendChild(option);
-                });
+                Array.from(specialtySet)
+                    .sort()
+                    .forEach((specialty) => {
+                        const option = document.createElement("option");
+                        option.value = specialty;
+                        option.textContent = specialty;
+                        specialtyFilter.appendChild(option);
+                    });
             }
 
             window.addEventListener("DOMContentLoaded", async () => {
@@ -780,7 +782,9 @@
               <p class="text-gray-600">${doctor.specialty || ""}</p>
               <p class="text-sm text-gray-500">${infoLine}</p>
             </div>
-            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${doctor.availabilityByDate ? JSON.stringify(doctor.availabilityByDate).replace(/"/g, '&quot;') : ""}')" 
+            <button onclick="selectDoctor('${doctor.name}', '${doctor.specialty}', '${doctor.experience}', '${doctor.qualification}', '${doctor.availability}', '${
+                            doctor.availabilityByDate ? JSON.stringify(doctor.availabilityByDate).replace(/"/g, "&quot;") : ""
+                        }')" 
               class="${buttonClass} px-4 py-2 rounded transition-colors duration-200"
               data-doctor="${doctor.name}" ${disabledAttr}>
               Select
@@ -1185,37 +1189,37 @@
                     const dayDiv = document.createElement("div");
                     dayDiv.textContent = day;
 
-                const thisDate = new Date(year, month, day);
-                thisDate.setHours(0, 0, 0, 0);
-                const dateString = formatDateString(thisDate);
-                const isPast = thisDate < today;
-                const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
-                const isWithinBookingWindow = isAvailableMonth(thisDate);
-                const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
-                let isTodayAllSlotsPast = false;
-                if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                    // FIX: Use correct availability for today
-                    let availabilityToUse = selectedDoctor.availability;
-                    if (selectedDoctor.availabilityByDate) {
-                        let dateKey = formatDateString(today);
-                        if (selectedDoctor.availabilityByDate[dateKey]) {
-                            const dayAvail = selectedDoctor.availabilityByDate[dateKey];
-                            availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
-                        } else {
-                            // Try Y-M-D format if needed
-                            const parts = dateKey.split('/');
-                            if (parts.length === 3) {
-                                const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
-                                if (selectedDoctor.availabilityByDate[ymd]) {
-                                    const dayAvail = selectedDoctor.availabilityByDate[ymd];
-                                    availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                    const thisDate = new Date(year, month, day);
+                    thisDate.setHours(0, 0, 0, 0);
+                    const dateString = formatDateString(thisDate);
+                    const isPast = thisDate < today;
+                    const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
+                    const isWithinBookingWindow = isAvailableMonth(thisDate);
+                    const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
+                    let isTodayAllSlotsPast = false;
+                    if (selectedDoctor && thisDate.getTime() === today.getTime()) {
+                        // FIX: Use correct availability for today
+                        let availabilityToUse = selectedDoctor.availability;
+                        if (selectedDoctor.availabilityByDate) {
+                            let dateKey = formatDateString(today);
+                            if (selectedDoctor.availabilityByDate[dateKey]) {
+                                const dayAvail = selectedDoctor.availabilityByDate[dateKey];
+                                availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                            } else {
+                                // Try Y-M-D format if needed
+                                const parts = dateKey.split("/");
+                                if (parts.length === 3) {
+                                    const ymd = `${parts[2]}-${parts[0].padStart(2, "0")}-${parts[1].padStart(2, "0")}`;
+                                    if (selectedDoctor.availabilityByDate[ymd]) {
+                                        const dayAvail = selectedDoctor.availabilityByDate[ymd];
+                                        availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                                    }
                                 }
                             }
                         }
+                        const slots = generateTimeSlots(availabilityToUse);
+                        isTodayAllSlotsPast = slots.length > 0 && slots.every((slot) => isTimeSlotPast(slot));
                     }
-                    const slots = generateTimeSlots(availabilityToUse);
-                    isTodayAllSlotsPast = slots.length > 0 && slots.every((slot) => isTimeSlotPast(slot));
-                }
 
                     let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
 
@@ -1313,15 +1317,14 @@
                 let availabilityToUse = selectedDoctor.availability;
                 if (selectedDoctor.availabilityByDate) {
                     let dateKey = selectedDate;
-                  
+
                     if (selectedDoctor.availabilityByDate[dateKey]) {
                         const dayAvail = selectedDoctor.availabilityByDate[dateKey];
                         availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
                     } else {
-                      
-                        const parts = dateKey.split('/');
+                        const parts = dateKey.split("/");
                         if (parts.length === 3) {
-                            const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+                            const ymd = `${parts[2]}-${parts[0].padStart(2, "0")}-${parts[1].padStart(2, "0")}`;
                             if (selectedDoctor.availabilityByDate[ymd]) {
                                 const dayAvail = selectedDoctor.availabilityByDate[ymd];
                                 availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
@@ -2025,7 +2028,6 @@
                 return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm}`;
             }
 
-            
             function convertTo12Hour(hour, minute = 0) {
                 const period = hour >= 12 ? "PM" : "AM";
                 const adjustedHour = hour % 12 === 0 ? 12 : hour % 12;
