@@ -884,7 +884,9 @@
                 <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             </div>
         </div>
-
+        <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30">
+        <div class="text-center text-gray-500 font-semibold">medicare@2000</div>
+        </footer>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const datePicker = document.getElementById("datePicker");
@@ -2298,7 +2300,7 @@
   <div class="col-span-3 text-gray-600">${availabilities[idx]}</div>
   <div class="col-span-2 relative">
     <button class="action-btn text-xl">...</button>
-    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20\">
       <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
       <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
       <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
@@ -3060,6 +3062,54 @@
                     }
                 });
             }
+            function setActiveTab(tabName) {
+                localStorage.setItem('adminDashboardActiveTab', tabName);
+            }
+            function getActiveTab() {
+                return localStorage.getItem('adminDashboardActiveTab') || 'appointmentsTab';
+            }
+            
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    setActiveTab(this.getAttribute('data-tab'));
+                });
+            });
+           
+            document.addEventListener('DOMContentLoaded', function() {
+                const activeTab = getActiveTab();
+                document.querySelectorAll('.tab').forEach(tab => {
+                    if (tab.getAttribute('data-tab') === activeTab) {
+                        tab.classList.add('tab-active');
+                        tab.classList.remove('tab-inactive');
+                    } else {
+                        tab.classList.remove('tab-active');
+                        tab.classList.add('tab-inactive');
+                    }
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    if (content.id === activeTab) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+               
+                const date = datePicker.value;
+                const searchTerm = searchInput.value.trim();
+                const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+                if (activeTab === 'appointmentsTab') {
+                    renderAppointmentsList(date, searchTerm, status);
+                } else if (activeTab === 'patientsTab') {
+                    fetchAndDisplayPatients(date, searchTerm);
+                } else if (activeTab === 'doctorsTab') {
+                    fetchAndDisplayDoctors(date);
+                }
+            });
+        
         </script>
+       
+            
+            
     </body>
+    
 </html>
