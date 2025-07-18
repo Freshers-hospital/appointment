@@ -7,13 +7,13 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
 router.post('/registerAsSuperadmin', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
+    const { username, email, password, contact } = req.body;
+    if (!username || !email || !password || !contact) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 2 });
+    const admin = new Admin({ username, email, password, role: 2, contact });
     await admin.save();
     res.status(201).json({ message: 'SuperAdmin registered successfully' });
   } catch (err) {
@@ -22,13 +22,13 @@ router.post('/registerAsSuperadmin', async (req, res) => {
 });
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
+    const { username, email, password, contact } = req.body;
+    if (!username || !email || !password || !contact) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 1 });
+    const admin = new Admin({ username, email, password, role: 1, contact });
     await admin.save();
     res.status(201).json({ message: 'Admin registered successfully' });
   } catch (err) {

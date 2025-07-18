@@ -6,7 +6,7 @@ const adminSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: Number, required: true, default: 1, enum: [1, 2] },  //1-admin,2-superadmin
-  phone: { type: String },
+  contact: { type: String, required: true },
   status: { type: String, required: true, default: "active", },
 }, { timestamps: true });
 
