@@ -25,7 +25,7 @@
             d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       </div>
-      <h2 class="text-xl font-semibold mb-4">Admin Login</h2>
+      <h2 class="text-xl font-semibold mb-4">Super Admin / Admin Login</h2>
     </div>
     <form id="loginForm" autocomplete="off" novalidate>
       <input type="email" name="email" placeholder="Email"
@@ -36,9 +36,7 @@
         LOGIN
       </button>
     </form>
-    <!-- <p class="text-center text-sm mt-4 text-blue-600 hover:underline">
-      <a href="adminregister.html">Don't have an account? Register</a>
-    </p> -->
+   
   </div>
   <script>
     document.getElementById('loginForm').addEventListener('submit', async function (e) {
@@ -61,7 +59,7 @@
           localStorage.setItem('admin_jwt', result.token);
           localStorage.setItem('role', result.role);
           if (result.role === 2) {
-            window.location.href = 'adminregister.html';
+            window.location.href = 'superadmin.html';
           } else {
             window.location.href = 'admindasboard.html';
           }
