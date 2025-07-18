@@ -47,7 +47,8 @@
                 <div id="adminsTab" class="tab-content">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">Admins</h3>
-                        <a href="adminregister.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Admin</a>
+<a href="adminregister.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Admin</a>
+
                     </div>
 
                     <div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
@@ -82,30 +83,44 @@
                     </div>
                 </div>
 
-                <!-- Doctors Tab Content (unchanged) -->
-                <!-- ... -->
+                <!-- Doctors Tab Content -->
+                
             </div>
         </div>
 
-        
-     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h2 class="text-xl font-semibold mb-4">Edit Admin</h2>
-    <div class="grid grid-cols-1 gap-4">
-      <input type="text" placeholder="Name" class="w-full border px-4 py-2 rounded" />
-      <input type="email" placeholder="Email" class="w-full border px-4 py-2 rounded" />
-      <input type="text" placeholder="Contact" class="w-full border px-4 py-2 rounded" />
-      <select class="w-full border px-4 py-2 rounded">
+
+
+<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md">
+    
+    <div class="mb-6">
+      <h2 class="text-2xl font-semibold text-blue-700">Edit Admin</h2>
+    </div>
+
+    <div class="grid grid-cols-3 gap-x-4 gap-y-4 text-sm text-gray-800">
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editName">Name:</label>
+      <input id="editName" type="text" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter name" />
+
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editEmail">Email:</label>
+      <input id="editEmail" type="email" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter email" />
+
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editContact">Contact:</label>
+      <input id="editContact" type="text" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter contact number" />
+
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editStatus">Status:</label>
+      <select id="editStatus" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
         <option value="active">Active</option>
         <option value="inactive">Inactive</option>
       </select>
     </div>
-    <div class="flex justify-end gap-2 mt-4">
-      <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded">Save</button>
+
+    <div class="flex justify-end gap-3 mt-8">
+      <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium rounded-md">Cancel</button>
+      <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md">Save</button>
     </div>
   </div>
 </div>
+
 </div>
         <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -118,22 +133,31 @@
             </div>
         </div>
 
-
 <div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">Admin Details</h2>
-      <button onclick="closeModals()" class="text-gray-500 hover:text-black text-2xl leading-none">&times;</button>
+  <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md">
+    
+    <div class="mb-6">
+      <h2 class="text-2xl font-semibold text-blue-700">Admin Details</h2>
     </div>
-    <div class="mb-2"><strong>Name:</strong> Sandeep Kumar</div>
-    <div class="mb-2"><strong>Email:</strong> sandeep@example.com</div>
-    <div class="mb-2"><strong>Contact:</strong> +91 9876543210</div>
-    <div class="mb-4"><strong>Status:</strong> Active</div>
-    <div class="flex justify-end">
-      <button onclick="closeModals()" class="px-4 py-2 bg-blue-600 text-white rounded">Close</button>
+
+    <div class="grid grid-cols-3 gap-x-4 gap-y-3 text-base text-gray-900">
+      <div class="col-span-1 font-medium text-gray-600">Name:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded" data-field="name">-</div>
+
+      <div class="col-span-1 font-medium text-gray-600">Email:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded" data-field="email">-</div>
+
+      <div class="col-span-1 font-medium text-gray-600">Contact:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded" data-field="phone">-</div>
+
+      <div class="col-span-1 font-medium text-gray-600">Status:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded" data-field="status">-</div>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <button onclick="closeModals()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl">Close</button>
     </div>
   </div>
-</div>
 </div>
 
         <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
@@ -261,5 +285,30 @@ function closeModals() {
     window.location.href = "login.html";
   }
 </script>
+
+<script>
+  async function viewAdmin(id) {
+    try {
+      const res = await fetch(`/api/admin/getAdminById/${id}`);
+      const admin = await res.json();
+
+      
+      const viewModal = document.getElementById("viewModal");
+      viewModal.querySelector("[data-field='name']").textContent = admin.username || "-";
+      viewModal.querySelector("[data-field='email']").textContent = admin.email || "-";
+      viewModal.querySelector("[data-field='phone']").textContent = admin.phone || "-";
+      viewModal.querySelector("[data-field='status']").textContent = admin.status || "active";
+
+    
+      viewModal.classList.remove("hidden");
+    } catch (error) {
+      console.error("Failed to fetch admin details:", error);
+      alert("Failed to load admin details.");
+    }
+  }
+
+</script>
+
+
 </body>
 </html>
