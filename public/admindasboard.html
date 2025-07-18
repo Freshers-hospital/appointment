@@ -7,6 +7,98 @@
     <title>Admin Dashboard - MediCare</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - MediCare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <style>
+        .flatpickr-calendar {
+            border-radius: 16px !important;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
+            border: none !important;
+            width: 320px !important;
+            background: #fff !important;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .flatpickr-months {
+            background: #fff !important;
+            color: #222 !important;
+            border-radius: 16px 16px 0 0 !important;
+            padding: 12px 0 0 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        .flatpickr-current-month {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.3em !important;
+            font-weight: 700 !important;
+            color: #222 !important;
+            height: 40px !important;
+            margin-bottom: 0 !important;
+        }
+
+        .flatpickr-current-month .flatpickr-monthDropdown-months,
+        .flatpickr-current-month .numInputWrapper {
+            color: #222 !important;
+            font-weight: 700 !important;
+        }
+
+        .flatpickr-day {
+            color: #222 !important;
+            font-weight: 500 !important;
+            background: transparent !important;
+            border-radius: 50% !important;
+            border: none !important;
+            transition: background 0.2s, color 0.2s;
+            margin: 2px 0 !important;
+        }
+
+        .flatpickr-day.selected,
+        .flatpickr-day.today {
+            background: #1677ff !important;
+            color: #fff !important;
+            border-radius: 50% !important;
+        }
+
+        .flatpickr-day:hover,
+        .flatpickr-day:focus {
+            background: #e6f0ff !important;
+            color: #1677ff !important;
+        }
+
+        .flatpickr-weekdays {
+            background: #fff !important;
+            color: #bdbdbd !important;
+            font-weight: 600 !important;
+            border: none !important;
+        }
+
+        .flatpickr-weekday {
+            color: #bdbdbd !important;
+            font-weight: 600 !important;
+            border: none !important;
+        }
+
+        .flatpickr-day.disabled,
+        .flatpickr-day.nextMonthDay,
+        .flatpickr-day.prevMonthDay {
+            color: #e0e0e0 !important;
+            background: transparent !important;
+            cursor: not-allowed !important;
+        }
+
+        .flatpickr-months .flatpickr-prev-month,
+        .flatpickr-months .flatpickr-next-month {
+            color: #bdbdbd !important;
+            fill: #bdbdbd !important;
+            top: 16px !important;
+        }
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <style>
         .flatpickr-calendar {
@@ -183,6 +275,12 @@
             pointer-events: auto !important;
             user-select: auto !important;
         }
+        .blurred-bg .flatpickr-calendar {
+            filter: none !important;
+            backdrop-filter: none !important;
+            pointer-events: auto !important;
+            user-select: auto !important;
+        }
 
         .flatpickr-day.today:not(.selected) {
             background: #f3f4f6 !important;
@@ -190,7 +288,21 @@
             border-radius: 50% !important;
             border: none !important;
         }
+        .flatpickr-day.today:not(.selected) {
+            background: #f3f4f6 !important;
+            color: #222 !important;
+            border-radius: 50% !important;
+            border: none !important;
+        }
 
+        .flatpickr-current-month .numInputWrapper,
+        .flatpickr-current-month .flatpickr-year {
+            display: none !important;
+        }
+
+        .flatpickr-current-month {
+            justify-content: center !important;
+        }
         .flatpickr-current-month .numInputWrapper,
         .flatpickr-current-month .flatpickr-year {
             display: none !important;
@@ -230,6 +342,36 @@
             font-size: 1.125rem;
             border-radius: 0.75rem;
         }
+        #availabilityModal {
+            border-radius: 1.25rem !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+            padding: 2rem !important;
+            background: #fff !important;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        #availabilityModal h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        #availabilityModal input[type="text"] {
+            font-size: 1.125rem;
+            border-radius: 0.75rem;
+        }
+
+        #availabilityModal button[type="submit"] {
+            background: #2563eb;
+            color: #fff;
+            font-size: 1.125rem;
+            border-radius: 0.75rem;
+        }
+
+        #availabilityModal button[type="button"] {
+            font-size: 1.125rem;
+            border-radius: 0.75rem;
+        }
 
         .action-menu {
             position: fixed !important;
@@ -237,7 +379,21 @@
             right: auto;
             margin-top: 0;
         }
+        .action-menu {
+            position: fixed !important;
+            z-index: 9999 !important;
+            right: auto;
+            margin-top: 0;
+        }
 
+        .bg-white.p-6.rounded-lg.shadow,
+        .px-20 {
+            overflow: visible !important;
+        }
+
+        .overflow-x-auto {
+            overflow-y: visible !important;
+        }
         .bg-white.p-6.rounded-lg.shadow,
         .px-20 {
             overflow: visible !important;
@@ -298,7 +454,36 @@
                     <input type="text" id="searchInput" placeholder="Search"
                         class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
                 </div>
+    <div class="p-8">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
+                <div id="addAdmin" class="text-lg text-blue-500"></div>
+                <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
+            </div>
+            <div class="flex items-center gap-4 px-20">
+                <div class="relative w-60">
+                    <img src="/search.webp" alt="Search"
+                        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
+                    <input type="text" id="searchInput" placeholder="Search"
+                        class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
+                </div>
 
+                <div class="relative w-60 mt-5">
+                    <div id="datePickerDisplay"
+                        class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+                            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+                        </svg>
+                        <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
+                    </div>
+                    <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
+                        autocomplete="off" />
+                </div>
+            </div>
+        </div>
                 <div class="relative w-60 mt-5">
                     <div id="datePickerDisplay"
                         class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
@@ -325,6 +510,16 @@
                     data-tab="patientsTab">Patients</button>
             </div>
         </div>
+        <div class="px-20 mt-4">
+            <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
+                <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active"
+                    data-tab="appointmentsTab">Appointments</button>
+                <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive"
+                    data-tab="doctorsTab">Doctors</button>
+                <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive"
+                    data-tab="patientsTab">Patients</button>
+            </div>
+        </div>
 
 
         <div class="px-20">
@@ -334,6 +529,21 @@
                         <label for="appointmentStatusFilter" class="font-semibold text-gray-900 text-base"> Show:
                         </label>
 
+        <div class="px-20">
+            <div class="bg-white p-6 rounded-xl shadow">
+                <div id="appointmentsTab" class="tab-content">
+                    <div class="flex items-center space-x-4 mb-4" id="appointmentsFilterBar">
+                        <label for="appointmentStatusFilter" class="font-semibold text-gray-900 text-base"> Show:
+                        </label>
+
+                        <div class="relative">
+                            <select id="appointmentStatusFilter"
+                                class="block w-56 appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-10 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-gray-400">
+                                <option value="all">All Appointments</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="rescheduled">Rescheduled</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
                         <div class="relative">
                             <select id="appointmentStatusFilter"
                                 class="block w-56 appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-10 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-gray-400">
@@ -351,7 +561,26 @@
                             </div>
                         </div>
                     </div>
+                            <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold" id="appointmentsTitle">Today's Appointments</h3>
+                            <p class="text-gray-500" id="selectedDate">No date selected</p>
+                        </div>
+                        <a href="appointment.html"><button id="addBtn"
+                                class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
+                                Appointment</button></a>
+                    </div>
+                    <div id="appointmentsList"></div>
+                </div>
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="text-xl font-semibold" id="appointmentsTitle">Today's Appointments</h3>
@@ -373,7 +602,20 @@
                         <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
                             Doctor</button>
                     </div>
+                <div id="doctorsTab" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold">Doctors</h3>
+                            <p class="text-gray-500">Manage doctor profiles and schedules</p>
+                        </div>
+                        <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
+                            Doctor</button>
+                    </div>
 
+                    <div
+                        class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+                        <div class="col-span-3">Doctor</div>
+                        <div class="col-span-2">Specialization</div>
                     <div
                         class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                         <div class="col-span-3">Doctor</div>
@@ -383,7 +625,12 @@
                         <div class="col-span-3">Availability</div>
                         <div class="col-span-2">Actions</div>
                     </div>
+                        <div class="col-span-2">Today's Appointments</div>
+                        <div class="col-span-3">Availability</div>
+                        <div class="col-span-2">Actions</div>
+                    </div>
 
+                    <div id="doctorsList" class="space-y-2 mt-2"></div>
                     <div id="doctorsList" class="space-y-2 mt-2"></div>
 
                     <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
@@ -394,7 +641,22 @@
                             class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
                     </div>
                 </div>
+                    <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
+                        <button id="prevDoctorsPage"
+                            class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                        <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+                        <button id="nextDoctorsPage"
+                            class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                    </div>
+                </div>
 
+                <div id="patientsTab" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold">Patients List</h3>
+                            <p class="text-gray-500">View and manage patient records</p>
+                        </div>
+                    </div>
                 <div id="patientsTab" class="tab-content hidden">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -413,7 +675,22 @@
                         <div class="col-span-2">Appointment Date</div>
                         <div class="col-span-2">Last Visit</div>
                     </div>
+                    <div id="patientsHeader"
+                        class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
+                        style="display: none">
+                        <div class="col-span-3">Patient</div>
+                        <div class="col-span-2">Age/Gender</div>
+                        <div class="col-span-1">Blood</div>
+                        <div class="col-span-2">Contact</div>
+                        <div class="col-span-2">Appointment Date</div>
+                        <div class="col-span-2">Last Visit</div>
+                    </div>
 
+                    <div id="patientsList" class="space-y-2 mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
                     <div id="patientsList" class="space-y-2 mt-2"></div>
                 </div>
             </div>
@@ -425,7 +702,18 @@
         <div id="appointmentDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
             <button id="closeAppointmentDetailsModal"
                 class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+    <div id="appointmentDetailsModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="appointmentDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeAppointmentDetailsModal"
+                class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
 
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Viewing Details</h2>
+                <div class="mt-4 text-lg font-semibold text-blue-600" id="modalAppointmentPatientName"></div>
+                <div class="mt-2 text-md font-medium text-gray-600" id="modalDoctorName"></div>
+                <div class="mt-2 text-sm text-gray-500" id="modalDateTime"></div>
+            </div>
             <div class="text-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Viewing Details</h2>
                 <div class="mt-4 text-lg font-semibold text-blue-600" id="modalAppointmentPatientName"></div>
@@ -453,7 +741,33 @@
                     </div>
                 </div>
             </div>
+            <div class="bg-gray-50 rounded-lg p-6">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500">Age:</span>
+                        <span id="modalAge" class="font-medium text-gray-900"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500">Gender:</span>
+                        <span id="modalGender" class="font-medium text-gray-900"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500">Blood Group:</span>
+                        <span id="modalBlood" class="font-medium text-gray-900"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500">Contact:</span>
+                        <span id="modalContact" class="font-medium text-gray-900"></span>
+                    </div>
+                </div>
+            </div>
 
+            <div class="flex justify-end mt-6">
+                <button id="closeAppointmentDetailsBtn"
+                    class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
+            </div>
+        </div>
+    </div>
             <div class="flex justify-end mt-6">
                 <button id="closeAppointmentDetailsBtn"
                     class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
@@ -487,13 +801,50 @@
             </form>
         </div>
     </div>
+    <div id="assignDoctorModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="assignDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeAssignDoctorModal"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-4">Assign Doctor</h2>
+            <div class="mb-4">
+                <p class="text-gray-600 mb-2">Patient: <span id="assignPatientName" class="font-semibold"></span></p>
+                <p class="text-gray-600 mb-4">Appointment: <span id="assignDateTime" class="font-semibold"></span></p>
+            </div>
+            <form id="assignDoctorForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Select Doctor</label>
+                    <select id="doctorSelect" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                        <option value="">Choose a doctor...</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 mt-6">
+                    <button type="button" id="cancelAssignDoctor"
+                        class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Assign
+                        Doctor</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div id="viewDetailsModalOverlay"
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div id="viewDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl relative">
             <button id="closeViewDetailsModal"
                 class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+    <div id="viewDetailsModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="viewDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl relative">
+            <button id="closeViewDetailsModal"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
 
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Appointment Details</h2>
+                <div class="mt-4 text-2xl font-semibold text-blue-600" id="viewDetailsPatient"></div>
+                <div class="mt-2 text-md font-medium text-gray-600" id="viewDetailsDoctor"></div>
+                <div class="mt-2 text-sm text-gray-500" id="viewDetailsDateTime"></div>
+            </div>
             <div class="text-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Appointment Details</h2>
                 <div class="mt-4 text-2xl font-semibold text-blue-600" id="viewDetailsPatient"></div>
@@ -516,7 +867,39 @@
                             </div>
                         </div>
                     </div>
+            <div class="bg-gray-50 rounded-lg p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="border rounded-lg p-4 bg-white">
+                        <h3 class="text-gray-800 font-semibold text-lg mb-3">Doctor Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Name:</span>
+                                <span id="viewDetailsDoctorName" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Specialty:</span>
+                                <span id="viewDetailsDoctorSpecialty" class="font-medium text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="border rounded-lg p-4 bg-white">
+                        <h3 class="text-gray-800 font-semibold text-lg mb-3">Appointment Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Date:</span>
+                                <span id="viewDetailsDate" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Time:</span>
+                                <span id="viewDetailsTime" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Status:</span>
+                                <span id="viewDetailsStatus" class="font-medium text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="border rounded-lg p-4 bg-white">
                         <h3 class="text-gray-800 font-semibold text-lg mb-3">Appointment Information</h3>
                         <div class="space-y-2">
@@ -552,7 +935,39 @@
                             </div>
                         </div>
                     </div>
+                    <div class="border rounded-lg p-4 bg-white">
+                        <h3 class="text-gray-800 font-semibold text-lg mb-3">Personal Details</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Name:</span>
+                                <span id="viewDetailsPatientName" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Age:</span>
+                                <span id="viewDetailsAge" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Gender:</span>
+                                <span id="viewDetailsGender" class="font-medium text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="border rounded-lg p-4 bg-white">
+                        <h3 class="text-gray-800 font-semibold text-lg mb-3">Contact Information</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Phone:</span>
+                                <span id="viewDetailsContact" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-gray-500">Blood Group:</span>
+                                <span id="viewDetailsBlood" class="font-medium text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                     <div class="border rounded-lg p-4 bg-white">
                         <h3 class="text-gray-800 font-semibold text-lg mb-3">Contact Information</h3>
                         <div class="space-y-2">
@@ -575,7 +990,43 @@
             </div>
         </div>
     </div>
+            <div class="flex justify-end mt-6">
+                <button id="okViewDetailsModal"
+                    class="px-6 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
+            </div>
+        </div>
+    </div>
 
+    <div id="rescheduleModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="rescheduleModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeRescheduleModal"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-xl font-bold mb-2">Reschedule Appointment</h2>
+            <div class="mb-4 text-gray-600" id="reschedulePatientName"></div>
+            <form id="rescheduleForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-1">New Date</label>
+                    <div id="rescheduleCalendarContainer"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-1">New Time</label>
+                    <div id="rescheduleTimeSlotsContainer"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-1">Reason for Rescheduling</label>
+                    <textarea id="rescheduleReason" class="w-full border border-gray-300 rounded px-3 py-2"
+                        placeholder="Optional reason for rescheduling"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 mt-6">
+                    <button type="button" id="cancelRescheduleBtn"
+                        class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">Cancel</button>
+                    <button type="submit" id="confirmRescheduleBtn"
+                        class="px-4 py-2 rounded bg-blue-600 text-white font-semibold">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div id="rescheduleModalOverlay"
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div id="rescheduleModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
@@ -622,7 +1073,45 @@
             </div>
         </div>
     </div>
+    <div id="cancelModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="cancelModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeCancelModal"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-xl font-bold mb-4 text-red-600">Cancel Appointment</h2>
+            <div class="mb-6 text-gray-700">Are you sure you want to cancel this appointment?</div>
+            <div class="flex justify-end gap-2">
+                <button id="cancelCancelBtn"
+                    class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">No</button>
+                <button id="confirmCancelBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold">Yes,
+                    Cancel</button>
+            </div>
+        </div>
+    </div>
 
+    <div id="addDoctorModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closeAddDoctorModal"
+                class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
+            <form id="addDoctorForm">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="doctorFirstName" class="block text-gray-700 text-sm font-semibold mb-2">First
+                            Name</label>
+                        <input type="text" id="doctorFirstName" name="firstName"
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required />
+                    </div>
+                    <div>
+                        <label for="doctorLastName" class="block text-gray-700 text-sm font-semibold mb-2">Last
+                            Name</label>
+                        <input type="text" id="doctorLastName" name="lastName"
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required />
+                    </div>
+                </div>
     <div id="addDoctorModalOverlay"
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
@@ -661,6 +1150,20 @@
                         <input type="text" id="doctorExperience" name="experience"
                             class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
                     </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="doctorSpecialty"
+                            class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
+                        <input type="text" id="doctorSpecialty" name="specialty"
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required />
+                    </div>
+                    <div class="mb-4">
+                        <label for="doctorExperience"
+                            class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
+                        <input type="text" id="doctorExperience" name="experience"
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
 
                     <div class="mb-4 col-span-2">
                         <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
@@ -668,7 +1171,21 @@
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             placeholder="e.g., Mbbs,Phd..." required />
                     </div>
+                    <div class="mb-4 col-span-2">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+                        <input type="text" name="qualification"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            placeholder="e.g., Mbbs,Phd..." required />
+                    </div>
 
+                    <div class="mb-4 col-span-2">
+                        <label for="doctorAvailability"
+                            class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
+                        <input type="text" id="doctorAvailability" name="availability"
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            placeholder="e.g., 9:00 AM - 5:00 PM" required />
+                    </div>
+                </div>
                     <div class="mb-4 col-span-2">
                         <label for="doctorAvailability"
                             class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
@@ -686,7 +1203,24 @@
             </form>
         </div>
     </div>
+                <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
+                <div class="flex justify-end mt-4">
+                    <button type="submit"
+                        class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <p id="alertMessage" class="text-center text-lg"></p>
+            <div class="mt-4 flex justify-center">
+                <button onclick="hideAlert()"
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">OK</button>
+            </div>
+        </div>
+    </div>
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
             <p id="alertMessage" class="text-center text-lg"></p>
@@ -712,10 +1246,36 @@
                 <div id="modalPatientBlood" class="text-gray-900"></div>
                 <div class="font-semibold text-gray-600">Contact</div>
                 <div id="modalPatientContact" class="text-gray-900"></div>
+    <div id="patientDetailsModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <button id="closePatientDetailsModal"
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="font-semibold text-gray-600">Name</div>
+                <div id="modalPatientName" class="text-gray-900"></div>
+                <div class="font-semibold text-gray-600">Age/Gender</div>
+                <div id="modalPatientAgeGender" class="text-gray-900"></div>
+                <div class="font-semibold text-gray-600">Blood</div>
+                <div id="modalPatientBlood" class="text-gray-900"></div>
+                <div class="font-semibold text-gray-600">Contact</div>
+                <div id="modalPatientContact" class="text-gray-900"></div>
 
                 <div class="font-semibold text-gray-600">Appointment Date</div>
                 <div id="modalPatientUpcoming" class="text-gray-900"></div>
+                <div class="font-semibold text-gray-600">Appointment Date</div>
+                <div id="modalPatientUpcoming" class="text-gray-900"></div>
 
+                <div class="font-semibold text-gray-600">Last Visit</div>
+                <div id="modalPatientLastVisit" class="text-gray-900"></div>
+            </div>
+            <div class="flex justify-end mt-6">
+                <button id="closePatientDetailsBtn"
+                    class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors duration-200">Close</button>
+            </div>
+        </div>
+    </div>
                 <div class="font-semibold text-gray-600">Last Visit</div>
                 <div id="modalPatientLastVisit" class="text-gray-900"></div>
             </div>
@@ -730,7 +1290,49 @@
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
             <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
+    <div id="viewDoctorProfileModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
 
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Name</p>
+                    <p id="profileDoctorName" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Specialization</p>
+                    <p id="profileDoctorSpecialty" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Experience</p>
+                    <p id="profileDoctorExperience" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Availability</p>
+                    <p id="profileDoctorAvailability" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Age</p>
+                    <p id="profileDoctorAge" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Gender</p>
+                    <p id="profileDoctorGender" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Phone Number</p>
+                    <p id="profileDoctorPhone" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Address</p>
+                    <p id="profileDoctorAddress" class="text-gray-800 font-semibold text-base truncate"></p>
+                </div>
+                <div class="sm:col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Qualification</p>
+                    <p id="profileDoctorQualification" class="text-gray-800 font-semibold text-base break-words"></p>
+                </div>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Name</p>
@@ -776,6 +1378,12 @@
             </div>
         </div>
     </div>
+            <div class="flex justify-center mt-6">
+                <button id="closeViewDoctorProfileBtn"
+                    class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Close</button>
+            </div>
+        </div>
+    </div>
 
     <div id="editDoctorProfileModalOverlay"
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -783,7 +1391,21 @@
             <button id="closeEditDoctorProfileModal"
                 class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             <h2 class="text-xl font-bold text-center mb-4 text-gray-800">Edit Doctor Profile</h2>
+    <div id="editDoctorProfileModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg max-h-screen overflow-y-auto relative">
+            <button id="closeEditDoctorProfileModal"
+                class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+            <h2 class="text-xl font-bold text-center mb-4 text-gray-800">Edit Doctor Profile</h2>
 
+            <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="sm:col-span-2 flex flex-col items-center mb-2">
+                    <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
+                    <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem">
+                        <img id="editDoctorPhotoPreview" src="" alt=""
+                            class="w-24 h-24 rounded-full object-cover border shadow"
+                            style="display: none; position: absolute; top: 0; left: 0" />
+                        <div id="editDoctorDefaultIcon" style="
             <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="sm:col-span-2 flex flex-col items-center mb-2">
                     <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
@@ -817,7 +1439,27 @@
                         Choose Photo
                     </button>
                 </div>
+                                ">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none" />
+                                <path stroke="currentColor" stroke-width="2" d="M4 20c0-4 4-7 8-7s8 3 8 7"
+                                    fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                    <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+                    <button type="button" onclick="document.getElementById('editDoctorPhoto').click()"
+                        class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
+                        Choose Photo
+                    </button>
+                </div>
 
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Name</label>
+                    <input type="text" id="editDoctorName" name="name"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+                </div>
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                     <label class="text-sm font-medium text-gray-600 mb-1 block">Name</label>
                     <input type="text" id="editDoctorName" name="name"
@@ -829,7 +1471,17 @@
                     <input type="text" id="editDoctorSpecialization" name="specialty"
                         class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
                 </div>
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+                    <input type="text" id="editDoctorSpecialization" name="specialty"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+                </div>
 
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
+                    <input type="text" id="editDoctorExperience" name="experience"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                </div>
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                     <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
                     <input type="text" id="editDoctorExperience" name="experience"
@@ -841,13 +1493,33 @@
                     <input type="text" id="editDoctorAvailability" name="availability"
                         class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                 </div>
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Availability</label>
+                    <input type="text" id="editDoctorAvailability" name="availability"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                </div>
 
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                     <label class="text-sm font-medium text-gray-600 mb-1 block">Age</label>
                     <input type="number" id="editDoctorAge" name="age"
                         class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" min="1" max="120" />
                 </div>
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Age</label>
+                    <input type="number" id="editDoctorAge" name="age"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" min="1" max="120" />
+                </div>
 
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Gender</label>
+                    <select id="editDoctorGender" name="gender"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                     <label class="text-sm font-medium text-gray-600 mb-1 block">Gender</label>
                     <select id="editDoctorGender" name="gender"
@@ -866,7 +1538,19 @@
                         pattern="^[6-9][0-9]{9}$" maxlength="10"
                         title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
                 </div>
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
+                    <input type="tel" id="editDoctorPhone" name="phone"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500"
+                        pattern="^[6-9][0-9]{9}$" maxlength="10"
+                        title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
+                </div>
 
+                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
+                    <input type="text" id="editDoctorQualification" name="qualification"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+                </div>
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                     <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
                     <input type="text" id="editDoctorQualification" name="qualification"
@@ -878,7 +1562,21 @@
                     <textarea id="editDoctorAddress" name="address"
                         class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
                 </div>
+                <div class="sm:col-span-2 bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label class="text-sm font-medium text-gray-600 mb-1 block">Address</label>
+                    <textarea id="editDoctorAddress" name="address"
+                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
+                </div>
 
+                <div class="sm:col-span-2 flex justify-between pt-3 gap-3">
+                    <button type="button" id="cancelEditDoctorBtn"
+                        class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
+                    <button type="submit"
+                        class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
                 <div class="sm:col-span-2 flex justify-between pt-3 gap-3">
                     <button type="button" id="cancelEditDoctorBtn"
                         class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
@@ -905,12 +1603,39 @@
                 class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
         </div>
     </div>
+    <div id="successModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
+            <div class="mb-4">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto">
+                    <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="3"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+            <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
+            <button id="successModalOkBtn"
+                class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
+        </div>
+    </div>
 
     <div id="availabilityModalOverlay"
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
             <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+    <div id="availabilityModalOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
 
+            <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
+                    <p class="text-gray-500 text-sm mb-1">Select Date</p>
+                    <input type="text" id="availabilityDate" name="date"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="MM/DD/YYYY" required readonly />
+                </div>
             <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
                     <p class="text-gray-500 text-sm mb-1">Select Date</p>
@@ -925,7 +1650,19 @@
                         class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="10:00 AM" required />
                 </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">Start Time</p>
+                    <input type="text" id="availabilityStart" name="start"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="10:00 AM" required />
+                </div>
 
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-gray-500 text-sm mb-1">End Time</p>
+                    <input type="text" id="availabilityEnd" name="end"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="05:00 PM" required />
+                </div>
                 <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">End Time</p>
                     <input type="text" id="availabilityEnd" name="end"
@@ -940,7 +1677,18 @@
                         class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Save</button>
                 </div>
             </form>
+                <div class="col-span-2 flex justify-center gap-4 mt-4">
+                    <button type="button" id="cancelAvailability"
+                        class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Save</button>
+                </div>
+            </form>
 
+            <button id="closeAvailabilityModal"
+                class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+        </div>
+    </div>
             <button id="closeAvailabilityModal"
                 class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
         </div>
@@ -976,7 +1724,17 @@
             dateFormat: "Y-m-d",
             allowInput: false,
             defaultDate: new Date(),
+        flatpickr("#datePicker", {
+            dateFormat: "Y-m-d",
+            allowInput: false,
+            defaultDate: new Date(),
 
+            static: true,
+            onReady: function (selectedDates, dateStr, instance) {
+                const monthElem = instance.calendarContainer.querySelector(".flatpickr-current-month");
+                if (monthElem) {
+                    const yearInput = monthElem.querySelector(".numInputWrapper");
+                    if (yearInput) yearInput.style.display = "none";
             static: true,
             onReady: function (selectedDates, dateStr, instance) {
                 const monthElem = instance.calendarContainer.querySelector(".flatpickr-current-month");
@@ -986,10 +1744,15 @@
 
                     const yearDropdown = monthElem.querySelector(".flatpickr-yearDropdown-years");
                     if (yearDropdown) yearDropdown.style.display = "none";
+                    const yearDropdown = monthElem.querySelector(".flatpickr-yearDropdown-years");
+                    if (yearDropdown) yearDropdown.style.display = "none";
 
                     const yearSpan = monthElem.querySelector(".flatpickr-year");
                     if (yearSpan) yearSpan.style.display = "none";
+                    const yearSpan = monthElem.querySelector(".flatpickr-year");
+                    if (yearSpan) yearSpan.style.display = "none";
 
+                    monthElem.style.justifyContent = "center";
                     monthElem.style.justifyContent = "center";
 
                     const monthName = monthElem.querySelector(".cur-month");
@@ -1012,7 +1775,14 @@
                 if (activeTab === "doctorsTab") {
                     fetchAndDisplayDoctors(dateStr);
                 }
+                const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
+                if (activeTab === "doctorsTab") {
+                    fetchAndDisplayDoctors(dateStr);
+                }
 
+                if (activeTab === "appointmentsTab") {
+                    renderAppointmentsList(dateStr, searchInput.value.trim());
+                }
                 if (activeTab === "appointmentsTab") {
                     renderAppointmentsList(dateStr, searchInput.value.trim());
                 }
@@ -1038,7 +1808,18 @@
         document.getElementById("datePicker").value = today.toISOString().split("T")[0];
         document.getElementById("selectedDate").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
         document.getElementById("datePickerText").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+        const today = new Date();
+        document.getElementById("datePicker").value = today.toISOString().split("T")[0];
+        document.getElementById("selectedDate").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+        document.getElementById("datePickerText").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
+        async function fetchAppointments(date, searchDoctorName = "", status = "all", specialty = "") {
+            try {
+                const formattedDate = new Date(date).toLocaleDateString("en-US", {
+                    month: "numeric",
+                    day: "numeric",
+                    year: "numeric",
+                });
         async function fetchAppointments(date, searchDoctorName = "", status = "all", specialty = "") {
             try {
                 const formattedDate = new Date(date).toLocaleDateString("en-US", {
@@ -1056,7 +1837,19 @@
                     throw new Error(`Failed to fetch appointments: ${response.status}`);
                 }
                 const data = await response.json();
+                let url = "/api/confirmations";
+                if (status && status !== "all") {
+                    url += `?status=${encodeURIComponent(status)}`;
+                }
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch appointments: ${response.status}`);
+                }
+                const data = await response.json();
 
+                if (data.length > 0) {
+                    console.log("First appointment details:", JSON.stringify(data[0], null, 2));
+                }
                 if (data.length > 0) {
                     console.log("First appointment details:", JSON.stringify(data[0], null, 2));
                 }
@@ -1066,17 +1859,31 @@
                         console.log("Appointment missing date data:", app);
                         return false;
                     }
+                const filteredAppointments = data.filter((app) => {
+                    if (!app.dateData?.date) {
+                        console.log("Appointment missing date data:", app);
+                        return false;
+                    }
 
                     const appointmentDate = app.dateData.date.trim();
                     const matchesDate = appointmentDate === formattedDate;
+                    const appointmentDate = app.dateData.date.trim();
+                    const matchesDate = appointmentDate === formattedDate;
 
+                    const appointmentDoctorName = app.doctorData?.name || app.doctorName || "";
+                    const matchesDoctor = !searchDoctorName || (appointmentDoctorName && appointmentDoctorName.toLowerCase().includes(searchDoctorName.toLowerCase()));
                     const appointmentDoctorName = app.doctorData?.name || app.doctorName || "";
                     const matchesDoctor = !searchDoctorName || (appointmentDoctorName && appointmentDoctorName.toLowerCase().includes(searchDoctorName.toLowerCase()));
 
                     if (searchDoctorName && appointmentDoctorName) {
                         console.log(`Checking doctor: "${appointmentDoctorName}" against search: "${searchDoctorName}" - matches: ${matchesDoctor}`);
                     }
+                    if (searchDoctorName && appointmentDoctorName) {
+                        console.log(`Checking doctor: "${appointmentDoctorName}" against search: "${searchDoctorName}" - matches: ${matchesDoctor}`);
+                    }
 
+                    return matchesDate && matchesDoctor;
+                });
                     return matchesDate && matchesDoctor;
                 });
 
@@ -1107,7 +1914,12 @@
 
                 const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
                 let filteredAppointments = appointments;
+                const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
+                let filteredAppointments = appointments;
 
+                const uniqueStatuses = [...new Set(appointments.map((app) => app.status))];
+                console.log("All unique status values in appointments:", uniqueStatuses);
+                console.log("Status filter selected:", statusFilter);
                 const uniqueStatuses = [...new Set(appointments.map((app) => app.status))];
                 console.log("All unique status values in appointments:", uniqueStatuses);
                 console.log("Status filter selected:", statusFilter);
@@ -1115,7 +1927,16 @@
                 if (statusFilter !== "all") {
                     filteredAppointments = appointments.filter((app) => {
                         const appointmentStatus = app.status || "confirmed";
+                if (statusFilter !== "all") {
+                    filteredAppointments = appointments.filter((app) => {
+                        const appointmentStatus = app.status || "confirmed";
 
+                        let matches = false;
+                        if (statusFilter.toLowerCase() === "cancelled") {
+                            matches = appointmentStatus.toLowerCase() === "cancelled" || appointmentStatus.toLowerCase() === "canceled";
+                        } else {
+                            matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
+                        }
                         let matches = false;
                         if (statusFilter.toLowerCase() === "cancelled") {
                             matches = appointmentStatus.toLowerCase() === "cancelled" || appointmentStatus.toLowerCase() === "canceled";
@@ -1157,7 +1978,12 @@
         `;
                     return;
                 }
+                    return;
+                }
 
+                filteredAppointments = filteredAppointments.slice().sort((a, b) => {
+                    const parseTime = (t) => {
+                        if (!t) return 0;
                 filteredAppointments = filteredAppointments.slice().sort((a, b) => {
                     const parseTime = (t) => {
                         if (!t) return 0;
@@ -1175,6 +2001,7 @@
                 const endIndex = startIndex + appointmentsPerPage;
                 const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
+                let tableHTML = `
                 let tableHTML = `
         <div class=\"overflow-x-auto\">
           <table class=\"min-w-full bg-white rounded-lg shadow-sm\">
@@ -1195,7 +2022,19 @@
                         const doctorName = app.doctorData?.name || "";
                         const isCanceled = app.status === "canceled" || app.status === "cancelled";
                         const isRescheduled = app.status === "rescheduled";
+                tableHTML += currentPageAppointments
+                    .map((app, idx) => {
+                        const doctorName = app.doctorData?.name || "";
+                        const isCanceled = app.status === "canceled" || app.status === "cancelled";
+                        const isRescheduled = app.status === "rescheduled";
 
+                        let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">Confirmed</span>`;
+                        if (isRescheduled) {
+                            statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">Rescheduled</span>`;
+                        } else if (isCanceled) {
+                            statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700\">Cancelled</span>`;
+                        }
+                        return `
                         let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">Confirmed</span>`;
                         if (isRescheduled) {
                             statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">Rescheduled</span>`;
@@ -1234,9 +2073,14 @@
         `;
                     })
                     .join("");
+                    })
+                    .join("");
 
                 tableHTML += `</tbody></table></div>`;
+                tableHTML += `</tbody></table></div>`;
 
+                if (totalPages > 1) {
+                    tableHTML += `
                 if (totalPages > 1) {
                     tableHTML += `
           <div class=\"flex justify-between items-center mt-6 px-4\">
@@ -1261,7 +2105,12 @@
           </div>
         `;
                 }
+                }
 
+                appointmentsList.innerHTML = tableHTML;
+            } catch (error) {
+                console.error("Error in renderAppointmentsList:", error);
+                appointmentsList.innerHTML = `
                 appointmentsList.innerHTML = tableHTML;
             } catch (error) {
                 console.error("Error in renderAppointmentsList:", error);
@@ -1276,7 +2125,13 @@
       `;
             }
         }
+            }
+        }
 
+        function changeAppointmentsPage(newPage) {
+            const totalPages = Math.ceil(allAppointmentsData.length / appointmentsPerPage);
+            if (newPage < 1 || newPage > totalPages) return;
+            currentAppointmentsPage = newPage;
         function changeAppointmentsPage(newPage) {
             const totalPages = Math.ceil(allAppointmentsData.length / appointmentsPerPage);
             if (newPage < 1 || newPage > totalPages) return;
@@ -1299,6 +2154,7 @@
                 currentAppointmentsPage = 1;
                 currentPatientsPage = 1;
 
+                const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
                 const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
 
                 if (activeTab === "appointmentsTab") {
@@ -1334,10 +2190,26 @@
                 document.getElementById("rescheduleModalOverlay").classList.remove("hidden");
             }
         });
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("reschedule-btn")) {
+                e.preventDefault();
+                const appointment = JSON.parse(e.target.dataset.appointment);
+                window.selectedAppointment = appointment;
+                document.getElementById("rescheduleModalOverlay").classList.remove("hidden");
+            }
+        });
 
         const tabs = document.querySelectorAll(".tab");
         const tabContents = document.querySelectorAll(".tab-content");
+        const tabs = document.querySelectorAll(".tab");
+        const tabContents = document.querySelectorAll(".tab-content");
 
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                tabs.forEach((t) => t.classList.remove("tab-active", "tab-inactive"));
+                tabs.forEach((t) => t.classList.add("tab-inactive"));
+                tab.classList.remove("tab-inactive");
+                tab.classList.add("tab-active");
         tabs.forEach((tab) => {
             tab.addEventListener("click", () => {
                 tabs.forEach((t) => t.classList.remove("tab-active", "tab-inactive"));
@@ -1348,13 +2220,24 @@
                 const targetId = tab.getAttribute("data-tab");
                 tabContents.forEach((c) => c.classList.add("hidden"));
                 document.getElementById(targetId).classList.remove("hidden");
+                const targetId = tab.getAttribute("data-tab");
+                tabContents.forEach((c) => c.classList.add("hidden"));
+                document.getElementById(targetId).classList.remove("hidden");
 
                 if (targetId === "appointmentsTab") {
                     currentAppointmentsPage = 1;
                 } else if (targetId === "patientsTab") {
                     currentPatientsPage = 1;
                 }
+                if (targetId === "appointmentsTab") {
+                    currentAppointmentsPage = 1;
+                } else if (targetId === "patientsTab") {
+                    currentPatientsPage = 1;
+                }
 
+                const date = datePicker.value;
+                const searchTerm = searchInput.value.trim();
+                const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
                 const date = datePicker.value;
                 const searchTerm = searchInput.value.trim();
                 const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
@@ -1378,7 +2261,18 @@
                 const patientsListContainer = document.getElementById("patientsList");
                 const patientsHeader = document.getElementById("patientsHeader");
                 patientsListContainer.innerHTML = '<div class="text-center p-4">Loading patients...</div>';
+                const allAppointments = await response.json();
+                const patientsListContainer = document.getElementById("patientsList");
+                const patientsHeader = document.getElementById("patientsHeader");
+                patientsListContainer.innerHTML = '<div class="text-center p-4">Loading patients...</div>';
 
+                const formattedSelectedDate = date
+                    ? new Date(date).toLocaleDateString("en-US", {
+                        month: "numeric",
+                        day: "numeric",
+                        year: "numeric",
+                    })
+                    : null;
                 const formattedSelectedDate = date
                     ? new Date(date).toLocaleDateString("en-US", {
                         month: "numeric",
@@ -1406,28 +2300,66 @@
                         });
                     }
                 });
+                const patientsMap = new Map();
+                allAppointments.forEach((app) => {
+                    if (!app.patientData || !app.patientData.name) {
+                        return;
+                    }
+                    const patientKey = `${app.patientData.name}-${app.patientData.contact}`;
+                    if (!patientsMap.has(patientKey)) {
+                        patientsMap.set(patientKey, {
+                            details: app.patientData,
+                            appointments: [],
+                        });
+                    }
+                    if (app.dateData && app.dateData.date) {
+                        patientsMap.get(patientKey).appointments.push({
+                            date: app.dateData.date,
+                            status: app.status || "confirmed",
+                        });
+                    }
+                });
 
+                const finalPatientList = [];
+                for (const [patientKey, patientData] of patientsMap.entries()) {
+                    const patientName = patientData.details.name || "";
+                    const matchesSearch = !searchTerm || patientName.toLowerCase().includes(searchTerm.toLowerCase());
                 const finalPatientList = [];
                 for (const [patientKey, patientData] of patientsMap.entries()) {
                     const patientName = patientData.details.name || "";
                     const matchesSearch = !searchTerm || patientName.toLowerCase().includes(searchTerm.toLowerCase());
 
                     const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
+                    const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
 
+                    if (matchesSearch && hasAppointmentOnDate) {
+                        finalPatientList.push(patientData);
+                    }
+                }
                     if (matchesSearch && hasAppointmentOnDate) {
                         finalPatientList.push(patientData);
                     }
                 }
 
                 allPatientsData = finalPatientList;
+                allPatientsData = finalPatientList;
 
+                currentPatientsPage = 1;
                 currentPatientsPage = 1;
 
                 if (finalPatientList.length === 0) {
                     if (patientsHeader) {
                         patientsHeader.style.display = "none";
                     }
+                if (finalPatientList.length === 0) {
+                    if (patientsHeader) {
+                        patientsHeader.style.display = "none";
+                    }
 
+                    let message = "No patients found";
+                    if (searchTerm) message += ` for "${searchTerm}"`;
+                    if (formattedSelectedDate) message += ` with appointments on ${new Date(date).toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+                    patientsListContainer.innerHTML = `
                     let message = "No patients found";
                     if (searchTerm) message += ` for "${searchTerm}"`;
                     if (formattedSelectedDate) message += ` with appointments on ${new Date(date).toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
@@ -1444,7 +2376,12 @@
         `;
                     return;
                 }
+                    return;
+                }
 
+                if (patientsHeader) {
+                    patientsHeader.style.display = "grid";
+                }
                 if (patientsHeader) {
                     patientsHeader.style.display = "grid";
                 }
@@ -1452,7 +2389,15 @@
                 renderPatientsListWithPagination();
             } catch (error) {
                 console.error("Error fetching patient data:", error);
+                renderPatientsListWithPagination();
+            } catch (error) {
+                console.error("Error fetching patient data:", error);
 
+                const patientsHeader = document.getElementById("patientsHeader");
+                if (patientsHeader) {
+                    patientsHeader.style.display = "none";
+                }
+                document.getElementById("patientsList").innerHTML = `
                 const patientsHeader = document.getElementById("patientsHeader");
                 if (patientsHeader) {
                     patientsHeader.style.display = "none";
@@ -1468,7 +2413,12 @@
       `;
             }
         }
+            }
+        }
 
+        function renderPatientsListWithPagination() {
+            const patientsListContainer = document.getElementById("patientsList");
+            const patientsHeader = document.getElementById("patientsHeader");
         function renderPatientsListWithPagination() {
             const patientsListContainer = document.getElementById("patientsList");
             const patientsHeader = document.getElementById("patientsHeader");
@@ -1480,7 +2430,17 @@
                 patientsListContainer.innerHTML = '<div class="p-4 text-center text-gray-500">No patients found</div>';
                 return;
             }
+            if (patientsHeader) {
+                patientsHeader.style.display = "none";
+            }
+            if (!allPatientsData || allPatientsData.length === 0) {
+                patientsListContainer.innerHTML = '<div class="p-4 text-center text-gray-500">No patients found</div>';
+                return;
+            }
 
+            if (patientsHeader) {
+                patientsHeader.style.display = "grid";
+            }
             if (patientsHeader) {
                 patientsHeader.style.display = "grid";
             }
@@ -1489,17 +2449,32 @@
             const startIndex = (currentPatientsPage - 1) * patientsPerPage;
             const endIndex = startIndex + patientsPerPage;
             const currentPagePatients = allPatientsData.slice(startIndex, endIndex);
+            const totalPages = Math.ceil(allPatientsData.length / patientsPerPage);
+            const startIndex = (currentPatientsPage - 1) * patientsPerPage;
+            const endIndex = startIndex + patientsPerPage;
+            const currentPagePatients = allPatientsData.slice(startIndex, endIndex);
 
+            let patientsHTML = "";
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
             let patientsHTML = "";
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
             currentPagePatients.forEach((patient) => {
                 const sortedAppointments = patient.appointments.map((a) => new Date(a.date)).sort((a, b) => a - b);
+            currentPagePatients.forEach((patient) => {
+                const sortedAppointments = patient.appointments.map((a) => new Date(a.date)).sort((a, b) => a - b);
 
                 const futureAppointments = sortedAppointments.filter((d) => d >= today);
                 const pastAppointments = sortedAppointments.filter((d) => d < today);
+                const futureAppointments = sortedAppointments.filter((d) => d >= today);
+                const pastAppointments = sortedAppointments.filter((d) => d < today);
 
+                const upcomingDate =
+                    futureAppointments.length > 0
+                        ? futureAppointments[0].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+                        : '<span class="text-gray-400">N/A</span>';
                 const upcomingDate =
                     futureAppointments.length > 0
                         ? futureAppointments[0].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
@@ -1509,15 +2484,30 @@
                     pastAppointments.length > 0
                         ? pastAppointments[pastAppointments.length - 1].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
                         : '<span class="text-gray-400">N/A</span>';
+                const lastVisit =
+                    pastAppointments.length > 0
+                        ? pastAppointments[pastAppointments.length - 1].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+                        : '<span class="text-gray-400">N/A</span>';
 
                 const allCancelled =
                     patient.appointments.length > 0 && patient.appointments.every((a) => (a.status || "").toLowerCase() === "canceled" || (a.status || "").toLowerCase() === "cancelled");
+                const allCancelled =
+                    patient.appointments.length > 0 && patient.appointments.every((a) => (a.status || "").toLowerCase() === "canceled" || (a.status || "").toLowerCase() === "cancelled");
 
+                patientsHTML += `
                 patientsHTML += `
         <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
           <div class="col-span-3 flex items-center">
             <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0 cursor-pointer patient-placeholder" 
               data-patient='${JSON.stringify({
+                    name: patient.details.name || "N/A",
+                    age: patient.details.age || "N/A",
+                    gender: patient.details.gender || "N/A",
+                    blood: patient.details.blood || "N/A",
+                    contact: patient.details.contact || "N/A",
+                    upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
+                    lastVisit: lastVisit.replace(/<[^>]+>/g, ""),
+                })}'
                     name: patient.details.name || "N/A",
                     age: patient.details.age || "N/A",
                     gender: patient.details.gender || "N/A",
@@ -1544,7 +2534,10 @@
         </div>
       `;
             });
+            });
 
+            if (totalPages > 1) {
+                patientsHTML += `
             if (totalPages > 1) {
                 patientsHTML += `
         <div class="flex justify-between items-center mt-6 px-4">
@@ -1569,10 +2562,17 @@
         </div>
       `;
             }
+            }
 
             patientsListContainer.innerHTML = patientsHTML;
         }
+            patientsListContainer.innerHTML = patientsHTML;
+        }
 
+        function changePatientsPage(newPage) {
+            if (newPage < 1 || newPage > Math.ceil(allPatientsData.length / patientsPerPage)) {
+                return;
+            }
         function changePatientsPage(newPage) {
             if (newPage < 1 || newPage > Math.ceil(allPatientsData.length / patientsPerPage)) {
                 return;
@@ -1582,10 +2582,27 @@
             renderPatientsListWithPagination();
         }
         window.changePatientsPage = changePatientsPage;
+            currentPatientsPage = newPage;
+            renderPatientsListWithPagination();
+        }
+        window.changePatientsPage = changePatientsPage;
 
         let currentDoctor = null;
         let currentDoctorId = null;
+        let currentDoctor = null;
+        let currentDoctorId = null;
 
+        async function openAvailabilityModal(doctor) {
+            if (!doctor || !doctor._id) return;
+            currentDoctor = doctor;
+            currentDoctorId = doctor._id;
+            document.getElementById("availabilityModalOverlay").classList.remove("hidden");
+            document.body.classList.add("blurred-bg");
+            document.getElementById("availabilityForm").reset();
+            const today = new Date();
+            document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
+            fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
+        }
         async function openAvailabilityModal(doctor) {
             if (!doctor || !doctor._id) return;
             currentDoctor = doctor;
@@ -1605,10 +2622,43 @@
             currentDoctorId = null;
             document.getElementById("availabilityForm").reset();
         }
+        function closeAvailabilityModal() {
+            document.getElementById("availabilityModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+            currentDoctor = null;
+            currentDoctorId = null;
+            document.getElementById("availabilityForm").reset();
+        }
 
         document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
         document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
+        document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
+        document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
 
+        flatpickr("#availabilityDate", {
+            dateFormat: "Y-m-d",
+            allowInput: false,
+            static: true,
+            onChange: function (selectedDates, dateStr) {
+                fetchAndFillAvailabilityForDate(dateStr);
+            },
+        });
+        flatpickr("#availabilityStart", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            allowInput: false,
+            static: true,
+        });
+        flatpickr("#availabilityEnd", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            allowInput: false,
+            static: true,
+        });
         flatpickr("#availabilityDate", {
             dateFormat: "Y-m-d",
             allowInput: false,
@@ -1651,7 +2701,39 @@
                 document.getElementById("availabilityEnd").value = "";
             }
         }
+        async function fetchAndFillAvailabilityForDate(dateStr) {
+            if (!currentDoctorId) return;
+            try {
+                const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById("availabilityStart").value = data.start || "";
+                    document.getElementById("availabilityEnd").value = data.end || "";
+                } else {
+                    document.getElementById("availabilityStart").value = "";
+                    document.getElementById("availabilityEnd").value = "";
+                }
+            } catch (err) {
+                document.getElementById("availabilityStart").value = "";
+                document.getElementById("availabilityEnd").value = "";
+            }
+        }
 
+        document.getElementById("availabilityForm").onsubmit = async function (e) {
+            e.preventDefault();
+            const date = document.getElementById("availabilityDate").value;
+            const start = document.getElementById("availabilityStart").value;
+            const end = document.getElementById("availabilityEnd").value;
+            if (!currentDoctorId) return;
+            try {
+                const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ date, start, end }),
+                });
+                console.log("currentDoctorId", currentDoctorId, date, start, end);
+                if (!response.ok) throw new Error("Failed to save availability");
+                closeAvailabilityModal();
         document.getElementById("availabilityForm").onsubmit = async function (e) {
             e.preventDefault();
             const date = document.getElementById("availabilityDate").value;
@@ -1685,10 +2767,18 @@
             document.getElementById("viewDetailsPatient").textContent = app.patientData?.name || "N/A";
             document.getElementById("viewDetailsDoctor").textContent = doctorName;
             document.getElementById("viewDetailsDateTime").textContent = `${app.dateData?.date || "N/A"} at ${app.dateData?.time || "N/A"}`;
+            document.getElementById("viewDetailsPatient").textContent = app.patientData?.name || "N/A";
+            document.getElementById("viewDetailsDoctor").textContent = doctorName;
+            document.getElementById("viewDetailsDateTime").textContent = `${app.dateData?.date || "N/A"} at ${app.dateData?.time || "N/A"}`;
 
             document.getElementById("viewDetailsDoctorName").textContent = doctorName;
             document.getElementById("viewDetailsDoctorSpecialty").textContent = app.doctorData?.specialty || "N/A";
+            document.getElementById("viewDetailsDoctorName").textContent = doctorName;
+            document.getElementById("viewDetailsDoctorSpecialty").textContent = app.doctorData?.specialty || "N/A";
 
+            document.getElementById("viewDetailsDate").textContent = app.dateData?.date || "N/A";
+            document.getElementById("viewDetailsTime").textContent = app.dateData?.time || "N/A";
+            document.getElementById("viewDetailsStatus").textContent = app.status || "confirmed";
             document.getElementById("viewDetailsDate").textContent = app.dateData?.date || "N/A";
             document.getElementById("viewDetailsTime").textContent = app.dateData?.time || "N/A";
             document.getElementById("viewDetailsStatus").textContent = app.status || "confirmed";
@@ -1696,14 +2786,26 @@
             document.getElementById("viewDetailsPatientName").textContent = app.patientData?.name || "N/A";
             document.getElementById("viewDetailsAge").textContent = app.patientData?.age || "N/A";
             document.getElementById("viewDetailsGender").textContent = app.patientData?.gender || "N/A";
+            document.getElementById("viewDetailsPatientName").textContent = app.patientData?.name || "N/A";
+            document.getElementById("viewDetailsAge").textContent = app.patientData?.age || "N/A";
+            document.getElementById("viewDetailsGender").textContent = app.patientData?.gender || "N/A";
 
+            document.getElementById("viewDetailsContact").textContent = app.patientData?.contact || "N/A";
+            document.getElementById("viewDetailsBlood").textContent = app.patientData?.blood || "N/A";
             document.getElementById("viewDetailsContact").textContent = app.patientData?.contact || "N/A";
             document.getElementById("viewDetailsBlood").textContent = app.patientData?.blood || "N/A";
 
             document.getElementById("viewDetailsModalOverlay").classList.remove("hidden");
             document.body.classList.add("blurred-bg");
         }
+            document.getElementById("viewDetailsModalOverlay").classList.remove("hidden");
+            document.body.classList.add("blurred-bg");
+        }
 
+        document.getElementById("closeViewDetailsModal").onclick = function () {
+            document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+        };
         document.getElementById("closeViewDetailsModal").onclick = function () {
             document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
@@ -1713,7 +2815,12 @@
             document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
         };
+        document.getElementById("okViewDetailsModal").onclick = function () {
+            document.getElementById("viewDetailsModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+        };
 
+        let currentAppointmentForAssignment = null;
         let currentAppointmentForAssignment = null;
 
         async function loadDoctors() {
@@ -1721,7 +2828,18 @@
                 const response = await fetch("/api/doctors");
                 if (!response.ok) throw new Error("Failed to fetch doctors");
                 const doctors = await response.json();
+        async function loadDoctors() {
+            try {
+                const response = await fetch("/api/doctors");
+                if (!response.ok) throw new Error("Failed to fetch doctors");
+                const doctors = await response.json();
 
+                const select = document.getElementById("doctorSelect");
+                select.innerHTML =
+                    '<option value="">Choose a doctor...</option>' +
+                    doctors
+                        .map(
+                            (doctor) => `
                 const select = document.getElementById("doctorSelect");
                 select.innerHTML =
                     '<option value="">Choose a doctor...</option>' +
@@ -1749,7 +2867,16 @@
             document.getElementById("assignDoctorModalOverlay").classList.remove("hidden");
             document.body.classList.add("blurred-bg");
         }
+            loadDoctors();
+            document.getElementById("assignDoctorModalOverlay").classList.remove("hidden");
+            document.body.classList.add("blurred-bg");
+        }
 
+        function closeAssignDoctorModal() {
+            document.getElementById("assignDoctorModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+            currentAppointmentForAssignment = null;
+        }
         function closeAssignDoctorModal() {
             document.getElementById("assignDoctorModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
@@ -1758,11 +2885,21 @@
 
         document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
         document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
+        document.getElementById("closeAssignDoctorModal").onclick = closeAssignDoctorModal;
+        document.getElementById("cancelAssignDoctor").onclick = closeAssignDoctorModal;
 
         document.getElementById("assignDoctorForm").onsubmit = async function (e) {
             e.preventDefault();
             if (!currentAppointmentForAssignment) return;
+        document.getElementById("assignDoctorForm").onsubmit = async function (e) {
+            e.preventDefault();
+            if (!currentAppointmentForAssignment) return;
 
+            const doctorId = document.getElementById("doctorSelect").value;
+            if (!doctorId) {
+                alert("Please select a doctor");
+                return;
+            }
             const doctorId = document.getElementById("doctorSelect").value;
             if (!doctorId) {
                 alert("Please select a doctor");
@@ -1777,9 +2914,21 @@
                     },
                     body: JSON.stringify({ doctorId }),
                 });
+            try {
+                const response = await fetch(`/api/appointments/${currentAppointmentForAssignment._id}/assign-doctor`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ doctorId }),
+                });
 
                 if (!response.ok) throw new Error("Failed to assign doctor");
+                if (!response.ok) throw new Error("Failed to assign doctor");
 
+                const currentDate = datePicker.value;
+                const searchTerm = searchInput.value.trim();
+                await renderAppointmentsList(currentDate, searchTerm);
                 const currentDate = datePicker.value;
                 const searchTerm = searchInput.value.trim();
                 await renderAppointmentsList(currentDate, searchTerm);
@@ -1799,11 +2948,25 @@
             const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
             const currentDate = datePicker.value;
             const searchTerm = searchInput.value.trim();
+            const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
+            const currentDate = datePicker.value;
+            const searchTerm = searchInput.value.trim();
 
             if (activeTab === "doctorsTab") {
                 fetchAndDisplayDoctors(currentDate);
             }
+            if (activeTab === "doctorsTab") {
+                fetchAndDisplayDoctors(currentDate);
+            }
 
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("action-btn")) {
+                    e.stopPropagation();
+                    const menus = document.querySelectorAll(".action-menu");
+                    menus.forEach((menu) => menu.classList.add("hidden"));
+                    const menu = e.target.nextElementSibling;
+                    menu.classList.toggle("hidden");
+                }
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("action-btn")) {
                     e.stopPropagation();
@@ -1820,7 +2983,18 @@
                     openAppointmentDetailsModal(appointmentData);
                     e.target.closest(".action-menu").classList.add("hidden");
                 }
+                if (e.target.classList.contains("view-details-btn")) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const appointmentData = JSON.parse(e.target.getAttribute("data-appointment"));
+                    openAppointmentDetailsModal(appointmentData);
+                    e.target.closest(".action-menu").classList.add("hidden");
+                }
 
+                if (e.target.classList.contains("edit-appointment-btn")) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const appointmentData = JSON.parse(e.target.getAttribute("data-appointment"));
                 if (e.target.classList.contains("edit-appointment-btn")) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1830,7 +3004,14 @@
                         alert("Error: Appointment ID missing. Cannot edit this appointment.");
                         return;
                     }
+                    if (!appointmentData._id) {
+                        alert("Error: Appointment ID missing. Cannot edit this appointment.");
+                        return;
+                    }
 
+                    if (appointmentData.doctorData) delete appointmentData.doctorData._id;
+                    if (appointmentData.patientData) delete appointmentData.patientData._id;
+                    if (appointmentData.dateData) delete appointmentData.dateData._id;
                     if (appointmentData.doctorData) delete appointmentData.doctorData._id;
                     if (appointmentData.patientData) delete appointmentData.patientData._id;
                     if (appointmentData.dateData) delete appointmentData.dateData._id;
@@ -1855,7 +3036,19 @@
                     openCancelModal(appointmentData);
                     e.target.closest(".action-menu").classList.add("hidden");
                 }
+                if (e.target.classList.contains("cancel-btn")) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const appointmentData = JSON.parse(e.target.getAttribute("data-appointment"));
+                    openCancelModal(appointmentData);
+                    e.target.closest(".action-menu").classList.add("hidden");
+                }
 
+                if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
+                    document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+                }
+            });
+        });
                 if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
                     document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
                 }
@@ -1864,10 +3057,20 @@
 
         let rescheduleAppointmentData = null;
         let cancelAppointmentData = null;
+        let rescheduleAppointmentData = null;
+        let cancelAppointmentData = null;
 
         let rescheduleSelectedDate = null;
         let rescheduleSelectedTime = null;
+        let rescheduleSelectedDate = null;
+        let rescheduleSelectedTime = null;
 
+        function openRescheduleModal(app) {
+            rescheduleAppointmentData = app;
+            document.getElementById("reschedulePatientName").textContent = `Reschedule appointment for ${app.patientData?.name || ""}`;
+            document.getElementById("rescheduleReason").value = "";
+            document.getElementById("rescheduleModalOverlay").classList.remove("hidden");
+            document.body.classList.add("blurred-bg");
         function openRescheduleModal(app) {
             rescheduleAppointmentData = app;
             document.getElementById("reschedulePatientName").textContent = `Reschedule appointment for ${app.patientData?.name || ""}`;
@@ -1896,7 +3099,21 @@
             let currentYear = today.getFullYear();
             let selectedDate = null;
             let doctorName = app.doctorData?.name || app.doctorName || "";
+        async function renderRescheduleCalendar(app) {
+            const container = document.getElementById("rescheduleCalendarContainer");
+            container.innerHTML = "";
+            const today = new Date();
+            let currentMonth = today.getMonth();
+            let currentYear = today.getFullYear();
+            let selectedDate = null;
+            let doctorName = app.doctorData?.name || app.doctorName || "";
 
+            function renderCalendar(month, year) {
+                container.innerHTML = "";
+                const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
+                const header = document.createElement("div");
+                header.className = "flex justify-between items-center mb-2";
+                header.innerHTML = `
             function renderCalendar(month, year) {
                 container.innerHTML = "";
                 const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
@@ -1907,6 +3124,13 @@
         <span class="font-semibold">${monthName} ${year}</span>
         <button type="button" class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded" id="rescheduleNextMonth">&gt;</button>
       `;
+                container.appendChild(header);
+                const daysRow = document.createElement("div");
+                daysRow.className = "grid grid-cols-7 text-center text-xs text-gray-600 mb-1";
+                daysRow.innerHTML = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => `<div>${d}</div>`).join("");
+                container.appendChild(daysRow);
+                const daysGrid = document.createElement("div");
+                daysGrid.className = "grid grid-cols-7 gap-1";
                 container.appendChild(header);
                 const daysRow = document.createElement("div");
                 daysRow.className = "grid grid-cols-7 text-center text-xs text-gray-600 mb-1";
@@ -1973,6 +3197,11 @@
             const container = document.getElementById("rescheduleTimeSlotsContainer");
             container.innerHTML = '<div class="text-gray-500">Loading time slots...</div>';
 
+            let slots = [];
+            try {
+                const response = await fetch(`/api/confirmations/booked-slots?doctorName=${encodeURIComponent(doctorName)}&date=${encodeURIComponent(dateStr)}`);
+                const data = await response.json();
+                const bookedTimes = data.bookedTimes || [];
             let slots = [];
             try {
                 const response = await fetch(`/api/confirmations/booked-slots?doctorName=${encodeURIComponent(doctorName)}&date=${encodeURIComponent(dateStr)}`);
@@ -2046,7 +3275,16 @@
             cancelAppointmentData = app;
             document.getElementById("cancelModalOverlay").classList.remove("hidden");
             document.body.classList.add("blurred-bg");
+        function openCancelModal(app) {
+            cancelAppointmentData = app;
+            document.getElementById("cancelModalOverlay").classList.remove("hidden");
+            document.body.classList.add("blurred-bg");
 
+            const confirmButton = document.getElementById("confirmCancelBtn");
+            confirmButton.disabled = false;
+            confirmButton.textContent = "Yes, Cancel";
+            confirmButton.classList.remove("opacity-75");
+        }
             const confirmButton = document.getElementById("confirmCancelBtn");
             confirmButton.disabled = false;
             confirmButton.textContent = "Yes, Cancel";
@@ -2057,7 +3295,16 @@
             document.getElementById("cancelModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
             cancelAppointmentData = null;
+        function closeCancelModal() {
+            document.getElementById("cancelModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+            cancelAppointmentData = null;
 
+            const confirmButton = document.getElementById("confirmCancelBtn");
+            confirmButton.disabled = false;
+            confirmButton.textContent = "Yes, Cancel";
+            confirmButton.classList.remove("opacity-75");
+        }
             const confirmButton = document.getElementById("confirmCancelBtn");
             confirmButton.disabled = false;
             confirmButton.textContent = "Yes, Cancel";
@@ -2066,13 +3313,24 @@
 
         document.getElementById("closeCancelModal").onclick = closeCancelModal;
         document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
+        document.getElementById("closeCancelModal").onclick = closeCancelModal;
+        document.getElementById("cancelCancelBtn").onclick = closeCancelModal;
 
         document.getElementById("confirmCancelBtn").onclick = async function () {
             if (!cancelAppointmentData || !cancelAppointmentData._id) {
                 alert("Error: Missing appointment ID.");
                 return;
             }
+        document.getElementById("confirmCancelBtn").onclick = async function () {
+            if (!cancelAppointmentData || !cancelAppointmentData._id) {
+                alert("Error: Missing appointment ID.");
+                return;
+            }
 
+            const confirmButton = document.getElementById("confirmCancelBtn");
+            confirmButton.disabled = true;
+            confirmButton.textContent = "Canceling...";
+            confirmButton.classList.add("opacity-75");
             const confirmButton = document.getElementById("confirmCancelBtn");
             confirmButton.disabled = true;
             confirmButton.textContent = "Canceling...";
@@ -2088,16 +3346,40 @@
                         action: "cancel",
                     }),
                 });
+            try {
+                const response = await fetch(`/api/confirmations/${cancelAppointmentData._id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        action: "cancel",
+                    }),
+                });
 
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "Failed to cancel appointment");
+                }
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.error || "Failed to cancel appointment");
                 }
 
                 closeCancelModal();
+                closeCancelModal();
 
                 showSuccessModal("Appointment cancelled successfully!");
+                showSuccessModal("Appointment cancelled successfully!");
 
+                try {
+                    const currentDate = datePicker.value;
+                    const searchTerm = searchInput.value.trim();
+                    console.log("Refreshing appointments list after cancellation...");
+                    await renderAppointmentsList(currentDate, searchTerm);
+                    console.log("Appointments list refreshed successfully");
+                } catch (refreshError) {
+                    console.error("Error refreshing appointments list:", refreshError);
                 try {
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
@@ -2112,7 +3394,17 @@
             } catch (error) {
                 console.error("Error cancelling appointment:", error);
                 alert("Error cancelling appointment: " + error.message);
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error("Error cancelling appointment:", error);
+                alert("Error cancelling appointment: " + error.message);
 
+                confirmButton.disabled = false;
+                confirmButton.textContent = "Yes, Cancel";
+                confirmButton.classList.remove("opacity-75");
+            }
+        };
                 confirmButton.disabled = false;
                 confirmButton.textContent = "Yes, Cancel";
                 confirmButton.classList.remove("opacity-75");
@@ -2121,10 +3413,18 @@
 
         const addDoctorBtn = document.getElementById("addDoctorBtn");
         const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
+        const addDoctorBtn = document.getElementById("addDoctorBtn");
+        const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
 
         if (addDoctorModalOverlay) {
             const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
+        if (addDoctorModalOverlay) {
+            const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
 
+            const openModal = () => {
+                addDoctorModalOverlay.classList.remove("hidden");
+                document.body.classList.add("blurred-bg");
+            };
             const openModal = () => {
                 addDoctorModalOverlay.classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
@@ -2136,11 +3436,23 @@
                 const form = document.getElementById("addDoctorForm");
                 if (form) form.reset();
             };
+            const closeModal = () => {
+                addDoctorModalOverlay.classList.add("hidden");
+                document.body.classList.remove("blurred-bg");
+                const form = document.getElementById("addDoctorForm");
+                if (form) form.reset();
+            };
 
             if (addDoctorBtn) {
                 addDoctorBtn.addEventListener("click", openModal);
             }
+            if (addDoctorBtn) {
+                addDoctorBtn.addEventListener("click", openModal);
+            }
 
+            if (closeAddDoctorModal) {
+                closeAddDoctorModal.addEventListener("click", closeModal);
+            }
             if (closeAddDoctorModal) {
                 closeAddDoctorModal.addEventListener("click", closeModal);
             }
@@ -2153,11 +3465,26 @@
                     const firstName = formData.get("firstName")?.trim() || "";
                     const lastName = formData.get("lastName")?.trim() || "";
                     const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
+            const addDoctorForm = document.getElementById("addDoctorForm");
+            if (addDoctorForm) {
+                addDoctorForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(addDoctorForm);
+                    const firstName = formData.get("firstName")?.trim() || "";
+                    const lastName = formData.get("lastName")?.trim() || "";
+                    const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
 
                     try {
                         const res = await fetch("/api/doctors");
                         const existingDoctors = await res.json();
+                    try {
+                        const res = await fetch("/api/doctors");
+                        const existingDoctors = await res.json();
 
+                        const isDuplicate = existingDoctors.some((doc) => {
+                            const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+                            return existingName === fullName;
+                        });
                         const isDuplicate = existingDoctors.some((doc) => {
                             const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
                             return existingName === fullName;
@@ -2188,7 +3515,18 @@
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(doctorData),
                         });
+                    try {
+                        const response = await fetch("/api/doctors", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(doctorData),
+                        });
 
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            showDoctorError(errorData.error || "Failed to add doctor.");
+                            return;
+                        }
                         if (!response.ok) {
                             const errorData = await response.json();
                             showDoctorError(errorData.error || "Failed to add doctor.");
@@ -2282,10 +3620,23 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
             document.getElementById("patientDetailsModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
         }
+        function closePatientDetailsModal() {
+            document.getElementById("patientDetailsModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+        }
 
         document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
         document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
+        document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
+        document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
+        document.getElementById("patientsList").addEventListener("click", function (e) {
+            if (e.target.classList.contains("patient-placeholder")) {
+                const patientData = JSON.parse(e.target.getAttribute("data-patient"));
+                console.log("Patient data for modal:", patientData);
+                openPatientDetailsModal(patientData);
+            }
+        });
         document.getElementById("patientsList").addEventListener("click", function (e) {
             if (e.target.classList.contains("patient-placeholder")) {
                 const patientData = JSON.parse(e.target.getAttribute("data-patient"));
@@ -2298,7 +3649,18 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         let currentDoctorsPage = 1;
         const doctorsPerPage = 5;
         let todaysAppointmentsCountMap = {};
+        let allDoctors = [];
+        let currentDoctorsPage = 1;
+        const doctorsPerPage = 5;
+        let todaysAppointmentsCountMap = {};
 
+        async function fetchAndDisplayDoctors(currentDate) {
+            try {
+                const response = await fetch("/api/doctors");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch doctors");
+                }
+                allDoctors = await response.json();
         async function fetchAndDisplayDoctors(currentDate) {
             try {
                 const response = await fetch("/api/doctors");
@@ -2308,12 +3670,21 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                 allDoctors = await response.json();
 
                 allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+                currentDoctorsPage = 1;
                 currentDoctorsPage = 1;
 
                 const appointmentsRes = await fetch("/api/confirmations");
                 const allAppointments = appointmentsRes.ok ? await appointmentsRes.json() : [];
+                const appointmentsRes = await fetch("/api/confirmations");
+                const allAppointments = appointmentsRes.ok ? await appointmentsRes.json() : [];
 
+                const formattedDate = new Date(currentDate).toLocaleDateString("en-US", {
+                    month: "numeric",
+                    day: "numeric",
+                    year: "numeric",
+                });
                 const formattedDate = new Date(currentDate).toLocaleDateString("en-US", {
                     month: "numeric",
                     day: "numeric",
@@ -2337,7 +3708,36 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         function addDoctorToList(newDoctor) {
             allDoctors.unshift(newDoctor);
             currentDoctorsPage = 1;
+                todaysAppointmentsCountMap = {};
+                allAppointments.forEach((app) => {
+                    if (app.dateData && app.dateData.date === formattedDate && app.status !== "canceled" && app.status !== "cancelled") {
+                        const doctorName = app.doctorData?.name || app.doctorName || "";
+                        if (doctorName) {
+                            todaysAppointmentsCountMap[doctorName] = (todaysAppointmentsCountMap[doctorName] || 0) + 1;
+                        }
+                    }
+                });
+                renderDoctorsPage();
+            } catch (error) {
+                console.error("Error fetching doctors:", error);
+            }
+        }
+        function addDoctorToList(newDoctor) {
+            allDoctors.unshift(newDoctor);
+            currentDoctorsPage = 1;
 
+            renderDoctorsPage();
+        }
+        async function renderDoctorsPage() {
+            const doctorsList = document.getElementById("doctorsList");
+            const paginationContainer = document.getElementById("doctorsPagination");
+            if (!doctorsList) return;
+            const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+            const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
+            const endIndex = startIndex + doctorsPerPage;
+            const currentDoctors = allDoctors.slice(startIndex, endIndex);
+            doctorsList.innerHTML = "";
+            const selectedDate = document.getElementById("datePicker").value;
             renderDoctorsPage();
         }
         async function renderDoctorsPage() {
@@ -2380,10 +3780,44 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                     count = todaysAppointmentsCountMap[doctorName];
                 }
                 doctorsList.innerHTML += `
+            const availabilityPromises = currentDoctors.map(async (doctor) => {
+                let displayAvailability = doctor.availability || "Available";
+                try {
+                    const res = await fetch(`/api/doctors/${doctor._id}/availability?date=${selectedDate}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.start && data.end) {
+                            displayAvailability = `${data.start} - ${data.end}`;
+                        }
+                    }
+                } catch (err) { }
+                return displayAvailability;
+            });
+            const availabilities = await Promise.all(availabilityPromises);
+            currentDoctors.forEach((doctor, idx) => {
+                let infoLine = "";
+                if (doctor.experience && doctor.qualification) {
+                    infoLine = `${doctor.experience} yrs exp. · ${doctor.qualification}`;
+                } else if (doctor.experience) {
+                    infoLine = `${doctor.experience} yrs exp.`;
+                } else if (doctor.qualification) {
+                    infoLine = `${doctor.qualification}`;
+                }
+                let count = 0;
+                const doctorName = doctor.name;
+                if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
+                    count = todaysAppointmentsCountMap[doctorName];
+                }
+                doctorsList.innerHTML += `
 <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
   <div class="col-span-3 flex items-center">
     <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx
+    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx
                     }" style="cursor:pointer;">
+      ${doctor.image
+                        ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
+                        : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+                    }
       ${doctor.image
                         ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
                         : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
@@ -2438,6 +3872,14 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                     }
                 });
             }
+            if (prevButton) {
+                prevButton.addEventListener("click", () => {
+                    if (currentDoctorsPage > 1) {
+                        currentDoctorsPage--;
+                        renderDoctorsPage();
+                    }
+                });
+            }
 
             if (nextButton) {
                 nextButton.addEventListener("click", () => {
@@ -2457,6 +3899,9 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         function renderPatientsListFromData(patients) {
             if (!patients || patients.length === 0) {
                 patientsList.innerHTML = `
+        function renderPatientsListFromData(patients) {
+            if (!patients || patients.length === 0) {
+                patientsList.innerHTML = `
         <div class="p-4 text-center text-gray-500">
           <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -2467,7 +3912,10 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
       `;
                 return;
             }
+                return;
+            }
 
+            let tableHTML = `
             let tableHTML = `
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white rounded-lg shadow-sm">
@@ -2490,7 +3938,10 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
 
             patientsList.innerHTML = tableHTML;
         }
+            patientsList.innerHTML = tableHTML;
+        }
 
+        testPatientsPagination();
         testPatientsPagination();
 
         if (document.getElementById("appointmentStatusFilter")) {
@@ -2502,9 +3953,30 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                 renderAppointmentsList(currentDate, searchTerm, status);
             });
         }
+        if (document.getElementById("appointmentStatusFilter")) {
+            document.getElementById("appointmentStatusFilter").addEventListener("change", function () {
+                const status = this.value;
+                const currentDate = datePicker.value;
+                const searchTerm = searchInput.value.trim();
+                console.log("Dropdown changed", status);
+                renderAppointmentsList(currentDate, searchTerm, status);
+            });
+        }
 
         let currentDoctorForEdit = null;
+        let currentDoctorForEdit = null;
 
+        function openEditDoctorModal(doctor) {
+            currentDoctorForEdit = doctor;
+            document.getElementById("editDoctorName").value = doctor.name || "";
+            document.getElementById("editDoctorSpecialty").value = doctor.specialty || "";
+            document.getElementById("editDoctorExperience").value = doctor.experience || "";
+            document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+            document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+            document.getElementById("editDoctorAge").value = doctor.age || "";
+            document.getElementById("editDoctorGender").value = doctor.gender || "";
+            document.getElementById("editDoctorPhone").value = doctor.phone || "";
+            document.getElementById("editDoctorAddress").value = doctor.address || "";
         function openEditDoctorModal(doctor) {
             currentDoctorForEdit = doctor;
             document.getElementById("editDoctorName").value = doctor.name || "";
@@ -2547,7 +4019,42 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         document.getElementById("editDoctorModalOverlay").onclick = function (e) {
             if (e.target === this) closeEditDoctorModal();
         };
+        document.getElementById("closeEditDoctorModal").onclick = closeEditDoctorModal;
+        document.getElementById("editDoctorModalOverlay").onclick = function (e) {
+            if (e.target === this) closeEditDoctorModal();
+        };
 
+        document.getElementById("doctorsList").addEventListener("click", function (e) {
+            if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                e.preventDefault();
+                const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                openEditDoctorModal(doctor);
+                e.target.closest(".action-menu").classList.add("hidden");
+            }
+        });
+        if (document.getElementById("doctorsList")) {
+            document.getElementById("doctorsList").addEventListener("click", function (e) {
+                if (e.target.classList.contains("doctor-photo-placeholder")) {
+                    const idx = e.target.getAttribute("data-doctor-index");
+                    const input = document.querySelector(`.doctor-photo-input[data-doctor-index="${idx}"]`);
+                    if (input) input.click();
+                }
+            });
+            document.getElementById("doctorsList").addEventListener("change", function (e) {
+                if (e.target.classList.contains("doctor-photo-input")) {
+                    const idx = e.target.getAttribute("data-doctor-index");
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (ev) {
+                            allDoctors[idx].photoUrl = ev.target.result;
+                            renderDoctorsPage();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+        }
         document.getElementById("doctorsList").addEventListener("click", function (e) {
             if (e.target.classList.contains("edit-doctor-profile-btn")) {
                 e.preventDefault();
@@ -2601,14 +4108,44 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
             allowInput: false,
             static: true,
         });
+        flatpickr("#availabilityDate", {
+            dateFormat: "m/d/Y",
+            allowInput: false,
+            static: true,
+        });
+        flatpickr("#availabilityStart", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            allowInput: false,
+            static: true,
+        });
+        flatpickr("#availabilityEnd", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            allowInput: false,
+            static: true,
+        });
 
+        document.getElementById("rescheduleForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
         document.getElementById("rescheduleForm").addEventListener("submit", async function (e) {
             e.preventDefault();
 
             const appointmentId = window.selectedAppointment?._id;
             const newDate = document.querySelector("#rescheduleCalendarContainer input")?.value;
             const newTime = document.querySelector("#rescheduleTimeSlotsContainer input")?.value;
+            const appointmentId = window.selectedAppointment?._id;
+            const newDate = document.querySelector("#rescheduleCalendarContainer input")?.value;
+            const newTime = document.querySelector("#rescheduleTimeSlotsContainer input")?.value;
 
+            if (!appointmentId || !newDate || !newTime) {
+                alert("Please select both date and time.");
+                return;
+            }
             if (!appointmentId || !newDate || !newTime) {
                 alert("Please select both date and time.");
                 return;
@@ -2626,9 +4163,25 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                         time: newTime,
                     }),
                 });
+            try {
+                const response = await fetch(`/api/confirmations/${appointmentId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        action: "reschedule",
+                        date: newDate,
+                        time: newTime,
+                    }),
+                });
 
                 const result = await response.json();
+                const result = await response.json();
 
+                if (response.ok) {
+                    alert("Appointment successfully rescheduled.");
+                    document.getElementById("rescheduleModalOverlay").classList.add("hidden");
                 if (response.ok) {
                     alert("Appointment successfully rescheduled.");
                     document.getElementById("rescheduleModalOverlay").classList.add("hidden");
@@ -2665,7 +4218,87 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                 });
             }
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusFilter = document.getElementById("appointmentStatusFilter");
+            if (statusFilter) {
+                statusFilter.addEventListener("change", function () {
+                    const status = this.value;
+                    const currentDate = datePicker.value;
+                    const searchTerm = searchInput.value.trim();
+                    console.log("Dropdown changed", status);
+                    renderAppointmentsList(currentDate, searchTerm, status);
+                });
+            }
+        });
 
+        let currentDoctorForEditProfile = null;
+        if (document.getElementById("doctorsList")) {
+            document.getElementById("doctorsList").addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                    e.preventDefault();
+                    const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                    currentDoctorForEditProfile = doctor;
+                    document.getElementById("editDoctorName").value = doctor.name || "";
+                    document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+                    document.getElementById("editDoctorExperience").value = doctor.experience || "";
+                    document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+                    document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+                    document.getElementById("editDoctorAge").value = doctor.age || "";
+                    document.getElementById("editDoctorGender").value = doctor.gender || "";
+                    document.getElementById("editDoctorPhone").value = doctor.phone || "";
+                    document.getElementById("editDoctorAddress").value = doctor.address || "";
+                    document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
+                    document.body.classList.add("blurred-bg");
+                    e.target.closest(".action-menu").classList.add("hidden");
+                }
+            });
+        }
+        document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
+        document.getElementById("editDoctorProfileModalOverlay").onclick = function (e) {
+            if (e.target === this) closeEditDoctorProfileModal();
+        };
+        function closeEditDoctorProfileModal() {
+            document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+            document.body.classList.remove("blurred-bg");
+            currentDoctorForEditProfile = null;
+        }
+        document.getElementById("editDoctorForm").onsubmit = async function (e) {
+            e.preventDefault();
+            if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
+                console.error("No doctor selected for editing or missing _id", currentDoctorForEditProfile);
+                return;
+            }
+            const formData = new FormData();
+            formData.append("name", document.getElementById("editDoctorName").value);
+            formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
+            formData.append("experience", document.getElementById("editDoctorExperience").value);
+            formData.append("qualification", document.getElementById("editDoctorQualification").value);
+            formData.append("availability", document.getElementById("editDoctorAvailability").value);
+            formData.append("age", document.getElementById("editDoctorAge").value);
+            formData.append("gender", document.getElementById("editDoctorGender").value);
+            formData.append("phone", document.getElementById("editDoctorPhone").value);
+            formData.append("address", document.getElementById("editDoctorAddress").value);
+            const photoInput = document.getElementById("editDoctorPhoto");
+            if (photoInput.files && photoInput.files[0]) {
+                formData.append("photo", photoInput.files[0]);
+            }
+            try {
+                const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
+                    method: "PUT",
+                    body: formData,
+                });
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || "Failed to update doctor");
+                }
+                closeEditDoctorProfileModal();
+                await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+                showSuccessModal("Doctor profile updated successfully!");
+            } catch (err) {
+                console.error("Error updating doctor:", err);
+                alert("Error updating doctor: " + err.message);
+            }
+        };
         let currentDoctorForEditProfile = null;
         if (document.getElementById("doctorsList")) {
             document.getElementById("doctorsList").addEventListener("click", function (e) {
@@ -2758,12 +4391,40 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         console.log("[DEBUG] Script loaded at end of HTML");
         document.addEventListener("DOMContentLoaded", function () {
             const qualificationGrid = document.getElementById("qualificationGrid");
+        document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            const photoPreview = document.getElementById("editDoctorPhotoPreview");
+            const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    photoPreview.src = e.target.result;
+                    photoPreview.style.display = "block";
+                    defaultIcon.style.display = "none";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                photoPreview.src = "";
+                photoPreview.style.display = "none";
+                defaultIcon.style.display = "flex";
+            }
+        });
+    </script>
+    <script>
+        console.log("[DEBUG] Script loaded at end of HTML");
+        document.addEventListener("DOMContentLoaded", function () {
+            const qualificationGrid = document.getElementById("qualificationGrid");
 
             qualificationGrid.addEventListener("click", function (e) {
                 if (e.target && e.target.id === "addQualificationBtn") {
                     const newField = document.createElement("div");
                     newField.className = "flex items-center gap-2 mt-2";
+            qualificationGrid.addEventListener("click", function (e) {
+                if (e.target && e.target.id === "addQualificationBtn") {
+                    const newField = document.createElement("div");
+                    newField.className = "flex items-center gap-2 mt-2";
 
+                    newField.innerHTML = `
                     newField.innerHTML = `
                 <input
                     type="text"
@@ -2783,6 +4444,8 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
 
                     qualificationGrid.appendChild(newField);
                 }
+                    qualificationGrid.appendChild(newField);
+                }
 
                 if (e.target && e.target.classList.contains("removeQualificationBtn")) {
                     const row = e.target.closest("div");
@@ -2800,7 +4463,12 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                 if (e.target.closest(".addQualificationBtn")) {
                     const newRow = document.createElement("div");
                     newRow.className = "flex items-center gap-2 mt-2";
+            qualificationGrid.addEventListener("click", function (e) {
+                if (e.target.closest(".addQualificationBtn")) {
+                    const newRow = document.createElement("div");
+                    newRow.className = "flex items-center gap-2 mt-2";
 
+                    newRow.innerHTML = `
                     newRow.innerHTML = `
         <input
           type="text"
@@ -2817,6 +4485,8 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
           &minus;
         </button>
       `;
+                    qualificationGrid.appendChild(newRow);
+                }
                     qualificationGrid.appendChild(newRow);
                 }
 
@@ -2895,7 +4565,19 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                     const menu = btn.nextElementSibling;
                     if (menu) {
                         const rect = btn.getBoundingClientRect();
+    <script>
+        function setupActionMenus() {
+            document.querySelectorAll(".action-btn").forEach((btn) => {
+                btn.onclick = function (e) {
+                    document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+                    const menu = btn.nextElementSibling;
+                    if (menu) {
+                        const rect = btn.getBoundingClientRect();
 
+                        menu.style.visibility = "hidden";
+                        menu.style.display = "block";
+                        menu.style.top = "-9999px";
+                        menu.style.left = "-9999px";
                         menu.style.visibility = "hidden";
                         menu.style.display = "block";
                         menu.style.top = "-9999px";
@@ -2903,10 +4585,19 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
 
                         const menuHeight = menu.offsetHeight;
                         let top = rect.top + window.scrollY;
+                        const menuHeight = menu.offsetHeight;
+                        let top = rect.top + window.scrollY;
 
                         if (rect.bottom + menuHeight > window.innerHeight) {
                             top = rect.top + window.scrollY - menuHeight;
+                        if (rect.bottom + menuHeight > window.innerHeight) {
+                            top = rect.top + window.scrollY - menuHeight;
 
+                            if (top < window.scrollY) {
+                                top = window.scrollY;
+                            }
+                        }
+                        let left = rect.left + window.scrollX;
                             if (top < window.scrollY) {
                                 top = window.scrollY;
                             }
@@ -2943,7 +4634,23 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         document.getElementById("cancelEditDoctorBtn").addEventListener("click", () => {
             document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
         });
+        document.getElementById("closeEditDoctorProfileModal").addEventListener("click", () => {
+            document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+        });
+        document.getElementById("cancelEditDoctorBtn").addEventListener("click", () => {
+            document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+        });
 
+        document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("editDoctorPhotoPreview").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
         document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -2975,6 +4682,26 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let currentDoctorForEditProfile = null;
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                e.preventDefault();
+                const doctorData = JSON.parse(e.target.dataset.doctor);
+                openEditDoctorModal(doctorData);
+            }
+        });
+    </script>
+    <script>
+        console.log("[DEBUG] Script loaded at end of HTML");
+        document.addEventListener("DOMContentLoaded", function () {
+            var closeBtn = document.getElementById("closeViewDoctorProfileBtn");
+            if (closeBtn) {
+                closeBtn.onclick = closeViewDoctorProfileModal;
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentDoctorForEditProfile = null;
 
             if (document.getElementById("doctorsList")) {
                 document.getElementById("doctorsList").addEventListener("click", function (e) {
@@ -2982,7 +4709,22 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                         e.preventDefault();
                         const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
                         currentDoctorForEditProfile = doctor;
+            if (document.getElementById("doctorsList")) {
+                document.getElementById("doctorsList").addEventListener("click", function (e) {
+                    if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                        e.preventDefault();
+                        const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                        currentDoctorForEditProfile = doctor;
 
+                        document.getElementById("editDoctorName").value = doctor.name || "";
+                        document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+                        document.getElementById("editDoctorExperience").value = doctor.experience || "";
+                        document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+                        document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+                        document.getElementById("editDoctorAge").value = doctor.age || "";
+                        document.getElementById("editDoctorGender").value = doctor.gender || "";
+                        document.getElementById("editDoctorPhone").value = doctor.phone || "";
+                        document.getElementById("editDoctorAddress").value = doctor.address || "";
                         document.getElementById("editDoctorName").value = doctor.name || "";
                         document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
                         document.getElementById("editDoctorExperience").value = doctor.experience || "";
@@ -3012,11 +4754,24 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
             if (document.getElementById("cancelEditDoctorBtn")) {
                 document.getElementById("cancelEditDoctorBtn").onclick = closeEditDoctorProfileModal;
             }
+            if (document.getElementById("closeEditDoctorProfileModal")) {
+                document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
+            }
+            if (document.getElementById("cancelEditDoctorBtn")) {
+                document.getElementById("cancelEditDoctorBtn").onclick = closeEditDoctorProfileModal;
+            }
 
             if (document.getElementById("editDoctorForm")) {
                 document.getElementById("editDoctorForm").onsubmit = async function (e) {
                     e.preventDefault();
+            if (document.getElementById("editDoctorForm")) {
+                document.getElementById("editDoctorForm").onsubmit = async function (e) {
+                    e.preventDefault();
 
+                    if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
+                        alert("No doctor selected for editing.");
+                        return;
+                    }
                     if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
                         alert("No doctor selected for editing.");
                         return;
@@ -3032,7 +4787,21 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                     formData.append("gender", document.getElementById("editDoctorGender").value);
                     formData.append("phone", document.getElementById("editDoctorPhone").value);
                     formData.append("address", document.getElementById("editDoctorAddress").value);
+                    const formData = new FormData();
+                    formData.append("name", document.getElementById("editDoctorName").value);
+                    formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
+                    formData.append("experience", document.getElementById("editDoctorExperience").value);
+                    formData.append("qualification", document.getElementById("editDoctorQualification").value);
+                    formData.append("availability", document.getElementById("editDoctorAvailability").value);
+                    formData.append("age", document.getElementById("editDoctorAge").value);
+                    formData.append("gender", document.getElementById("editDoctorGender").value);
+                    formData.append("phone", document.getElementById("editDoctorPhone").value);
+                    formData.append("address", document.getElementById("editDoctorAddress").value);
 
+                    const photoInput = document.getElementById("editDoctorPhoto");
+                    if (photoInput.files.length > 0) {
+                        formData.append("photo", photoInput.files[0]);
+                    }
                     const photoInput = document.getElementById("editDoctorPhoto");
                     if (photoInput.files.length > 0) {
                         formData.append("photo", photoInput.files[0]);
@@ -3043,7 +4812,16 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                             method: "PUT",
                             body: formData,
                         });
+                    try {
+                        const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
+                            method: "PUT",
+                            body: formData,
+                        });
 
+                        if (!response.ok) {
+                            const errorData = await response.json().catch(() => ({}));
+                            throw new Error(errorData.error || "Failed to update doctor");
+                        }
                         if (!response.ok) {
                             const errorData = await response.json().catch(() => ({}));
                             throw new Error(errorData.error || "Failed to update doctor");
@@ -3058,7 +4836,30 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
                     }
                 };
             }
+                        closeEditDoctorProfileModal();
+                        await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+                        showSuccessModal("Doctor profile updated successfully!");
+                    } catch (err) {
+                        console.error("Error updating doctor:", err);
+                        alert("Error updating doctor: " + err.message);
+                    }
+                };
+            }
 
+            if (document.getElementById("editDoctorPhoto")) {
+                document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById("editDoctorPhotoPreview").src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    </script>
             if (document.getElementById("editDoctorPhoto")) {
                 document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
                     const file = event.target.files[0];
@@ -3131,11 +4932,82 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
         if (editDoctorPhone) {
             editDoctorPhone.addEventListener("input", function () {
                 let value = this.value.replace(/\D/g, "");
+    <input type="file" id="doctorPhotoInput" style="display: none" accept="image/*" />
+    <div id="doctorPhotoModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999">
+        <img id="doctorPhotoModalImg" src=""
+            style="max-width: 90vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 2px 16px #0008" />
+    </div>
+    <script>
+        document.getElementById("doctorsList").addEventListener("click", function (e) {
+            if (e.target.closest(".doctor-photo-placeholder")) {
+                const photoDiv = e.target.closest(".doctor-photo-placeholder");
+                const doctorId = photoDiv.getAttribute("data-doctor-id");
+                const idx = photoDiv.getAttribute("data-doctor-index");
+                const doctor = allDoctors[parseInt(idx)];
+                const imgTag = photoDiv.querySelector("img");
+                const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
+                if (imageUrl.includes("default-profile.png")) {
+                    const fileInput = document.getElementById("doctorPhotoInput");
+                    fileInput.value = "";
+                    fileInput.onchange = function (event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const formData = new FormData();
+                            formData.append("photo", file);
+                            fetch(`/api/doctors/${doctorId}`, {
+                                method: "PUT",
+                                body: formData,
+                            })
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    if (data.image) {
+                                        allDoctors[parseInt(idx)].image = "/uploads/" + data.image;
+                                        renderDoctorsPage();
+                                    } else {
+                                        alert("Upload failed");
+                                    }
+                                })
+                                .catch(() => alert("Upload error"));
+                        }
+                    };
+                    fileInput.click();
+                } else {
+                    const modal = document.getElementById("doctorPhotoModal");
+                    const modalImg = document.getElementById("doctorPhotoModalImg");
+                    modalImg.src = imageUrl;
+                    modal.style.display = "flex";
+                    modal.onclick = function () {
+                        modal.style.display = "none";
+                    };
+                }
+            }
+        });
+    </script>
+    <script>
+        const editDoctorPhone = document.getElementById("editDoctorPhone");
+        if (editDoctorPhone) {
+            editDoctorPhone.addEventListener("input", function () {
+                let value = this.value.replace(/\D/g, "");
 
                 if (value.length === 1 && !/[6-9]/.test(value[0])) {
                     value = "";
                 }
+                if (value.length === 1 && !/[6-9]/.test(value[0])) {
+                    value = "";
+                }
 
+                if (value.length > 10) value = value.slice(0, 10);
+                this.value = value;
+            });
+            editDoctorPhone.addEventListener("paste", function (e) {
+                e.preventDefault();
+                const text = (e.originalEvent || e).clipboardData.getData("text/plain");
+                let cleaned = text.replace(/\D/g, "").slice(0, 10);
+                if (cleaned.length > 0 && !/[6-9]/.test(cleaned[0])) cleaned = "";
+                this.value = cleaned;
+            });
+        }
                 if (value.length > 10) value = value.slice(0, 10);
                 this.value = value;
             });
@@ -3168,4 +5040,5 @@ document.getElementById("confirmLogoutBtn").onclick = function () {
 
 </html>
 
+</html>
 </html>
