@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
     const token = jwt.sign({ id: admin._id, username: admin.username, role: admin.role }, JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, role: admin.role });
+    res.json({ token, role: admin.role,name:admin.username });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
