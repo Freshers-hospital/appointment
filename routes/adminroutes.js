@@ -70,5 +70,37 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: 'Invalid token' });
   }
 }
-
+router.get('/getAllAdmins', async (req, res) => {
+  try {
+    const admins = await Admin.find({ role: 1, status: 'active' });
+    res.json(admins);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get('/getAdminById/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const admin = await Admin.findOne({ _id: id });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.json(admin);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.put('/updateAdmin/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+    const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.json(admin);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = { router, authMiddleware }; 
