@@ -28,63 +28,70 @@
             </div>
         </nav>
 
-     <div class="min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+     <div class="p-8">
      
 
-            <div class="mb-6">
-                <h2 class="text-2xl font-semibold">Super Admin Dashboard</h2>
-                <p class="text-gray-500">Manage admins and doctors</p>
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-2xl font-semibold px-20">Super Admin Dashboard</h2>
+                    <p class="text-gray-500 px-20">Manage admins and doctors</p>
+                </div>
             </div>
 
           
-            <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
-                <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active" data-tab="adminsTab">Admins</button>
-                <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
+            <div class="px-20 mt-4">
+                <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
+                    <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active bg-white shadow rounded" data-tab="adminsTab">Admins</button>
+                    <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
+                </div>
             </div>
 
-            <div class="space-y-10">
-               
-                <div id="adminsTab" class="tab-content">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold">Admins</h3>
-<a href="adminregister.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Admin</a>
-
-                    </div>
-
-                    <div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-                        <div class="col-span-3">Admin Name</div>
-                        <div class="col-span-3">Email</div>
-                        <div class="col-span-2">Contact</div>
-                        <div class="col-span-2">Status</div>
-                        <div class="col-span-2 text-right">Action</div>
-                    </div>
-
-                    <div id="adminList" class="space-y-2 mt-2">
-                        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
-                            <div class="col-span-3 font-semibold text-gray-800">Sandeep Kumar</div>
-                            <div class="col-span-3 text-gray-700">sandeep@example.com</div>
-                            <div class="col-span-2 text-gray-700">+91 9876543210</div>
-                            <div class="col-span-2">
-                                <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">Active</span>
+            <div class="px-20">
+                <div class="bg-white p-6 rounded-xl shadow">
+                    <div class="space-y-10">
+                       
+                        <div id="adminsTab" class="tab-content">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-semibold">Admins</h3>
+                                <a href="adminregister.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Admin</a>
                             </div>
-                            <div class="col-span-2 text-right">
-                                <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-                                <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-                                      <button onclick="document.getElementById('viewModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
-                                    <button onclick="document.getElementById('editModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        Edit
-                                    </button>
-                                    <button onclick="document.getElementById('deleteModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
-                                        Delete
-                                    </button>
+
+                            <div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+                                <div class="col-span-3">Admin Name</div>
+                                <div class="col-span-3">Email</div>
+                                <div class="col-span-2">Contact</div>
+                                <div class="col-span-2">Status</div>
+                                <div class="col-span-2 text-right">Action</div>
+                            </div>
+
+                            <div id="adminList" class="space-y-2 mt-2">
+                                <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+                                    <div class="col-span-3 font-semibold text-gray-800">Sandeep Kumar</div>
+                                    <div class="col-span-3 text-gray-700">sandeep@example.com</div>
+                                    <div class="col-span-2 text-gray-700">+91 9876543210</div>
+                                    <div class="col-span-2">
+                                        <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">Active</span>
+                                    </div>
+                                    <div class="col-span-2 text-right">
+                                        <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+                                        <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+                                              <button onclick="openViewModal(this)" data-name="Sandeep Kumar" data-email="sandeep@example.com" data-contact="+91 9876543210" data-status="Active" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+                                            <button onclick="document.getElementById('editModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                Edit
+                                            </button>
+                                            <button onclick="document.getElementById('deleteModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Doctors Tab Content (unchanged) -->
+                        <!-- ... -->
                     </div>
                 </div>
-
-                <!-- Doctors Tab Content -->
-                
             </div>
         </div>
 
@@ -153,11 +160,15 @@
       <div class="col-span-1 font-medium text-gray-600">Status:</div>
       <div class="col-span-2 bg-gray-50 px-3 py-2 rounded" data-field="status">-</div>
     </div>
-
-    <div class="flex justify-end mt-6">
-      <button onclick="closeModals()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl">Close</button>
+    <div class="mb-2"><strong>Name:</strong> <span id="viewAdminName"></span></div>
+    <div class="mb-2"><strong>Email:</strong> <span id="viewAdminEmail"></span></div>
+    <div class="mb-2"><strong>Contact:</strong> <span id="viewAdminContact"></span></div>
+    <div class="mb-4"><strong>Status:</strong> <span id="viewAdminStatus"></span></div>
+    <div class="flex justify-end">
+      <button onclick="closeModals()" class="px-4 py-2 bg-blue-600 text-white rounded">Close</button>
     </div>
   </div>
+</div>
 </div>
 
         <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
@@ -172,19 +183,17 @@
         </div>
 
         <script>
-            const tabs = document.querySelectorAll(".tab");
-            const tabContents = document.querySelectorAll(".tab-content");
-
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
             tabs.forEach((tab) => {
-                tab.addEventListener("click", () => {
-                    tabs.forEach((t) => t.classList.remove("tab-active"));
-                    tabs.forEach((t) => t.classList.add("tab-inactive"));
-                    tab.classList.add("tab-active");
-                    tab.classList.remove("tab-inactive");
-
-                    const targetId = tab.getAttribute("data-tab");
-                    tabContents.forEach((content) => content.classList.add("hidden"));
-                    document.getElementById(targetId).classList.remove("hidden");
+                tab.addEventListener('click', () => {
+                    tabs.forEach((t) => t.classList.remove('tab-active', 'bg-white', 'shadow', 'rounded'));
+                    tabs.forEach((t) => t.classList.add('tab-inactive'));
+                    tab.classList.remove('tab-inactive');
+                    tab.classList.add('tab-active', 'bg-white', 'shadow', 'rounded');
+                    const targetId = tab.getAttribute('data-tab');
+                    tabContents.forEach((content) => content.classList.add('hidden'));
+                    document.getElementById(targetId).classList.remove('hidden');
                 });
             });
 
@@ -241,7 +250,7 @@ function closeModals() {
           <div class="col-span-2 text-right">
             <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
             <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-              <button onclick="viewAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.phone || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
               <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
               <button onclick="deleteAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
             </div>
@@ -261,10 +270,13 @@ function closeModals() {
     el.nextElementSibling.classList.toggle("hidden");
   }
 
-  function viewAdmin(id) {
-    
-    document.getElementById("viewModal").classList.remove("hidden");
-  }
+  function openViewModal(btn) {
+    document.getElementById('viewModal').classList.remove('hidden');
+    document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
+    document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
+    document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
+    document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
+}
 
   function editAdmin(id) {
     document.getElementById("editModal").classList.remove("hidden");
