@@ -43,6 +43,10 @@ app.get("/", (req, res) => {
 });
 
 
+app.get("/superadmin", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "superadmin.html"));
+});
+
 
 mongoose.connect(mongoURI).then(() => {
     app.listen(port, () => {

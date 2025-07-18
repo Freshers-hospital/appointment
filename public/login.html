@@ -1,76 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Login</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Login</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            if (typeof tailwind === "undefined") {
+                const script = document.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js";
+                document.head.appendChild(script);
+            }
+        </script>
+    </head>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    if (typeof tailwind === 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js';
-      document.head.appendChild(script);
-    }
-  </script>
-</head>
-
-<body class="bg-blue-50 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-    <div class="flex flex-col items-center">
-      <div class="bg-blue-500 rounded-full p-3 mb-4">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      </div>
-      <h2 class="text-xl font-semibold mb-4">Super Admin / Admin Login</h2>
-    </div>
-    <form id="loginForm" autocomplete="off" novalidate>
-      <input type="email" name="email" placeholder="Email"
-        class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-      <input type="password" name="password" placeholder="Password"
-        class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">
-        LOGIN
-      </button>
-    </form>
-   
-  </div>
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      var form = e.target;
-      var email = form.email.value.trim();
-      var password = form.password.value;
-      if (!email || !password) {
-        alert('Please fill in all fields.');
-        return;
-      }
-      try {
-        const res = await fetch('/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const result = await res.json();
-        if (res.ok && result.token) {
-          localStorage.setItem('admin_jwt', result.token);
-          localStorage.setItem('role', result.role);
-          if (result.role === 2) {
-            window.location.href = 'superadmin.html';
-          } else {
-            window.location.href = 'admindasboard.html';
-          }
-        } else {
-          alert(result.error || 'Login failed');
-        }
-      } catch (err) {
-        alert('Error: ' + err.message);
-      }
-    });
-  </script>
-</body>
-
+    <body class="bg-blue-50 flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div class="flex flex-col items-center">
+                <div class="bg-blue-500 rounded-full p-3 mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold mb-4">Super Admin / Admin Login</h2>
+            </div>
+            <form id="loginForm" autocomplete="off" novalidate>
+                <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">LOGIN</button>
+            </form>
+        </div>
+        <script>
+            document.getElementById("loginForm").addEventListener("submit", async function (e) {
+                e.preventDefault();
+                var form = e.target;
+                var email = form.email.value.trim();
+                var password = form.password.value;
+                if (!email || !password) {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+                try {
+                    const res = await fetch("/api/admin/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email, password }),
+                    });
+                    const result = await res.json();
+                    if (res.ok && result.token) {
+                        localStorage.setItem("admin_jwt", result.token);
+                        localStorage.setItem("role", result.role);
+                        if (result.role === 2) {
+                            window.location.href = "superadmin.html";
+                        } else {
+                            window.location.href = "admindasboard.html";
+                        }
+                    } else {
+                        alert(result.error || "Login failed");
+                    }
+                } catch (err) {
+                    alert("Error: " + err.message);
+                }
+            });
+        </script>
+    </body>
 </html>

@@ -6,10 +6,8 @@
         <title>Super Admin Dashboard</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-
     <body class="bg-gray-100 font-sans">
-         
-        <nav class="bg-white shadow py-2 px-10">
+       <nav class="bg-white shadow py-2 px-10">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
                     <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,21 +28,22 @@
             </div>
         </nav>
 
-        <div class="p-8">
+     <div class="min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+     
+
             <div class="mb-6">
                 <h2 class="text-2xl font-semibold">Super Admin Dashboard</h2>
                 <p class="text-gray-500">Manage admins and doctors</p>
             </div>
 
-            <!-- Tab Buttons -->
+          
             <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
                 <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active" data-tab="adminsTab">Admins</button>
                 <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
             </div>
 
-            <!-- Tab Content Wrapper -->
             <div class="space-y-10">
-                <!-- Admins Tab Content -->
+               
                 <div id="adminsTab" class="tab-content">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">Admins</h3>
@@ -88,7 +87,7 @@
             </div>
         </div>
 
-        <!-- Edit Modal -->
+        
      <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
   <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
     <h2 class="text-xl font-semibold mb-4">Edit Admin</h2>
@@ -108,7 +107,6 @@
   </div>
 </div>
 </div>
-        <!-- Delete Modal -->
         <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
                 <h2 class="text-xl font-semibold mb-4">Confirm Delete</h2>
@@ -121,7 +119,6 @@
         </div>
 
 
-<!-- View Modal -->
 <div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
   <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
     <div class="flex justify-between items-center mb-4">
@@ -139,13 +136,6 @@
 </div>
 </div>
 
-
-
-
-
-
-
-        <!-- Logout Modal -->
         <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
                 <h2 class="text-xl font-semibold mb-4">Logout</h2>
@@ -194,10 +184,82 @@ function closeModals() {
   document.getElementById("viewModal")?.classList.add("hidden");
 }
 
-
-            function logout() {
-                window.location.href = "login.html"; // change to actual logout redirect page if needed
+           function logout() {
+                window.location.href = "login.html"; 
             }
         </script>
-    </body>
+
+
+<script>
+ 
+  async function fetchAdmins() {
+    const adminList = document.getElementById("adminList");
+    adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
+
+    try {
+    const res = await fetch("/api/admin/getAllAdmins");
+
+      const admins = await res.json();
+ 
+      if (!admins.length) {
+        adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
+        return;
+      }
+
+      adminList.innerHTML = admins.map(admin => `
+        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+          <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
+          <div class="col-span-3 text-gray-700">${admin.email}</div>
+          <div class="col-span-2 text-gray-700">${admin.phone || '-'}</div>
+          <div class="col-span-2">
+            <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">${admin.status || 'active'}</span>
+          </div>
+          <div class="col-span-2 text-right">
+            <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+            <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+              <button onclick="viewAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+              <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+              <button onclick="deleteAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (err) {
+      adminList.innerHTML = `<div class="text-red-500 text-center py-4">Failed to load admins.</div>`;
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", fetchAdmins);
+
+
+  function toggleDropdown(el) {
+    document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+    el.nextElementSibling.classList.toggle("hidden");
+  }
+
+  function viewAdmin(id) {
+    
+    document.getElementById("viewModal").classList.remove("hidden");
+  }
+
+  function editAdmin(id) {
+    document.getElementById("editModal").classList.remove("hidden");
+  }
+
+  function deleteAdmin(id) {
+    document.getElementById("deleteModal").classList.remove("hidden");
+  }
+
+  function closeModals() {
+    document.getElementById("editModal")?.classList.add("hidden");
+    document.getElementById("deleteModal")?.classList.add("hidden");
+    document.getElementById("logoutModal")?.classList.add("hidden");
+    document.getElementById("viewModal")?.classList.add("hidden");
+  }
+
+  function logout() {
+    window.location.href = "login.html";
+  }
+</script>
+</body>
 </html>
