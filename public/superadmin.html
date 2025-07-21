@@ -366,9 +366,26 @@
     document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
 }
 
-    function editAdmin(id) {
-      document.getElementById("editModal").classList.remove("hidden");
-    }
+
+function editAdmin(id) {
+  const admin = allAdmins.find(a => a._id === id);
+  if (!admin) return;
+
+  document.getElementById("editName").value = admin.username || '';
+  document.getElementById("editEmail").value = admin.email || '';
+  document.getElementById("editContact").value = admin.phone || '';
+  document.getElementById("editStatus").value = admin.status?.toLowerCase() || 'active';
+
+  document.getElementById("editModal").classList.remove("hidden");
+
+  // Store ID globally to use in Save
+  window.currentEditingAdminId = id;
+}
+
+
+
+
+
 
 
     let currentDeleteId = null; 
@@ -599,6 +616,62 @@
     document.getElementById("userName").textContent = "Welcome back, " + userName;
   </script>
   
+
+<script>
+  document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
+    const id = window.currentEditingAdminId;
+    const name = document.getElementById("editName").value.trim();
+    const email = document.getElementById("editEmail").value.trim();
+    const contact = document.getElementById("editContact").value.trim();
+    const status = document.getElementById("editStatus").value;
+
+    if (!name || !email) {
+      alert("Name and Email are required");
+      return;
+    }
+
+    const token = localStorage.getItem("admin_jwt");
+    if (!token) {
+      alert("Unauthorized. Please login again.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: name,
+          email: email,
+          phone: contact,
+          status: status
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to update admin");
+      }
+
+      alert("Admin updated successfully!");
+      closeModals();
+      fetchAdmins(); // Refresh
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
   
 </body>
 
