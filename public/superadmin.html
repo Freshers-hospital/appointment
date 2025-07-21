@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Super Admin Dashboard</title>
-        <link rel="icon" type="image/png" href="favicon.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Admin Dashboard</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
 
     <body class="bg-gray-100 font-sans">
         <nav class="bg-white shadow py-2 px-10">
@@ -53,8 +55,9 @@
                     <div class="space-y-10">
                         <div id="adminsTab" class="tab-content">
                             <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-xl font-semibold">Admins</h3>
-                                <a href="adminregister.html" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">+ Add Admin</a>
+                                <h3 class="text-xl font-semibold">Admins List</h3>
+                                
+                                <a href="adminregister.html" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">+ Add Admin</a>
                             </div>
 
                             <div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
@@ -106,6 +109,30 @@
                         </div>
 
                         <!-- Doctors Tab Content -->
+                        <div id="doctorsTab" class="tab-content hidden">
+                          <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
+                             <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
+                            <div class="flex items-center gap-4">
+                              <input type="text" id="doctorDatePicker" class="w-44 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Select date" readonly />
+                              <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
+                            </div>
+                          </div>
+                        
+                          <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+                            <div class="col-span-3">Doctor</div>
+                            <div class="col-span-2">Specialization</div>
+                            <div class="col-span-2">Today's Appointments</div>
+                            <div class="col-span-3">Availability</div>
+                            <div class="col-span-2">Actions</div>
+                          </div>
+                          <div id="doctorsList" class="space-y-2 mt-2"></div>
+                          <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
+                            <button id="prevDoctorsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                            <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+                            <button id="nextDoctorsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -172,29 +199,31 @@
             </div>
         </div>
 
-        <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-                <h2 class="text-xl font-semibold mb-4">Logout</h2>
-                <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
-                </div>
-            </div>
-        </div>
-
+  <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <h2 class="text-xl font-semibold mb-4">Logout</h2>
+      <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const tabs = document.querySelectorAll(".tab");
             const tabContents = document.querySelectorAll(".tab-content");
             tabs.forEach((tab) => {
-                tab.addEventListener("click", () => {
-                    tabs.forEach((t) => t.classList.remove("tab-active", "bg-white", "shadow", "rounded"));
-                    tabs.forEach((t) => t.classList.add("tab-inactive"));
-                    tab.classList.remove("tab-inactive");
-                    tab.classList.add("tab-active", "bg-white", "shadow", "rounded");
-                    const targetId = tab.getAttribute("data-tab");
-                    tabContents.forEach((content) => content.classList.add("hidden"));
-                    document.getElementById(targetId).classList.remove("hidden");
+                tab.addEventListener('click', () => {
+                    tabs.forEach((t) => t.classList.remove('tab-active', 'bg-white', 'shadow', 'rounded'));
+                    tabs.forEach((t) => t.classList.add('tab-inactive'));
+                    tab.classList.remove('tab-inactive');
+                    tab.classList.add('tab-active', 'bg-white', 'shadow', 'rounded');
+                    const targetId = tab.getAttribute('data-tab');
+                    tabContents.forEach((content) => content.classList.add('hidden'));
+                    document.getElementById(targetId).classList.remove('hidden');
+                    if (targetId === "doctorsTab") fetchAndDisplayDoctors();
+                    if (targetId === "adminsTab") fetchAdmins();
                 });
             });
 
@@ -239,11 +268,15 @@
     }
 </script>
 
-        <script>
-           
-async function fetchAdmins() {
-  const adminList = document.getElementById("adminList");
-  adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
+  <script>
+
+    let allAdmins = [];
+    let currentAdminsPage = 1;
+    const adminsPerPage = 7;
+
+    async function fetchAdmins() {
+      const adminList = document.getElementById("adminList");
+      adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
 
   try {
     const res = await fetch("/api/admin/getAllAdmins", {
@@ -259,51 +292,80 @@ async function fetchAdmins() {
       return;
     }
 
-    adminList.innerHTML = admins
-      .map(
-        (admin) => `
-<div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative"
-     data-id="${admin._id}"
-     data-name="${admin.username}"
-     data-email="${admin.email}"
-     data-contact="${admin.contact || "-"}"
-     data-status="${admin.status || "active"}">
+        allAdmins = admins;
+        currentAdminsPage = 1;
+        renderAdminsPage();
+      } catch (err) {
+        adminList.innerHTML = `<div class="text-red-500 text-center py-4">Failed to load admins.</div>`;
+      }
+    }
 
-  <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
-  <div class="col-span-3 text-gray-700">${admin.email}</div>
-  <div class="col-span-2 text-gray-700">${admin.contact || "-"}</div>
-  <div class="col-span-2">
-  <span class="inline-block px-2 py-1 text-xs font-medium rounded ${
-  admin.status?.toLowerCase() === "active"
-    ? "text-green-800 bg-green-100"
-    : "text-red-800 bg-red-100"
-}">
-  ${admin.status}
-</span>
+    function renderAdminsPage() {
+      const adminList = document.getElementById("adminList");
+      const totalPages = Math.ceil(allAdmins.length / adminsPerPage);
+      const startIndex = (currentAdminsPage - 1) * adminsPerPage;
+      const endIndex = startIndex + adminsPerPage;
+      const currentAdmins = allAdmins.slice(startIndex, endIndex);
+      if (!currentAdmins.length) {
+        adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
+        updateAdminsPagination(totalPages);
+        return;
+      }
+      adminList.innerHTML = currentAdmins.map(admin => `
+        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+          <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
+          <div class="col-span-3 text-gray-700">${admin.email}</div>
+          <div class="col-span-2 text-gray-700">${admin.phone || '-'}</div>
+          <div class="col-span-2">
+            <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">${admin.status || 'active'}</span>
+          </div>
+          <div class="col-span-2 text-right">
+            <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+            <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.phone || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+              <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+              <button onclick="deleteAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+      updateAdminsPagination(totalPages);
+    }
 
-  </div>
-  <div class="col-span-2 text-right">
-    <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-    <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-      <button onclick="openViewModal(this)"
-              data-name="${admin.username}"
-              data-email="${admin.email}"
-              data-contact="${admin.contact || "-"}"
-              data-status="${admin.status || "active"}"
-              class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
-      <button onclick="editAdmin('${admin._id}')"
-              class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
-      <button onclick="deleteAdmin('${admin._id}')"
-              class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-    </div>
-  </div>
-</div>`
-      )
-      .join("");
-  } catch (err) {
-    adminList.innerHTML = `<div class="text-red-500 text-center py-4">Failed to load admins.</div>`;
-  }
-}
+    function updateAdminsPagination(totalPages) {
+      let pagination = document.getElementById("adminsPagination");
+      if (!pagination) {
+        pagination = document.createElement("div");
+        pagination.id = "adminsPagination";
+        pagination.className = "flex justify-center items-center space-x-2 mt-4";
+        document.getElementById("adminList").after(pagination);
+      }
+      if (totalPages > 1) {
+        pagination.innerHTML = `
+          <button id="prevAdminsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+          <span id="adminsPageInfo" class="text-sm text-gray-600">Page ${currentAdminsPage} of ${totalPages}</span>
+          <button id="nextAdminsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+        `;
+        document.getElementById("prevAdminsPage").disabled = currentAdminsPage === 1;
+        document.getElementById("nextAdminsPage").disabled = currentAdminsPage === totalPages;
+        document.getElementById("prevAdminsPage").onclick = function () {
+          if (currentAdminsPage > 1) {
+            currentAdminsPage--;
+            renderAdminsPage();
+          }
+        };
+        document.getElementById("nextAdminsPage").onclick = function () {
+          if (currentAdminsPage < totalPages) {
+            currentAdminsPage++;
+            renderAdminsPage();
+          }
+        };
+        pagination.style.display = "flex";
+      } else {
+        pagination.innerHTML = "";
+        pagination.style.display = "none";
+      }
+    }
 
 
 
@@ -388,59 +450,185 @@ async function fetchAdmins() {
                 document.getElementById("viewModal")?.classList.add("hidden");
             }
 
-            async function updateAdmin() {
-                const id = document.getElementById("editAdminId").value;
-                const name = document.getElementById("editName").value.trim();
-                const email = document.getElementById("editEmail").value.trim();
-                const contact = document.getElementById("editContact").value.trim();
-                const status = document.getElementById("editStatus").value;
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+    let allDoctors = [];
+    let currentDoctorsPage = 1;
+    const doctorsPerPage = 5;
+    let todaysAppointmentsCountMap = {};
 
-                const contactPattern = /^[6-9][0-9]{9}$/;
-
-                if (!contactPattern.test(contact)) {
-                    alert("Invalid contact number. It must be 10 digits and start with 6, 7, 8, or 9.");
-                    return;
-                }
-
-                try {
-                    const res = await fetch(`/api/admin/updateAdmin/${id}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ username: name, email, contact, status }),
-                    });
-
-                    if (res.ok) {
-                        closeModals();
-                        await fetchAdmins();
-                    } else {
-                        alert("Failed to update admin");
-                    }
-                } catch (err) {
-                    console.error(err);
-                    alert("An error occurred while updating the admin");
-                }
+    async function fetchAndDisplayDoctors(currentDate) {
+      try {
+        const response = await fetch("/api/doctors");
+        if (!response.ok) {
+          throw new Error("Failed to fetch doctors");
+        }
+        allDoctors = await response.json();
+        allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        currentDoctorsPage = 1;
+        const appointmentsRes = await fetch("/api/confirmations");
+        const allAppointments = appointmentsRes.ok ? await appointmentsRes.json() : [];
+        const formattedDate = new Date(currentDate || new Date()).toLocaleDateString("en-US", {
+          month: "numeric",
+          day: "numeric",
+          year: "numeric",
+        });
+        todaysAppointmentsCountMap = {};
+        allAppointments.forEach((app) => {
+          if (app.dateData && app.dateData.date === formattedDate && app.status !== "canceled" && app.status !== "cancelled") {
+            const doctorName = app.doctorData?.name || app.doctorName || "";
+            if (doctorName) {
+              todaysAppointmentsCountMap[doctorName] = (todaysAppointmentsCountMap[doctorName] || 0) + 1;
             }
+          }
+        });
+        renderDoctorsPage();
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    }
 
-            window.addEventListener("DOMContentLoaded", fetchAdmins);
-
-            const userName = localStorage.getItem("name");
-            document.getElementById("userName").textContent = "Welcome back, " + userName;
-        </script>
-
-        <script>
-            function validateContactInput(input) {
-                input.value = input.value.replace(/[^0-9]/g, "");
-
-                if (input.value.length === 1 && !/^[6-9]$/.test(input.value)) {
-                    input.value = "";
-                }
-
-                if (input.value.length > 10) {
-                    input.value = input.value.slice(0, 10);
-                }
+    async function renderDoctorsPage() {
+      const doctorsList = document.getElementById("doctorsList");
+      const paginationContainer = document.getElementById("doctorsPagination");
+      if (!doctorsList) return;
+      const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+      const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
+      const endIndex = startIndex + doctorsPerPage;
+      const currentDoctors = allDoctors.slice(startIndex, endIndex);
+      doctorsList.innerHTML = "";
+      const selectedDate = document.getElementById("datePicker")?.value || new Date().toISOString().split('T')[0];
+      const availabilityPromises = currentDoctors.map(async (doctor) => {
+        let displayAvailability = doctor.availability || "Available";
+        try {
+          const res = await fetch(`/api/doctors/${doctor._id}/availability?date=${selectedDate}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.start && data.end) {
+              displayAvailability = `${data.start} - ${data.end}`;
             }
-        </script>
-    </body>
+          }
+        } catch (err) { }
+        return displayAvailability;
+      });
+      const availabilities = await Promise.all(availabilityPromises);
+      currentDoctors.forEach((doctor, idx) => {
+        let infoLine = "";
+        if (doctor.experience && doctor.qualification) {
+          infoLine = `${doctor.experience} yrs exp. · ${doctor.qualification}`;
+        } else if (doctor.experience) {
+          infoLine = `${doctor.experience} yrs exp.`;
+        } else if (doctor.qualification) {
+          infoLine = `${doctor.qualification}`;
+        }
+        let count = 0;
+        const doctorName = doctor.name;
+        if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
+          count = todaysAppointmentsCountMap[doctorName];
+        }
+        doctorsList.innerHTML += `
+<div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+  <div class="col-span-3 flex items-center">
+    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx}" style="cursor:pointer;">
+      ${doctor.image
+        ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
+        : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+      }
+    </div>
+    <div>
+      <div class="font-semibold text-gray-800">${doctor.name}</div>
+      <div class="text-xs text-gray-500">${infoLine}</div>
+    </div>
+  </div>
+  <div class="col-span-2 text-gray-600">${doctor.specialty || "General Medicine"}</div>
+  <div class="col-span-2 text-gray-600">${count}</div>
+  <div class="col-span-3 text-gray-600">${availabilities[idx]}</div>
+  <div class="col-span-2 relative">
+    <button class="action-btn text-xl">...</button>
+    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+      <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
+      <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
+      <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+    </div>
+  </div>
+</div>
+`;
+      });
+      updateDoctorsPagination(totalPages);
+    }
+
+    function updateDoctorsPagination(totalPages) {
+      const paginationContainer = document.getElementById("doctorsPagination");
+      const prevButton = document.getElementById("prevDoctorsPage");
+      const nextButton = document.getElementById("nextDoctorsPage");
+      const pageInfo = document.getElementById("doctorsPageInfo");
+      if (!paginationContainer) return;
+      if (totalPages > 1) {
+        paginationContainer.classList.remove("hidden");
+      } else {
+        paginationContainer.classList.add("hidden");
+      }
+      pageInfo.textContent = `Page ${currentDoctorsPage} of ${totalPages}`;
+      prevButton.disabled = currentDoctorsPage === 1;
+      nextButton.disabled = currentDoctorsPage === totalPages;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const prevButton = document.getElementById("prevDoctorsPage");
+      const nextButton = document.getElementById("nextDoctorsPage");
+      if (prevButton) {
+        prevButton.addEventListener("click", () => {
+          if (currentDoctorsPage > 1) {
+            currentDoctorsPage--;
+            renderDoctorsPage();
+          }
+        });
+      }
+      if (nextButton) {
+        nextButton.addEventListener("click", () => {
+          const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+          if (currentDoctorsPage < totalPages) {
+            currentDoctorsPage++;
+            renderDoctorsPage();
+          }
+        });
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.flatpickr) {
+        flatpickr("#doctorDatePicker", {
+          dateFormat: "Y-m-d",
+          defaultDate: new Date(),
+          onChange: function(selectedDates, dateStr) {
+            fetchAndDisplayDoctors(dateStr);
+          }
+        });
+       
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('doctorDatePicker').value = today;
+        fetchAndDisplayDoctors(today);
+      }
+    });
+   
+    function getSelectedDoctorDate() {
+      return document.getElementById('doctorDatePicker')?.value || new Date().toISOString().split('T')[0];
+    }
+   
+    const originalFetchAndDisplayDoctors = fetchAndDisplayDoctors;
+    fetchAndDisplayDoctors = function(date) {
+      originalFetchAndDisplayDoctors(date || getSelectedDoctorDate());
+    }
+  </script>
+ 
+  
+  <script>
+    const userName = localStorage.getItem("name");
+    document.getElementById("userName").textContent = "Welcome back, " + userName;
+  </script>
+  
+  
+</body>
+
 </html>
