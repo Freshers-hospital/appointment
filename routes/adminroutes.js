@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/admin');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
@@ -51,12 +52,30 @@ router.post('/login', async (req, res) => {
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
     const token = jwt.sign({ id: admin._id, username: admin.username, role: admin.role }, JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, role: admin.role,name:admin.username });
+    res.json({ token, role: admin.role, name: admin.username });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
+router.post('/resetPassword', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.status(404).json({ error: 'Email does not exist' });
+    const hashedPassword= await bcrypt.hash(password,10);
+    const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
+    if(!updateAdminPassword){
+      res.status(404).json({ error: 'Email does not exist' });
+    }
+    res.status(201).json({ message: 'Password reset successfully' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -72,7 +91,7 @@ function authMiddleware(req, res, next) {
 }
 router.get('/getAllAdmins', async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1, status: 'active' });
+    const admins = await Admin.find({ role: 1,status: 'active'  })
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -103,4 +122,18 @@ router.put('/updateAdmin/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const admin = await Admin.findByIdAndUpdate(id, { status: 'inactive' }, { new: true });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.json({ message: 'Admin deleted successfully', admin });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = { router, authMiddleware }; 
