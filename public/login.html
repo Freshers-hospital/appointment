@@ -54,9 +54,13 @@
         });
         const result = await res.json();
         if (res.ok && result.token) {
+
           localStorage.setItem("admin_jwt", result.token);
           localStorage.setItem("role", result.role);
           localStorage.setItem("name", result.name);
+          localStorage.setItem("adminId", result.adminId);
+
+           
           if (result.role === 2) {
             window.location.href = "superadmin.html";
           } else {
