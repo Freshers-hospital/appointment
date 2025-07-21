@@ -246,14 +246,14 @@
         <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
           <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
           <div class="col-span-3 text-gray-700">${admin.email}</div>
-          <div class="col-span-2 text-gray-700">${admin.phone || '-'}</div>
+          <div class="col-span-2 text-gray-700">${admin.contact || '-'}</div>
           <div class="col-span-2">
             <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">${admin.status || 'active'}</span>
           </div>
           <div class="col-span-2 text-right">
             <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
             <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.phone || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
               <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
               <button onclick="deleteAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
             </div>

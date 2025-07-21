@@ -28,6 +28,11 @@
             <input type="email" name="email" placeholder="Email"
                 class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required />
+                <input type="tel" name="contact" placeholder="contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+                 class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                 oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+                required />
+
             <input type="password" name="password" placeholder="Password"
                 class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required />
@@ -49,10 +54,11 @@
             var form = e.target;
             var username = form.username.value.trim();
             var email = form.email.value.trim();
+            var contact = form.contact.value.trim();
             var password = form.password.value;
             var confirmPassword = form.confirmPassword.value;
 
-            if (!username || !email || !password || !confirmPassword) {
+            if (!username || !email || !password || !confirmPassword || !contact) {
                 alert("Please fill in all fields.");
                 return;
             }
@@ -72,7 +78,7 @@
                 const res = await fetch("/api/admin/register", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, email, password }),
+                    body: JSON.stringify({ username, email, password, contact }),
                 });
                 if (res.ok) {
                     alert("Registration successful! Please login.");
