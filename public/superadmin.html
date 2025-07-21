@@ -10,32 +10,32 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
-    <body class="bg-gray-100 font-sans">
-        <nav class="bg-white shadow py-2 px-10">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                        />
-                    </svg>
-                    <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
-                </div>
-                <div class="flex items-center">
-                    <div class="mr-4 font-bold text-sm text-black" id="userName"></div>
-                    <button onclick="document.getElementById('logoutModal').classList.remove('hidden')" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l5-5m0 0l-5-5m5 5H9m4 5v1a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h4a2 2 0 012 2v1" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
+<body class="bg-gray-100 font-sans">
+  <nav class="bg-white shadow py-2 px-10">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center">
+        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+        <h1 class="text-xl font-bold text-blue-600"> MediCare </h1>
+      </div>
+      <div class="flex items-center">
+        <div class="mr-4 font-bold text-sm text-black" id="userName"></div>
+        <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
+          class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M16 17l5-5m0 0l-5-5m5 5H9m4 5v1a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h4a2 2 0 012 2v1" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-        <div class="p-8">
+     <div class="p-8">
+     
+
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
                 <div>
                     <h2 class="text-2xl font-semibold px-20">Super Admin Dashboard</h2>
@@ -43,6 +43,7 @@
                 </div>
             </div>
 
+          
             <div class="px-20 mt-4">
                 <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
                     <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active bg-white shadow rounded" data-tab="adminsTab">Admins</button>
@@ -53,6 +54,7 @@
             <div class="px-20">
                 <div class="bg-white p-6 rounded-xl shadow">
                     <div class="space-y-10">
+                       
                         <div id="adminsTab" class="tab-content">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-xl font-semibold">Admins List</h3>
@@ -74,32 +76,16 @@
                                     <div class="col-span-3 text-gray-700">sandeep@example.com</div>
                                     <div class="col-span-2 text-gray-700">+91 9876543210</div>
                                     <div class="col-span-2">
-                                    
-
+                                        <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">Active</span>
                                     </div>
                                     <div class="col-span-2 text-right">
                                         <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
                                         <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-                                            <button
-                                                onclick="openViewModal(this)"
-                                                data-name="Sandeep Kumar"
-                                                data-email="sandeep@example.com"
-                                                data-contact="+91 9876543210"
-                                                data-status="Active"
-                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            >
-                                                View
-                                            </button>
-                                            <button
-                                                onclick="document.getElementById('editModal').classList.remove('hidden')"
-                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            >
+                                              <button onclick="openViewModal(this)" data-name="Sandeep Kumar" data-email="sandeep@example.com" data-contact="+91 9876543210" data-status="Active" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+                                            <button onclick="document.getElementById('editModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                 Edit
                                             </button>
-                                            <button
-                                                onclick="document.getElementById('deleteModal').classList.remove('hidden')"
-                                                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                            >
+                                            <button onclick="document.getElementById('deleteModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                                                 Delete
                                             </button>
                                         </div>
@@ -138,28 +124,38 @@
             </div>
         </div>
 
-        <!-- Edit Modal -->
-        <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-                <h2 class="text-xl font-semibold mb-4">Edit Admin</h2>
-                <input type="hidden" id="editAdminId" />
-                <div class="grid grid-cols-1 gap-4">
-                    <input id="editName" type="text" placeholder="Name" class="w-full border px-4 py-2 rounded" />
-                    <input id="editEmail" type="email" placeholder="Email" class="w-full border px-4 py-2 rounded" />
-                    <input id="editContact" type="text" maxlength="10" oninput="validateContactInput(this)" placeholder="Contact" class="w-full border px-4 py-2 rounded" />
+<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md">
+    
+    <div class="mb-6">
+      <h2 class="text-2xl font-semibold text-blue-700">Edit Admin</h2>
+    </div>
 
-                    <select id="editStatus" class="w-full border px-4 py-2 rounded">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
-                <div class="flex justify-end gap-2 mt-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="updateAdmin()" class="px-4 py-2 bg-blue-600 text-white rounded">Save</button>
-                </div>
-            </div>
-        </div>
+    <div class="grid grid-cols-3 gap-x-4 gap-y-4 text-sm text-gray-800">
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editName">Name:</label>
+      <input id="editName" type="text" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter name" />
 
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editEmail">Email:</label>
+      <input id="editEmail" type="email" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter email" />
+
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editContact">Contact:</label>
+      <input id="editContact" type="text" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter contact number" />
+
+      <label class="col-span-1 font-medium self-center text-gray-600" for="editStatus">Status:</label>
+      <select id="editStatus" class="col-span-2 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-8">
+      <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium rounded-md">Cancel</button>
+      <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md">Save</button>
+    </div>
+  </div>
+</div>
+
+</div>
         <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
                 <h2 class="text-xl font-semibold mb-4">Confirm Delete</h2>
@@ -173,31 +169,37 @@
             </div>
         </div>
 
-        <div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md relative">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold text-blue-700">Admin Details</h2>
-                </div>
 
-                <div class="grid grid-cols-3 gap-x-4 gap-y-4 text-base text-gray-800">
-                    <div class="col-span-1 font-medium text-gray-600">Name:</div>
-                    <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminName">-</div>
+<div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+  <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md relative">
+    
+    <div class="mb-6">
+      <h2 class="text-2xl font-semibold text-blue-700">Admin Details</h2>
+    </div>
 
-                    <div class="col-span-1 font-medium text-gray-600">Email:</div>
-                    <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminEmail">-</div>
+   
+    <div class="grid grid-cols-3 gap-x-4 gap-y-4 text-base text-gray-800">
+      <div class="col-span-1 font-medium text-gray-600">Name:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminName">-</div>
 
-                    <div class="col-span-1 font-medium text-gray-600">Contact:</div>
-                    <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminContact">-</div>
+      <div class="col-span-1 font-medium text-gray-600">Email:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminEmail">-</div>
 
-                    <div class="col-span-1 font-medium text-gray-600">Status:</div>
-                    <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminStatus">-</div>
-                </div>
+      <div class="col-span-1 font-medium text-gray-600">Contact:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminContact">-</div>
 
-                <div class="flex justify-end mt-6">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md">Close</button>
-                </div>
-            </div>
-        </div>
+      <div class="col-span-1 font-medium text-gray-600">Status:</div>
+      <div class="col-span-2 bg-gray-50 px-3 py-2 rounded-md" id="viewAdminStatus">-</div>
+    </div>
+
+   
+    <div class="flex justify-end mt-6">
+        <button onclick="closeModals()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md">
+    Close
+  </button>
+    </div>
+  </div>
+</div>
 
   <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -211,8 +213,8 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
-            const tabs = document.querySelectorAll(".tab");
-            const tabContents = document.querySelectorAll(".tab-content");
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
             tabs.forEach((tab) => {
                 tab.addEventListener('click', () => {
                     tabs.forEach((t) => t.classList.remove('tab-active', 'bg-white', 'shadow', 'rounded'));
@@ -227,46 +229,31 @@
                 });
             });
 
-            window.addEventListener("click", function (e) {
-                document.querySelectorAll(".action-menu").forEach((menu) => {
-                    if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
-                        menu.classList.add("hidden");
-                    }
-                });
-            });
-        </script>
-
-
+    window.addEventListener("click", function (e) {
+      document.querySelectorAll(".action-menu").forEach((menu) => {
+        if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    });
+  </script>
   <script>
     function toggleDropdown(el) {
-        document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-        el.nextElementSibling.classList.toggle("hidden");
+      document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+      el.nextElementSibling.classList.toggle("hidden");
     }
-
     function closeModals() {
-        document.getElementById("editModal")?.classList.add("hidden");
-        document.getElementById("deleteModal")?.classList.add("hidden");
-        document.getElementById("logoutModal")?.classList.add("hidden");
-        document.getElementById("viewModal")?.classList.add("hidden");
+      document.getElementById("editModal")?.classList.add("hidden");
+      document.getElementById("deleteModal")?.classList.add("hidden");
+      document.getElementById("logoutModal")?.classList.add("hidden");
+      document.getElementById("viewModal")?.classList.add("hidden");
     }
 
-    async function logout() {
-        const adminId = localStorage.getItem("adminId");
-
-        if (adminId) {
-            await fetch(`/api/admin/updateAdmin/${adminId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ status: "inactive" })
-            });
-        }
-
-        localStorage.clear();
-        window.location.href = "login.html";
+    function logout() {
+      window.location.href = "login.html";
     }
-</script>
+  </script>
+
 
   <script>
 
@@ -278,19 +265,15 @@
       const adminList = document.getElementById("adminList");
       adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
 
-  try {
-    const res = await fetch("/api/admin/getAllAdmins", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("admin_jwt")}`
-      }
-    });
+      try {
+        const res = await fetch("/api/admin/getAllAdmins");
 
-    const admins = await res.json();
+        const admins = await res.json();
 
-    if (!admins.length) {
-      adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
-      return;
-    }
+        if (!admins.length) {
+          adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
+          return;
+        }
 
         allAdmins = admins;
         currentAdminsPage = 1;
@@ -367,25 +350,13 @@
       }
     }
 
+    window.addEventListener("DOMContentLoaded", fetchAdmins);
 
 
-            function editAdmin(id) {
-                const adminDiv = document.querySelector(`[data-id="${id}"]`);
-                if (!adminDiv) return;
-
-                document.getElementById("editAdminId").value = id;
-                document.getElementById("editName").value = adminDiv.getAttribute("data-name");
-                document.getElementById("editEmail").value = adminDiv.getAttribute("data-email");
-                document.getElementById("editContact").value = adminDiv.getAttribute("data-contact");
-                document.getElementById("editStatus").value = adminDiv.getAttribute("data-status");
-
-                document.getElementById("editModal").classList.remove("hidden");
-            }
-
-            function toggleDropdown(el) {
-                document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-                el.nextElementSibling.classList.toggle("hidden");
-            }
+    function toggleDropdown(el) {
+      document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+      el.nextElementSibling.classList.toggle("hidden");
+    }
 
   function openViewModal(btn) {
     document.getElementById('viewModal').classList.remove('hidden');
@@ -395,9 +366,26 @@
     document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
 }
 
-    function editAdmin(id) {
-      document.getElementById("editModal").classList.remove("hidden");
-    }
+
+function editAdmin(id) {
+  const admin = allAdmins.find(a => a._id === id);
+  if (!admin) return;
+
+  document.getElementById("editName").value = admin.username || '';
+  document.getElementById("editEmail").value = admin.email || '';
+  document.getElementById("editContact").value = admin.phone || '';
+  document.getElementById("editStatus").value = admin.status?.toLowerCase() || 'active';
+
+  document.getElementById("editModal").classList.remove("hidden");
+
+  // Store ID globally to use in Save
+  window.currentEditingAdminId = id;
+}
+
+
+
+
+
 
 
     let currentDeleteId = null; 
@@ -443,12 +431,12 @@
 }
 
 
-            function closeModals() {
-                document.getElementById("editModal")?.classList.add("hidden");
-                document.getElementById("deleteModal")?.classList.add("hidden");
-                document.getElementById("logoutModal")?.classList.add("hidden");
-                document.getElementById("viewModal")?.classList.add("hidden");
-            }
+    function closeModals() {
+      document.getElementById("editModal")?.classList.add("hidden");
+      document.getElementById("deleteModal")?.classList.add("hidden");
+      document.getElementById("logoutModal")?.classList.add("hidden");
+      document.getElementById("viewModal")?.classList.add("hidden");
+    }
 
     function logout() {
       localStorage.clear();
@@ -628,6 +616,62 @@
     document.getElementById("userName").textContent = "Welcome back, " + userName;
   </script>
   
+
+<script>
+  document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
+    const id = window.currentEditingAdminId;
+    const name = document.getElementById("editName").value.trim();
+    const email = document.getElementById("editEmail").value.trim();
+    const contact = document.getElementById("editContact").value.trim();
+    const status = document.getElementById("editStatus").value;
+
+    if (!name || !email) {
+      alert("Name and Email are required");
+      return;
+    }
+
+    const token = localStorage.getItem("admin_jwt");
+    if (!token) {
+      alert("Unauthorized. Please login again.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: name,
+          email: email,
+          phone: contact,
+          status: status
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to update admin");
+      }
+
+      alert("Admin updated successfully!");
+      closeModals();
+      fetchAdmins(); // Refresh
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
   
 </body>
 
