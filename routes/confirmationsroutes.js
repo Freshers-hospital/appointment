@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
             doctor: doctor._id,
             doctorName: doctor.name,
             date: date._id,
-            status: "pending",
+            status: "confirmed",
         });
 
         await confirmation.save();
@@ -59,9 +59,17 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        console.log("Fetching confirmations...");
+        const { status } = req.query;
+        let filter = {};
+        if (status && status !== "all") {
+            if (status === "cancelled") {
+                filter.status = { $in: ["cancelled", "canceled"] };
+            } else {
+                filter.status = status;
+            }
+        }
 
-        const confirmations = await Confirmation.find()
+        const confirmations = await Confirmation.find(filter)
             .populate({
                 path: "doctor",
                 select: "name specialty experience education image",
@@ -161,7 +169,7 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "Confirmation not found" });
     }
 
-    // ✅ Reschedule
+
     if (action === "reschedule") {
       if (!date || !time) {
         return res.status(400).json({ error: "Date and time are required for rescheduling." });
@@ -191,14 +199,13 @@ router.put("/:id", async (req, res) => {
       return res.json({ message: "Appointment rescheduled", confirmation });
     }
 
-    // ✅ Cancel
     if (action === "cancel") {
       confirmation.status = "cancelled";
       await confirmation.save();
       return res.json({ message: "Appointment cancelled", confirmation });
     }
 
-    // ✅ Edit appointment (including doctor or patient info)
+  
     if (action === "edit") {
       if (patientData) {
         const patient = await Patient.findById(confirmation.patient);
@@ -230,7 +237,7 @@ router.put("/:id", async (req, res) => {
       return res.json({ message: "Appointment updated", confirmation });
     }
 
-    // ❌ Invalid action fallback
+   
     res.status(400).json({ error: "Invalid action or missing data" });
   } catch (error) {
     console.error("ERROR in PUT /api/confirmations/:id:", error.message);
