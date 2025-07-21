@@ -200,9 +200,9 @@ router.put("/:id", async (req, res) => {
     }
 
     if (action === "cancel") {
-      confirmation.status = "canceled";
+      confirmation.status = "cancelled";
       await confirmation.save();
-      return res.json({ message: "Appointment canceled", confirmation });
+      return res.json({ message: "Appointment cancelled", confirmation });
     }
 
   
