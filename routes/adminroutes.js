@@ -91,7 +91,7 @@ function authMiddleware(req, res, next) {
 }
 router.get('/getAllAdmins', async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1, status: 'active' });
+    const admins = await Admin.find({ role: 1,status: 'active'  })
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -122,4 +122,18 @@ router.put('/updateAdmin/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const admin = await Admin.findByIdAndUpdate(id, { status: 'inactive' }, { new: true });
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.json({ message: 'Admin deleted successfully', admin });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = { router, authMiddleware }; 
