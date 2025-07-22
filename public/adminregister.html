@@ -9,44 +9,61 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-blue-50 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div class="flex flex-col items-center">
-            <div class="bg-blue-500 rounded-full p-3 mb-4">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-            </div>
-            <h2 class="text-xl font-semibold mb-4">Admin Registration</h2>
+<body>
+    <div class="p-3 flex justify-between items-center bg-white shadow">
+        <div class="flex items-center">
+            <svg class="w-6 h-6 text-blue-600 mr-2 ml-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
         </div>
+        <button onclick="window.location.href='superadmin.html'"
+            class="text-gray-600 hover:text-gray-800 flex items-center">
+            Back to Dashboard
+            <svg class="w-4 h-4 mr-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+        </button>
+    </div>
+    <div class="bg-blue-50 flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div class="flex flex-col items-center">
+                <div class="bg-blue-500 rounded-full p-3 mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold mb-4">Admin Registration</h2>
+            </div>
 
-        <form id="adminRegForm" autocomplete="off" novalidate>
-            <input type="text" name="username" placeholder="Username"
-                class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-            <input type="email" name="email" placeholder="Email"
-                class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-                <input type="tel" name="contact" placeholder="contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
-                 class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                 oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
-                required />
+            <form id="adminRegForm" autocomplete="off" novalidate>
+                <input type="text" name="username" placeholder="Username"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+                <input type="email" name="email" placeholder="Email"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+                <input type="tel" name="contact" placeholder="contact" pattern="[6-9][0-9]{9}" maxlength="10"
+                    minlength="10"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+                    required />
 
-            <input type="password" name="password" placeholder="Password"
-                class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-            <input type="password" name="confirmPassword" placeholder="Confirm Password"
-                class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
+                <input type="password" name="password" placeholder="Password"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+                <input type="password" name="confirmPassword" placeholder="Confirm Password"
+                    class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
 
-            <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
-        </form>
+                <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
+            </form>
 
-        <p class="text-center text-sm mt-4 text-blue-600 hover:underline">
-            <a href="login.html">Already have an account? Login</a>
-        </p>
+            <!-- <p class="text-center text-sm mt-4 text-blue-600 hover:underline">
+                <a href="login.html">Already have an account? Login</a>
+            </p> -->
+        </div>
     </div>
     <script>
         document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
@@ -81,8 +98,8 @@
                     body: JSON.stringify({ username, email, password, contact }),
                 });
                 if (res.ok) {
-                    alert("Registration successful! Please login.");
-                    window.location.href = "login.html";
+                    alert("Registration successful!");
+                    window.location.href = "superadmin.html";
                 } else {
                     const err = await res.json();
                     alert(err.error || "Registration failed");
