@@ -7,9 +7,11 @@ const adminSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: Number, required: true, default: 1, enum: [1, 2] }, // 1-admin, 2-superadmin
   contact: { type: String, required: true },
+
   status: { type: String, required: true, default: 'inactive', enum:['active','inactive']},
-  lastSeen: { type: Date, default: Date.now },
-  isDeleted: { type: Boolean, required: true,default:false },
+  isDeleted:{type:Boolean,default:false },
+  lastSeen: { type: Date, default: Date.now }
+
 }, { timestamps: true });
 
 adminSchema.pre('save', async function (next) {
