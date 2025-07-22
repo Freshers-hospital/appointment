@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-gray-100 font-sans">
-  <nav class="bg-white shadow py-2 px-10">
+  <nav class="bg-white shadow py-2 px-[110px]">
     <div class="flex justify-between items-center">
       <div class="flex items-center">
         <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,14 +298,14 @@
         <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
           <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
           <div class="col-span-3 text-gray-700">${admin.email}</div>
-          <div class="col-span-2 text-gray-700">${admin.phone || '-'}</div>
+          <div class="col-span-2 text-gray-700">${admin.contact || '-'}</div>
           <div class="col-span-2">
             <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">${admin.status || 'active'}</span>
           </div>
           <div class="col-span-2 text-right">
             <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
             <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.phone || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
               <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
               <button onclick="deleteAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
             </div>
@@ -366,9 +366,26 @@
     document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
 }
 
-    function editAdmin(id) {
-      document.getElementById("editModal").classList.remove("hidden");
-    }
+
+function editAdmin(id) {
+  const admin = allAdmins.find(a => a._id === id);
+  if (!admin) return;
+
+  document.getElementById("editName").value = admin.username || '';
+  document.getElementById("editEmail").value = admin.email || '';
+  document.getElementById("editContact").value = admin.phone || '';
+  document.getElementById("editStatus").value = admin.status?.toLowerCase() || 'active';
+
+  document.getElementById("editModal").classList.remove("hidden");
+
+  // Store ID globally to use in Save
+  window.currentEditingAdminId = id;
+}
+
+
+
+
+
 
 
     let currentDeleteId = null; 
@@ -599,6 +616,62 @@
     document.getElementById("userName").textContent = "Welcome back, " + userName;
   </script>
   
+
+<script>
+  document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
+    const id = window.currentEditingAdminId;
+    const name = document.getElementById("editName").value.trim();
+    const email = document.getElementById("editEmail").value.trim();
+    const contact = document.getElementById("editContact").value.trim();
+    const status = document.getElementById("editStatus").value;
+
+    if (!name || !email) {
+      alert("Name and Email are required");
+      return;
+    }
+
+    const token = localStorage.getItem("admin_jwt");
+    if (!token) {
+      alert("Unauthorized. Please login again.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: name,
+          email: email,
+          phone: contact,
+          status: status
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to update admin");
+      }
+
+      alert("Admin updated successfully!");
+      closeModals();
+      fetchAdmins(); // Refresh
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
   
 </body>
 
