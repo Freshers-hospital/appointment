@@ -8,6 +8,95 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    .flatpickr-calendar {
+      border-radius: 16px !important;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
+      border: none !important;
+      width: 320px !important;
+      background: #fff !important;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    .flatpickr-months {
+      background: #fff !important;
+      color: #222 !important;
+      border-radius: 16px 16px 0 0 !important;
+      padding: 12px 0 0 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .flatpickr-current-month {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 1.3em !important;
+      font-weight: 700 !important;
+      color: #222 !important;
+      height: 40px !important;
+      margin-bottom: 0 !important;
+    }
+    .flatpickr-current-month .flatpickr-monthDropdown-months,
+    .flatpickr-current-month .numInputWrapper {
+      color: #222 !important;
+      font-weight: 700 !important;
+    }
+    .flatpickr-day {
+      color: #222 !important;
+      font-weight: 500 !important;
+      background: transparent !important;
+      border-radius: 50% !important;
+      border: none !important;
+      transition: background 0.2s, color 0.2s;
+      margin: 2px 0 !important;
+    }
+    .flatpickr-day.selected,
+    .flatpickr-day.today {
+      background: #1677ff !important;
+      color: #fff !important;
+      border-radius: 50% !important;
+    }
+    .flatpickr-day:hover,
+    .flatpickr-day:focus {
+      background: #e6f0ff !important;
+      color: #1677ff !important;
+    }
+    .flatpickr-weekdays {
+      background: #fff !important;
+      color: #bdbdbd !important;
+      font-weight: 600 !important;
+      border: none !important;
+    }
+    .flatpickr-weekday {
+      color: #bdbdbd !important;
+      font-weight: 600 !important;
+      border: none !important;
+    }
+    .flatpickr-day.disabled,
+    .flatpickr-day.nextMonthDay,
+    .flatpickr-day.prevMonthDay {
+      color: #e0e0e0 !important;
+      background: transparent !important;
+      cursor: not-allowed !important;
+    }
+    .flatpickr-months .flatpickr-prev-month,
+    .flatpickr-months .flatpickr-next-month {
+      color: #bdbdbd !important;
+      fill: #bdbdbd !important;
+      top: 16px !important;
+    }
+    .flatpickr-day.today:not(.selected) {
+      background: #f3f4f6 !important;
+      color: #222 !important;
+      border-radius: 50% !important;
+      border: none !important;
+    }
+    .flatpickr-current-month .numInputWrapper,
+    .flatpickr-current-month .flatpickr-year {
+      display: none !important;
+    }
+    .flatpickr-current-month {
+      justify-content: center !important;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -79,7 +168,7 @@
                                         <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">Active</span>
                                     </div>
                                     <div class="col-span-2 text-right">
-                                        <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+                                        <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
                                         <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
                                               <button onclick="openViewModal(this)" data-name="Sandeep Kumar" data-email="sandeep@example.com" data-contact="+91 9876543210" data-status="Active" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
                                             <button onclick="document.getElementById('editModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -99,9 +188,20 @@
                           <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
                              <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
-                            <div class="flex items-center gap-4">
-                              <input type="text" id="doctorDatePicker" class="w-44 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Select date" readonly />
-                              <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add Doctor</button>
+                            <div class="flex flex-row items-center space-x-3">
+                              <div class="relative w-60 mt-0 h-12">
+                                <div id="datePickerDisplay"
+                                  class="flex items-center justify-center w-44 h-12 py-0 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none text-base">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-400" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+                                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+                                  </svg>
+                                  <span id="datePickerText" class="text-gray-900 font-semibold text-base">2025-06-23</span>
+                                </div>
+                               <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly autocomplete="off" />
+                              </div>
+                              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Doctor</button>
                             </div>
                           </div>
                         
@@ -211,6 +311,188 @@
       </div>
     </div>
   </div>
+  <!-- DOCTOR MODALS START -->
+<div id="viewDoctorProfileModalOverlay"
+class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+<div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Name</p>
+            <p id="profileDoctorName" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Specialization</p>
+            <p id="profileDoctorSpecialty" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Experience</p>
+            <p id="profileDoctorExperience" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Availability</p>
+            <p id="profileDoctorAvailability" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Age</p>
+            <p id="profileDoctorAge" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Gender</p>
+            <p id="profileDoctorGender" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Phone Number</p>
+            <p id="profileDoctorPhone" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Address</p>
+            <p id="profileDoctorAddress" class="text-gray-800 font-semibold text-base truncate"></p>
+        </div>
+        <div class="sm:col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Qualification</p>
+            <p id="profileDoctorQualification" class="text-gray-800 font-semibold text-base break-words"></p>
+        </div>
+    </div>
+    <div class="flex justify-center mt-6">
+        <button id="closeViewDoctorProfileBtn"
+            class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Close</button>
+    </div>
+</div>
+</div>
+<div id="editDoctorProfileModalOverlay"
+class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+<div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg max-h-screen overflow-y-auto relative">
+    <button id="closeEditDoctorProfileModal"
+        class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+    <h2 class="text-xl font-bold text-center mb-4 text-gray-800">Edit Doctor Profile</h2>
+    <form id="editDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="sm:col-span-2 flex flex-col items-center mb-2">
+            <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
+            <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem">
+                <img id="editDoctorPhotoPreview" src="" alt=""
+                    class="w-24 h-24 rounded-full object-cover border shadow"
+                    style="display: none; position: absolute; top: 0; left: 0" />
+                <div id="editDoctorDefaultIcon" style="
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 96px;
+                            height: 96px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: #f3f4f6;
+                            border-radius: 50%;
+                        ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none" />
+                        <path stroke="currentColor" stroke-width="2" d="M4 20c0-4 4-7 8-7s8 3 8 7"
+                            fill="none" />
+                    </svg>
+                </div>
+            </div>
+            <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+            <button type="button" onclick="document.getElementById('editDoctorPhoto').click()"
+                class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
+                Choose Photo
+            </button>
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Name</label>
+            <input type="text" id="editDoctorName" name="name"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+            <input type="text" id="editDoctorSpecialization" name="specialty"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
+            <input type="text" id="editDoctorExperience" name="experience"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Availability</label>
+            <input type="text" id="editDoctorAvailability" name="availability"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Age</label>
+            <input type="number" id="editDoctorAge" name="age"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" min="1" max="120" />
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Gender</label>
+            <select id="editDoctorGender" name="gender"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
+            <input type="tel" id="editDoctorPhone" name="phone"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500"
+                pattern="^[6-9][0-9]{9}$" maxlength="10"
+                title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
+            <input type="text" id="editDoctorQualification" name="qualification"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div class="sm:col-span-2 bg-gray-50 p-3 rounded-lg shadow-sm">
+            <label class="text-sm font-medium text-gray-600 mb-1 block">Address</label>
+            <textarea id="editDoctorAddress" name="address"
+                class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
+        </div>
+        <div class="sm:col-span-2 flex justify-between pt-3 gap-3">
+            <button type="button" id="cancelEditDoctorBtn"
+                class="w-1/2 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-semibold hover:bg-gray-100">Cancel</button>
+            <button type="submit"
+                class="w-1/2 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Save</button>
+        </div>
+    </form>
+</div>
+</div>
+<div id="availabilityModalOverlay"
+class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+<div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+    <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
+            <p class="text-gray-500 text-sm mb-1">Select Date</p>
+            <input type="text" id="availabilityDate" name="date"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="MM/DD/YYYY" required readonly />
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">Start Time</p>
+            <input type="text" id="availabilityStart" name="start"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="10:00 AM" required />
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm mb-1">End Time</p>
+            <input type="text" id="availabilityEnd" name="end"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="05:00 PM" required />
+        </div>
+        <div class="col-span-2 flex justify-center gap-4 mt-4">
+            <button type="button" id="cancelAvailability"
+                class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
+            <button type="submit"
+                class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Save</button>
+        </div>
+    </form>
+    <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+</div>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const tabs = document.querySelectorAll('.tab');
@@ -238,10 +520,6 @@
     });
   </script>
   <script>
-    function toggleDropdown(el) {
-      document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-      el.nextElementSibling.classList.toggle("hidden");
-    }
     function closeModals() {
       document.getElementById("editModal")?.classList.add("hidden");
       document.getElementById("deleteModal")?.classList.add("hidden");
@@ -303,7 +581,7 @@
             <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">${admin.status || 'active'}</span>
           </div>
           <div class="col-span-2 text-right">
-            <button onclick="toggleDropdown(this)" class="text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+            <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
             <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
               <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
               <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
@@ -353,12 +631,7 @@
     window.addEventListener("DOMContentLoaded", fetchAdmins);
 
 
-    function toggleDropdown(el) {
-      document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-      el.nextElementSibling.classList.toggle("hidden");
-    }
-
-  function openViewModal(btn) {
+    function openViewModal(btn) {
     document.getElementById('viewModal').classList.remove('hidden');
     document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
     document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
@@ -585,19 +858,46 @@ function editAdmin(id) {
       }
     });
     document.addEventListener("DOMContentLoaded", function () {
-      if (window.flatpickr) {
-        flatpickr("#doctorDatePicker", {
-          dateFormat: "Y-m-d",
-          defaultDate: new Date(),
-          onChange: function(selectedDates, dateStr) {
-            fetchAndDisplayDoctors(dateStr);
+      const datePicker = document.getElementById("datePicker");
+      const datePickerText = document.getElementById("datePickerText");
+      flatpickr("#datePicker", {
+        dateFormat: "Y-m-d",
+        allowInput: false,
+        defaultDate: new Date(),
+        static: true,
+        onReady: function (selectedDates, dateStr, instance) {
+          const monthElem = instance.calendarContainer.querySelector(".flatpickr-current-month");
+          if (monthElem) {
+            const yearInput = monthElem.querySelector(".numInputWrapper");
+            if (yearInput) yearInput.style.display = "none";
+            const yearDropdown = monthElem.querySelector(".flatpickr-yearDropdown-years");
+            if (yearDropdown) yearDropdown.style.display = "none";
+            const yearSpan = monthElem.querySelector(".flatpickr-year");
+            if (yearSpan) yearSpan.style.display = "none";
+            monthElem.style.justifyContent = "center";
+            const monthName = monthElem.querySelector(".cur-month");
+            if (monthName) {
+              monthName.style.fontWeight = "bold";
+              monthName.style.fontSize = "1.3em";
+            }
           }
-        });
-       
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('doctorDatePicker').value = today;
-        fetchAndDisplayDoctors(today);
-      }
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+          const displayText = selectedDates[0]?.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) || "";
+          document.getElementById("datePickerText").textContent = displayText;
+          document.getElementById("datePicker").value = dateStr;
+          fetchAndDisplayDoctors(dateStr);
+        },
+      });
+      document.getElementById("datePickerDisplay").addEventListener("click", function () {
+        if (document.getElementById("datePicker")._flatpickr) {
+          document.getElementById("datePicker")._flatpickr.open();
+        }
+      });
+      document.getElementById("datePicker").style.color = "transparent";
+      const today = new Date();
+      document.getElementById("datePicker").value = today.toISOString().split("T")[0];
+      document.getElementById("datePickerText").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
     });
    
     function getSelectedDoctorDate() {
@@ -664,14 +964,220 @@ function editAdmin(id) {
     }
   });
 </script>
+<script>
+  
 
+(function() {
+  // View Profile
+  document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("view-profile-btn")) {
+      e.preventDefault();
+      const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+      document.getElementById("profileDoctorName").textContent = doctor.name || "";
+      document.getElementById("profileDoctorSpecialty").textContent = doctor.specialty || "";
+      document.getElementById("profileDoctorExperience").textContent = doctor.experience || "";
+      document.getElementById("profileDoctorQualification").textContent = doctor.qualification || "";
+      document.getElementById("profileDoctorAvailability").textContent = doctor.availability || "";
+      document.getElementById("profileDoctorAge").textContent = doctor.age || "";
+      document.getElementById("profileDoctorGender").textContent = doctor.gender || "";
+      document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
+      document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
+      document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
+      document.body.classList.add("blurred-bg");
+      e.target.closest(".action-menu").classList.add("hidden");
+    }
+  });
+  document.getElementById("closeViewDoctorProfileBtn").onclick = function() {
+    document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
+    document.body.classList.remove("blurred-bg");
+  };
 
+  // Edit Profile
+  let currentDoctorForEditProfile = null;
+  document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("edit-doctor-profile-btn")) {
+      e.preventDefault();
+      const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+      currentDoctorForEditProfile = doctor;
+      document.getElementById("editDoctorName").value = doctor.name || "";
+      document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+      document.getElementById("editDoctorExperience").value = doctor.experience || "";
+      document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+      document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+      document.getElementById("editDoctorAge").value = doctor.age || "";
+      document.getElementById("editDoctorGender").value = doctor.gender || "";
+      document.getElementById("editDoctorPhone").value = doctor.phone || "";
+      document.getElementById("editDoctorAddress").value = doctor.address || "";
+      document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
+      document.body.classList.add("blurred-bg");
+      e.target.closest(".action-menu").classList.add("hidden");
+    }
+  });
+  document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
+  document.getElementById("cancelEditDoctorBtn").onclick = closeEditDoctorProfileModal;
+  function closeEditDoctorProfileModal() {
+    document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+    document.body.classList.remove("blurred-bg");
+    currentDoctorForEditProfile = null;
+  }
+  document.getElementById("editDoctorForm").onsubmit = async function(e) {
+    e.preventDefault();
+    if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
+      alert("No doctor selected for editing.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("name", document.getElementById("editDoctorName").value);
+    formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
+    formData.append("experience", document.getElementById("editDoctorExperience").value);
+    formData.append("qualification", document.getElementById("editDoctorQualification").value);
+    formData.append("availability", document.getElementById("editDoctorAvailability").value);
+    formData.append("age", document.getElementById("editDoctorAge").value);
+    formData.append("gender", document.getElementById("editDoctorGender").value);
+    formData.append("phone", document.getElementById("editDoctorPhone").value);
+    formData.append("address", document.getElementById("editDoctorAddress").value);
+    const photoInput = document.getElementById("editDoctorPhoto");
+    if (photoInput.files && photoInput.files[0]) {
+      formData.append("photo", photoInput.files[0]);
+    }
+    try {
+      const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
+        method: "PUT",
+        body: formData,
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to update doctor");
+      }
+      closeEditDoctorProfileModal();
+      await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+      alert("Doctor profile updated successfully!");
+    } catch (err) {
+      alert("Error updating doctor: " + err.message);
+    }
+  };
+  document.getElementById("editDoctorPhoto").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    const photoPreview = document.getElementById("editDoctorPhotoPreview");
+    const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        photoPreview.src = e.target.result;
+        photoPreview.style.display = "block";
+        defaultIcon.style.display = "none";
+      };
+      reader.readAsDataURL(file);
+    } else {
+      photoPreview.src = "";
+      photoPreview.style.display = "none";
+      defaultIcon.style.display = "flex";
+    }
+  });
 
+  // Manage Availability
+  let currentDoctorId = null;
+  document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("manage-availability-btn")) {
+      e.preventDefault();
+      const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+      currentDoctorId = doctor._id;
+      document.getElementById("availabilityModalOverlay").classList.remove("hidden");
+      document.body.classList.add("blurred-bg");
+      document.getElementById("availabilityForm").reset();
+      const today = new Date();
+      document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
+      fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
+      e.target.closest(".action-menu").classList.add("hidden");
+    }
+  });
+  document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
+  document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
+  function closeAvailabilityModal() {
+    document.getElementById("availabilityModalOverlay").classList.add("hidden");
+    document.body.classList.remove("blurred-bg");
+    currentDoctorId = null;
+    document.getElementById("availabilityForm").reset();
+  }
+  flatpickr("#availabilityDate", {
+    dateFormat: "Y-m-d",
+    allowInput: false,
+    static: true,
+    onChange: function(selectedDates, dateStr) {
+      fetchAndFillAvailabilityForDate(dateStr);
+    },
+  });
+  flatpickr("#availabilityStart", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "h:i K",
+    time_24hr: false,
+    allowInput: false,
+    static: true,
+  });
+  flatpickr("#availabilityEnd", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "h:i K",
+    time_24hr: false,
+    allowInput: false,
+    static: true,
+  });
+  async function fetchAndFillAvailabilityForDate(dateStr) {
+    if (!currentDoctorId) return;
+    try {
+      const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById("availabilityStart").value = data.start || "";
+        document.getElementById("availabilityEnd").value = data.end || "";
+      } else {
+        document.getElementById("availabilityStart").value = "";
+        document.getElementById("availabilityEnd").value = "";
+      }
+    } catch (err) {
+      document.getElementById("availabilityStart").value = "";
+      document.getElementById("availabilityEnd").value = "";
+    }
+  }
+  document.getElementById("availabilityForm").onsubmit = async function(e) {
+    e.preventDefault();
+    const date = document.getElementById("availabilityDate").value;
+    const start = document.getElementById("availabilityStart").value;
+    const end = document.getElementById("availabilityEnd").value;
+    if (!currentDoctorId) return;
+    try {
+      const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, start, end }),
+      });
+      if (!response.ok) throw new Error("Failed to save availability");
+      closeAvailabilityModal();
+      await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+    } catch (err) {
+      alert("Error saving availability: " + err.message);
+    }
+  };
+})();
 
-
-
-
-
+(function() {
+  document.addEventListener("click", function(e) {
+    // Open/close the action menu for the clicked ... button
+    if (e.target.classList.contains("action-btn")) {
+      e.stopPropagation();
+      // Close all other menus
+      document.querySelectorAll(".action-menu").forEach(menu => menu.classList.add("hidden"));
+      // Open the menu next to the clicked button
+      const menu = e.target.nextElementSibling;
+      if (menu) menu.classList.toggle("hidden");
+    } else {
+      // Clicked elsewhere: close all menus
+      document.querySelectorAll(".action-menu").forEach(menu => menu.classList.add("hidden"));
+    }
+  });
+})();
+</script>
   
 </body>
 
