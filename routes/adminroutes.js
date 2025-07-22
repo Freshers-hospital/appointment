@@ -51,6 +51,7 @@ router.post('/login', async (req, res) => {
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+    await Admin.findByIdAndUpdate(admin._id, { status: 'active' });
     const token = jwt.sign({ id: admin._id, username: admin.username, role: admin.role }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, role: admin.role, name: admin.username });
   } catch (err) {
@@ -91,7 +92,7 @@ function authMiddleware(req, res, next) {
 }
 router.get('/getAllAdmins', async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1,status: 'active'  })
+    const admins = await Admin.find({ role: 1})
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });

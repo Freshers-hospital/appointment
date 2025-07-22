@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -8,7 +7,7 @@ const adminSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: Number, required: true, default: 1, enum: [1, 2] }, // 1-admin, 2-superadmin
   contact: { type: String, required: true },
-  status: { type: String, default: '' },
+  status: { type: String, required: true, default: 'inactive', enum:['active','inactive']},
   lastSeen: { type: Date, default: Date.now }
 }, { timestamps: true });
 
