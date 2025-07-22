@@ -103,7 +103,7 @@ function authMiddleware(req, res, next) {
 }
 router.get('/getAllAdmins', async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1 })
+    const admins = await Admin.find({ role: 1,isDeleted:false })
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });
