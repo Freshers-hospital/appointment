@@ -81,8 +81,8 @@
                     body: JSON.stringify({ username, email, password, contact }),
                 });
                 if (res.ok) {
-                    alert("Registration successful! Please login.");
-                    window.location.href = "login.html";
+                    alert("Registration successful!");
+                    window.location.href = "superadmin.html";
                 } else {
                     const err = await res.json();
                     alert(err.error || "Registration failed");

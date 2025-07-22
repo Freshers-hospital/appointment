@@ -9,6 +9,7 @@ const adminSchema = new mongoose.Schema({
   role: { type: Number, required: true, default: 1, enum: [1, 2] }, // 1-admin, 2-superadmin
   contact: { type: String, required: true },
   status: { type: String, default: '' },
+  isDeleted:{type:Boolean,default:false },
   lastSeen: { type: Date, default: Date.now }
 }, { timestamps: true });
 
