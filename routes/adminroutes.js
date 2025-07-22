@@ -51,13 +51,25 @@ router.post('/login', async (req, res) => {
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+    await Admin.findByIdAndUpdate(admin._id, { status: 'active' });
     const token = jwt.sign({ id: admin._id, username: admin.username, role: admin.role }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, role: admin.role, name: admin.username });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
+router.post('/logout', async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ error: 'Token not provided' });
+    const decryptToken = jwt.verify(token, JWT_SECRET);
+    const { id, username, role } = decryptToken;
+    await Admin.findByIdAndUpdate(id,{ status: 'inactive' });
+    res.json({ message:`${username} logged out successfully` });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 router.post('/resetPassword', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -66,9 +78,9 @@ router.post('/resetPassword', async (req, res) => {
     }
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ error: 'Email does not exist' });
-    const hashedPassword= await bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
-    if(!updateAdminPassword){
+    if (!updateAdminPassword) {
       res.status(404).json({ error: 'Email does not exist' });
     }
     res.status(201).json({ message: 'Password reset successfully' });
@@ -91,7 +103,7 @@ function authMiddleware(req, res, next) {
 }
 router.get('/getAllAdmins', async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1,status: 'active'  })
+    const admins = await Admin.find({ role: 1,isDeleted:false })
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });
