@@ -182,8 +182,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Doctors Tab Content -->
                         <div id="doctorsTab" class="tab-content hidden">
                           <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
@@ -311,7 +309,7 @@
       </div>
     </div>
   </div>
-  <!-- DOCTOR MODALS START -->
+ 
 <div id="viewDoctorProfileModalOverlay"
 class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
 <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
@@ -491,6 +489,60 @@ class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-5
         </div>
     </form>
     <button id="closeAvailabilityModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+    </div>
+  </div>
+<div id="addDoctorModalOverlay"
+class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+<div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+    <button id="closeAddDoctorModal"
+        class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
+    <form id="addDoctorForm">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label for="doctorFirstName" class="block text-gray-700 text-sm font-semibold mb-2">First Name</label>
+                <input type="text" id="doctorFirstName" name="firstName"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    required />
+            </div>
+            <div>
+                <label for="doctorLastName" class="block text-gray-700 text-sm font-semibold mb-2">Last Name</label>
+                <input type="text" id="doctorLastName" name="lastName"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    required />
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="mb-4">
+                <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
+                <input type="text" id="doctorSpecialty" name="specialty"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    required />
+            </div>
+            <div class="mb-4">
+                <label for="doctorExperience" class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
+                <input type="text" id="doctorExperience" name="experience"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            </div>
+            <div class="mb-4 col-span-2">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+                <input type="text" name="qualification"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., Mbbs,Phd..." required />
+            </div>
+            <div class="mb-4 col-span-2">
+                <label for="doctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
+                <input type="text" id="doctorAvailability" name="availability"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., 9:00 AM - 5:00 PM" required />
+            </div>
+        </div>
+        <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
+        <div class="flex justify-end mt-4">
+            <button type="submit"
+                class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
+        </div>
+    </form>
 </div>
 </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -631,7 +683,7 @@ class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-5
     window.addEventListener("DOMContentLoaded", fetchAdmins);
 
 
-    function openViewModal(btn) {
+  function openViewModal(btn) {
     document.getElementById('viewModal').classList.remove('hidden');
     document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
     document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
@@ -861,9 +913,9 @@ function editAdmin(id) {
       const datePicker = document.getElementById("datePicker");
       const datePickerText = document.getElementById("datePickerText");
       flatpickr("#datePicker", {
-        dateFormat: "Y-m-d",
+          dateFormat: "Y-m-d",
         allowInput: false,
-        defaultDate: new Date(),
+          defaultDate: new Date(),
         static: true,
         onReady: function (selectedDates, dateStr, instance) {
           const monthElem = instance.calendarContainer.querySelector(".flatpickr-current-month");
@@ -968,7 +1020,7 @@ function editAdmin(id) {
   
 
 (function() {
-  // View Profile
+  
   document.addEventListener("click", function(e) {
     if (e.target.classList.contains("view-profile-btn")) {
       e.preventDefault();
@@ -992,7 +1044,7 @@ function editAdmin(id) {
     document.body.classList.remove("blurred-bg");
   };
 
-  // Edit Profile
+ 
   let currentDoctorForEditProfile = null;
   document.addEventListener("click", function(e) {
     if (e.target.classList.contains("edit-doctor-profile-btn")) {
@@ -1075,7 +1127,7 @@ function editAdmin(id) {
     }
   });
 
-  // Manage Availability
+  
   let currentDoctorId = null;
   document.addEventListener("click", function(e) {
     if (e.target.classList.contains("manage-availability-btn")) {
@@ -1160,25 +1212,106 @@ function editAdmin(id) {
     }
   };
 })();
-
 (function() {
   document.addEventListener("click", function(e) {
-    // Open/close the action menu for the clicked ... button
     if (e.target.classList.contains("action-btn")) {
       e.stopPropagation();
-      // Close all other menus
       document.querySelectorAll(".action-menu").forEach(menu => menu.classList.add("hidden"));
-      // Open the menu next to the clicked button
       const menu = e.target.nextElementSibling;
       if (menu) menu.classList.toggle("hidden");
     } else {
-      // Clicked elsewhere: close all menus
       document.querySelectorAll(".action-menu").forEach(menu => menu.classList.add("hidden"));
     }
   });
 })();
+(function() {
+  const addDoctorBtn = document.getElementById("addDoctorBtn");
+  const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
+  if (addDoctorModalOverlay) {
+    const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
+    const openModal = () => {
+      addDoctorModalOverlay.classList.remove("hidden");
+      document.body.classList.add("blurred-bg");
+    };
+    const closeModal = () => {
+      addDoctorModalOverlay.classList.add("hidden");
+      document.body.classList.remove("blurred-bg");
+      const form = document.getElementById("addDoctorForm");
+      if (form) form.reset();
+      showDoctorError("");
+    };
+    if (addDoctorBtn) {
+      addDoctorBtn.addEventListener("click", openModal);
+    }
+    if (closeAddDoctorModal) {
+      closeAddDoctorModal.addEventListener("click", closeModal);
+    }
+    const addDoctorForm = document.getElementById("addDoctorForm");
+    if (addDoctorForm) {
+      addDoctorForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(addDoctorForm);
+        const firstName = formData.get("firstName")?.trim() || "";
+        const lastName = formData.get("lastName")?.trim() || "";
+        const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
+        try {
+          const res = await fetch("/api/doctors");
+          const existingDoctors = await res.json();
+          const isDuplicate = existingDoctors.some((doc) => {
+            const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+            return existingName === fullName;
+          });
+          if (isDuplicate) {
+            showDoctorError("Doctor already exists: duplicate name.");
+            return;
+          }
+        } catch (err) {
+          showDoctorError("Error checking existing doctors.");
+          return;
+        }
+        const doctorData = {
+          firstName,
+          lastName,
+          name: `Dr. ${firstName} ${lastName}`,
+          specialty: formData.get("specialty"),
+          experience: formData.get("experience"),
+          qualification: formData.get("qualification"),
+          availability: formData.get("availability"),
+        };
+        try {
+          const response = await fetch("/api/doctors", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(doctorData),
+          });
+          if (!response.ok) {
+            const errorData = await response.json();
+            showDoctorError(errorData.error || "Failed to add doctor.");
+            return;
+          }
+          showDoctorError("");
+          alert("Doctor added successfully!");
+          closeModal();
+          await fetchAndDisplayDoctors();
+        } catch (error) {
+          showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
+        }
+      });
+    }
+  }
+  function showDoctorError(msg) {
+    const errorDiv = document.getElementById("doctorErrorMsg");
+    if (!errorDiv) return;
+    if (msg) {
+      errorDiv.textContent = msg;
+      errorDiv.style.display = "block";
+    } else {
+      errorDiv.textContent = "";
+      errorDiv.style.display = "none";
+    }
+  }
+})();
 </script>
-  
-</body>
 
+</body>
 </html>
