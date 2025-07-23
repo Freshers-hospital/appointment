@@ -207,32 +207,14 @@
               <div class="col-span-2 ">Action</div>
                             </div>
 
-                            <div id="adminList" class="space-y-2 mt-2">
-
-                                    <div class="col-span-2 text-right">
-                <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-                <div
-                  class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-                  <button onclick="openViewModal(this)" data-name="Sandeep Kumar" data-email="sandeep@example.com"
-                    data-contact="+91 9876543210" data-status="Active"
-                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
-                  <button onclick="document.getElementById('editModal').classList.remove('hidden')"
-                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                Edit
-                                            </button>
-                  <button onclick="document.getElementById('deleteModal').classList.remove('hidden')"
-                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="doctorsTab" class="tab-content hidden">
-                          <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
-                             <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
+            <div id="adminList" class="space-y-2 mt-2">
+            </div>
+          </div>
+        </div>
+        <div id="doctorsTab" class="tab-content hidden">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
+            <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
             <div class="flex flex-row items-center space-x-3">
               <div class="relative w-60 mt-0 h-12">
                 <div id="datePickerDisplay"
@@ -363,7 +345,7 @@
         <div>
           <label class="text-sm text-gray-500 mb-1 block">Account Status</label>
           <div id="viewAdminStatus"
-            class="bg-green-50 border border-green-200 text-green-800 rounded-md px-4 py-3 text-lg font-semibold capitalize">
+            class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">
             -
           </div>
         </div>
@@ -386,6 +368,24 @@
       <div class="flex justify-center gap-4">
         <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
         <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
+      </div>
+    </div>
+  </div>
+  <div id="deleteAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmDeleteAdmin()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div id="restoreAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmRestoreAdmin()" class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
       </div>
     </div>
   </div>
@@ -650,16 +650,6 @@
     });
   </script>
   <script>
-    function closeModals() {
-      document.getElementById("editModal")?.classList.add("hidden");
-      document.getElementById("deleteModal")?.classList.add("hidden");
-      document.getElementById("logoutModal")?.classList.add("hidden");
-      document.getElementById("viewModal")?.classList.add("hidden");
-    }
-  </script>
-
-
-  <script>
 
     let allAdmins = [];
     let currentAdminsPage = 1;
@@ -699,28 +689,30 @@
         return;
       }
       adminList.innerHTML = currentAdmins.map(admin => `
-        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative ${admin.status?.toLowerCase() === 'deleted' ? 'bg-gray-300 text-gray-500 opacity-80 pointer-events-none' : ''}">
-          <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
-          <div class="col-span-3 text-gray-700">${admin.email}</div>
-          <div class="col-span-2 text-gray-700">${admin.contact || '-'}</div>
-          <div class="col-span-2">
-           <span class="inline-block px-2 py-1 text-xs font-medium rounded ${
-  admin.status?.toLowerCase() === 'active'
-    ? 'text-green-800 bg-green-100'
-    : 'text-red-800 bg-red-100'
-}">
-${admin.status?.toLowerCase() === 'active' ? 'Active' : 'InActive'}
+        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+          <div class="col-span-3 font-semibold text-gray-800 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.username}</div>
+          <div class="col-span-3 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.email}</div>
+          <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.contact || '-'}</div>
+          <div class="col-span-2 ">
+           <span class="inline-block px-2 py-1 text-xs font-medium rounded ${admin.isDeleted ? 'line-through text-gray-300' : ''} ${admin.status?.toLowerCase() === 'active'
+          ? 'text-green-800 bg-green-100' : admin.status === "inactive" ? 'text-red-800 bg-red-100'
+            : 'text-gray-800 bg-red-100'
+        }">
+       ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status === "inactive" ? 'Inactive' : 'Deleted'}
 
-</span>
+       </span>
 
           </div>
           <div class="col-span-2 relative">
             <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-            <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-20">
+            ${admin.isDeleted ? `   <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+               <button onclick="openRestoreModal('${admin._id}')"class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+             </div>`:
+          `<div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
               <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
               <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
-              <button onclick="deleteAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-            </div>
+              <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+             </div>`}
           </div>
         </div>
       `).join("");
@@ -773,7 +765,6 @@ ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'InActive'}
     document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
 }
 
-
 function editAdmin(id) {
   const admin = allAdmins.find(a => a._id === id);
   if (!admin) return;
@@ -784,7 +775,7 @@ function editAdmin(id) {
       document.getElementById("editStatusDisplay").textContent = admin.status || 'Active';
 
 
-  document.getElementById("editModal").classList.remove("hidden");
+      document.getElementById("editModal").classList.remove("hidden");
 
   window.currentEditingAdminId = id;
 }
@@ -794,6 +785,8 @@ function editAdmin(id) {
 
    function deleteAdmin(id) {
 
+      document.getElementById("deleteModal").classList.remove("hidden");
+    }
    document.getElementById("deleteModal").classList.remove("hidden");
    }
 
@@ -833,6 +826,10 @@ function editAdmin(id) {
       document.getElementById("deleteModal")?.classList.add("hidden");
       document.getElementById("logoutModal")?.classList.add("hidden");
       document.getElementById("viewModal")?.classList.add("hidden");
+      document.getElementById("deleteAdminModal")?.classList.add("hidden");
+      document.getElementById("restoreAdminModal")?.classList.add("hidden");
+      selectedAdminId = null;
+      selectedRestoreAdminId = null;
     }
 
     let allDoctors = [];
@@ -845,6 +842,7 @@ function editAdmin(id) {
         const response = await fetch("/api/doctors");
         if (!response.ok) {
           throw new Error("Failed to fetch doctors");
+          showToast("Failed to fetch doctors", "error")
         }
         allDoctors = await response.json();
         allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -868,6 +866,7 @@ function editAdmin(id) {
         renderDoctorsPage();
       } catch (error) {
         console.error("Error fetching doctors:", error);
+        showToast("Error fetching doctors" + error, "error")
       }
     }
 
@@ -891,7 +890,7 @@ function editAdmin(id) {
               displayAvailability = `${data.start} - ${data.end}`;
             }
           }
-        } catch (err) { }
+        } catch (err) { showToast(err?.message, "error") }
         return displayAvailability;
       });
       const availabilities = await Promise.all(availabilityPromises);
@@ -1032,35 +1031,102 @@ function editAdmin(id) {
  
   
   <script>
-function getInitials(name) {
-  if (!name) return "";
-  const parts = name.trim().split(" ");
-  if (parts.length === 1) return parts[0][0].toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-}
-const userName = localStorage.getItem("name") || "superadmin";
-document.getElementById("userName").textContent = userName;
-document.getElementById("userAvatar").textContent = getInitials(userName);
-</script>
-<script>
-  document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
-    const id = window.currentEditingAdminId;
-    const name = document.getElementById("editName").value.trim();
-    const email = document.getElementById("editEmail").value.trim();
-    const contact = document.getElementById("editContact").value.trim();
-const status = document.getElementById("editStatusDisplay").textContent.trim();
-
-
-    if (!name || !email) {
-      alert("Name and Email are required");
-      return;
+    const userName = localStorage.getItem("name");
+    document.getElementById("userName").textContent = userName;
+  </script>
+  <script>
+    let selectedAdminId = null;
+    function openDeleteModal(adminId) {
+      selectedAdminId = adminId;
+      document.getElementById('deleteAdminModal').classList.remove('hidden');
     }
+    async function confirmDeleteAdmin() {
+      if (!selectedAdminId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error");
+        return;
+      }
 
-    const token = localStorage.getItem("admin_jwt");
-    if (!token) {
-      alert("Unauthorized. Please login again.");
-      return;
+      try {
+        const res = await fetch(`/api/admin/deleteAdmin/${selectedAdminId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: "deleted" }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to delete admin");
+          showToast(errData.message || "Failed to delete admin", "error")
+        }
+        showToast("Admin deleted successfully", "success");
+        document.getElementById("deleteAdminModal")?.classList.add("hidden");
+        closeModals();
+        fetchAdmins();
+      } catch (err) {
+        showToast("Delete failed: " + err.message, "error")
+      }
     }
+  </script>
+  <script>
+    let selectedRestoreAdminId = null;
+    function openRestoreModal(adminId) {
+      selectedRestoreAdminId = adminId;
+      document.getElementById('restoreAdminModal').classList.remove('hidden');
+    }
+    async function confirmRestoreAdmin() {
+      if (!selectedRestoreAdminId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error")
+        return;
+      }
+      try {
+        const res = await fetch(`/api/admin/updateAdmin/${selectedRestoreAdminId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ isDeleted: false, status: 'inactive' }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to restore admin");
+          showToast(errData.message || "Failed to restore admin", "error")
+        }
+        showToast('Admin restored successfully', "success")
+        document.getElementById("restoreAdminModal")?.classList.add("hidden");
+        fetchAdmins();
+      } catch (err) {
+        showToast("Restore failed: " + err.message, "error")
+      }
+    }
+  </script>
+  <script>
+    document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
+      const id = window.currentEditingAdminId;
+      const name = document.getElementById("editName").value.trim();
+      const email = document.getElementById("editEmail").value.trim();
+      const contact = document.getElementById("editContact").value.trim();
+      const status = document.getElementById("editStatusDisplay").textContent.trim();
+
+
+      if (!name || !email) {
+        showToast("Name and Email are required", "error")
+        return;
+      }
+
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("Unauthorized. Please login again.", "error")
+        return;
+      }
 
     try {
       const res = await fetch(`/api/admin/updateAdmin/${id}`, {
@@ -1077,19 +1143,19 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
         })
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Failed to update admin");
-      }
-
-      alert("Admin updated successfully!");
-      closeModals();
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.message || "Failed to update admin");
+          showToast(data.message || "Failed to update admin", "error")
+        }
+        showToast("Admin updated successfully", "success")
+        closeModals();
         fetchAdmins();
-    } catch (err) {
-      alert("Error: " + err.message);
-    }
-  });
-</script>
+      } catch (err) {
+        showToast("Error: " + err.message, "error")
+      }
+    });
+  </script>
 
   <script>
 
@@ -1140,12 +1206,12 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
             phoneWrapper.classList.add("hidden");
           }
           const addressWrapper = document.getElementById('profileDoctorAddressWrapper');
-          const addressrElement = document.getElementById('profileDoctorAddress');
+          const addressElement = document.getElementById('profileDoctorAddress');
           if (doctor.address) {
             addressrElement.textContent = doctor.address;
             addressWrapper.classList.remove("hidden");
           } else {
-            addressrElement.textContent = '';
+            addressElement.textContent = '';
             addressWrapper.classList.add("hidden");
           }
           document.body.classList.add("blurred-bg");
@@ -1188,7 +1254,7 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
       document.getElementById("editDoctorForm").onsubmit = async function (e) {
         e.preventDefault();
         if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
-          alert("No doctor selected for editing.");
+          showToast("No doctor selected for editing.", "error")
           return;
         }
         const formData = new FormData();
@@ -1213,12 +1279,13 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.error || "Failed to update doctor");
+            showToast(errorData.error || "Failed to update doctor", "error");
           }
           closeEditDoctorProfileModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-          alert("Doctor profile updated successfully!");
+          showToast("Doctor profile updated successfully!", "success")
         } catch (err) {
-          alert("Error updating doctor: " + err.message);
+          showToast("Error updating doctor: " + err.message, "error")
         }
       };
       document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
@@ -1318,10 +1385,11 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
             body: JSON.stringify({ date, start, end }),
           });
           if (!response.ok) throw new Error("Failed to save availability");
+          showToast("Failed to save availability", "error")
           closeAvailabilityModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
         } catch (err) {
-          alert("Error saving availability: " + err.message);
+          showToast("Error saving availability: " + err.message, "error")
         }
       };
     })();
@@ -1403,7 +1471,7 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
                 return;
               }
               showDoctorError("");
-              alert("Doctor added successfully!");
+              showToast("Doctor added successfully!", "success")
               closeModal();
               await fetchAndDisplayDoctors();
             } catch (error) {
@@ -1442,26 +1510,62 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
   </script>
   <script>
     async function logout() {
-          try {
-            const token = localStorage.getItem('admin_jwt');
-            const res = await fetch("/api/admin/logout", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ token }),
-            });
-            const result = await res.json();
-            if (res.ok) {
-              localStorage.clear();
-              window.location.href = "login.html";
-            } else {
-              alert(result.error);
-            }
-          } catch (err) {
-            alert("Error: " + err.message);
-          }
-      };
+      try {
+        const token = localStorage.getItem('admin_jwt');
+        const res = await fetch("/api/admin/logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        });
+        const result = await res.json();
+        if (res.ok) {
+          localStorage.clear();
+          window.location.href = "login.html";
+        } else {
+          showToast(result.error, "error");
+        }
+      } catch (err) {
+        showToast("Error: " + err.message, "error");
+      }
+    };
   </script>
-  
+  <div id="toast-container" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 space-y-3"></div>
+  <script>
+    function showToast(message, type = "success") {
+      const toast = document.createElement("div");
+      const types = {
+        success: {
+          bg: "bg-green-100",
+          text: "text-green-800",
+          svg: `<svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z" clip-rule="evenodd"/></svg>`
+        },
+        error: {
+          bg: "bg-red-100",
+          text: "text-red-800",
+          svg: `<svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-4.293-2.707a1 1 0 00-1.414-1.414L10 8.586 7.707 6.293a1 1 0 10-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 101.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z" clip-rule="evenodd"/></svg>`
+        },
+        warning: {
+          bg: "bg-yellow-100",
+          text: "text-yellow-800",
+          svg: `<svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.721-1.36 3.486 0l6.518 11.594c.75 1.334-.213 2.995-1.742 2.995H3.48c-1.53 0-2.492-1.661-1.742-2.995L8.257 3.1zM11 14a1 1 0 10-2 0 1 1 0 002 0zm-1-2a1 1 0 01-1-1V9a1 1 0 112 0v2a1 1 0 01-1 1z" clip-rule="evenodd"/></svg>`
+        }
+      };
+      const { bg, text, svg } = types[type];
+      toast.className = `${bg} ${text} px-4 py-3 rounded shadow flex items-center justify-between animate-slide-in`;
+      toast.innerHTML = `
+        <div class="flex items-center gap-2">
+          ${svg}
+          <span>${message}</span>
+        </div>
+       
+      `;
+      document.getElementById("toast-container").appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 2000);
+    }
+  </script>
 </body>
 
 </html>
