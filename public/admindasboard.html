@@ -3247,6 +3247,67 @@
             }
         });
     </script>
+    <!-- Admin Profile -->
+    <div id="adminProfileModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-sm relative">
+        <button id="closeAdminProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Admin Profile</h2>
+        <div class="space-y-4">
+          <div>
+            <div class="text-gray-500 text-sm mb-1">Name</div>
+            <div id="adminProfileName" class="text-gray-800 font-semibold text-base"></div>
+          </div>
+          <div>
+            <div class="text-gray-500 text-sm mb-1">Email</div>
+            <div id="adminProfileEmail" class="text-gray-800 font-semibold text-base"></div>
+          </div>
+          <div>
+            <div class="text-gray-500 text-sm mb-1">Contact No</div>
+            <div id="adminProfileContact" class="text-gray-800 font-semibold text-base"></div>
+          </div>
+        </div>
+        <div class="flex justify-center mt-6">
+          <button id="closeAdminProfileBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Close</button>
+        </div>
+      </div>
+    </div>
+    <script>
+    
+    const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
+    const adminProfileModal = document.getElementById('adminProfileModal');
+    const closeAdminProfileModal = document.getElementById('closeAdminProfileModal');
+    const closeAdminProfileBtn = document.getElementById('closeAdminProfileBtn');
+
+    if (profileLink && adminProfileModal) {
+      profileLink.addEventListener('click', async function(e) {
+        e.preventDefault();
+    
+        document.getElementById('adminProfileName').textContent = localStorage.getItem('name') || '';
+    
+        try {
+          const token = localStorage.getItem('admin_jwt');
+          const res = await fetch('/api/admin/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            document.getElementById('adminProfileEmail').textContent = data.email || '';
+            document.getElementById('adminProfileContact').textContent = data.contact || data.phone || '';
+          } else {
+            document.getElementById('adminProfileEmail').textContent = 'N/A';
+            document.getElementById('adminProfileContact').textContent = 'N/A';
+          }
+        } catch {
+          document.getElementById('adminProfileEmail').textContent = 'N/A';
+          document.getElementById('adminProfileContact').textContent = 'N/A';
+        }
+        adminProfileModal.classList.remove('hidden');
+      });
+    }
+    if (closeAdminProfileModal) closeAdminProfileModal.onclick = () => adminProfileModal.classList.add('hidden');
+    if (closeAdminProfileBtn) closeAdminProfileBtn.onclick = () => adminProfileModal.classList.add('hidden');
+
+    </script>
 </body>
 
 </html>

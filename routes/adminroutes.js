@@ -89,6 +89,17 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: 'Invalid token' });
   }
 }
+
+router.get('/me', authMiddleware, async (req, res) => {
+    try {
+        const admin = await Admin.findById(req.admin.id).select('-password');
+        if (!admin) return res.status(404).send('Admin not found.');
+        res.send(admin);
+    } catch (err) {
+        res.status(500).send("Server error.");
+    }
+});
+
 router.get('/getAllAdmins', async (req, res) => {
   try {
     const admins = await Admin.find({ role: 1})
