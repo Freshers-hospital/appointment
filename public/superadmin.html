@@ -694,8 +694,8 @@
           <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.contact || '-'}</div>
           <div class="col-span-2 ">
            <span class="inline-block px-2 py-1 text-xs font-medium rounded ${admin.isDeleted ? 'line-through text-gray-300' : ''} ${admin.status?.toLowerCase() === 'active'
-          ?'text-green-800 bg-green-100':admin.status === "inactive" ? 'text-red-800 bg-red-100'
-          : 'text-gray-800 bg-red-100'
+          ? 'text-green-800 bg-green-100' : admin.status === "inactive" ? 'text-red-800 bg-red-100'
+            : 'text-gray-800 bg-red-100'
         }">
        ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status === "inactive" ? 'Inactive' : 'Deleted'}
 
@@ -807,6 +807,7 @@
         const response = await fetch("/api/doctors");
         if (!response.ok) {
           throw new Error("Failed to fetch doctors");
+          showToast("Failed to fetch doctors", "error")
         }
         allDoctors = await response.json();
         allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -830,6 +831,7 @@
         renderDoctorsPage();
       } catch (error) {
         console.error("Error fetching doctors:", error);
+        showToast("Error fetching doctors" + error, "error")
       }
     }
 
@@ -853,7 +855,7 @@
               displayAvailability = `${data.start} - ${data.end}`;
             }
           }
-        } catch (err) { }
+        } catch (err) { showToast(err?.message, "error") }
         return displayAvailability;
       });
       const availabilities = await Promise.all(availabilityPromises);
@@ -1007,7 +1009,7 @@
       if (!selectedAdminId) return;
       const token = localStorage.getItem("admin_jwt");
       if (!token) {
-        alert("You are not authorized. Please log in again.");
+        showToast("You are not authorized. Please log in again.", "error");
         return;
       }
 
@@ -1024,14 +1026,14 @@
         if (!res.ok) {
           const errData = await res.json();
           throw new Error(errData.message || "Failed to delete admin");
+          showToast(errData.message || "Failed to delete admin", "error")
         }
-
-        //alert("Admin deleted successfully");
+        showToast("Admin deleted successfully", "success");
         document.getElementById("deleteAdminModal")?.classList.add("hidden");
         closeModals();
         fetchAdmins();
       } catch (err) {
-        alert("Delete failed: " + err.message);
+        showToast("Delete failed: " + err.message, "error")
       }
     }
   </script>
@@ -1045,7 +1047,7 @@
       if (!selectedRestoreAdminId) return;
       const token = localStorage.getItem("admin_jwt");
       if (!token) {
-        alert("You are not authorized. Please log in again.");
+        showToast("You are not authorized. Please log in again.", "error")
         return;
       }
       try {
@@ -1061,12 +1063,13 @@
         if (!res.ok) {
           const errData = await res.json();
           throw new Error(errData.message || "Failed to restore admin");
+          showToast(errData.message || "Failed to restore admin", "error")
         }
-       // alert("Admin restored successfully");
+        showToast('Admin restored successfully', "success")
         document.getElementById("restoreAdminModal")?.classList.add("hidden");
         fetchAdmins();
       } catch (err) {
-        alert("Restore failed: " + err.message);
+        showToast("Restore failed: " + err.message, "error")
       }
     }
   </script>
@@ -1080,13 +1083,13 @@
 
 
       if (!name || !email) {
-        alert("Name and Email are required");
+        showToast("Name and Email are required", "error")
         return;
       }
 
       const token = localStorage.getItem("admin_jwt");
       if (!token) {
-        alert("Unauthorized. Please login again.");
+        showToast("Unauthorized. Please login again.", "error")
         return;
       }
 
@@ -1108,13 +1111,13 @@
         if (!res.ok) {
           const data = await res.json();
           throw new Error(data.message || "Failed to update admin");
+          showToast(data.message || "Failed to update admin", "error")
         }
-
-        alert("Admin updated successfully!");
+        showToast("Admin updated successfully", "success")
         closeModals();
         fetchAdmins();
       } catch (err) {
-        alert("Error: " + err.message);
+        showToast("Error: " + err.message, "error")
       }
     });
   </script>
@@ -1216,7 +1219,7 @@
       document.getElementById("editDoctorForm").onsubmit = async function (e) {
         e.preventDefault();
         if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
-          alert("No doctor selected for editing.");
+          showToast("No doctor selected for editing.", "error")
           return;
         }
         const formData = new FormData();
@@ -1241,12 +1244,13 @@
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.error || "Failed to update doctor");
+            showToast(errorData.error || "Failed to update doctor", "error");
           }
           closeEditDoctorProfileModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-          alert("Doctor profile updated successfully!");
+          showToast("Doctor profile updated successfully!", "success")
         } catch (err) {
-          alert("Error updating doctor: " + err.message);
+          showToast("Error updating doctor: " + err.message, "error")
         }
       };
       document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
@@ -1346,10 +1350,11 @@
             body: JSON.stringify({ date, start, end }),
           });
           if (!response.ok) throw new Error("Failed to save availability");
+          showToast("Failed to save availability", "error")
           closeAvailabilityModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
         } catch (err) {
-          alert("Error saving availability: " + err.message);
+          showToast("Error saving availability: " + err.message, "error")
         }
       };
     })();
@@ -1431,7 +1436,7 @@
                 return;
               }
               showDoctorError("");
-              alert("Doctor added successfully!");
+              showToast("Doctor added successfully!", "success")
               closeModal();
               await fetchAndDisplayDoctors();
             } catch (error) {
@@ -1482,14 +1487,50 @@
           localStorage.clear();
           window.location.href = "login.html";
         } else {
-          alert(result.error);
+          showToast(result.error, "error");
         }
       } catch (err) {
-        alert("Error: " + err.message);
+        showToast("Error: " + err.message, "error");
       }
     };
   </script>
+  <div id="toast-container" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 space-y-3"></div>
+  <script>
+    function showToast(message, type = "success") {
+      const toast = document.createElement("div");
+      const types = {
+        success: {
+          bg: "bg-green-100",
+          text: "text-green-800",
+          svg: `<svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z" clip-rule="evenodd"/></svg>`
+        },
+        error: {
+          bg: "bg-red-100",
+          text: "text-red-800",
+          svg: `<svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-4.293-2.707a1 1 0 00-1.414-1.414L10 8.586 7.707 6.293a1 1 0 10-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 101.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z" clip-rule="evenodd"/></svg>`
+        },
+        warning: {
+          bg: "bg-yellow-100",
+          text: "text-yellow-800",
+          svg: `<svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.721-1.36 3.486 0l6.518 11.594c.75 1.334-.213 2.995-1.742 2.995H3.48c-1.53 0-2.492-1.661-1.742-2.995L8.257 3.1zM11 14a1 1 0 10-2 0 1 1 0 002 0zm-1-2a1 1 0 01-1-1V9a1 1 0 112 0v2a1 1 0 01-1 1z" clip-rule="evenodd"/></svg>`
+        }
+      };
+      const { bg, text, svg } = types[type];
+      toast.className = `${bg} ${text} px-4 py-3 rounded shadow flex items-center justify-between animate-slide-in`;
+      toast.innerHTML = `
+        <div class="flex items-center gap-2">
+          ${svg}
+          <span>${message}</span>
+        </div>
+       
+      `;
+      document.getElementById("toast-container").appendChild(toast);
 
+      setTimeout(() => {
+        toast.remove();
+      }, 2000);
+    }
+  </script>
 </body>
 
 </html>
