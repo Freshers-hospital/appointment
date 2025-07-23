@@ -298,7 +298,7 @@
                                 </a>
                             </li>
                             <li>
-                                <button id="signOutBtn"
+                                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
                                     class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
                                     <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -3248,7 +3248,7 @@
 
     <script>
         const userName = localStorage.getItem("name");
-        document.getElementById("userName").textContent = "Welcome back, " + userName;
+        document.getElementById("userName").textContent = userName;
     </script>
     <script>
         const dropdownToggle = document.getElementById("userDropdownToggle");
@@ -3265,29 +3265,41 @@
         });
     </script>
     <script>
-        document.getElementById("signOutBtn").onclick = async function () {
-            if (confirm("Are you sure you want to sign out?")) {
-                try {
-                    const token = localStorage.getItem('admin_jwt');
-                    const res = await fetch("/api/admin/logout", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ token }),
-                    });
-                    const result = await res.json();
-                    if (res.ok) {
-                        localStorage.clear();
-                        window.location.href = "login.html";
-                    } else {
-                        alert(result.error);
-                    }
-                } catch (err) {
-                    alert("Error: " + err.message);
+        function closeModals() {
+            document.getElementById("logoutModal")?.classList.add("hidden");
+        }
+    </script>
+    <script>
+        async function logout() {
+            try {
+                const token = localStorage.getItem('admin_jwt');
+                const res = await fetch("/api/admin/logout", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token }),
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    localStorage.clear();
+                    window.location.href = "login.html";
+                } else {
+                    alert(result.error);
                 }
+            } catch (err) {
+                alert("Error: " + err.message);
             }
         };
-
     </script>
+    <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+            <h2 class="text-xl font-semibold mb-4">Logout</h2>
+            <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
+            <div class="flex justify-center gap-4">
+                <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
