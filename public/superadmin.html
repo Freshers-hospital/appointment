@@ -713,11 +713,13 @@
           <div class="col-span-3 text-gray-700">${admin.email}</div>
           <div class="col-span-2 text-gray-700">${admin.contact || '-'}</div>
           <div class="col-span-2">
-           <span class="inline-block px-2 py-1 text-xs font-medium rounded ${admin.status?.toLowerCase() === 'active'
-          ? 'text-green-800 bg-green-100'
-          : 'text-red-800 bg-red-100'
-        }">
-  ${admin.status || 'active'}
+           <span class="inline-block px-2 py-1 text-xs font-medium rounded ${
+  admin.status?.toLowerCase() === 'active'
+    ? 'text-green-800 bg-green-100'
+    : 'text-red-800 bg-red-100'
+}">
+${admin.status?.toLowerCase() === 'active' ? 'Active' : 'InActive'}
+
 </span>
 
           </div>
@@ -1044,13 +1046,14 @@
   </script>
 
 
-  <script>
-    document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
-      const id = window.currentEditingAdminId;
-      const name = document.getElementById("editName").value.trim();
-      const email = document.getElementById("editEmail").value.trim();
-      const contact = document.getElementById("editContact").value.trim();
-      const status = document.getElementById("editStatus").value;
+<script>
+  document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
+    const id = window.currentEditingAdminId;
+    const name = document.getElementById("editName").value.trim();
+    const email = document.getElementById("editEmail").value.trim();
+    const contact = document.getElementById("editContact").value.trim();
+const status = document.getElementById("editStatusDisplay").textContent.trim();
+
 
       if (!name || !email) {
         alert("Name and Email are required");
