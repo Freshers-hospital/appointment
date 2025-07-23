@@ -783,43 +783,7 @@ function editAdmin(id) {
 
     let currentDeleteId = null; 
 
-   function deleteAdmin(id) {
-
-      document.getElementById("deleteModal").classList.remove("hidden");
-    }
-   document.getElementById("deleteModal").classList.remove("hidden");
-   }
-
-  async function deleteAdmin(id) {
-  const token = localStorage.getItem("admin_jwt"); 
-  if (!token) {
-    alert("You are not authorized. Please log in again.");
-    return;
-  }
-
-  try {
-    const res = await fetch(`/api/admin/deleteAdmin/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`, 
-      },
-      body: JSON.stringify({ status: "deleted" }),
-    });
-
-    if (!res.ok) {
-      const errData = await res.json();
-      throw new Error(errData.message || "Failed to delete admin");
-    }
-
-    alert("Admin deleted successfully");
-    closeModals();
-    fetchAdmins(); 
-  } catch (err) {
-    alert("Delete failed: " + err.message);
-  }
-}
-
+   
 
     function closeModals() {
       document.getElementById("editModal")?.classList.add("hidden");
@@ -1493,6 +1457,17 @@ function editAdmin(id) {
       }
     })();
   </script>
+  <script>
+function getInitials(name) {
+  if (!name) return "";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+const AdminName = localStorage.getItem("name") || "superadmin";
+document.getElementById("userName").textContent = userName;
+document.getElementById("userAvatar").textContent = getInitials(userName);
+</script>
 
   <script>
     const dropdownToggle = document.getElementById("userDropdownToggle");
@@ -1529,7 +1504,7 @@ function editAdmin(id) {
       }
     };
   </script>
-  <div id="toast-container" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 space-y-3"></div>
+  <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3"></div>
   <script>
     function showToast(message, type = "success") {
       const toast = document.createElement("div");
@@ -1566,6 +1541,7 @@ function editAdmin(id) {
       }, 2000);
     }
   </script>
+ 
 </body>
 
 </html>
