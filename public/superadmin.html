@@ -122,19 +122,10 @@
         </svg>
         <h1 class="text-xl font-bold text-blue-600"> MediCare </h1>
       </div>
-      <!-- <div class="flex items-center">
-        <div class="mr-4 font-bold text-sm text-black" id="userName"></div>
-        <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
-          class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M16 17l5-5m0 0l-5-5m5 5H9m4 5v1a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h4a2 2 0 012 2v1" />
-          </svg>
-        </button>
-      </div> -->
       <div class="flex items-center">
-        <div class="mr-4 font-bold text-sm text-black" id="userName"></div>
-        <div class="flex items-center relative">
+        <div class="flex items-center gap-2">
+          <div id="userAvatar" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-lg"></div>
+          <span id="userName" class="font-bold text-sm text-black"></span>
           <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1" id="userDropdownToggle">
             <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <rect x="0" fill="none" width="24" height="24" />
@@ -157,15 +148,15 @@
                 </a>
               </li>
               <li>
-                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
+        <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
                   class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
                   <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
                       fill="#ff0000" />
-                  </svg>
+          </svg>
                   <span>Logout</span>
-                </button>
+        </button>
               </li>
             </ul>
           </div>
@@ -174,8 +165,8 @@
     </div>
   </nav>
 
-  <div class="p-8">
-
+     <div class="p-8">
+     
 
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
                 <div>
@@ -187,8 +178,11 @@
           
             <div class="px-20 mt-4">
                 <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
-                    <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active bg-white shadow rounded" data-tab="adminsTab">Admins</button>
-                    <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive" data-tab="doctorsTab">Doctors</button>
+        <button
+          class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active bg-white shadow rounded"
+          data-tab="adminsTab">Admins</button>
+        <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive"
+          data-tab="doctorsTab">Doctors</button>
                 </div>
             </div>
 
@@ -200,32 +194,34 @@
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-xl font-semibold">Admins List</h3>
                                 
-                                <a href="adminregister.html" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">+ Add Admin</a>
+              <a href="adminregister.html" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">+ Add
+                Admin</a>
                             </div>
-                            <div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+
+            <div
+              class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                                 <div class="col-span-3">Admin Name</div>
                                 <div class="col-span-3">Email</div>
                                 <div class="col-span-2">Contact</div>
                                 <div class="col-span-2">Status</div>
-                                <div class="col-span-2">Action</div>
+              <div class="col-span-2 ">Action</div>
                             </div>
 
                             <div id="adminList" class="space-y-2 mt-2">
-                                <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
-                                    <div class="col-span-3 font-semibold text-gray-800">Sandeep Kumar</div>
-                                    <div class="col-span-3 text-gray-700">sandeep@example.com</div>
-                                    <div class="col-span-2 text-gray-700">+91 9876543210</div>
-                                    <div class="col-span-2">
-                                        <span class="inline-block px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded">Active</span>
-                                    </div>
-                                    <div class="col-span-2 relative">
-                                        <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-                                        <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-20">
-                                              <button onclick="openViewModal(this)" data-name="Sandeep Kumar" data-email="sandeep@example.com" data-contact="+91 9876543210" data-status="Active" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
-                                            <button onclick="document.getElementById('editModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+
+                                    <div class="col-span-2 text-right">
+                <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+                <div
+                  class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+                  <button onclick="openViewModal(this)" data-name="Sandeep Kumar" data-email="sandeep@example.com"
+                    data-contact="+91 9876543210" data-status="Active"
+                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+                  <button onclick="document.getElementById('editModal').classList.remove('hidden')"
+                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                 Edit
                                             </button>
-                                            <button onclick="document.getElementById('deleteModal').classList.remove('hidden')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                  <button onclick="document.getElementById('deleteModal').classList.remove('hidden')"
+                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                                                 Delete
                                             </button>
                                         </div>
@@ -233,30 +229,31 @@
                                 </div>
                             </div>
                         </div>
-
-                           
                         <div id="doctorsTab" class="tab-content hidden">
                           <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
                              <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
-                            <div class="flex flex-row items-center space-x-3">
-                              <div class="relative w-60 mt-0 h-12">
-                                <div id="datePickerDisplay"
-                                  class="flex items-center justify-center w-44 h-12 py-0 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none text-base">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-400" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                                  </svg>
-                                  <span id="datePickerText" class="text-gray-900 font-semibold text-base">2025-06-23</span>
-                                </div>
-                               <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly autocomplete="off" />
-                              </div>
-                              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Doctor</button>
+            <div class="flex flex-row items-center space-x-3">
+              <div class="relative w-60 mt-0 h-12">
+                <div id="datePickerDisplay"
+                  class="flex items-center justify-center w-44 h-12 py-0 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none text-base">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-400" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+                  </svg>
+                  <span id="datePickerText" class="text-gray-900 font-semibold text-base">2025-06-23</span>
+                </div>
+                <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
+                  autocomplete="off" />
+              </div>
+              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+
+                Add Doctor</button>
                             </div>
                           </div>
                         
-                          <div class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+          <div
+            class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                             <div class="col-span-3">Doctor</div>
                             <div class="col-span-2">Specialization</div>
                             <div class="col-span-2">Today's Appointments</div>
@@ -265,35 +262,37 @@
                           </div>
                           <div id="doctorsList" class="space-y-2 mt-2"></div>
                           <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
-                            <button id="prevDoctorsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+            <button id="prevDoctorsPage"
+              class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
                             <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
-                            <button id="nextDoctorsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+            <button id="nextDoctorsPage"
+              class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
                           </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
   <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Edit Admin</h2>
         <p class="text-sm text-gray-500 mt-1">Update administrator information</p>
-      </div>
+    </div>
       <div class="grid grid-cols-2 gap-6">
         <div>
           <label for="editName" class="text-sm text-gray-500 mb-1 block">Full Name</label>
           <input id="editName" type="text"
             class="w-full px-4 py-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter name" />
-        </div>
+    </div>
         <div>
           <label for="editEmail" class="text-sm text-gray-500 mb-1 block">Email Address</label>
           <input id="editEmail" type="email"
             class="w-full px-4 py-3 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter email" />
-        </div>
+    </div>
         <div>
           <label for="editContact" class="text-sm text-gray-500 mb-1 block">Contact Number</label>
           <input id="editContact" type="text"
@@ -306,31 +305,31 @@
             class="bg-gray-100 border border-gray-300 text-gray-700 rounded-md px-4 py-3 text-lg font-medium shadow-sm capitalize">
             -
           </div>
-        </div>
-      </div>
+  </div>
+</div>
 
 
       <div class="flex justify-end mt-8 gap-4">
         <button onclick="closeModals()"
           class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-6 py-2 rounded-md">Cancel</button>
         <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md shadow">Save</button>
-      </div>
+</div>
     </div>
   </div>
 
 
-  <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <h2 class="text-xl font-semibold mb-4">Confirm Delete</h2>
-      <p class="mb-4 text-gray-600">Are you sure you want to delete this admin?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+        <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+                <h2 class="text-xl font-semibold mb-4">Confirm Delete</h2>
+                <p class="mb-4 text-gray-600">Are you sure you want to delete this admin?</p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button> 
+                    
 
-
-      </div>
-    </div>
-  </div>
+                </div>
+            </div>
+        </div>
 
 
   <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
@@ -340,7 +339,7 @@
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Admin Profile</h2>
         <p class="text-sm text-gray-500 mt-1">Detailed administrator information</p>
-      </div>
+    </div>
 
       <div class="grid grid-cols-2 gap-6">
         <div>
@@ -368,17 +367,17 @@
             -
           </div>
         </div>
-      </div>
+    </div>
 
-
+   
       <div class="mt-8 flex justify-end">
         <button onclick="closeModals()"
           class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md shadow">
-          Close
-        </button>
-      </div>
+    Close
+  </button>
     </div>
   </div>
+</div>
 
   <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -621,30 +620,26 @@
           <button type="submit"
             class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
         </div>
-    </form>
-</div>
-</div>
- </div>
-    <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
-        <div class="text-gray-500 font-semibold">medicare@2000</div>
-        </footer>
+      </form>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script>
-    const tabs = document.querySelectorAll('.tab');
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach((t) => t.classList.remove('tab-active', 'bg-white', 'shadow', 'rounded'));
-        tabs.forEach((t) => t.classList.add('tab-inactive'));
-        tab.classList.remove('tab-inactive');
-        tab.classList.add('tab-active', 'bg-white', 'shadow', 'rounded');
-        const targetId = tab.getAttribute('data-tab');
-        tabContents.forEach((content) => content.classList.add('hidden'));
-        document.getElementById(targetId).classList.remove('hidden');
-        if (targetId === "doctorsTab") fetchAndDisplayDoctors();
-        if (targetId === "adminsTab") fetchAdmins();
-      });
-    });
+        <script>
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach((tab) => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach((t) => t.classList.remove('tab-active', 'bg-white', 'shadow', 'rounded'));
+                    tabs.forEach((t) => t.classList.add('tab-inactive'));
+                    tab.classList.remove('tab-inactive');
+                    tab.classList.add('tab-active', 'bg-white', 'shadow', 'rounded');
+                    const targetId = tab.getAttribute('data-tab');
+                    tabContents.forEach((content) => content.classList.add('hidden'));
+                    document.getElementById(targetId).classList.remove('hidden');
+                    if (targetId === "doctorsTab") fetchAndDisplayDoctors();
+                    if (targetId === "adminsTab") fetchAdmins();
+                });
+            });
 
     window.addEventListener("click", function (e) {
       document.querySelectorAll(".action-menu").forEach((menu) => {
@@ -704,7 +699,7 @@
         return;
       }
       adminList.innerHTML = currentAdmins.map(admin => `
-        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative ${admin.status?.toLowerCase() === 'deleted' ? 'bg-gray-300 text-gray-500 opacity-80 pointer-events-none' : ''}">
           <div class="col-span-3 font-semibold text-gray-800">${admin.username}</div>
           <div class="col-span-3 text-gray-700">${admin.email}</div>
           <div class="col-span-2 text-gray-700">${admin.contact || '-'}</div>
@@ -715,8 +710,6 @@
     : 'text-red-800 bg-red-100'
 }">
 ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'InActive'}
-
-${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
 
 </span>
 
@@ -772,67 +765,67 @@ ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
     window.addEventListener("DOMContentLoaded", fetchAdmins);
 
 
-    function openViewModal(btn) {
-      document.getElementById('viewModal').classList.remove('hidden');
-      document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
-      document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
-      document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
-      document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
-    }
+  function openViewModal(btn) {
+    document.getElementById('viewModal').classList.remove('hidden');
+    document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
+    document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
+    document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
+    document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
+}
 
 
-    function editAdmin(id) {
-      const admin = allAdmins.find(a => a._id === id);
-      if (!admin) return;
+function editAdmin(id) {
+  const admin = allAdmins.find(a => a._id === id);
+  if (!admin) return;
 
-      document.getElementById("editName").value = admin.username || '';
-      document.getElementById("editEmail").value = admin.email || '';
+  document.getElementById("editName").value = admin.username || '';
+  document.getElementById("editEmail").value = admin.email || '';
       document.getElementById("editContact").value = admin.contact || '';
       document.getElementById("editStatusDisplay").textContent = admin.status || 'Active';
 
 
-      document.getElementById("editModal").classList.remove("hidden");
+  document.getElementById("editModal").classList.remove("hidden");
 
-      window.currentEditingAdminId = id;
+  window.currentEditingAdminId = id;
+}
+
+
+    let currentDeleteId = null; 
+
+   function deleteAdmin(id) {
+
+   document.getElementById("deleteModal").classList.remove("hidden");
+   }
+
+  async function deleteAdmin(id) {
+  const token = localStorage.getItem("admin_jwt"); 
+  if (!token) {
+    alert("You are not authorized. Please log in again.");
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/admin/deleteAdmin/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`, 
+      },
+      body: JSON.stringify({ status: "deleted" }),
+    });
+
+    if (!res.ok) {
+      const errData = await res.json();
+      throw new Error(errData.message || "Failed to delete admin");
     }
 
-
-    let currentDeleteId = null;
-
-    function deleteAdmin(id) {
-
-      document.getElementById("deleteModal").classList.remove("hidden");
-    }
-
-    async function deleteAdmin(id) {
-      const token = localStorage.getItem("admin_jwt");
-      if (!token) {
-        alert("You are not authorized. Please log in again.");
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/admin/deleteAdmin/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ status: "deleted" }),
-        });
-
-        if (!res.ok) {
-          const errData = await res.json();
-          throw new Error(errData.message || "Failed to delete admin");
-        }
-
-        alert("Admin deleted successfully");
-        closeModals();
-        fetchAdmins();
-      } catch (err) {
-        alert("Delete failed: " + err.message);
-      }
-    }
+    alert("Admin deleted successfully");
+    closeModals();
+    fetchAdmins(); 
+  } catch (err) {
+    alert("Delete failed: " + err.message);
+  }
+}
 
 
     function closeModals() {
@@ -921,9 +914,9 @@ ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
   <div class="col-span-3 flex items-center">
     <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx}" style="cursor:pointer;">
       ${doctor.image
-            ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
-            : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
-          }
+        ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
+        : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+      }
     </div>
     <div>
       <div class="font-semibold text-gray-800">${doctor.name}</div>
@@ -988,9 +981,9 @@ ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
       const datePicker = document.getElementById("datePicker");
       const datePickerText = document.getElementById("datePickerText");
       flatpickr("#datePicker", {
-        dateFormat: "Y-m-d",
+          dateFormat: "Y-m-d",
         allowInput: false,
-        defaultDate: new Date(),
+          defaultDate: new Date(),
         static: true,
         onReady: function (selectedDates, dateStr, instance) {
           const monthElem = instance.calendarContainer.querySelector(".flatpickr-current-month");
@@ -1026,24 +1019,29 @@ ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
       document.getElementById("datePicker").value = today.toISOString().split("T")[0];
       document.getElementById("datePickerText").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
     });
-
+   
     function getSelectedDoctorDate() {
       return document.getElementById('doctorDatePicker')?.value || new Date().toISOString().split('T')[0];
     }
-
+   
     const originalFetchAndDisplayDoctors = fetchAndDisplayDoctors;
     fetchAndDisplayDoctors = function (date) {
       originalFetchAndDisplayDoctors(date || getSelectedDoctorDate());
     }
   </script>
-
-
+ 
+  
   <script>
-    const userName = localStorage.getItem("name");
-    document.getElementById("userName").textContent = userName;
-  </script>
-
-
+function getInitials(name) {
+  if (!name) return "";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+const userName = localStorage.getItem("name") || "superadmin";
+document.getElementById("userName").textContent = userName;
+document.getElementById("userAvatar").textContent = getInitials(userName);
+</script>
 <script>
   document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
     const id = window.currentEditingAdminId;
@@ -1052,48 +1050,46 @@ ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
     const contact = document.getElementById("editContact").value.trim();
 const status = document.getElementById("editStatusDisplay").textContent.trim();
 
-const status = document.getElementById("editStatusDisplay").textContent.trim();
 
+    if (!name || !email) {
+      alert("Name and Email are required");
+      return;
+    }
 
-      if (!name || !email) {
-        alert("Name and Email are required");
-        return;
+    const token = localStorage.getItem("admin_jwt");
+    if (!token) {
+      alert("Unauthorized. Please login again.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: name,
+          email: email,
+          phone: contact,
+          status: status
+        })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to update admin");
       }
 
-      const token = localStorage.getItem("admin_jwt");
-      if (!token) {
-        alert("Unauthorized. Please login again.");
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/admin/updateAdmin/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            username: name,
-            email: email,
-            phone: contact,
-            status: status
-          })
-        });
-
-        if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.message || "Failed to update admin");
-        }
-
-        alert("Admin updated successfully!");
-        closeModals();
+      alert("Admin updated successfully!");
+      closeModals();
         fetchAdmins();
-      } catch (err) {
-        alert("Error: " + err.message);
-      }
-    });
-  </script>
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  });
+</script>
 
   <script>
 
@@ -1465,192 +1461,7 @@ const status = document.getElementById("editStatusDisplay").textContent.trim();
           }
       };
   </script>
-
   
-  let currentDoctorId = null;
-  document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("manage-availability-btn")) {
-      e.preventDefault();
-      const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
-      currentDoctorId = doctor._id;
-      document.getElementById("availabilityModalOverlay").classList.remove("hidden");
-      document.body.classList.add("blurred-bg");
-      document.getElementById("availabilityForm").reset();
-      const today = new Date();
-      document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
-      fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
-      e.target.closest(".action-menu").classList.add("hidden");
-    }
-  });
-  document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
-  document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
-  function closeAvailabilityModal() {
-    document.getElementById("availabilityModalOverlay").classList.add("hidden");
-    document.body.classList.remove("blurred-bg");
-    currentDoctorId = null;
-    document.getElementById("availabilityForm").reset();
-  }
-  flatpickr("#availabilityDate", {
-    dateFormat: "Y-m-d",
-    allowInput: false,
-    static: true,
-    onChange: function(selectedDates, dateStr) {
-      fetchAndFillAvailabilityForDate(dateStr);
-    },
-  });
-  flatpickr("#availabilityStart", {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "h:i K",
-    time_24hr: false,
-    allowInput: false,
-    static: true,
-  });
-  flatpickr("#availabilityEnd", {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "h:i K",
-    time_24hr: false,
-    allowInput: false,
-    static: true,
-  });
-  async function fetchAndFillAvailabilityForDate(dateStr) {
-    if (!currentDoctorId) return;
-    try {
-      const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
-      if (res.ok) {
-        const data = await res.json();
-        document.getElementById("availabilityStart").value = data.start || "";
-        document.getElementById("availabilityEnd").value = data.end || "";
-      } else {
-        document.getElementById("availabilityStart").value = "";
-        document.getElementById("availabilityEnd").value = "";
-      }
-    } catch (err) {
-      document.getElementById("availabilityStart").value = "";
-      document.getElementById("availabilityEnd").value = "";
-    }
-  }
-  document.getElementById("availabilityForm").onsubmit = async function(e) {
-    e.preventDefault();
-    const date = document.getElementById("availabilityDate").value;
-    const start = document.getElementById("availabilityStart").value;
-    const end = document.getElementById("availabilityEnd").value;
-    if (!currentDoctorId) return;
-    try {
-      const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, start, end }),
-      });
-      if (!response.ok) throw new Error("Failed to save availability");
-      closeAvailabilityModal();
-      await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-    } catch (err) {
-      alert("Error saving availability: " + err.message);
-    }
-  };
-})();
-(function() {
-  document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("action-btn")) {
-      e.stopPropagation();
-      document.querySelectorAll(".action-menu").forEach(menu => menu.classList.add("hidden"));
-      const menu = e.target.nextElementSibling;
-      if (menu) menu.classList.toggle("hidden");
-    } else {
-      document.querySelectorAll(".action-menu").forEach(menu => menu.classList.add("hidden"));
-    }
-  });
-})();
-(function() {
-  const addDoctorBtn = document.getElementById("addDoctorBtn");
-  const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
-  if (addDoctorModalOverlay) {
-    const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
-    const openModal = () => {
-      addDoctorModalOverlay.classList.remove("hidden");
-      document.body.classList.add("blurred-bg");
-    };
-    const closeModal = () => {
-      addDoctorModalOverlay.classList.add("hidden");
-      document.body.classList.remove("blurred-bg");
-      const form = document.getElementById("addDoctorForm");
-      if (form) form.reset();
-      showDoctorError("");
-    };
-    if (addDoctorBtn) {
-      addDoctorBtn.addEventListener("click", openModal);
-    }
-    if (closeAddDoctorModal) {
-      closeAddDoctorModal.addEventListener("click", closeModal);
-    }
-    const addDoctorForm = document.getElementById("addDoctorForm");
-    if (addDoctorForm) {
-      addDoctorForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const formData = new FormData(addDoctorForm);
-        const firstName = formData.get("firstName")?.trim() || "";
-        const lastName = formData.get("lastName")?.trim() || "";
-        const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
-        try {
-          const res = await fetch("/api/doctors");
-          const existingDoctors = await res.json();
-          const isDuplicate = existingDoctors.some((doc) => {
-            const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
-            return existingName === fullName;
-          });
-          if (isDuplicate) {
-            showDoctorError("Doctor already exists: duplicate name.");
-            return;
-          }
-        } catch (err) {
-          showDoctorError("Error checking existing doctors.");
-          return;
-        }
-        const doctorData = {
-          firstName,
-          lastName,
-          name: `Dr. ${firstName} ${lastName}`,
-          specialty: formData.get("specialty"),
-          experience: formData.get("experience"),
-          qualification: formData.get("qualification"),
-          availability: formData.get("availability"),
-        };
-        try {
-          const response = await fetch("/api/doctors", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(doctorData),
-          });
-          if (!response.ok) {
-            const errorData = await response.json();
-            showDoctorError(errorData.error || "Failed to add doctor.");
-            return;
-          }
-          showDoctorError("");
-          alert("Doctor added successfully!");
-          closeModal();
-          await fetchAndDisplayDoctors();
-        } catch (error) {
-          showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
-        }
-      });
-    }
-  }
-  function showDoctorError(msg) {
-    const errorDiv = document.getElementById("doctorErrorMsg");
-    if (!errorDiv) return;
-    if (msg) {
-      errorDiv.textContent = msg;
-      errorDiv.style.display = "block";
-    } else {
-      errorDiv.textContent = "";
-      errorDiv.style.display = "none";
-    }
-  }
-})();
-</script>
 </body>
 
 </html>

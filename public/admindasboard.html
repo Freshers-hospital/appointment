@@ -270,49 +270,45 @@
                 </svg>
                 <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
             </div>
-            <div class="flex items-center">
-                <div class="mr-4 font-bold text-sm text-black" id="userName"></div>
-                <div class="flex items-center relative">
-                    <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1"
-                        id="userDropdownToggle">
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" fill="none" width="24" height="24" />
-                            <g>
-                                <path d="M7 10l5 5 5-5" />
-                            </g>
-                        </svg>
-                    </div>
-                    <div id="userDropdownMenu"
-                        class="absolute right-0 mt-32 w-44 bg-white border border-gray-200 rounded shadow-md hidden z-50">
-                        <ul class="py-1 text-sm text-gray-700">
-                            <li>
-                                <a href=""
-                                    class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors duration-150">
-                                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
-                                            fill="#000000" />
-                                    </svg>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
-                                    class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
-                                    <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
-                                            fill="#ff0000" />
-                                    </svg>
-                                    <span>Logout</span>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="flex items-center gap-2">
+                <div id="userAvatar" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black  text-lg"></div>
+                <span id="userName" class="font-bold text-sm text-black"></span>
+                <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1" id="userDropdownToggle">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" fill="none" width="24" height="24" />
+                        <g>
+                            <path d="M7 10l5 5 5-5" />
+                        </g>
+                    </svg>
+                </div>
+                <div id="userDropdownMenu"
+                    class="absolute right-0 mt-32 w-44 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                    <ul class="py-1 text-sm text-gray-700">
+                        <li>
+                            <a href="" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors duration-150">
+                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
+                                        fill="#000000" />
+                                </svg>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
+                                class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
+                                <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
+                                        fill="#ff0000" />
+                                </svg>
+                                <span>Logout</span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
     </nav>
 
     <div class="p-8">
@@ -3247,9 +3243,18 @@
     </script>
 
     <script>
-        const userName = localStorage.getItem("name");
-        document.getElementById("userName").textContent = userName;
-    </script>
+function getInitials(name) {
+  if (!name) return "";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+const userName = localStorage.getItem("name") || "superadmin";
+document.getElementById("userName").textContent = userName;
+document.getElementById("userAvatar").textContent = getInitials(userName);
+</script>
+
+
     <script>
         const dropdownToggle = document.getElementById("userDropdownToggle");
         const dropdownMenu = document.getElementById("userDropdownMenu");
