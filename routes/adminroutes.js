@@ -49,6 +49,7 @@ router.post('/login', async (req, res) => {
       admin = await Admin.findOne({ username: email });
     }
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
+    if (admin.isDeleted) return res.status(401).json({ error: 'Account has been deleted' });
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
     await Admin.findByIdAndUpdate(admin._id, { status: 'active' });
@@ -64,8 +65,8 @@ router.post('/logout', async (req, res) => {
     if (!token) return res.status(400).json({ error: 'Token not provided' });
     const decryptToken = jwt.verify(token, JWT_SECRET);
     const { id, username, role } = decryptToken;
-    await Admin.findByIdAndUpdate(id,{ status: 'inactive' });
-    res.json({ message:`${username} logged out successfully` });
+    await Admin.findByIdAndUpdate(id, { status: 'inactive' });
+    res.json({ message: `${username} logged out successfully` });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -103,9 +104,7 @@ function authMiddleware(req, res, next) {
 }
 router.get('/getAllAdmins', async (req, res) => {
   try {
-
-    const admins = await Admin.find({ role: 1 ,isDeleted:false});
-
+    const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -140,8 +139,8 @@ router.put('/updateAdmin/:id', async (req, res) => {
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
-        const admin = await Admin.findByIdAndUpdate(id, { isDeleted:true }, { new: true });
- 
+    const admin = await Admin.findByIdAndUpdate(id, { isDeleted: true, status: 'deleted' }, { new: true });
+
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
