@@ -3247,69 +3247,233 @@
             }
         });
     </script>
-    <!-- Admin Profile -->
-    <div id="adminProfileModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-      <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-sm relative">
-        <button id="closeAdminProfileModal" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-        <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Admin Profile</h2>
-        <div class="space-y-4">
-          <div>
-            <div class="text-gray-500 text-sm mb-1">Name</div>
-            <div id="adminProfileName" class="text-gray-800 font-semibold text-base"></div>
+    
+    <div id="adminProfileModal" class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
+        <button id="closeAdminProfileModal" class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile & Settings</h2>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600">
+            <span id="adminProfileInitials"></span>
           </div>
-          <div>
-            <div class="text-gray-500 text-sm mb-1">Email</div>
-            <div id="adminProfileEmail" class="text-gray-800 font-semibold text-base"></div>
+          <div class="flex-1">
+            <input id="adminProfileNameTop" class="text-xl font-semibold text-gray-900 bg-transparent border-none outline-none w-full" readonly />
           </div>
-          <div>
-            <div class="text-gray-500 text-sm mb-1">Contact No</div>
-            <div id="adminProfileContact" class="text-gray-800 font-semibold text-base"></div>
-          </div>
+          <button id="editProfileBtn" class="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-medium"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6-6" /></svg> Edit</button>
+    </div>
+    <div class="bg-gray-50 rounded-xl p-6">
+      <div class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Personal Information</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Name</label>
+          <input id="adminProfileName" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
         </div>
-        <div class="flex justify-center mt-6">
-          <button id="closeAdminProfileBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Close</button>
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Date of Joining</label>
+          <input id="adminProfileJoined" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" disabled />
+        </div>
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Email</label>
+          <input id="adminProfileEmail" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
+        </div>
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Contact Number</label>
+          <input id="adminProfileContact" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
         </div>
       </div>
+      <div id="editProfileActions" class="flex gap-3 mt-6 hidden">
+        <button id="saveProfileBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
+        <button id="cancelProfileBtn" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
+      </div>
     </div>
-    <script>
-    
-    const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
-    const adminProfileModal = document.getElementById('adminProfileModal');
-    const closeAdminProfileModal = document.getElementById('closeAdminProfileModal');
-    const closeAdminProfileBtn = document.getElementById('closeAdminProfileBtn');
+    <div class="flex justify-end mt-8">
+      <button id="closeAdminProfileBtn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">Close</button>
+    </div>
+  </div>
+</div>
+<script>
+const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
+const adminProfileModal = document.getElementById('adminProfileModal');
+const closeAdminProfileModal = document.getElementById('closeAdminProfileModal');
+const closeAdminProfileBtn = document.getElementById('closeAdminProfileBtn');
+const adminProfileNameTop = document.getElementById('adminProfileNameTop');
+const adminProfileInitials = document.getElementById('adminProfileInitials');
+const adminProfileName = document.getElementById('adminProfileName');
+const adminProfileJoined = document.getElementById('adminProfileJoined');
+const adminProfileEmail = document.getElementById('adminProfileEmail');
+const adminProfileContact = document.getElementById('adminProfileContact');
+const editProfileBtn = document.getElementById('editProfileBtn');
+const editProfileActions = document.getElementById('editProfileActions');
+const saveProfileBtn = document.getElementById('saveProfileBtn');
+const cancelProfileBtn = document.getElementById('cancelProfileBtn');
+let currentAdminId = null;
+let originalName = '';
+let originalEmail = '';
+let originalContact = '';
 
-    if (profileLink && adminProfileModal) {
-      profileLink.addEventListener('click', async function(e) {
-        e.preventDefault();
-    
-        document.getElementById('adminProfileName').textContent = localStorage.getItem('name') || '';
-    
-        try {
-          const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-          if (res.ok) {
-            const data = await res.json();
-            document.getElementById('adminProfileEmail').textContent = data.email || '';
-            document.getElementById('adminProfileContact').textContent = data.contact || data.phone || '';
-          } else {
-            document.getElementById('adminProfileEmail').textContent = 'N/A';
-            document.getElementById('adminProfileContact').textContent = 'N/A';
-          }
-        } catch {
-          document.getElementById('adminProfileEmail').textContent = 'N/A';
-          document.getElementById('adminProfileContact').textContent = 'N/A';
-        }
-        adminProfileModal.classList.remove('hidden');
+function setProfileInitials(name) {
+  if (!name) { adminProfileInitials.textContent = ''; return; }
+  const parts = name.split(' ');
+  adminProfileInitials.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name[0].toUpperCase();
+}
+
+if (profileLink && adminProfileModal) {
+  profileLink.addEventListener('click', async function(e) {
+    e.preventDefault();
+    const name = localStorage.getItem('name') || '';
+    adminProfileNameTop.value = name;
+    setProfileInitials(name);
+    try {
+      const token = localStorage.getItem('admin_jwt');
+      const res = await fetch('/api/admin/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
+      if (res.ok) {
+        const data = await res.json();
+        adminProfileName.value = data.username || '';
+        adminProfileNameTop.value = data.username || '';
+        adminProfileJoined.value = data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '';
+        adminProfileEmail.value = data.email || '';
+        adminProfileContact.value = data.contact || data.phone || '';
+        originalName = adminProfileName.value;
+        originalEmail = adminProfileEmail.value;
+        originalContact = adminProfileContact.value;
+        currentAdminId = data._id;
+      } else {
+        adminProfileName.value = 'N/A';
+        adminProfileNameTop.value = 'N/A';
+        adminProfileJoined.value = 'N/A';
+        adminProfileEmail.value = 'N/A';
+        adminProfileContact.value = 'N/A';
+        originalName = 'N/A';
+        originalEmail = 'N/A';
+        originalContact = 'N/A';
+        currentAdminId = null;
+      }
+    } catch {
+      adminProfileName.value = 'N/A';
+      adminProfileNameTop.value = 'N/A';
+      adminProfileJoined.value = 'N/A';
+      adminProfileEmail.value = 'N/A';
+      adminProfileContact.value = 'N/A';
+      originalName = 'N/A';
+      originalEmail = 'N/A';
+      originalContact = 'N/A';
+      currentAdminId = null;
     }
-    if (closeAdminProfileModal) closeAdminProfileModal.onclick = () => adminProfileModal.classList.add('hidden');
-    if (closeAdminProfileBtn) closeAdminProfileBtn.onclick = () => adminProfileModal.classList.add('hidden');
+    adminProfileName.readOnly = true;
+    adminProfileNameTop.readOnly = true;
+    adminProfileEmail.readOnly = true;
+    adminProfileContact.readOnly = true;
+    editProfileActions.classList.add('hidden');
+    adminProfileModal.classList.remove('hidden');
+  });
+}
+if (closeAdminProfileModal) closeAdminProfileModal.onclick = () => adminProfileModal.classList.add('hidden');
+if (closeAdminProfileBtn) closeAdminProfileBtn.onclick = () => adminProfileModal.classList.add('hidden');
 
-    </script>
+if (editProfileBtn) {
+  editProfileBtn.onclick = function() {
+    adminProfileName.readOnly = false;
+    adminProfileNameTop.readOnly = false;
+    adminProfileEmail.readOnly = false;
+    adminProfileContact.readOnly = false;
+    adminProfileName.classList.remove('bg-gray-100');
+    adminProfileNameTop.classList.remove('bg-gray-100');
+    adminProfileEmail.classList.remove('bg-gray-100');
+    adminProfileContact.classList.remove('bg-gray-100');
+    editProfileActions.classList.remove('hidden');
+    editProfileBtn.disabled = true;
+  };
+}
+if (cancelProfileBtn) {
+  cancelProfileBtn.onclick = function() {
+    adminProfileName.value = originalName;
+    adminProfileNameTop.value = originalName;
+    adminProfileEmail.value = originalEmail;
+    adminProfileContact.value = originalContact;
+    adminProfileName.readOnly = true;
+    adminProfileNameTop.readOnly = true;
+    adminProfileEmail.readOnly = true;
+    adminProfileContact.readOnly = true;
+    adminProfileName.classList.add('bg-gray-100');
+    adminProfileNameTop.classList.add('bg-gray-100');
+    adminProfileEmail.classList.add('bg-gray-100');
+    adminProfileContact.classList.add('bg-gray-100');
+    editProfileActions.classList.add('hidden');
+    editProfileBtn.disabled = false;
+  };
+}
+if (saveProfileBtn) {
+  saveProfileBtn.onclick = async function() {
+    const newName = adminProfileName.value.trim();
+    const newEmail = adminProfileEmail.value.trim();
+    const newContact = adminProfileContact.value.trim();
+    if (!newName) {
+      alert('Please enter a name.');
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    if (!/^[6-9][0-9]{9}$/.test(newContact)) {
+      alert('Please enter a valid 10-digit mobile number starting with 6-9.');
+      return;
+    }
+    if (!currentAdminId) {
+      alert('Admin not loaded.');
+      return;
+    }
+    try {
+      const token = localStorage.getItem('admin_jwt');
+      const res = await fetch('/api/admin/updateProfile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id: currentAdminId, username: newName, email: newEmail, contact: newContact })
+      });
+      if (res.ok) {
+    
+        const refreshed = await fetch('/api/admin/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (refreshed.ok) {
+          const data = await refreshed.json();
+          adminProfileName.value = data.username || '';
+          adminProfileNameTop.value = data.username || '';
+          adminProfileJoined.value = data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '';
+          adminProfileEmail.value = data.email || '';
+          adminProfileContact.value = data.contact || data.phone || '';
+          originalName = adminProfileName.value;
+          originalEmail = adminProfileEmail.value;
+          originalContact = adminProfileContact.value;
+          
+          if (data.username) localStorage.setItem('name', data.username);
+          if (data.email) localStorage.setItem('email', data.email);
+          if (data.contact) localStorage.setItem('contact', data.contact);
+        }
+        adminProfileName.readOnly = true;
+        adminProfileNameTop.readOnly = true;
+        adminProfileEmail.readOnly = true;
+        adminProfileContact.readOnly = true;
+        adminProfileName.classList.add('bg-gray-100');
+        adminProfileNameTop.classList.add('bg-gray-100');
+        adminProfileEmail.classList.add('bg-gray-100');
+        adminProfileContact.classList.add('bg-gray-100');
+        editProfileActions.classList.add('hidden');
+        editProfileBtn.disabled = false;
+        alert('Profile updated successfully!');
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(errData.error || 'Failed to update profile.');
+      }
+    } catch {
+      alert('Failed to update profile.');
+    }
+  };
+}
+</script>
 </body>
-
-</html>
 
 </html>
