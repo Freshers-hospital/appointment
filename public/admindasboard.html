@@ -779,19 +779,19 @@
                     <p class="text-gray-500 text-sm mb-1">Availability</p>
                     <p id="profileDoctorAvailability" class="text-gray-800 font-semibold text-base truncate"></p>
                 </div>
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div id="profileDoctorAgeWrapper" class="bg-gray-50 p-4 rounded-lg shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Age</p>
                     <p id="profileDoctorAge" class="text-gray-800 font-semibold text-base truncate"></p>
                 </div>
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div id="profileDoctorGenderWrapper" class="bg-gray-50 p-4 rounded-lg shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Gender</p>
                     <p id="profileDoctorGender" class="text-gray-800 font-semibold text-base truncate"></p>
                 </div>
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div id="profileDoctorPhoneWrapper" class="bg-gray-50 p-4 rounded-lg shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Phone Number</p>
                     <p id="profileDoctorPhone" class="text-gray-800 font-semibold text-base truncate"></p>
                 </div>
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div id="profileDoctorAddressWrapper" class="bg-gray-50 p-4 rounded-lg shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Address</p>
                     <p id="profileDoctorAddress" class="text-gray-800 font-semibold text-base truncate"></p>
                 </div>
@@ -2884,6 +2884,44 @@
                     document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
                     document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
                     document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
+                    const ageWrapper = document.getElementById('profileDoctorAgeWrapper');
+                    const ageElement = document.getElementById('profileDoctorAge');
+                    if (doctor.age) {
+                        ageElement.textContent = doctor.age;
+                        ageWrapper.classList.remove("hidden");
+                    } else {
+                        ageElement.textContent = '';
+                        ageWrapper.classList.add("hidden");
+                    }
+
+                    const genderWrapper = document.getElementById('profileDoctorGenderWrapper');
+                    const genderElement = document.getElementById('profileDoctorGender');
+                    if (doctor.gender) {
+                        genderElement.textContent = doctor.gender;
+                        genderWrapper.classList.remove("hidden");
+                    } else {
+                        genderElement.textContent = '';
+                        genderWrapper.classList.add("hidden");
+                    }
+
+                    const phoneWrapper = document.getElementById('profileDoctorPhoneWrapper');
+                    const phoneElement = document.getElementById('profileDoctorPhone');
+                    if (doctor.phone) {
+                        phoneElement.textContent = doctor.phone;
+                        phoneWrapper.classList.remove("hidden");
+                    } else {
+                        phoneElement.textContent = '';
+                        phoneWrapper.classList.add("hidden");
+                    }
+                    const addressWrapper = document.getElementById('profileDoctorAddressWrapper');
+                    const addressElement = document.getElementById('profileDoctorAddress');
+                    if (doctor.address) {
+                        addressrElement.textContent = doctor.address;
+                        addressWrapper.classList.remove("hidden");
+                    } else {
+                        addressElement.textContent = '';
+                        addressWrapper.classList.add("hidden");
+                    }
                     document.body.classList.add("blurred-bg");
                     e.target.closest(".action-menu").classList.add("hidden");
                 }
