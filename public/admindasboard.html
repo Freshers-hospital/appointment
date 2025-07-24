@@ -3374,7 +3374,8 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
         </div>
         <div>
           <label class="block text-gray-500 text-xs mb-1">Contact Number</label>
-          <input id="adminProfileContact" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
+          <input id="adminProfileContact" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" pattern="[6-9]{1}[0-9]{9}"
+          maxlength="10"  minlength="10" readonly />
         </div>
       </div>
       <div id="editProfileActions" class="flex gap-3 mt-6 hidden">
