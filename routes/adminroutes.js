@@ -45,8 +45,6 @@ router.post('/login', async (req, res) => {
     let admin;
     if (email.includes('@')) {
       admin = await Admin.findOne({ email });
-    } else {
-      admin = await Admin.findOne({ username: email });
     }
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
     if (admin.isDeleted) return res.status(401).json({ error: 'Account has been deleted' });
