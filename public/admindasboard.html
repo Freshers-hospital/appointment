@@ -3343,21 +3343,249 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
         </div>
     </div>
     
-    <div id="toast" class="fixed bottom-4 right-4 z-50 hidden px-6 py-4 rounded-lg font-semibold text-white bg-green-600 shadow-lg transition-all"></div>
+    <div id="adminProfileModal" class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
+        <button id="closeAdminProfileModal" class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile & Settings</h2>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600">
+            <span id="adminProfileInitials"></span>
+          </div>
+          <div class="flex-1">
+            <input id="adminProfileNameTop" class="text-xl font-semibold text-gray-900 bg-transparent border-none outline-none w-full" readonly />
+          </div>
+          <button id="editProfileBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">Edit</button>
+    </div>
+    <div class="bg-gray-50 rounded-xl p-6">
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Name</label>
+          <input id="adminProfileName" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
+        </div>
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Date of Joining</label>
+          <input id="adminProfileJoined" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" disabled />
+        </div>
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Email</label>
+          <input id="adminProfileEmail" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
+        </div>
+        <div>
+          <label class="block text-gray-500 text-xs mb-1">Contact Number</label>
+          <input id="adminProfileContact" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium" readonly />
+        </div>
+      </div>
+      <div id="editProfileActions" class="flex gap-3 mt-6 hidden">
+        <button id="saveProfileBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
+        <button id="cancelProfileBtn" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
+      </div>
+    </div>
+    <div class="flex justify-end mt-8">
+      <button id="closeAdminProfileBtn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">Close</button>
+    </div>
+  </div>
+</div>
 <script>
-  function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = 'fixed bottom-4 right-20 z-50 px-6 py-4 rounded-lg font-semibold text-white shadow-lg space-y-3 transition-all';
-    toast.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600');
-    toast.classList.remove('hidden');
-    setTimeout(() => {
-      toast.classList.add('hidden');
-    }, 2000);
-  }
-</script>
+const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
+const adminProfileModal = document.getElementById('adminProfileModal');
+const closeAdminProfileModal = document.getElementById('closeAdminProfileModal');
+const closeAdminProfileBtn = document.getElementById('closeAdminProfileBtn');
+const adminProfileNameTop = document.getElementById('adminProfileNameTop');
+const adminProfileInitials = document.getElementById('adminProfileInitials');
+const adminProfileName = document.getElementById('adminProfileName');
+const adminProfileJoined = document.getElementById('adminProfileJoined');
+const adminProfileEmail = document.getElementById('adminProfileEmail');
+const adminProfileContact = document.getElementById('adminProfileContact');
+const editProfileBtn = document.getElementById('editProfileBtn');
+const editProfileActions = document.getElementById('editProfileActions');
+const saveProfileBtn = document.getElementById('saveProfileBtn');
+const cancelProfileBtn = document.getElementById('cancelProfileBtn');
+let currentAdminId = null;
+let originalName = '';
+let originalEmail = '';
+let originalContact = '';
 
-    </body>
+function setProfileInitials(name) {
+  if (!name || typeof name !== 'string' || !name.trim()) { adminProfileInitials.textContent = ''; return; }
+  const parts = name.trim().split(' ');
+  adminProfileInitials.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name[0].toUpperCase();
+}
+
+if (profileLink && adminProfileModal) {
+  profileLink.addEventListener('click', async function(e) {
+    e.preventDefault();
+    const name = localStorage.getItem('name') || '';
+    adminProfileNameTop.value = name;
+    setProfileInitials(name);
+    try {
+      const token = localStorage.getItem('admin_jwt');
+      const res = await fetch('/api/admin/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        adminProfileName.value = data.username || '';
+        adminProfileNameTop.value = data.username || '';
+        adminProfileJoined.value = data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '';
+        adminProfileEmail.value = data.email || '';
+        adminProfileContact.value = data.contact || data.phone || '';
+        originalName = adminProfileName.value;
+        originalEmail = adminProfileEmail.value;
+        originalContact = adminProfileContact.value;
+        currentAdminId = data._id;
+      } else {
+        adminProfileName.value = 'N/A';
+        adminProfileNameTop.value = 'N/A';
+        adminProfileJoined.value = 'N/A';
+        adminProfileEmail.value = 'N/A';
+        adminProfileContact.value = 'N/A';
+        originalName = 'N/A';
+        originalEmail = 'N/A';
+        originalContact = 'N/A';
+        currentAdminId = null;
+      }
+    } catch {
+      adminProfileName.value = 'N/A';
+      adminProfileNameTop.value = 'N/A';
+      adminProfileJoined.value = 'N/A';
+      adminProfileEmail.value = 'N/A';
+      adminProfileContact.value = 'N/A';
+      originalName = 'N/A';
+      originalEmail = 'N/A';
+      originalContact = 'N/A';
+      currentAdminId = null;
+    }
+    adminProfileName.readOnly = true;
+    adminProfileNameTop.readOnly = true;
+    adminProfileEmail.readOnly = true;
+    adminProfileContact.readOnly = true;
+    adminProfileJoined.disabled = true;
+    editProfileActions.classList.add('hidden');
+    adminProfileModal.classList.remove('hidden');
+  });
+}
+if (closeAdminProfileModal) closeAdminProfileModal.onclick = () => adminProfileModal.classList.add('hidden');
+if (closeAdminProfileBtn) closeAdminProfileBtn.onclick = () => adminProfileModal.classList.add('hidden');
+
+if (editProfileBtn) {
+  editProfileBtn.onclick = function() {
+    adminProfileName.readOnly = false;
+    adminProfileNameTop.readOnly = false;
+    adminProfileEmail.readOnly = false;
+    adminProfileContact.readOnly = false;
+    adminProfileJoined.disabled = true;
+    adminProfileName.classList.remove('bg-gray-100');
+    adminProfileNameTop.classList.remove('bg-gray-100');
+    adminProfileEmail.classList.remove('bg-gray-100');
+    adminProfileContact.classList.remove('bg-gray-100');
+    editProfileActions.classList.remove('hidden');
+    editProfileBtn.disabled = true;
+  };
+}
+if (cancelProfileBtn) {
+  cancelProfileBtn.onclick = function() {
+    adminProfileName.value = originalName;
+    adminProfileNameTop.value = originalName;
+    adminProfileEmail.value = originalEmail;
+    adminProfileContact.value = originalContact;
+    adminProfileName.readOnly = true;
+    adminProfileNameTop.readOnly = true;
+    adminProfileEmail.readOnly = true;
+    adminProfileContact.readOnly = true;
+    adminProfileJoined.disabled = true;
+    adminProfileName.classList.add('bg-gray-100');
+    adminProfileNameTop.classList.add('bg-gray-100');
+    adminProfileEmail.classList.add('bg-gray-100');
+    adminProfileContact.classList.add('bg-gray-100');
+    editProfileActions.classList.add('hidden');
+    editProfileBtn.disabled = false;
+  };
+}
+if (saveProfileBtn) {
+  saveProfileBtn.onclick = async function() {
+    const newName = adminProfileName.value.trim();
+    const newEmail = adminProfileEmail.value.trim();
+    const newContact = adminProfileContact.value.trim();
+    if (!newName) {
+      showToast('Please enter a name.', 'error');
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail)) {
+      showToast('Please enter a valid email address.', 'error');
+      return;
+    }
+    if (!/^[6-9][0-9]{9}$/.test(newContact)) {
+      showToast('Please enter a valid 10-digit mobile number starting with 6-9.', 'error');
+      return;
+    }
+    if (!currentAdminId) {
+      showToast('Admin not loaded.', 'error');
+      return;
+    }
+    try {
+      const token = localStorage.getItem('admin_jwt');
+      const res = await fetch('/api/admin/updateProfile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id: currentAdminId, username: newName, email: newEmail, contact: newContact })
+      });
+      if (res.ok) {
+        
+        const refreshed = await fetch('/api/admin/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (refreshed.ok) {
+          const data = await refreshed.json();
+          adminProfileName.value = data.username || '';
+          adminProfileNameTop.value = data.username || '';
+          adminProfileJoined.value = data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '';
+          adminProfileEmail.value = data.email || '';
+          adminProfileContact.value = data.contact || data.phone || '';
+          originalName = adminProfileName.value;
+          originalEmail = adminProfileEmail.value;
+          originalContact = adminProfileContact.value;
+          if (data.username) localStorage.setItem('name', data.username);
+          if (data.email) localStorage.setItem('email', data.email);
+          if (data.contact) localStorage.setItem('contact', data.contact);
+          
+          let adminsList = [];
+          try {
+            adminsList = JSON.parse(localStorage.getItem('adminsList') || '[]');
+          } catch {}
+          if (Array.isArray(adminsList)) {
+            const idx = adminsList.findIndex(a => a._id === data._id);
+            if (idx !== -1) {
+              adminsList[idx].username = data.username;
+              adminsList[idx].email = data.email;
+              adminsList[idx].contact = data.contact;
+              localStorage.setItem('adminsList', JSON.stringify(adminsList));
+            }
+          }
+        }
+        adminProfileName.readOnly = true;
+        adminProfileNameTop.readOnly = true;
+        adminProfileEmail.readOnly = true;
+        adminProfileContact.readOnly = true;
+        adminProfileJoined.disabled = true;
+        adminProfileName.classList.add('bg-gray-100');
+        adminProfileNameTop.classList.add('bg-gray-100');
+        adminProfileEmail.classList.add('bg-gray-100');
+        adminProfileContact.classList.add('bg-gray-100');
+        editProfileActions.classList.add('hidden');
+        editProfileBtn.disabled = false;
+        showToast('Profile updated successfully!', 'success');
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        showToast(errData.error || 'Failed to update profile.', 'error');
+      }
+    } catch {
+      showToast('Failed to update profile.', 'error');
+    }
+  };
+}
+</script>
+</body>
 
 </html>

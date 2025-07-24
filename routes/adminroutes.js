@@ -292,4 +292,49 @@ router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   }
 });
 
+router.put('/updateMobile', authMiddleware, async (req, res) => {
+  try {
+    const { id, contact } = req.body;
+    console.log('UpdateMobile called with:', { id, contact });
+    if (!id || !contact) {
+      console.log('Missing id or contact');
+      return res.status(400).json({ error: 'Missing id or contact' });
+    }
+    const admin = await Admin.findById(id);
+    console.log('Admin found:', admin);
+    if (!admin) {
+      console.log('Admin not found');
+      return res.status(404).json({ error: 'Admin not found' });
+    }
+    admin.contact = contact;
+    await admin.save();
+    console.log('Contact updated successfully');
+    res.json({ success: true, contact });
+  } catch (err) {
+    console.log('Server error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.put('/updateProfile', authMiddleware, async (req, res) => {
+  try {
+    const { id, username, email, contact } = req.body;
+    if (!id || !username || !email || !contact) return res.status(400).json({ error: 'Missing id, username, email, or contact' });
+
+  
+    const existing = await Admin.findOne({ email, _id: { $ne: id } });
+    if (existing) return res.status(400).json({ error: 'Email already registered' });
+
+    const admin = await Admin.findById(id);
+    if (!admin) return res.status(404).json({ error: 'Admin not found' });
+    admin.username = username;
+    admin.email = email;
+    admin.contact = contact;
+    await admin.save();
+    res.json({ success: true, username, email, contact });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 module.exports = { router, authMiddleware }; 
