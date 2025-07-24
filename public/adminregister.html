@@ -2,61 +2,97 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Registration</title>
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Registration</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-blue-50 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div class="flex flex-col items-center">
-            <div class="bg-blue-500 rounded-full p-3 mb-4">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-            </div>
-            <h2 class="text-xl font-semibold mb-4">Admin Registration</h2>
+<body>
+    <div class="p-3 flex justify-between items-center bg-white shadow">
+        <div class="flex items-center">
+            <svg class="w-6 h-6 text-blue-600 mr-2 ml-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
         </div>
-
-        <form id="adminRegForm" autocomplete="off" novalidate>
-            <input type="text" name="username" placeholder="Username"
-                class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-            <input type="email" name="email" placeholder="Email"
-                class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-                <input type="tel" name="contact" placeholder="contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
-                 class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                 oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
-                required />
-
-            <input type="password" name="password" placeholder="Password"
-                class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-            <input type="password" name="confirmPassword" placeholder="Confirm Password"
-                class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required />
-
-            <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
-        </form>
-
-        <p class="text-center text-sm mt-4 text-blue-600 hover:underline">
-            <a href="login.html">Already have an account? Login</a>
-        </p>
+        <button onclick="window.location.href='superadmin.html'"
+            class="text-gray-600 hover:text-gray-800 flex items-center">
+            Back to Dashboard
+            <svg class="w-4 h-4 mr-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+        </button>
     </div>
-    <script>
-        document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            var form = e.target;
-            var username = form.username.value.trim();
-            var email = form.email.value.trim();
-            var contact = form.contact.value.trim();
-            var password = form.password.value;
-            var confirmPassword = form.confirmPassword.value;
+    <div class="bg-blue-50 flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div class="flex flex-col items-center">
+                <div class="bg-blue-500 rounded-full p-3 mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold mb-4">Admin Registration</h2>
+            </div>
+
+            <form id="adminRegForm" autocomplete="off" novalidate>
+                <input type="text" name="username" placeholder="Username"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+                <input type="email" name="email" placeholder="Email"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+                <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10"
+                    minlength="10"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+                    required />
+
+                <input type="password" name="password" placeholder="Password"
+                    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+                <input type="password" name="confirmPassword" placeholder="Confirm Password"
+                    class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required />
+
+                <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
+            </form>
+
+            <!-- <p class="text-center text-sm mt-4 text-blue-600 hover:underline">
+                <a href="login.html">Already have an account? Login</a>
+            </p> -->
+        </div>
+    </div>
+  </div>
+
+      <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-8">
+   <div class="w-full flex justify-center">
+  <div class="text-gray-500 font-semibold">medicare@2000</div>
+</div>
+
+    <div class="flex items-center gap-3">
+
+        <!-- <button id="lightThemeBtn" title="Light Theme" style="background:none;border:none;outline:none;cursor:pointer;padding:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button id="darkThemeBtn" title="Dark Theme" style="background:none;border:none;outline:none;cursor:pointer;padding:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
+        </button> -->
+        
+    </div>
+</footer>
+  
+  <script>
+    document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var form = e.target;
+      var username = form.username.value.trim();
+      var email = form.email.value.trim();
+      var contact = form.contact.value.trim();
+      var password = form.password.value;
+      var confirmPassword = form.confirmPassword.value;
 
             if (!username || !email || !password || !confirmPassword || !contact) {
                 alert("Please fill in all fields.");
@@ -81,8 +117,8 @@
                     body: JSON.stringify({ username, email, password, contact }),
                 });
                 if (res.ok) {
-                    alert("Registration successful! Please login.");
-                    window.location.href = "login.html";
+                    alert("Registration successful!");
+                    window.location.href = "superadmin.html";
                 } else {
                     const err = await res.json();
                     alert(err.error || "Registration failed");
