@@ -196,15 +196,18 @@
               <a href="adminregister.html" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">+ Add
                 Admin</a>
             </div>
+<div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+  <div class="col-span-2">Admin Name</div>
+  <div class="col-span-2">Email</div>
+  <div class="col-span-2">Contact</div>
+  <div class="col-span-2">Status</div>
+  <div class="col-span-2">Password</div>
+  <div class="col-span-2 text-right">Actions</div>
+</div>
 
-            <div
-              class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-              <div class="col-span-3">Admin Name</div>
-              <div class="col-span-3">Email</div>
-              <div class="col-span-2">Contact</div>
-              <div class="col-span-2">Status</div>
-              <div class="col-span-2 text-right">Action</div>
-            </div>
+
+</div>
+
 
             <div id="adminList" class="space-y-2 mt-2">
             </div>
@@ -676,47 +679,79 @@
       }
     }
 
-    function renderAdminsPage() {
-      const adminList = document.getElementById("adminList");
-      const totalPages = Math.ceil(allAdmins.length / adminsPerPage);
-      const startIndex = (currentAdminsPage - 1) * adminsPerPage;
-      const endIndex = startIndex + adminsPerPage;
-      const currentAdmins = allAdmins.slice(startIndex, endIndex);
-      if (!currentAdmins.length) {
-        adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
-        updateAdminsPagination(totalPages);
-        return;
-      }
-      adminList.innerHTML = currentAdmins.map(admin => `
-        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
-          <div class="col-span-3 font-semibold text-gray-800 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.username}</div>
-          <div class="col-span-3 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.email}</div>
-          <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.contact || '-'}</div>
-          <div class="col-span-2 ">
-           <span class="inline-block px-2 py-1 text-xs font-medium rounded ${admin.isDeleted ? 'line-through text-gray-300' : ''} ${admin.status?.toLowerCase() === 'active'
-          ? 'text-green-800 bg-green-100' : admin.status === "inactive" ? 'text-red-800 bg-red-100'
-            : 'text-gray-800 bg-red-100'
-        }">
-       ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status === "inactive" ? 'Inactive' : 'Deleted'}
 
-       </span>
 
-          </div>
-          <div class="col-span-2 text-right">
-            <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-            ${admin.isDeleted ? `   <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-               <button onclick="openRestoreModal('${admin._id}')"class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
-             </div>`:
-          `<div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
-              <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
-              <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-             </div>`}
-          </div>
-        </div>
-      `).join("");
-      updateAdminsPagination(totalPages);
-    }
+
+function renderAdminsPage() {
+  const adminList = document.getElementById("adminList");
+  const totalPages = Math.ceil(allAdmins.length / adminsPerPage);
+  const startIndex = (currentAdminsPage - 1) * adminsPerPage;
+  const endIndex = startIndex + adminsPerPage;
+  const currentAdmins = allAdmins.slice(startIndex, endIndex);
+
+  if (!currentAdmins.length) {
+    adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
+    updateAdminsPagination(totalPages);
+    return;
+  }
+
+  adminList.innerHTML = currentAdmins.map(admin => `
+    <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+      <div class="col-span-2 font-semibold text-gray-800 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.username}</div>
+      <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.email}</div>
+      <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.contact || '-'}</div>
+      <div class="col-span-2">
+        <span class="inline-block px-2 py-1 text-xs font-medium rounded ${admin.isDeleted ? 'line-through text-gray-300' : ''} ${admin.status?.toLowerCase() === 'active'
+          ? 'text-green-800 bg-green-100'
+          : admin.status === 'inactive'
+            ? 'text-red-800 bg-red-100'
+            : 'text-gray-800 bg-red-100'}">
+          ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status === 'inactive' ? 'Inactive' : 'Deleted'}
+        </span>
+      </div>
+
+       
+  <div class="col-span-2">
+  <div class="relative">
+    <input
+      type="password"
+      value="${admin.decryptedPassword || '********'}"
+      class="admin-password w-full bg-gray-100 px-2 py-1 pr-8 rounded text-gray-600 text-xs"
+      readonly
+    />
+    <button
+      type="button"
+      class="absolute inset-y-0 right-1 text-sm text-gray-500"
+      onclick="togglePasswordVisibility(this)"
+    >
+      👁️
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+      <div class="col-span-2 text-right">
+        <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+        ${admin.isDeleted ? `
+          <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+            <button onclick="openRestoreModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+          </div>` : `
+          <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+            <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+            <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+            <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+          </div>`}
+      </div>
+    </div>
+  `).join("");
+
+  updateAdminsPagination(totalPages);
+}
 
     function updateAdminsPagination(totalPages) {
       let pagination = document.getElementById("adminsPagination");
@@ -1531,6 +1566,22 @@
       }, 2000);
     }
   </script>
+
+<script>
+  function togglePasswordVisibility(button) {
+    const input = button.previousElementSibling;
+    if (!input) return;
+    if (input.type === "password") {
+      input.type = "text";
+      button.textContent = "🙈";
+    } else {
+      input.type = "password";
+      button.textContent = "👁️";
+    }
+  }
+</script>
+
+
 </body>
 
 </html>

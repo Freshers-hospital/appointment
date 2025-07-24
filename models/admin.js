@@ -5,6 +5,7 @@ const adminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  encryptedPassword: { type: String },
   role: { type: Number, required: true, default: 1, enum: [1, 2] }, // 1-admin, 2-superadmin
   contact: { type: String, required: true },
 
