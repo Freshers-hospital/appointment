@@ -87,30 +87,31 @@ router.post("/:doctorId/availability", async (req, res) => {
     }
 });
 
-router.put("/:doctorId", upload.single("photo"), async (req, res) => {
-    try {
-        const doctorId = req.params.doctorId;
-        const updateData = req.body;
-        // Phone validation
-        if (updateData.phone) {
-            const phonePattern = /^[6-9][0-9]{9}$/;
-            if (!phonePattern.test(updateData.phone)) {
-                return res.status(400).json({ error: "Phone number must be 10 digits and start with 6, 7, 8, or 9." });
-            }
-        }
-        if (req.file) {
-            updateData.image = `/uploads/${req.file.filename}`;
-        }
-        Object.keys(updateData).forEach((key) => {
-            if (updateData[key] === "") delete updateData[key];
-        });
-        const updatedDoctor = await Doctor.findByIdAndUpdate(doctorId, updateData, { new: true });
-        if (!updatedDoctor) return res.status(404).json({ error: "Doctor not found" });
-        res.json(updatedDoctor);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to update doctor" });
+
+router.put('/:doctorId', upload.single('photo'), async (req, res) => {
+  try {
+    const doctorId = req.params.doctorId;
+    const updateData = req.body;
+   
+    if (updateData.phone) {
+      const phonePattern = /^[6-9][0-9]{9}$/;
+      if (!phonePattern.test(updateData.phone)) {
+        return res.status(400).json({ error: 'Phone number must be 10 digits and start with 6, 7, 8, or 9.' });
+      }
     }
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] === '') delete updateData[key];
+    });
+    const updatedDoctor = await Doctor.findByIdAndUpdate(doctorId, updateData, { new: true });
+    if (!updatedDoctor) return res.status(404).json({ error: 'Doctor not found' });
+    res.json(updatedDoctor);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update doctor' });
+  }
 });
 
 module.exports = router;

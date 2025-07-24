@@ -574,40 +574,46 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-between mt-6">
-                        <button onclick="goBackToDateTime()" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">Back</button>
-                        <button onclick="confirmBooking()" id="confirmBookingBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
-                            Confirm Appointment
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Custom Refresh Warning Modal -->
-        <div id="refreshWarningModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <h2 class="text-xl font-bold mb-4 text-gray-800 text-center">Are you sure you want to refresh?</h2>
-                <p class="text-gray-600 mb-6 text-center">After refreshing, your details will be removed.</p>
-                <div class="flex justify-end gap-4">
-                    <button id="cancelRefreshBtn" class="px-4 py-2 rounded bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400">Cancel</button>
-                    <button id="confirmRefreshBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Refresh</button>
+                <div class="flex justify-between mt-6">
+                    <button onclick="goBackToDateTime()"
+                        class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">Back</button>
+                    <button onclick="confirmBooking()" id="confirmBookingBtn"
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                        Confirm Appointment
+                    </button>
                 </div>
             </div>
         </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const ageSelect = document.getElementById("age");
-                for (let i = 1; i <= 100; i++) {
-                    const option = document.createElement("option");
-                    option.value = i;
-                    option.textContent = i + " years";
-                    ageSelect.appendChild(option);
-                }
-                const above100 = document.createElement("option");
-                above100.value = "101";
-                above100.textContent = "Above 100 years";
-                ageSelect.appendChild(above100);
+    </section>
+<div id="refreshWarningModal"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+            <h2 class="text-xl font-bold mb-4 text-gray-800 text-center">Are you sure you want to refresh?</h2>
+            <p class="text-gray-600 mb-6 text-center">After refreshing, your details will be removed.</p>
+            <div class="flex justify-end gap-4">
+                <button id="cancelRefreshBtn"
+                    class="px-4 py-2 rounded bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400">Cancel</button>
+                <button id="confirmRefreshBtn"
+                    class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Refresh</button>
+            </div>
+        </div>
+    </div>
+     </div>
+    <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
+        <div class="text-gray-500 font-semibold">medicare@2000</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const ageSelect = document.getElementById("age");
+            for (let i = 1; i <= 100; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.textContent = i + " years";
+                ageSelect.appendChild(option);
+            }
+            const above100 = document.createElement("option");
+            above100.value = "101";
+            above100.textContent = "Above 100 years";
+            ageSelect.appendChild(above100);
 
                 updateStepper(1);
 
