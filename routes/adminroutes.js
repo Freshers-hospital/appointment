@@ -190,7 +190,7 @@ router.put('/updateProfile', authMiddleware, async (req, res) => {
     const { id, username, email, contact } = req.body;
     if (!id || !username || !email || !contact) return res.status(400).json({ error: 'Missing id, username, email, or contact' });
 
-    // Check for duplicate email (other than self)
+  
     const existing = await Admin.findOne({ email, _id: { $ne: id } });
     if (existing) return res.status(400).json({ error: 'Email already registered' });
 

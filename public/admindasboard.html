@@ -3355,10 +3355,10 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
           <div class="flex-1">
             <input id="adminProfileNameTop" class="text-xl font-semibold text-gray-900 bg-transparent border-none outline-none w-full" readonly />
           </div>
-          <button id="editProfileBtn" class="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-medium"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6-6" /></svg> Edit</button>
+          <button id="editProfileBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">Edit</button>
     </div>
     <div class="bg-gray-50 rounded-xl p-6">
-      <div class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Personal Information</div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="block text-gray-500 text-xs mb-1">Name</label>
@@ -3408,8 +3408,8 @@ let originalEmail = '';
 let originalContact = '';
 
 function setProfileInitials(name) {
-  if (!name) { adminProfileInitials.textContent = ''; return; }
-  const parts = name.split(' ');
+  if (!name || typeof name !== 'string' || !name.trim()) { adminProfileInitials.textContent = ''; return; }
+  const parts = name.trim().split(' ');
   adminProfileInitials.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name[0].toUpperCase();
 }
 
@@ -3461,6 +3461,7 @@ if (profileLink && adminProfileModal) {
     adminProfileNameTop.readOnly = true;
     adminProfileEmail.readOnly = true;
     adminProfileContact.readOnly = true;
+    adminProfileJoined.disabled = true;
     editProfileActions.classList.add('hidden');
     adminProfileModal.classList.remove('hidden');
   });
@@ -3474,6 +3475,7 @@ if (editProfileBtn) {
     adminProfileNameTop.readOnly = false;
     adminProfileEmail.readOnly = false;
     adminProfileContact.readOnly = false;
+    adminProfileJoined.disabled = true;
     adminProfileName.classList.remove('bg-gray-100');
     adminProfileNameTop.classList.remove('bg-gray-100');
     adminProfileEmail.classList.remove('bg-gray-100');
@@ -3492,6 +3494,7 @@ if (cancelProfileBtn) {
     adminProfileNameTop.readOnly = true;
     adminProfileEmail.readOnly = true;
     adminProfileContact.readOnly = true;
+    adminProfileJoined.disabled = true;
     adminProfileName.classList.add('bg-gray-100');
     adminProfileNameTop.classList.add('bg-gray-100');
     adminProfileEmail.classList.add('bg-gray-100');
@@ -3506,19 +3509,19 @@ if (saveProfileBtn) {
     const newEmail = adminProfileEmail.value.trim();
     const newContact = adminProfileContact.value.trim();
     if (!newName) {
-      alert('Please enter a name.');
+      showToast('Please enter a name.', 'error');
       return;
     }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail)) {
-      alert('Please enter a valid email address.');
+      showToast('Please enter a valid email address.', 'error');
       return;
     }
     if (!/^[6-9][0-9]{9}$/.test(newContact)) {
-      alert('Please enter a valid 10-digit mobile number starting with 6-9.');
+      showToast('Please enter a valid 10-digit mobile number starting with 6-9.', 'error');
       return;
     }
     if (!currentAdminId) {
-      alert('Admin not loaded.');
+      showToast('Admin not loaded.', 'error');
       return;
     }
     try {
@@ -3532,7 +3535,7 @@ if (saveProfileBtn) {
         body: JSON.stringify({ id: currentAdminId, username: newName, email: newEmail, contact: newContact })
       });
       if (res.ok) {
-    
+        
         const refreshed = await fetch('/api/admin/me', { headers: { 'Authorization': `Bearer ${token}` } });
         if (refreshed.ok) {
           const data = await refreshed.json();
@@ -3544,28 +3547,42 @@ if (saveProfileBtn) {
           originalName = adminProfileName.value;
           originalEmail = adminProfileEmail.value;
           originalContact = adminProfileContact.value;
-          
           if (data.username) localStorage.setItem('name', data.username);
           if (data.email) localStorage.setItem('email', data.email);
           if (data.contact) localStorage.setItem('contact', data.contact);
+          
+          let adminsList = [];
+          try {
+            adminsList = JSON.parse(localStorage.getItem('adminsList') || '[]');
+          } catch {}
+          if (Array.isArray(adminsList)) {
+            const idx = adminsList.findIndex(a => a._id === data._id);
+            if (idx !== -1) {
+              adminsList[idx].username = data.username;
+              adminsList[idx].email = data.email;
+              adminsList[idx].contact = data.contact;
+              localStorage.setItem('adminsList', JSON.stringify(adminsList));
+            }
+          }
         }
         adminProfileName.readOnly = true;
         adminProfileNameTop.readOnly = true;
         adminProfileEmail.readOnly = true;
         adminProfileContact.readOnly = true;
+        adminProfileJoined.disabled = true;
         adminProfileName.classList.add('bg-gray-100');
         adminProfileNameTop.classList.add('bg-gray-100');
         adminProfileEmail.classList.add('bg-gray-100');
         adminProfileContact.classList.add('bg-gray-100');
         editProfileActions.classList.add('hidden');
         editProfileBtn.disabled = false;
-        alert('Profile updated successfully!');
+        showToast('Profile updated successfully!', 'success');
       } else {
         const errData = await res.json().catch(() => ({}));
-        alert(errData.error || 'Failed to update profile.');
+        showToast(errData.error || 'Failed to update profile.', 'error');
       }
     } catch {
-      alert('Failed to update profile.');
+      showToast('Failed to update profile.', 'error');
     }
   };
 }
