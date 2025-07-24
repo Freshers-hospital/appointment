@@ -1174,46 +1174,51 @@
                     const dayDiv = document.createElement("div");
                     dayDiv.textContent = day;
 
-                const thisDate = new Date(year, month, day);
-                thisDate.setHours(0, 0, 0, 0);
-                const dateString = formatDateString(thisDate);
-                const isPast = thisDate < today;
-                const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
-                const isWithinBookingWindow = isAvailableMonth(thisDate);
-                const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
-                let isTodayAllSlotsPast = false;
-                if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                    // FIX: Use correct availability for today
-                    let availabilityToUse = selectedDoctor.availability;
-                    if (selectedDoctor.availabilityByDate) {
-                        let dateKey = formatDateString(today);
-                        if (selectedDoctor.availabilityByDate[dateKey]) {
-                            const dayAvail = selectedDoctor.availabilityByDate[dateKey];
-                            availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
-                        } else {
-                            // Try Y-M-D format if needed
-                            const parts = dateKey.split('/');
-                            if (parts.length === 3) {
-                                const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
-                                if (selectedDoctor.availabilityByDate[ymd]) {
-                                    const dayAvail = selectedDoctor.availabilityByDate[ymd];
-                                    availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                    const thisDate = new Date(year, month, day);
+                    thisDate.setHours(0, 0, 0, 0);
+                    const dateString = formatDateString(thisDate);
+                    const isPast = thisDate < today;
+                    const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
+                    const isWithinBookingWindow = isAvailableMonth(thisDate);
+                    const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
+                    let isAllSlotsUnavailable = false;
+                    if (selectedDoctor) {
+                        // Get availability for this date
+                        let availabilityToUse = selectedDoctor.availability;
+                        if (selectedDoctor.availabilityByDate) {
+                            let dateKey = dateString;
+                            if (selectedDoctor.availabilityByDate[dateKey]) {
+                                const dayAvail = selectedDoctor.availabilityByDate[dateKey];
+                                availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                            } else {
+                                // Try Y-M-D format if needed
+                                const parts = dateKey.split('/');
+                                if (parts.length === 3) {
+                                    const ymd = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+                                    if (selectedDoctor.availabilityByDate[ymd]) {
+                                        const dayAvail = selectedDoctor.availabilityByDate[ymd];
+                                        availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
+                                    }
                                 }
                             }
                         }
+                        const slots = generateTimeSlots(availabilityToUse);
+                        let bookedSlots = [];
+                        if (typeof bookedSlotsCache !== 'undefined') {
+                            const cacheKey = `${selectedDoctor.name}-${dateString}`;
+                            if (bookedSlotsCache.has(cacheKey)) {
+                                bookedSlots = bookedSlotsCache.get(cacheKey);
+                            }
+                        }
+                        isAllSlotsUnavailable = slots.length > 0 && slots.every(slot => isTimeSlotPast(slot) || (bookedSlots && bookedSlots.includes(slot)));
                     }
-                    const slots = generateTimeSlots(availabilityToUse);
-                    isTodayAllSlotsPast = slots.length > 0 && slots.every((slot) => isTimeSlotPast(slot));
-                }
-
                     let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
-
-                    if (isPast || isUnavailable || !isWithinBookingWindow || isTodayAllSlotsPast) {
+                    if (isPast || isUnavailable || !isWithinBookingWindow || isAllSlotsUnavailable) {
                         if (isFutureMonth) {
                             className += "bg-gray-50 text-gray-400 cursor-not-allowed";
                         } else if (isUnavailable) {
                             className += "bg-red-100 text-gray-600 cursor-not-allowed";
-                        } else if (isPast || isTodayAllSlotsPast) {
+                        } else if (isPast || isAllSlotsUnavailable) {
                             className += "text-gray-350 cursor-not-allowed opacity-40";
                         } else {
                             className += "text-gray-400 cursor-not-allowed";
@@ -1222,11 +1227,9 @@
                         className += "bg-green-100 text-gray-800 cursor-pointer hover:bg-green-200";
                         dayDiv.addEventListener("click", () => selectDate(dateString, dayDiv));
                     }
-
                     if (selectedDate === dateString) {
                         className += " selected bg-green-500 text-white hover:bg-green-600";
                     }
-
                     dayDiv.className = className;
                     dayDiv.setAttribute("data-date", dateString);
                     daysContainer.appendChild(dayDiv);
