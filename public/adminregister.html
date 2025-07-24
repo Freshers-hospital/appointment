@@ -118,10 +118,12 @@
         showToast("Please fill in all fields.", "warning");
         return;
       }
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        showToast("Enter a valid email address.", "warning");
-        return;
-      }
+     const emailPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
+     if (!emailPattern.test(email)) {
+    showToast("Enter a valid email with at least one letter and one number.", "warning");
+    return;
+     }
+
       if (password.length < 6) {
         showToast("Password must be at least 6 characters.", "warning");
         return;
