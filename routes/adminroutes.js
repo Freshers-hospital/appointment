@@ -21,21 +21,61 @@ router.post('/registerAsSuperadmin', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+// router.post('/register', async (req, res) => {
+//   try {
+//     const { username, email, password, contact } = req.body;
+//     if (!username || !email || !password || !contact) {
+//       return res.status(400).json({ error: 'All fields are required' });
+//     }
+//     const exists = await Admin.findOne({ email });
+//     if (exists) return res.status(400).json({ error: 'Email already registered' });
+//     const admin = new Admin({ username, email, password, role: 1, contact });
+//     await admin.save();
+//     res.status(201).json({ message: 'Admin registered successfully' });
+//   } catch (err) {
+//     res.status(400).json({ error: err.message });
+//   }
+// });
+
+
+
+
 router.post('/register', async (req, res) => {
   try {
     const { username, email, password, contact } = req.body;
     if (!username || !email || !password || !contact) {
       return res.status(400).json({ error: 'All fields are required' });
     }
+
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 1, contact });
+
+    // 🔐 AES Encrypt the password for display
+    const encryptedPassword = encrypt(password);
+
+    // 🔒 Let bcrypt hash the password in schema pre-save
+    const admin = new Admin({
+      username,
+      email,
+      password,             // Will be hashed in schema
+      encryptedPassword,    // Will be decrypted only for frontend display
+      role: 1,
+      contact
+    });
+
     await admin.save();
+
     res.status(201).json({ message: 'Admin registered successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
+
+
+
+
+
 
 
 router.post('/login', async (req, res) => {
@@ -69,24 +109,64 @@ router.post('/logout', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+// router.post('/resetPassword', async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     if (!email || !password) {
+//       return res.status(400).json({ error: 'All fields are required' });
+//     }
+//     const admin = await Admin.findOne({ email });
+//     if (!admin) return res.status(404).json({ error: 'Email does not exist' });
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
+//     if (!updateAdminPassword) {
+//       res.status(404).json({ error: 'Email does not exist' });
+//     }
+//     res.status(201).json({ message: 'Password reset successfully' });
+//   } catch (err) {
+//     res.status(400).json({ error: err.message });
+//   }
+// });
+
+
+
+
 router.post('/resetPassword', async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-    const admin = await Admin.findOne({ email });
-    if (!admin) return res.status(404).json({ error: 'Email does not exist' });
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
-    if (!updateAdminPassword) {
-      res.status(404).json({ error: 'Email does not exist' });
-    }
+    const encryptedPassword = encrypt(password);
+
+    const updated = await Admin.findOneAndUpdate(
+      { email },
+      { password: hashedPassword, encryptedPassword },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ error: 'Email does not exist' });
+
     res.status(201).json({ message: 'Password reset successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -100,25 +180,48 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: 'Invalid token' });
   }
 }
+// router.get('/getAllAdmins', async (req, res) => {
+//   try {
+//     const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
+//     res.json(admins);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
-router.get('/me', authMiddleware, async (req, res) => {
-    try {
-        const admin = await Admin.findById(req.admin.id).select('-password');
-        if (!admin) return res.status(404).send('Admin not found.');
-        res.send(admin);
-    } catch (err) {
-        res.status(500).send("Server error.");
-    }
-});
+
+
+const { decrypt } = require('../utils/encryption');
 
 router.get('/getAllAdmins', async (req, res) => {
   try {
     const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
-    res.json(admins);
+
+    const adminsWithPasswords = admins.map(admin => {
+      const decryptedPassword = admin.encryptedPassword
+        ? decrypt(admin.encryptedPassword)
+        : '********';
+
+      return {
+        ...admin.toObject(),
+        decryptedPassword // used in frontend input field
+      };
+    });
+
+    res.json(adminsWithPasswords);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+
+
+
+
+
+
 router.get('/getAdminById/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -131,19 +234,56 @@ router.get('/getAdminById/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// router.put('/updateAdmin/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const updateData = req.body;
+//     const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
+//     if (!admin) {
+//       return res.status(404).json({ message: 'Admin not found' });
+//     }
+//     res.json(admin);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+
+
+
+const { encrypt } = require('../utils/encryption'); // Make sure this is imported
+
 router.put('/updateAdmin/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const updateData = req.body;
-    const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
-    if (!admin) {
-      return res.status(404).json({ message: 'Admin not found' });
+    const updateData = { ...req.body };
+
+    if (updateData.password && updateData.password.trim() !== '') {
+      const hashed = await bcrypt.hash(updateData.password, 10);
+      updateData.password = hashed;
+      updateData.encryptedPassword = encrypt(req.body.password); // for frontend display
+    } else {
+      delete updateData.password;
     }
-    res.json(admin);
+
+    const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
+    if (!admin) return res.status(404).json({ message: 'Admin not found' });
+
+    res.json({ message: 'Admin updated successfully', admin });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+
+
+
+
+
+
+
 
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   try {
