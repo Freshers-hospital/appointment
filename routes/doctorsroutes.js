@@ -102,7 +102,7 @@ router.put('/:doctorId', upload.single('photo'), async (req, res) => {
   try {
     const doctorId = req.params.doctorId;
     const updateData = req.body;
-    // Phone validation
+   
     if (updateData.phone) {
       const phonePattern = /^[6-9][0-9]{9}$/;
       if (!phonePattern.test(updateData.phone)) {

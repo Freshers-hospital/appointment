@@ -49,15 +49,28 @@ router.post('/login', async (req, res) => {
       admin = await Admin.findOne({ username: email });
     }
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
+    if (admin.isDeleted) return res.status(401).json({ error: 'Account has been deleted' });
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+    await Admin.findByIdAndUpdate(admin._id, { status: 'active' });
     const token = jwt.sign({ id: admin._id, username: admin.username, role: admin.role }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, role: admin.role, name: admin.username });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
+router.post('/logout', async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ error: 'Token not provided' });
+    const decryptToken = jwt.verify(token, JWT_SECRET);
+    const { id, username, role } = decryptToken;
+    await Admin.findByIdAndUpdate(id, { status: 'inactive' });
+    res.json({ message: `${username} logged out successfully` });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 router.post('/resetPassword', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -66,9 +79,9 @@ router.post('/resetPassword', async (req, res) => {
     }
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ error: 'Email does not exist' });
-    const hashedPassword= await bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
-    if(!updateAdminPassword){
+    if (!updateAdminPassword) {
       res.status(404).json({ error: 'Email does not exist' });
     }
     res.status(201).json({ message: 'Password reset successfully' });
@@ -102,7 +115,7 @@ router.get('/me', authMiddleware, async (req, res) => {
 
 router.get('/getAllAdmins', async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1})
+    const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
     res.json(admins);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -137,7 +150,8 @@ router.put('/updateAdmin/:id', async (req, res) => {
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
-    const admin = await Admin.findByIdAndUpdate(id, { status: 'inactive' }, { new: true });
+    const admin = await Admin.findByIdAndUpdate(id, { isDeleted: true, status: 'deleted' }, { new: true });
+
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
