@@ -17,26 +17,21 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post("/", async (req, res) => {
-    try {
-        const { firstName, lastName, specialty, ...rest } = req.body;
+router.post('/', async (req, res) => {
+  try {
+    const { firstName, lastName, specialty, ...rest } = req.body;
 
-        const existing = await Doctor.findOne({ firstName, lastName });
-        if (existing) {
-            return res.status(400).json({ error: " A doctor with this name already exists." });
-        }
-
-        const existingSpecialty = await Doctor.findOne({ specialty });
-        if (existingSpecialty) {
-            return res.status(400).json({ error: "A doctor with this specialty already exists." });
-        }
-
-        const doctor = new Doctor({ firstName, lastName, specialty, ...rest, name: `Dr. ${firstName} ${lastName}` });
-        await doctor.save();
-        res.status(201).json(doctor);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+ 
+    const existing = await Doctor.findOne({ firstName, lastName });
+    if (existing) {
+      return res.status(400).json({ error: ' A doctor with this name already exists.' });
     }
+ const doctor = new Doctor({ firstName, lastName, specialty, ...rest, name: `Dr. ${firstName} ${lastName}` });
+    await doctor.save();
+    res.status(201).json(doctor);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.get("/", async (req, res) => {
