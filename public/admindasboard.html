@@ -271,8 +271,9 @@
                 <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
             </div>
             <div class="flex items-center">
-                <div class="mr-4 font-bold text-sm text-black" id="userName"></div>
-                <div class="flex items-center relative">
+                        <div class="flex items-center gap-2">
+          <div id="userAvatar" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-lg"></div>
+          <span id="userName" class="font-bold text-sm text-black"></span>
                     <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1"
                         id="userDropdownToggle">
                         <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -3299,6 +3300,17 @@
             document.getElementById("logoutModal")?.classList.add("hidden");
         }
     </script>
+    <script>
+function getInitials(name) {
+  if (!name) return "";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+const AdminName = localStorage.getItem("name") || "admin";
+document.getElementById("userName").textContent = userName;
+document.getElementById("userAvatar").textContent = getInitials(userName);
+</script>
     <script>
         async function logout() {
             try {
