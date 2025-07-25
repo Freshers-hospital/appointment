@@ -228,7 +228,7 @@ router.put('/updateProfile', authMiddleware, async (req, res) => {
   }
 });
 
-router.get('/me', async (req, res) => {
+router.get('/getAdminProfile', async (req, res) => {
   const authHeader = req.headers['authorization'];
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Authorization header missing' });

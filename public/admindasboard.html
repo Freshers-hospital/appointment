@@ -3440,7 +3440,7 @@
                 setProfileInitials(name);
                 try {
                     const token = localStorage.getItem('admin_jwt');
-                    const res = await fetch('/api/admin/me', {
+                    const res = await fetch('/api/admin/getAdminProfile', {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
@@ -3558,7 +3558,7 @@
                     });
                     if (res.ok) {
 
-                        const refreshed = await fetch('/api/admin/me', { headers: { 'Authorization': `Bearer ${token}` } });
+                        const refreshed = await fetch('/api/admin/getAdminProfile', { headers: { 'Authorization': `Bearer ${token}` } });
                         if (refreshed.ok) {
                             const data = await refreshed.json();
                             adminProfileName.value = data.admin.username || '';
