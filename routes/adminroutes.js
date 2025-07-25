@@ -1,10 +1,10 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const Admin = require('../models/admin');
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const Admin = require("../models/admin");
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 router.post('/registerAsSuperadmin', async (req, res) => {
   try {
@@ -14,6 +14,7 @@ router.post('/registerAsSuperadmin', async (req, res) => {
     }
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
+    const admin = new Admin({ username, email, password, role: 0, contact });
     const admin = new Admin({ username, email, password, role: 0, contact });
     await admin.save();
     res.status(201).json({ message: 'SuperAdmin registered successfully' });
@@ -64,6 +65,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 router.post('/logout', async (req, res) => {
   try {
     const { token } = req.body;
@@ -77,6 +79,7 @@ router.post('/logout', async (req, res) => {
   }
 });
 
+
 router.post('/resetPassword', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -84,6 +87,14 @@ router.post('/resetPassword', async (req, res) => {
       return res.status(400).json({ error: 'All fields are required' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
+    const encryptedPassword = encrypt(password);
+    const updated = await Admin.findOneAndUpdate(
+      { email },
+      { password: hashedPassword, encryptedPassword },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ error: 'Email does not exist' });
     const encryptedPassword = encrypt(password);
     const updated = await Admin.findOneAndUpdate(
       { email },
@@ -131,6 +142,7 @@ router.get('/getAllAdmins', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 router.get('/getAdminById/:id', async (req, res) => {
   try {
@@ -249,4 +261,70 @@ router.get('/getAdminProfile', async (req, res) => {
   }
 });
 
-module.exports = { router, authMiddleware }; 
+router.put('/updateMobile', authMiddleware, async (req, res) => {
+  try {
+    const { id, contact } = req.body;
+    console.log('UpdateMobile called with:', { id, contact });
+    if (!id || !contact) {
+      console.log('Missing id or contact');
+      return res.status(400).json({ error: 'Missing id or contact' });
+    }
+    const admin = await Admin.findById(id);
+    console.log('Admin found:', admin);
+    if (!admin) {
+      console.log('Admin not found');
+      return res.status(404).json({ error: 'Admin not found' });
+    }
+    admin.contact = contact;
+    await admin.save();
+    console.log('Contact updated successfully');
+    res.json({ success: true, contact });
+  } catch (err) {
+    console.log('Server error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.put('/updateProfile', authMiddleware, async (req, res) => {
+  try {
+    const { id, username, email, contact } = req.body;
+    if (!id || !username || !email || !contact) return res.status(400).json({ error: 'Missing id, username, email, or contact' });
+
+
+    const existing = await Admin.findOne({ email, _id: { $ne: id } });
+    if (existing) return res.status(400).json({ error: 'Email already registered' });
+
+    const admin = await Admin.findById(id);
+    if (!admin) return res.status(404).json({ error: 'Admin not found' });
+    admin.username = username;
+    admin.email = email;
+    admin.contact = contact;
+    await admin.save();
+    res.json({ success: true, username, email, contact });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.get('/getAdminProfile', async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const adminId = decoded.id;
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    res.json({ admin });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+module.exports = { router, authMiddleware };
