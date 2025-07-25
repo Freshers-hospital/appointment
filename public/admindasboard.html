@@ -141,7 +141,7 @@
             backdrop-filter: blur(6px);
         }
 
-        .blurred-bg>*:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(#addDoctorModalOverlay):not(#patientDetailsModalOverlay):not(#successModalOverlay):not(#viewDoctorProfileModalOverlay):not(#editDoctorProfileModalOverlay) {
+        .blurred-bg>*:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(#addDoctorModalOverlay):not(#patientDetailsModalOverlay):not(#successModalOverlay):not(#viewDoctorProfileModalOverlay):not(#editDoctorProfileModalOverlay):not(#toast) {
             filter: blur(4px);
             pointer-events: none;
             user-select: none;
@@ -270,45 +270,52 @@
                 </svg>
                 <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
             </div>
-            <div class="flex items-center gap-2">
-                <div id="userAvatar" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black  text-lg"></div>
-                <span id="userName" class="font-bold text-sm text-black"></span>
-                <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1" id="userDropdownToggle">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" fill="none" width="24" height="24" />
-                        <g>
-                            <path d="M7 10l5 5 5-5" />
-                        </g>
-                    </svg>
-                </div>
-                <div id="userDropdownMenu"
-                    class="absolute right-0 mt-32 w-44 bg-white border border-gray-200 rounded shadow-md hidden z-50">
-                    <ul class="py-1 text-sm text-gray-700">
-                        <li>
-                            <a href="" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors duration-150">
-                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
-                                        fill="#000000" />
-                                </svg>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
-                                class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
-                                <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
-                                        fill="#ff0000" />
-                                </svg>
-                                <span>Logout</span>
-                            </button>
-                        </li>
-                    </ul>
+            <div class="flex items-center">
+                <div class="flex items-center gap-2">
+                    <div id="userAvatar"
+                        class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-lg">
+                    </div>
+                    <span id="userName" class="font-bold text-sm text-black"></span>
+                    <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1"
+                        id="userDropdownToggle">
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" fill="none" width="24" height="24" />
+                            <g>
+                                <path d="M7 10l5 5 5-5" />
+                            </g>
+                        </svg>
+                    </div>
+                    <div id="userDropdownMenu"
+                        class="absolute right-0 mt-32 w-44 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                        <ul class="py-1 text-sm text-gray-700">
+                            <li>
+                                <a href=""
+                                    class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors duration-150">
+                                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
+                                            fill="#000000" />
+                                    </svg>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
+                                    class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
+                                    <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
+                                            fill="#ff0000" />
+                                    </svg>
+                                    <span>Logout</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
     </nav>
 
     <div class="p-8">
@@ -352,16 +359,13 @@
                     data-tab="patientsTab">Patients</button>
             </div>
         </div>
-
-
-        <div class="px-20">
+           <div class="px-20">
             <div class="bg-white p-6 rounded-xl shadow">
                 <div id="appointmentsTab" class="tab-content">
                     <div class="flex items-center space-x-4 mb-4" id="appointmentsFilterBar">
                         <label for="appointmentStatusFilter" class="font-semibold text-gray-900 text-base"> Show:
                         </label>
-
-                        <div class="relative">
+                          <div class="relative">
                             <select id="appointmentStatusFilter"
                                 class="block w-56 appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-10 text-sm font-medium text-gray-800 shadow-sm transition-all duration-150 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-gray-400">
                                 <option value="all">All Appointments</option>
@@ -651,73 +655,68 @@
     </div>
 
     <div id="addDoctorModalOverlay"
-        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-            <button id="closeAddDoctorModal"
-                class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
-            <form id="addDoctorForm">
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="doctorFirstName" class="block text-gray-700 text-sm font-semibold mb-2">First
-                            Name</label>
-                        <input type="text" id="doctorFirstName" name="firstName"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            required />
-                    </div>
-                    <div>
-                        <label for="doctorLastName" class="block text-gray-700 text-sm font-semibold mb-2">Last
-                            Name</label>
-                        <input type="text" id="doctorLastName" name="lastName"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            required />
-                    </div>
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative overflow-y-auto max-h-[90vh]">
+
+        <button id="closeAddDoctorModal"
+            class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
+       <form id="addDoctorForm">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="doctorFirstName" class="block text-gray-700 text-sm font-semibold mb-2">First Name</label>
+                    <input type="text" id="doctorFirstName" name="firstName"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required />
                 </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="mb-4">
-                        <label for="doctorSpecialty"
-                            class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
-                        <input type="text" id="doctorSpecialty" name="specialty"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            required />
-                    </div>
-                    <div class="mb-4">
-                        <label for="doctorExperience"
-                            class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
-                        <input type="text" id="doctorExperience" name="experience"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-                    </div>
-
-                    <div class="mb-4 col-span-2">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
-                        <input type="text" name="qualification"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            placeholder="e.g., Mbbs,Phd..." required />
-                    </div>
-
-                    <div class="mb-4 col-span-2">
-                        <label for="doctorAvailability"
-                            class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
-                        <input type="text" id="doctorAvailability" name="availability"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            placeholder="e.g., 9:00 AM - 5:00 PM" required />
-                    </div>
+                <div>
+                    <label for="doctorLastName" class="block text-gray-700 text-sm font-semibold mb-2">Last Name</label>
+                    <input type="text" id="doctorLastName" name="lastName"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required />
                 </div>
+            </div>
 
-                <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
-                <div class="flex justify-end mt-4">
-                    <button type="submit"
-                        class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
+                    <select id="doctorSpecialty" name="specialty"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required>
+                    </select>
                 </div>
-            </form>
-        </div>
+                <div>
+                    <label for="doctorExperience" class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
+                    <input type="text" id="doctorExperience" name="experience"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+                <input type="text" name="qualification"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., Mbbs,Phd..." required />
+            </div>
+            <div class="mb-4">
+                <label for="doctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
+                <input type="text" id="doctorAvailability" name="availability"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., 9:00 AM - 5:00 PM" required />
+            </div>
+            <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
+            <div class="flex justify-end mt-4">
+                <button type="submit"
+                    class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">
+                    Add
+                </button>
+            </div>
+        </form>
     </div>
-
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <p id="alertMessage" class="text-center text-lg"></p>
-            <div class="mt-4 flex justify-center">
+</div>
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+                <p id="alertMessage" class="text-center text-lg"></p>
+                <div class="mt-4 flex justify-center">
                 <button onclick="hideAlert()"
                     class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">OK</button>
             </div>
@@ -972,7 +971,8 @@
                 class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
         </div>
     </div>
-    <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
+    <footer
+        class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
         <div class="text-gray-500 font-semibold">medicare@2000</div>
         <!-- <div class="flex items-center gap-3">
             <button id="lightThemeBtn" title="Light Theme"
@@ -1501,10 +1501,9 @@
             <p class="text-sm">${message}</p>
           </div>
         `;
-                    return;
+        return;
                 }
-
-                if (patientsHeader) {
+if (patientsHeader) {
                     patientsHeader.style.display = "grid";
                 }
 
@@ -1724,8 +1723,13 @@
                     body: JSON.stringify({ date, start, end }),
                 });
                 console.log("currentDoctorId", currentDoctorId, date, start, end);
-                if (!response.ok) throw new Error("Failed to save availability");
-                closeAvailabilityModal();
+                    if (!response.ok) {
+                   showToast("Failed to save availability", "error");
+                   return;
+                   }
+                   showToast("Availability saved successfully!", "success");
+
+                    closeAvailabilityModal();
 
                 const datePicker = document.getElementById("datePicker");
                 if (datePicker) {
@@ -1734,7 +1738,7 @@
                     await fetchAndDisplayDoctors();
                 }
             } catch (err) {
-                alert("Error saving availability: " + err.message);
+                showToast("Error saving availability: " + err.message, 'error');
             }
         };
 
@@ -1795,7 +1799,7 @@
                         .join("");
             } catch (error) {
                 console.error("Error loading doctors:", error);
-                alert("Failed to load doctors. Please try again.");
+                showToast("Failed to load doctors. Please try again.", 'error');
             }
         }
 
@@ -1824,7 +1828,7 @@
 
             const doctorId = document.getElementById("doctorSelect").value;
             if (!doctorId) {
-                alert("Please select a doctor");
+                showToast("Please select a doctor", 'warning');
                 return;
             }
 
@@ -1844,10 +1848,10 @@
                 await renderAppointmentsList(currentDate, searchTerm);
 
                 closeAssignDoctorModal();
-                alert("Doctor assigned successfully!");
+                showToast("Doctor assigned successfully!", 'success');
             } catch (error) {
                 console.error("Error assigning doctor:", error);
-                alert("Failed to assign doctor. Please try again.");
+                showToast("Failed to assign doctor. Please try again.", 'error');
             }
         };
 
@@ -1886,7 +1890,7 @@
                     const appointmentData = JSON.parse(e.target.getAttribute("data-appointment"));
 
                     if (!appointmentData._id) {
-                        alert("Error: Appointment ID missing. Cannot edit this appointment.");
+                        showToast("Error: Appointment ID missing. Cannot edit this appointment.", 'error');
                         return;
                     }
 
@@ -2066,11 +2070,11 @@
         document.getElementById("rescheduleForm").onsubmit = async function (e) {
             e.preventDefault();
             if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
-                alert("Error: Missing appointment ID.");
+                showToast("Error: Missing appointment ID.", 'error');
                 return;
             }
             if (!rescheduleSelectedDate || !rescheduleSelectedTime) {
-                alert("Please select both date and time.");
+                showToast("Please select both date and time.", 'warning');
                 return;
             }
             try {
@@ -2087,7 +2091,7 @@
                 });
                 if (!response.ok) throw new Error("Failed to reschedule appointment");
                 closeRescheduleModal();
-                showSuccessModal("Appointment rescheduled successfully!");
+                showSuccessModal("Appointment rescheduled successfully!", "Appointment rescheduled successfully!", "success");
                 try {
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
@@ -2097,7 +2101,7 @@
                     window.location.reload();
                 }
             } catch (err) {
-                alert("Error rescheduling appointment: " + err.message);
+                showToast("Error rescheduling appointment: " + err.message, 'error');
             }
         };
 
@@ -2128,15 +2132,13 @@
 
         document.getElementById("confirmCancelBtn").onclick = async function () {
             if (!cancelAppointmentData || !cancelAppointmentData._id) {
-                alert("Error: Missing appointment ID.");
+                showToast("Error: Missing appointment ID.", 'error');
                 return;
             }
-
             const confirmButton = document.getElementById("confirmCancelBtn");
             confirmButton.disabled = true;
             confirmButton.textContent = "Canceling...";
             confirmButton.classList.add("opacity-75");
-
             try {
                 const response = await fetch(`/api/confirmations/${cancelAppointmentData._id}`, {
                     method: "PUT",
@@ -2147,31 +2149,21 @@
                         action: "cancel",
                     }),
                 });
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.error || "Failed to cancel appointment");
                 }
-
                 closeCancelModal();
-
-                showSuccessModal("Appointment cancelled successfully!");
-
+                showSuccessModal("Appointment cancelled successfully!", "Appointment cancelled successfully!", "success");
                 try {
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
-                    console.log("Refreshing appointments list after cancellation...");
                     await renderAppointmentsList(currentDate, searchTerm);
-                    console.log("Appointments list refreshed successfully");
                 } catch (refreshError) {
-                    console.error("Error refreshing appointments list:", refreshError);
-
                     window.location.reload();
                 }
             } catch (error) {
-                console.error("Error cancelling appointment:", error);
-                alert("Error cancelling appointment: " + error.message);
-
+                showToast("Error cancelling appointment: " + error.message, 'error');
                 confirmButton.disabled = false;
                 confirmButton.textContent = "Yes, Cancel";
                 confirmButton.classList.remove("opacity-75");
@@ -2227,7 +2219,7 @@
                             return;
                         }
                     } catch (err) {
-                        showDoctorError("Error checking existing doctors.");
+                        showToast("Error checking existing doctors.", 'error');
                         return;
                     }
 
@@ -2250,16 +2242,15 @@
 
                         if (!response.ok) {
                             const errorData = await response.json();
-                            showDoctorError(errorData.error || "Failed to add doctor.");
+                            showToast(errorData.error || "Failed to add doctor.", 'error');
                             return;
                         }
 
-                        showDoctorError("");
-                        showSuccessModal("Doctor added successfully!");
+                        showSuccessModal("Doctor added successfully!", "Doctor added successfully!", "success");
                         closeModal();
                         await fetchAndDisplayDoctors();
                     } catch (error) {
-                        showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
+                        showToast("Error adding doctor: " + (error.message || "Unknown error"), 'error');
                     }
                 });
             }
@@ -2276,15 +2267,20 @@
             }
         }
 
-        function showSuccessModal(message) {
+        let pendingToast = null;
+        function showSuccessModal(message, toastMessage = null, toastType = 'success') {
             document.getElementById("successModalMessage").textContent = message;
             document.getElementById("successModalOverlay").classList.remove("hidden");
             document.body.classList.add("blurred-bg");
+            pendingToast = toastMessage ? { message: toastMessage, type: toastType } : null;
         }
-
         function hideSuccessModal() {
             document.getElementById("successModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
+            if (pendingToast) {
+                showToast(pendingToast.message, pendingToast.type);
+                pendingToast = null;
+            }
         }
         document.getElementById("successModalOkBtn").onclick = hideSuccessModal;
         document.getElementById("successModalOverlay").onclick = function (e) {
@@ -2646,7 +2642,7 @@
             const newTime = document.querySelector("#rescheduleTimeSlotsContainer input")?.value;
 
             if (!appointmentId || !newDate || !newTime) {
-                alert("Please select both date and time.");
+                showToast("Please select both date and time.", 'warning');
                 return;
             }
 
@@ -2666,7 +2662,7 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert("Appointment successfully rescheduled.");
+                    showToast("Appointment successfully rescheduled!", 'success');
                     document.getElementById("rescheduleModalOverlay").classList.add("hidden");
 
                     const date = document.getElementById("datePicker").value;
@@ -2676,7 +2672,7 @@
                     throw new Error(result.error || "Failed to reschedule appointment");
                 }
             } catch (err) {
-                alert("Error rescheduling appointment: " + err.message);
+                showToast("Error rescheduling appointment: " + err.message, 'error');
             }
         });
 
@@ -2736,7 +2732,7 @@
         document.getElementById("editDoctorForm").onsubmit = async function (e) {
             e.preventDefault();
             if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
-                console.error("No doctor selected for editing or missing _id", currentDoctorForEditProfile);
+                showToast("No doctor selected for editing.", 'warning');
                 return;
             }
             const formData = new FormData();
@@ -2764,10 +2760,10 @@
                 }
                 closeEditDoctorProfileModal();
                 await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-                showSuccessModal("Doctor profile updated successfully!");
+                showToast("Doctor profile updated successfully!", 'success');
             } catch (err) {
                 console.error("Error updating doctor:", err);
-                alert("Error updating doctor: " + err.message);
+                showToast("Error updating doctor: " + err.message, 'error');
             }
         };
 
@@ -3091,7 +3087,7 @@
                     e.preventDefault();
 
                     if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
-                        alert("No doctor selected for editing.");
+                        showToast("No doctor selected for editing.", 'warning');
                         return;
                     }
 
@@ -3124,10 +3120,10 @@
 
                         closeEditDoctorProfileModal();
                         await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-                        showSuccessModal("Doctor profile updated successfully!");
+                        showToast("Doctor profile updated successfully!", 'success');
                     } catch (err) {
                         console.error("Error updating doctor:", err);
-                        alert("Error updating doctor: " + err.message);
+                        showToast("Error updating doctor: " + err.message, 'error');
                     }
                 };
             }
@@ -3180,10 +3176,10 @@
                                         allDoctors[parseInt(idx)].image = "/uploads/" + data.image;
                                         renderDoctorsPage();
                                     } else {
-                                        alert("Upload failed");
+                                        showToast("Upload failed", 'error');
                                     }
                                 })
-                                .catch(() => alert("Upload error"));
+                                .catch(() => showToast("Upload error", 'error'));
                         }
                     };
                     fileInput.click();
@@ -3227,7 +3223,7 @@
                 const phone = editDoctorPhone.value;
                 const phonePattern = /^[6-9][0-9]{9}$/;
                 if (!phonePattern.test(phone)) {
-                    alert("Phone number must be 10 digits and start with 6, 7, 8, or 9.");
+                    showToast("Phone number must be 10 digits and start with 6, 7, 8, or 9.", 'warning');
                     editDoctorPhone.focus();
                     e.preventDefault();
                     return false;
@@ -3281,18 +3277,9 @@
     </script>
 
     <script>
-function getInitials(name) {
-  if (!name) return "";
-  const parts = name.trim().split(" ");
-  if (parts.length === 1) return parts[0][0].toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-}
-const userName = localStorage.getItem("name") || "superadmin";
-document.getElementById("userName").textContent = userName;
-document.getElementById("userAvatar").textContent = getInitials(userName);
-</script>
-
-
+        const userName = localStorage.getItem("name");
+        document.getElementById("userName").textContent = userName;
+    </script>
     <script>
         const dropdownToggle = document.getElementById("userDropdownToggle");
         const dropdownMenu = document.getElementById("userDropdownMenu");
@@ -3313,6 +3300,17 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
         }
     </script>
     <script>
+        function getInitials(name) {
+            if (!name) return "";
+            const parts = name.trim().split(" ");
+            if (parts.length === 1) return parts[0][0].toUpperCase();
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+        const AdminName = localStorage.getItem("name") || "admin";
+        document.getElementById("userName").textContent = userName;
+        document.getElementById("userAvatar").textContent = getInitials(userName);
+    </script>
+    <script>
         async function logout() {
             try {
                 const token = localStorage.getItem('admin_jwt');
@@ -3326,10 +3324,10 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
                     localStorage.clear();
                     window.location.href = "login.html";
                 } else {
-                    alert(result.error);
+                    showToast(result.error, 'error');
                 }
             } catch (err) {
-                alert("Error: " + err.message);
+                showToast("Error: " + err.message, 'error');
             }
         };
     </script>
@@ -3343,8 +3341,312 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
             </div>
         </div>
     </div>
-</body>
 
-</html>
+    <div id="adminProfileModal"
+        class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
+            <button id="closeAdminProfileModal"
+                class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile & Settings</h2>
+            <div class="flex items-center gap-4 mb-6">
+                <div
+                    class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600">
+                    <span id="adminProfileInitials"></span>
+                </div>
+                <div class="flex-1">
+                    <input id="adminProfileNameTop"
+                        class="text-xl font-semibold text-gray-900 bg-transparent border-none outline-none w-full"
+                        readonly />
+                </div>
+                <button id="editProfileBtn"
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">Edit</button>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-1">Name</label>
+                        <input id="adminProfileName"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                            readonly />
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-1">Date of Joining</label>
+                        <input id="adminProfileJoined"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                            disabled />
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-1">Email</label>
+                        <input id="adminProfileEmail"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                            readonly />
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-1">Contact Number</label>
+                        <input id="adminProfileContact"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                            readonly />
+                    </div>
+                </div>
+                <div id="editProfileActions" class="flex gap-3 mt-6 hidden">
+                    <button id="saveProfileBtn"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
+                    <button id="cancelProfileBtn"
+                        class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
+                </div>
+            </div>
+            <div class="flex justify-end mt-8">
+                <button id="closeAdminProfileBtn"
+                    class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">Close</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
+        const adminProfileModal = document.getElementById('adminProfileModal');
+        const closeAdminProfileModal = document.getElementById('closeAdminProfileModal');
+        const closeAdminProfileBtn = document.getElementById('closeAdminProfileBtn');
+        const adminProfileNameTop = document.getElementById('adminProfileNameTop');
+        const adminProfileInitials = document.getElementById('adminProfileInitials');
+        const adminProfileName = document.getElementById('adminProfileName');
+        const adminProfileJoined = document.getElementById('adminProfileJoined');
+        const adminProfileEmail = document.getElementById('adminProfileEmail');
+        const adminProfileContact = document.getElementById('adminProfileContact');
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const editProfileActions = document.getElementById('editProfileActions');
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+        const cancelProfileBtn = document.getElementById('cancelProfileBtn');
+        let currentAdminId = null;
+        let originalName = '';
+        let originalEmail = '';
+        let originalContact = '';
+
+        function setProfileInitials(name) {
+            if (!name || typeof name !== 'string' || !name.trim()) { adminProfileInitials.textContent = ''; return; }
+            const parts = name.trim().split(' ');
+            adminProfileInitials.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name[0].toUpperCase();
+        }
+
+        if (profileLink && adminProfileModal) {
+            profileLink.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const name = localStorage.getItem('name') || '';
+                adminProfileNameTop.value = name;
+                setProfileInitials(name);
+                try {
+                    const token = localStorage.getItem('admin_jwt');
+                    const res = await fetch('/api/admin/getAdminProfile', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        adminProfileName.value = data.admin.username || '';
+                        adminProfileNameTop.value = data.admin.username || '';
+                        adminProfileJoined.value = data.admin.createdAt ? new Date(data.admin.createdAt).toLocaleDateString() : '';
+                        adminProfileEmail.value = data.admin.email || '';
+                        adminProfileContact.value = data.admin.contact || '';
+                        originalName = adminProfileName.value;
+                        originalEmail = adminProfileEmail.value;
+                        originalContact = adminProfileContact.value;
+                        currentAdminId = data.admin._id;
+                    } else {
+                        adminProfileName.value = 'N/A';
+                        adminProfileNameTop.value = 'N/A';
+                        adminProfileJoined.value = 'N/A';
+                        adminProfileEmail.value = 'N/A';
+                        adminProfileContact.value = 'N/A';
+                        originalName = 'N/A';
+                        originalEmail = 'N/A';
+                        originalContact = 'N/A';
+                        currentAdminId = null;
+                    }
+                } catch {
+                    adminProfileName.value = 'N/A';
+                    adminProfileNameTop.value = 'N/A';
+                    adminProfileJoined.value = 'N/A';
+                    adminProfileEmail.value = 'N/A';
+                    adminProfileContact.value = 'N/A';
+                    originalName = 'N/A';
+                    originalEmail = 'N/A';
+                    originalContact = 'N/A';
+                    currentAdminId = null;
+                }
+                adminProfileName.readOnly = true;
+                adminProfileNameTop.readOnly = true;
+                adminProfileEmail.readOnly = true;
+                adminProfileContact.readOnly = true;
+                adminProfileJoined.disabled = true;
+                editProfileActions.classList.add('hidden');
+                adminProfileModal.classList.remove('hidden');
+            });
+        }
+        if (closeAdminProfileModal) closeAdminProfileModal.onclick = () => adminProfileModal.classList.add('hidden');
+        if (closeAdminProfileBtn) closeAdminProfileBtn.onclick = () => adminProfileModal.classList.add('hidden');
+
+        if (editProfileBtn) {
+            editProfileBtn.onclick = function () {
+                adminProfileName.readOnly = false;
+                adminProfileNameTop.readOnly = false;
+                adminProfileEmail.readOnly = false;
+                adminProfileContact.readOnly = false;
+                adminProfileJoined.disabled = true;
+                adminProfileName.classList.remove('bg-gray-100');
+                adminProfileNameTop.classList.remove('bg-gray-100');
+                adminProfileEmail.classList.remove('bg-gray-100');
+                adminProfileContact.classList.remove('bg-gray-100');
+                editProfileActions.classList.remove('hidden');
+                editProfileBtn.disabled = true;
+            };
+        }
+        if (cancelProfileBtn) {
+            cancelProfileBtn.onclick = function () {
+                adminProfileName.value = originalName;
+                adminProfileNameTop.value = originalName;
+                adminProfileEmail.value = originalEmail;
+                adminProfileContact.value = originalContact;
+                adminProfileName.readOnly = true;
+                adminProfileNameTop.readOnly = true;
+                adminProfileEmail.readOnly = true;
+                adminProfileContact.readOnly = true;
+                adminProfileJoined.disabled = true;
+                adminProfileName.classList.add('bg-gray-100');
+                adminProfileNameTop.classList.add('bg-gray-100');
+                adminProfileEmail.classList.add('bg-gray-100');
+                adminProfileContact.classList.add('bg-gray-100');
+                editProfileActions.classList.add('hidden');
+                editProfileBtn.disabled = false;
+            };
+        }
+        if (saveProfileBtn) {
+            saveProfileBtn.onclick = async function () {
+                const newName = adminProfileName.value.trim();
+                const newEmail = adminProfileEmail.value.trim();
+                const newContact = adminProfileContact.value.trim();
+                if (!newName) {
+                    showToast('Please enter a name.', 'error');
+                    return;
+                }
+                if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail)) {
+                    showToast('Please enter a valid email address.', 'error');
+                    return;
+                }
+                if (!/^[6-9][0-9]{9}$/.test(newContact)) {
+                    showToast('Please enter a valid 10-digit mobile number starting with 6-9.', 'error');
+                    return;
+                }
+                if (!currentAdminId) {
+                    showToast('Admin not loaded.', 'error');
+                    return;
+                }
+                try {
+                    const token = localStorage.getItem('admin_jwt');
+                    const res = await fetch('/api/admin/updateProfile', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ id: currentAdminId, username: newName, email: newEmail, contact: newContact })
+                    });
+                    if (res.ok) {
+
+                        const refreshed = await fetch('/api/admin/getAdminProfile', { headers: { 'Authorization': `Bearer ${token}` } });
+                        if (refreshed.ok) {
+                            const data = await refreshed.json();
+                            adminProfileName.value = data.admin.username || '';
+                            adminProfileNameTop.value = data.admin.username || '';
+                            adminProfileJoined.value = data.admin.createdAt ? new Date(data.admin.createdAt).toLocaleDateString() : '';
+                            adminProfileEmail.value = data.admin.email || '';
+                            adminProfileContact.value = data.admin.contact || '';
+                            originalName = adminProfileName.value;
+                            originalEmail = adminProfileEmail.value;
+                            originalContact = adminProfileContact.value;
+                            if (data.admin.username) localStorage.setItem('name', data.admin.username);
+                            if (data.admin.email) localStorage.setItem('email', data.admin.email);
+                            if (data.admin.contact) localStorage.setItem('contact', data.admin.contact);
+
+                            let adminsList = [];
+                            try {
+                                adminsList = JSON.parse(localStorage.getItem('adminsList') || '[]');
+                            } catch { }
+                            if (Array.isArray(adminsList)) {
+                                const idx = adminsList.findIndex(a => a._id === data._id);
+                                if (idx !== -1) {
+                                    adminsList[idx].username = data.username;
+                                    adminsList[idx].email = data.email;
+                                    adminsList[idx].contact = data.contact;
+                                    localStorage.setItem('adminsList', JSON.stringify(adminsList));
+                                }
+                            }
+                        }
+                        adminProfileName.readOnly = true;
+                        adminProfileNameTop.readOnly = true;
+                        adminProfileEmail.readOnly = true;
+                        adminProfileContact.readOnly = true;
+                        adminProfileJoined.disabled = true;
+                        adminProfileName.classList.add('bg-gray-100');
+                        adminProfileNameTop.classList.add('bg-gray-100');
+                        adminProfileEmail.classList.add('bg-gray-100');
+                        adminProfileContact.classList.add('bg-gray-100');
+                        editProfileActions.classList.add('hidden');
+                        editProfileBtn.disabled = false;
+                        showToast('Profile updated successfully!', 'success');
+                    } else {
+                        const errData = await res.json().catch(() => ({}));
+                        showToast(errData.error || 'Failed to update profile.', 'error');
+                    }
+                } catch {
+                    showToast('Failed to update profile.', 'error');
+                }
+            };
+        }
+    </script>
+
+    <div id="toast"
+        class="fixed bottom-4 right-4 z-50 hidden px-6 py-4 rounded-lg font-semibold text-white bg-green-600 shadow-lg transition-all">
+    </div>
+
+<script>
+  function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'fixed bottom-4 right-20 z-50 px-6 py-4 rounded-lg font-semibold text-white shadow-lg space-y-3 transition-all';
+    toast.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600');
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 2000);
+  }
+</script>
+<script>
+  const specialties = [
+    "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+    "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+    "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+    "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+    "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+  ];
+
+  const select = document.getElementById("doctorSpecialty");
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Select Specialty";
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  select.appendChild(defaultOption);
+
+  specialties.forEach(spec => {
+    const option = document.createElement("option");
+    option.value = spec;
+    option.textContent = spec;
+    select.appendChild(option);
+  });
+</script>
+
+</body>
 
 </html>

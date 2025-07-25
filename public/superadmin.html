@@ -198,14 +198,15 @@
                 Admin</a>
                             </div>
 
-            <div
-              class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-                                <div class="col-span-3">Admin Name</div>
-                                <div class="col-span-3">Email</div>
-                                <div class="col-span-2">Contact</div>
-                                <div class="col-span-2">Status</div>
-              <div class="col-span-2 ">Action</div>
-                            </div>
+          <div class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+  <div class="col-span-2">Admin Name</div>
+  <div class="col-span-3">Email</div>
+  <div class="col-span-2">Contact</div>
+  <div class="col-span-2">Status</div>
+  <div class="col-span-2">Password</div>
+  <div class="col-span-1 text-right">Action</div>
+</div>
+
 
             <div id="adminList" class="space-y-2 mt-2">
             </div>
@@ -572,57 +573,61 @@
   <div id="addDoctorModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-      <button id="closeAddDoctorModal"
-        class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-      <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
-      <form id="addDoctorForm">
+    <button id="closeAddDoctorModal"
+            class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Doctor</h2>
+       <form id="addDoctorForm">
         <div class="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label for="doctorFirstName" class="block text-gray-700 text-sm font-semibold mb-2">First Name</label>
-            <input type="text" id="doctorFirstName" name="firstName"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required />
-          </div>
-          <div>
-            <label for="doctorLastName" class="block text-gray-700 text-sm font-semibold mb-2">Last Name</label>
-            <input type="text" id="doctorLastName" name="lastName"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required />
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="mb-4">
-            <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
-            <input type="text" id="doctorSpecialty" name="specialty"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required />
-          </div>
-          <div class="mb-4">
-            <label for="doctorExperience" class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
-            <input type="text" id="doctorExperience" name="experience"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          </div>
-          <div class="mb-4 col-span-2">
-            <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
-            <input type="text" name="qualification"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="e.g., Mbbs,Phd..." required />
-          </div>
-          <div class="mb-4 col-span-2">
-            <label for="doctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
-            <input type="text" id="doctorAvailability" name="availability"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="e.g., 9:00 AM - 5:00 PM" required />
-          </div>
-        </div>
-        <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
-        <div class="flex justify-end mt-4">
-          <button type="submit"
-            class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Add</button>
-        </div>
-      </form>
+                <div>
+                    <label for="doctorFirstName" class="block text-gray-700 text-sm font-semibold mb-2">First Name</label>
+                    <input type="text" id="doctorFirstName" name="firstName"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required />
+                </div>
+                <div>
+                    <label for="doctorLastName" class="block text-gray-700 text-sm font-semibold mb-2">Last Name</label>
+                    <input type="text" id="doctorLastName" name="lastName"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
+                    <select id="doctorSpecialty" name="specialty"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required>
+                    </select>
+                </div>
+                <div>
+                    <label for="doctorExperience" class="block text-gray-700 text-sm font-semibold mb-2">Experience</label>
+                    <input type="text" id="doctorExperience" name="experience"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Qualification</label>
+                <input type="text" name="qualification"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., Mbbs,Phd..." required />
+            </div>
+            <div class="mb-4">
+                <label for="doctorAvailability" class="block text-gray-700 text-sm font-semibold mb-2">Availability</label>
+                <input type="text" id="doctorAvailability" name="availability"
+                    class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="e.g., 9:00 AM - 5:00 PM" required />
+            </div>
+            <div id="doctorErrorMsg" style="display: none; color: red; margin-top: 8px"></div>
+            <div class="flex justify-end mt-4">
+                <button type="submit"
+                    class="px-8 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">
+                    Add
+                </button>
+            </div>
+        </form>
     </div>
-  </div>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const tabs = document.querySelectorAll('.tab');
@@ -689,33 +694,66 @@
         return;
       }
       adminList.innerHTML = currentAdmins.map(admin => `
-        <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
-          <div class="col-span-3 font-semibold text-gray-800 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.username}</div>
-          <div class="col-span-3 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.email}</div>
-          <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">${admin.contact || '-'}</div>
-          <div class="col-span-2 ">
-           <span class="inline-block px-2 py-1 text-xs font-medium rounded ${admin.isDeleted ? 'line-through text-gray-300' : ''} ${admin.status?.toLowerCase() === 'active'
-          ? 'text-green-800 bg-green-100' : admin.status === "inactive" ? 'text-red-800 bg-red-100'
-            : 'text-gray-800 bg-red-100'
-        }">
-       ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status === "inactive" ? 'Inactive' : 'Deleted'}
+  <div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-white rounded-lg shadow text-sm relative">
+    
+    <div class="col-span-2 font-semibold text-gray-800 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">
+      ${admin.username}
+    </div>
+    
+    <div class="col-span-3 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">
+      ${admin.email}
+    </div>
+    
+    <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">
+      ${admin.contact || '-'}
+    </div>
+    
+    <div class="col-span-2">
+      <span class="inline-block px-2 py-1 text-xs font-medium rounded 
+        ${admin.status?.toLowerCase() === 'active'
+          ? 'text-green-800 bg-green-100'
+          : 'text-red-800 bg-red-100'}">
+        ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
+      </span>
+    </div>
+    
+   <div class="col-span-2">
+  <div class="relative w-36"> <!-- Set smaller width here -->
+    <input
+      type="password"
+      value="${admin.decryptedPassword || '********'}"
+      class="admin-password w-full px-2 py-1 pr-8 rounded border border-gray-300 text-gray-600 text-xs bg-gray-100"
+      readonly
+    />
+    <button
+      type="button"
+      class="absolute inset-y-0 right-1 text-sm text-gray-500"
+      onclick="togglePasswordVisibility(this)">
+      👁️
+    </button>
+  </div>
+</div>
 
-       </span>
-
-          </div>
-          <div class="col-span-2 relative">
-            <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
-            ${admin.isDeleted ? `   <div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-               <button onclick="openRestoreModal('${admin._id}')"class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
-             </div>`:
-          `<div class="action-menu absolute right-4 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-              <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
-              <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
-              <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-             </div>`}
-          </div>
+    
+    <div class="col-span-1 relative text-right">
+      <button class="action-btn text-gray-600 hover:text-black focus:outline-none text-xl">⋯</button>
+      ${admin.isDeleted ? `
+        <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+          <button onclick="openRestoreModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
         </div>
-      `).join("");
+      ` : `
+        <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+          <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}"
+            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
+          <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+          <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+        </div>
+      `}
+    </div>
+
+  </div>
+`).join("");
+
       updateAdminsPagination(totalPages);
     }
 
@@ -1348,8 +1386,12 @@ function editAdmin(id) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date, start, end }),
           });
-          if (!response.ok) throw new Error("Failed to save availability");
-          showToast("Failed to save availability", "error")
+          if (!response.ok) {
+  showToast("Failed to save availability", "error");
+  return;
+}
+showToast("Availability saved successfully!", "success");
+
           closeAvailabilityModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
         } catch (err) {
@@ -1504,29 +1546,30 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
       }
     };
   </script>
-  <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3"></div>
+  <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3">
+  </div>
   <script>
     function showToast(message, type = "success") {
       const toast = document.createElement("div");
       const types = {
         success: {
-          bg: "bg-green-100",
-          text: "text-green-800",
-          svg: `<svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z" clip-rule="evenodd"/></svg>`
+          bg: "bg-green-600",
+          text: "text-white",
+          svg: `<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z" clip-rule="evenodd"/></svg>`
         },
         error: {
-          bg: "bg-red-100",
-          text: "text-red-800",
-          svg: `<svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-4.293-2.707a1 1 0 00-1.414-1.414L10 8.586 7.707 6.293a1 1 0 10-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 101.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z" clip-rule="evenodd"/></svg>`
+          bg: "bg-red-600",
+          text: "text-white",
+          svg: `<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-4.293-2.707a1 1 0 00-1.414-1.414L10 8.586 7.707 6.293a1 1 0 10-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 101.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z" clip-rule="evenodd"/></svg>`
         },
         warning: {
-          bg: "bg-yellow-100",
-          text: "text-yellow-800",
-          svg: `<svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.721-1.36 3.486 0l6.518 11.594c.75 1.334-.213 2.995-1.742 2.995H3.48c-1.53 0-2.492-1.661-1.742-2.995L8.257 3.1zM11 14a1 1 0 10-2 0 1 1 0 002 0zm-1-2a1 1 0 01-1-1V9a1 1 0 112 0v2a1 1 0 01-1 1z" clip-rule="evenodd"/></svg>`
+          bg: "bg-yellow-600",
+          text: "text-white",
+          svg: `<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.721-1.36 3.486 0l6.518 11.594c.75 1.334-.213 2.995-1.742 2.995H3.48c-1.53 0-2.492-1.661-1.742-2.995L8.257 3.1zM11 14a1 1 0 10-2 0 1 1 0 002 0zm-1-2a1 1 0 01-1-1V9a1 1 0 112 0v2a1 1 0 01-1 1z" clip-rule="evenodd"/></svg>`
         }
       };
       const { bg, text, svg } = types[type];
-      toast.className = `${bg} ${text} px-4 py-3 rounded shadow flex items-center justify-between animate-slide-in`;
+      toast.className = `${bg} ${text} px-4 py-4 rounded shadow flex items-center justify-between animate-slide-in`;
       toast.innerHTML = `
         <div class="flex items-center gap-2">
           ${svg}
@@ -1541,6 +1584,48 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
       }, 2000);
     }
   </script>
+
+
+<script>
+  function togglePasswordVisibility(button) {
+    const input = button.previousElementSibling;
+    if (!input) return;
+    if (input.type === "password") {
+      input.type = "text";
+      button.textContent = "🙈";
+    } else {
+      input.type = "password";
+      button.textContent = "👁️";
+    }
+  }
+</script>
+</script>
+<script>
+  const specialties = [
+    "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+    "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+    "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+    "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+    "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+  ];
+
+  const select = document.getElementById("doctorSpecialty");
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Select Specialty";
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  select.appendChild(defaultOption);
+
+  specialties.forEach(spec => {
+    const option = document.createElement("option");
+    option.value = spec;
+    option.textContent = spec;
+    select.appendChild(option);
+  });
+</script>
+
+
  
 </body>
 
