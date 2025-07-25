@@ -164,8 +164,7 @@ router.put("/:id", async (req, res) => {
         const { action, date, time, patientData, doctorName } = req.body;
 
         const confirmation = await Confirmation.findById(req.params.id).populate("date").populate("doctor");
-        const confirmation = await Confirmation.findById(req.params.id).populate("date").populate("doctor");
-
+      
         if (!confirmation) {
             return res.status(404).json({ error: "Confirmation not found" });
         }
