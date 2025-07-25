@@ -128,16 +128,26 @@ router.get("/getAllAdmins", async (req, res) => {
       const decryptedPassword = admin.encryptedPassword
         ? decrypt(admin.encryptedPassword)
         : '********';
+
       return {
         ...admin.toObject(),
         decryptedPassword // used in frontend input field
       };
     });
+
     res.json(adminsWithPasswords);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+
+
+
+
+
 
 router.get('/getAdminById/:id', async (req, res) => {
   try {
@@ -151,13 +161,29 @@ router.get('/getAdminById/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// router.put('/updateAdmin/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const updateData = req.body;
+//     const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
+//     if (!admin) {
+//       return res.status(404).json({ message: 'Admin not found' });
+//     }
+//     res.json(admin);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
-const { encrypt } = require("../utils/encryption"); 
 
-router.put("/updateAdmin/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updateData = { ...req.body };
+
+
+const { encrypt } = require('../utils/encryption'); // Make sure this is imported
+
+router.put('/updateAdmin/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = { ...req.body };
 
         if (updateData.password && updateData.password.trim() !== "") {
             const hashed = await bcrypt.hash(updateData.password, 10);
@@ -175,6 +201,16 @@ router.put("/updateAdmin/:id", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+
+
+
+
+
+
+
+
 
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   try {
