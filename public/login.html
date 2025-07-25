@@ -123,7 +123,7 @@
           localStorage.setItem("name", result.name);
     showToast("Login successful!", "success");
     setTimeout(() => {
-            if (result.role === 2) {
+            if (result.role === 0) {
               window.location.href = "superadmin.html";
             } else {
               window.location.href = "admindasboard.html";

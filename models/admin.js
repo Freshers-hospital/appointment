@@ -5,11 +5,11 @@ const adminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: Number, required: true, default: 1, enum: [1, 2] }, // 1-admin, 2-superadmin
+  role: { type: Number, required: true, default: 1, enum: [0, 1] }, // 1-admin, 0-superadmin
   contact: { type: String, required: true },
 
-  status: { type: String, required: true, default: 'inactive', enum:['active','inactive']},
-  isDeleted:{type:Boolean,default:false },
+  status: { type: String, required: true, default: 'inactive', enum: ['active', 'inactive'] },
+  isDeleted: { type: Boolean, default: false },
   lastSeen: { type: Date, default: Date.now }
 
 }, { timestamps: true });
