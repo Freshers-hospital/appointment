@@ -14,46 +14,22 @@ router.post('/registerAsSuperadmin', async (req, res) => {
     }
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 2, contact });
+    const admin = new Admin({ username, email, password, role: 0, contact });
     await admin.save();
     res.status(201).json({ message: 'SuperAdmin registered successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
-// router.post('/register', async (req, res) => {
-//   try {
-//     const { username, email, password, contact } = req.body;
-//     if (!username || !email || !password || !contact) {
-//       return res.status(400).json({ error: 'All fields are required' });
-//     }
-//     const exists = await Admin.findOne({ email });
-//     if (exists) return res.status(400).json({ error: 'Email already registered' });
-//     const admin = new Admin({ username, email, password, role: 1, contact });
-//     await admin.save();
-//     res.status(201).json({ message: 'Admin registered successfully' });
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
-
-
-
-
 router.post('/register', async (req, res) => {
   try {
     const { username, email, password, contact } = req.body;
     if (!username || !email || !password || !contact) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-
-    // 🔐 AES Encrypt the password for display
     const encryptedPassword = encrypt(password);
-
-    // 🔒 Let bcrypt hash the password in schema pre-save
     const admin = new Admin({
       username,
       email,
@@ -62,9 +38,7 @@ router.post('/register', async (req, res) => {
       role: 1,
       contact
     });
-
     await admin.save();
-
     res.status(201).json({ message: 'Admin registered successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -74,7 +48,6 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-
     let admin;
     if (email.includes('@')) {
       admin = await Admin.findOne({ email });
@@ -90,6 +63,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 router.post('/logout', async (req, res) => {
   try {
     const { token } = req.body;
@@ -102,27 +76,6 @@ router.post('/logout', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-// router.post('/resetPassword', async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     if (!email || !password) {
-//       return res.status(400).json({ error: 'All fields are required' });
-//     }
-//     const admin = await Admin.findOne({ email });
-//     if (!admin) return res.status(404).json({ error: 'Email does not exist' });
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
-//     if (!updateAdminPassword) {
-//       res.status(404).json({ error: 'Email does not exist' });
-//     }
-//     res.status(201).json({ message: 'Password reset successfully' });
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
-
-
-
 
 router.post('/resetPassword', async (req, res) => {
   try {
@@ -130,10 +83,8 @@ router.post('/resetPassword', async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const encryptedPassword = encrypt(password);
-
     const updated = await Admin.findOneAndUpdate(
       { email },
       { password: hashedPassword, encryptedPassword },
@@ -141,25 +92,11 @@ router.post('/resetPassword', async (req, res) => {
     );
 
     if (!updated) return res.status(404).json({ error: 'Email does not exist' });
-
     res.status(201).json({ message: 'Password reset successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -173,16 +110,6 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: 'Invalid token' });
   }
 }
-// router.get('/getAllAdmins', async (req, res) => {
-//   try {
-//     const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
-//     res.json(admins);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-
 
 const { decrypt } = require('../utils/encryption');
 
@@ -194,26 +121,16 @@ router.get('/getAllAdmins', async (req, res) => {
       const decryptedPassword = admin.encryptedPassword
         ? decrypt(admin.encryptedPassword)
         : '********';
-
       return {
         ...admin.toObject(),
         decryptedPassword // used in frontend input field
       };
     });
-
     res.json(adminsWithPasswords);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-
-
-
-
-
-
-
-
 
 router.get('/getAdminById/:id', async (req, res) => {
   try {
@@ -227,22 +144,6 @@ router.get('/getAdminById/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-// router.put('/updateAdmin/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const updateData = req.body;
-//     const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
-//     if (!admin) {
-//       return res.status(404).json({ message: 'Admin not found' });
-//     }
-//     res.json(admin);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-
-
 
 const { encrypt } = require('../utils/encryption'); // Make sure this is imported
 
@@ -267,16 +168,6 @@ router.put('/updateAdmin/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-
-
-
-
-
-
-
-
-
 
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   try {
@@ -321,7 +212,7 @@ router.put('/updateProfile', authMiddleware, async (req, res) => {
     const { id, username, email, contact } = req.body;
     if (!id || !username || !email || !contact) return res.status(400).json({ error: 'Missing id, username, email, or contact' });
 
-  
+
     const existing = await Admin.findOne({ email, _id: { $ne: id } });
     if (existing) return res.status(400).json({ error: 'Email already registered' });
 
@@ -334,6 +225,27 @@ router.put('/updateProfile', authMiddleware, async (req, res) => {
     res.json({ success: true, username, email, contact });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.get('/getAdminProfile', async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const adminId = decoded.id;
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    res.json({ admin });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
