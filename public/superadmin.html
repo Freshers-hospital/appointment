@@ -578,6 +578,9 @@
 
 
    
+  <div id="addDoctorModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
     <button id="closeAddDoctorModal"
       class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold">&times;</button>
 
@@ -601,10 +604,11 @@
       </div>
 
       <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-        <label for="doctorSpecialty" class="block text-sm font-medium text-gray-700 mb-1">Specialization</label>
-        <input type="text" id="doctorSpecialty" name="specialty"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required />
+        <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
+                    <select id="doctorSpecialty" name="specialty"
+                        class="w-full border border-gray-300 rounded px-0 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required>
+                    </select>
       </div>
 
       <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -643,56 +647,7 @@
 </div>
 
 
-<div id="superadminProfileModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
-  <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-8 relative">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile & Settings</h2>
 
-    <div class="flex items-center mb-6 gap-4">
-      <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-lg font-bold text-white shadow">
-  <span id="superadminInitial">S</span>
-</div>
-
-      <div>
-        <h3 id="superadminName" class="text-lg font-bold text-gray-800">Superadmin</h3>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm text-gray-500 mb-1">Name</label>
-        <input type="text" id="profileName" class="w-full border rounded px-4 py-2 bg-gray-100" readonly />
-      </div>
-      <div>
-        <label class="block text-sm text-gray-500 mb-1">Date of Joining</label>
-        <input type="text" id="profileJoiningDate" class="w-full border rounded px-4 py-2 bg-gray-100" readonly />
-      </div>
-      <div>
-        <label class="block text-sm text-gray-500 mb-1">Email</label>
-        <input type="text" id="profileEmail" class="w-full border rounded px-4 py-2 bg-gray-100" readonly />
-      </div>
-      <div>
-        <label class="block text-sm text-gray-500 mb-1">Contact Number</label>
-        <input type="text" id="profileContact" class="w-full border rounded px-4 py-2 bg-gray-100" readonly />
-      </div>
-    </div>
-
-<div class="flex justify-between items-center mt-8">
-  
-  <button id="editProfileBtn"
-    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md font-medium">Edit</button>
-
-  <div class="flex gap-3">
-    <button onclick="document.getElementById('superadminProfileModal').classList.add('hidden')"
-      class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md font-medium">Close</button>
-
-    <button id="saveProfileBtn"
-      class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md font-medium hidden">Save</button>
-  </div>
-</div>
-  </div>
-</div>
-
-      
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const tabs = document.querySelectorAll('.tab');
@@ -1466,8 +1421,12 @@ function editAdmin(id) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date, start, end }),
           });
-          if (!response.ok) throw new Error("Failed to save availability");
-          showToast("Failed to save availability", "error")
+          if (!response.ok) {
+  showToast("Failed to save availability", "error");
+  return;
+}
+showToast("Availability saved successfully!", "success");
+
           closeAvailabilityModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
         } catch (err) {
@@ -1660,47 +1619,214 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
       }, 2000);
     }
   </script>
-
-
+</script>
 <script>
-  const contactInput = document.getElementById('editContact');
+  const specialties = [
+    "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+    "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+    "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+    "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+    "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+  ];
 
-  contactInput.addEventListener('input', (e) => {
-   
-    let value = e.target.value.replace(/\D/g, '');
+  const select = document.getElementById("doctorSpecialty");
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent ="Select Specialty";
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  select.appendChild(defaultOption);
 
-     
-    if (value.length === 1 && !/^[6-9]$/.test(value)) {
-      value = '';
-    }
-
-    if (value.length > 10) { 
-      value = value.slice(0, 10);
-    }
-
-    e.target.value = value;
+  specialties.forEach(spec => {
+    const option = document.createElement("option");
+    option.value = spec
+    option.textContent = spec;
+    select.appendChild(option);
   });
 </script>
 
+<div id="superAdminProfileModal"
+    class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
+        <button id="closeSuperAdminProfileModal"
+            class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Super Admin Profile</h2>
+        <div class="flex items-center gap-4 mb-6">
+            <div
+                class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600">
+                <span id="superAdminProfileInitials"></span>
+            </div>
+            <div class="flex-1">
+                <input id="superAdminProfileNameTop"
+                    class="text-xl font-semibold text-gray-900 bg-transparent border-none outline-none w-full"
+                    readonly />
+            </div>
+            <button id="editSuperAdminProfileBtn"
+                class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">Edit</button>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-500 text-xs mb-1">Name</label>
+                    <input id="superAdminProfileName"
+                        class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                        readonly />
+                </div>
+                <div>
+                    <label class="block text-gray-500 text-xs mb-1">Date of Joining</label>
+                    <input id="superAdminProfileJoined"
+                        class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                        disabled />
+                </div>
+                <div>
+                    <label class="block text-gray-500 text-xs mb-1">Email</label>
+                    <input id="superAdminProfileEmail"
+                        class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                        readonly />
+                </div>
+                <div>
+                    <label class="block text-gray-500 text-xs mb-1">Contact Number</label>
+                    <input id="superAdminProfileContact"
+                        class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                        readonly />
+                </div>
+            </div>
+            <div id="editSuperAdminProfileActions" class="flex gap-3 mt-6 hidden">
+                <button id="saveSuperAdminProfileBtn"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
+                <button id="cancelSuperAdminProfileBtn"
+                    class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
+            </div>
+        </div>
+        <div class="flex justify-end mt-8">
+            <button id="closeSuperAdminProfileBtn"
+                class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">Close</button>
+        </div>
+    </div>
+</div>
 <script>
-  function togglePasswordVisibility(button) {
-    const input = button.closest("div").querySelector('.admin-password');
-    const eyeHidden = button.querySelector('.eye-hidden');
-    const eyeVisible = button.querySelector('.eye-visible');
+  const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
+ 
+    const modal = document.getElementById('superAdminProfileModal');
+    const closeBtn = document.getElementById('closeSuperAdminProfileModal');
+    const closeBtn2 = document.getElementById('closeSuperAdminProfileBtn');
+    const nameTop = document.getElementById('superAdminProfileNameTop');
+    const initials = document.getElementById('superAdminProfileInitials');
+    const name = document.getElementById('superAdminProfileName');
+    const joined = document.getElementById('superAdminProfileJoined');
+    const email = document.getElementById('superAdminProfileEmail');
+    const contact = document.getElementById('superAdminProfileContact');
+    const editBtn = document.getElementById('editSuperAdminProfileBtn');
+    const editActions = document.getElementById('editSuperAdminProfileActions');
+    const saveBtn = document.getElementById('saveSuperAdminProfileBtn');
+    const cancelBtn = document.getElementById('cancelSuperAdminProfileBtn');
 
-    if (input.type === "password") {
-      input.type = "text";
-      eyeHidden.classList.add("hidden");
-      eyeVisible.classList.remove("hidden");
-    } else {
-      input.type = "password";
-      eyeHidden.classList.remove("hidden");
-      eyeVisible.classList.add("hidden");
+    let currentId = null, origName = '', origEmail = '', origContact = '';
+
+    function setInitials(nameVal) {
+        if (!nameVal) return initials.textContent = '';
+        const parts = nameVal.trim().split(' ');
+        initials.textContent = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : nameVal[0].toUpperCase();
     }
-  }
+
+    if (profileLink && modal) {
+        profileLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const localName = localStorage.getItem('name') || '';
+            nameTop.value = localName;
+            setInitials(localName);
+
+            try {
+                const token = localStorage.getItem('admin_jwt');
+                const res = await fetch('/api/admin/getAdminProfile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    name.value = data.admin.username;
+                    nameTop.value = data.admin.username;
+                    joined.value = new Date(data.admin.createdAt).toLocaleDateString();
+                    email.value = data.admin.email;
+                    contact.value = data.admin.contact;
+                    origName = name.value;
+                    origEmail = email.value;
+                    origContact = contact.value;
+                    currentId = data.admin._id;
+                }
+            } catch (err) {
+                console.error("Error fetching superadmin profile:", err);
+            }
+
+            modal.classList.remove('hidden');
+        });
+    }
+
+    if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
+    if (closeBtn2) closeBtn2.onclick = () => modal.classList.add('hidden');
+
+    if (editBtn) {
+        editBtn.onclick = () => {
+            name.readOnly = false;
+            nameTop.readOnly = false;
+            email.readOnly = false;
+            contact.readOnly = false;
+            joined.disabled = true;
+            editActions.classList.remove('hidden');
+            editBtn.disabled = true;
+        };
+    }
+
+    if (cancelBtn) {
+        cancelBtn.onclick = () => {
+            name.value = origName;
+            nameTop.value = origName;
+            email.value = origEmail;
+            contact.value = origContact;
+            name.readOnly = true;
+            nameTop.readOnly = true;
+            email.readOnly = true;
+            contact.readOnly = true;
+            joined.disabled = true;
+            editActions.classList.add('hidden');
+            editBtn.disabled = false;
+        };
+    }
+
+    if (saveBtn) {
+        saveBtn.onclick = async () => {
+            const newName = name.value.trim();
+            const newEmail = email.value.trim();
+            const newContact = contact.value.trim();
+
+            if (!newName || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail) || !/^[6-9][0-9]{9}$/.test(newContact)) {
+                showToast('Please fill all fields correctly.', 'error');
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('admin_jwt');
+                const res = await fetch('/api/admin/updateProfile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ id: currentId, username: newName, email: newEmail, contact: newContact })
+                });
+
+                if (res.ok) {
+                    showToast('Profile updated successfully!', 'success');
+                    modal.classList.add('hidden');
+                } else {
+                    showToast('Update failed.', 'error');
+                }
+            } catch (err) {
+                showToast('Error updating profile.', 'error');
+            }
+        };
+    }
 </script>
-
-
 </body>
 
 </html>
