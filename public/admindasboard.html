@@ -401,8 +401,8 @@
                             <h3 class="text-xl font-semibold">Doctors</h3>
                             <p class="text-gray-500">Manage doctor profiles and schedules</p>
                         </div>
-                        <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
-                            Doctor</button>
+                        <!-- <button id="addDoctorBtn" class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
+                            Doctor</button> -->
                     </div>
 
                     <div
@@ -654,7 +654,7 @@
         </div>
     </div>
 
-    <div id="addDoctorModalOverlay"
+    <!-- <div id="addDoctorModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative overflow-y-auto max-h-[90vh]">
 
@@ -712,7 +712,7 @@
             </div>
         </form>
     </div>
-</div>
+</div> -->
 <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
                 <p id="alertMessage" class="text-center text-lg"></p>
@@ -2170,91 +2170,97 @@ if (patientsHeader) {
             }
         };
 
-        const addDoctorBtn = document.getElementById("addDoctorBtn");
-        const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
+        // const addDoctorBtn = document.getElementById("addDoctorBtn");
+        // const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
 
-        if (addDoctorModalOverlay) {
-            const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
+        // if (addDoctorModalOverlay) {
+        //     const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
 
-            const openModal = () => {
-                addDoctorModalOverlay.classList.remove("hidden");
-                document.body.classList.add("blurred-bg");
-            };
+        //     const openModal = () => {
+        //         addDoctorModalOverlay.classList.remove("hidden");
+        //         document.body.classList.add("blurred-bg");
+        //     };
 
-            const closeModal = () => {
-                addDoctorModalOverlay.classList.add("hidden");
-                document.body.classList.remove("blurred-bg");
-                const form = document.getElementById("addDoctorForm");
-                if (form) form.reset();
-            };
+        //     const closeModal = () => {
+        //         addDoctorModalOverlay.classList.add("hidden");
+        //         document.body.classList.remove("blurred-bg");
+        //         const form = document.getElementById("addDoctorForm");
+        //         if (form) form.reset();
+        //     };
 
-            if (addDoctorBtn) {
-                addDoctorBtn.addEventListener("click", openModal);
-            }
+        //     if (addDoctorBtn) {
+        //         addDoctorBtn.addEventListener("click", openModal);
+        //     }
 
-            if (closeAddDoctorModal) {
-                closeAddDoctorModal.addEventListener("click", closeModal);
-            }
+        //     if (closeAddDoctorModal) {
+        //         closeAddDoctorModal.addEventListener("click", closeModal);
+        //     }
 
-            const addDoctorForm = document.getElementById("addDoctorForm");
-            if (addDoctorForm) {
-                addDoctorForm.addEventListener("submit", async (e) => {
-                    e.preventDefault();
-                    const formData = new FormData(addDoctorForm);
-                    const firstName = formData.get("firstName")?.trim() || "";
-                    const lastName = formData.get("lastName")?.trim() || "";
-                    const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
+        //     const addDoctorForm = document.getElementById("addDoctorForm");
+        //     if (addDoctorForm) {
+        //         addDoctorForm.addEventListener("submit", async (e) => {
+        //             e.preventDefault();
+        //             const formData = new FormData(addDoctorForm);
+        //             const firstName = formData.get("firstName")?.trim() || "";
+        //             const lastName = formData.get("lastName")?.trim() || "";
+        //             const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
 
-                    try {
-                        const res = await fetch("/api/doctors");
-                        const existingDoctors = await res.json();
+        //             try {
+        //                 const res = await fetch("/api/doctors");
+        //                 const existingDoctors = await res.json();
 
-                        const isDuplicate = existingDoctors.some((doc) => {
-                            const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
-                            return existingName === fullName;
-                        });
+        //                 const isDuplicate = existingDoctors.some((doc) => {
+        //                     const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+        //                     return existingName === fullName;
+        //                 });
 
-                        if (isDuplicate) {
-                            showDoctorError("Doctor already exists: duplicate name.");
-                            return;
-                        }
-                    } catch (err) {
-                        showToast("Error checking existing doctors.", 'error');
-                        return;
-                    }
+        //                 if (isDuplicate) {
+        //                     showDoctorError("Doctor already exists: duplicate name.");
+        //                     return;
+        //                 }
+        //             } catch (err) {
+        //                 showToast("Error checking existing doctors.", 'error');
+        //                 return;
+        //             }
 
-                    const doctorData = {
-                        firstName,
-                        lastName,
-                        name: `Dr. ${firstName} ${lastName}`,
-                        specialty: formData.get("specialty"),
-                        experience: formData.get("experience"),
-                        qualification: formData.get("qualification"),
-                        availability: formData.get("availability"),
-                    };
+        //             const doctorData = {
+        //                 firstName,
+        //                 lastName,
+        //                 name: `Dr. ${firstName} ${lastName}`,
+        //                 specialty: formData.get("specialty"),
+        //                 experience: formData.get("experience"),
+        //                 qualification: formData.get("qualification"),
+        //                 availability: formData.get("availability"),
+        //             };
 
-                    try {
-                        const response = await fetch("/api/doctors", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(doctorData),
-                        });
+        //             try {
+        //                 const response = await fetch("/api/doctors", {
+        //                     method: "POST",
+        //                     headers: { "Content-Type": "application/json" },
+        //                     body: JSON.stringify(doctorData),
+        //                 });
 
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            showToast(errorData.error || "Failed to add doctor.", 'error');
-                            return;
-                        }
+        //                 if (!response.ok) {
+        //                     const errorData = await response.json();
+        //                     showToast(errorData.error || "Failed to add doctor.", 'error');
+        //                     return;
+        //                 }
 
-                        showSuccessModal("Doctor added successfully!", "Doctor added successfully!", "success");
-                        closeModal();
-                        await fetchAndDisplayDoctors();
-                    } catch (error) {
-                        showToast("Error adding doctor: " + (error.message || "Unknown error"), 'error');
-                    }
-                });
-            }
+        //                 showSuccessModal("Doctor added successfully!", "Doctor added successfully!", "success");
+        //                 closeModal();
+        //                 await fetchAndDisplayDoctors();
+        //             } catch (error) {
+        //                 showToast("Error adding doctor: " + (error.message || "Unknown error"), 'error');
+        //             }
+        //         });
+        //     }
+        // }
+        async function fetchAndDisplayDoctors() {
+        const res = await fetch("/api/doctors");
+         const doctors = await res.json();
+  
         }
+
         function showDoctorError(msg) {
             const errorDiv = document.getElementById("doctorErrorMsg");
             if (!errorDiv) return;
@@ -3645,6 +3651,7 @@ if (patientsHeader) {
     option.textContent = spec;
     select.appendChild(option);
   });
+
 </script>
 
 </body>
