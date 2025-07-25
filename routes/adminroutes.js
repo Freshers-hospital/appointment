@@ -14,7 +14,7 @@ router.post('/registerAsSuperadmin', async (req, res) => {
     }
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 2, contact });
+    const admin = new Admin({ username, email, password, role: 0, contact });
     await admin.save();
     res.status(201).json({ message: 'SuperAdmin registered successfully' });
   } catch (err) {
@@ -50,15 +50,15 @@ router.post('/register', async (req, res) => {
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
 
-    // 🔐 AES Encrypt the password for display
+
     const encryptedPassword = encrypt(password);
 
-    // 🔒 Let bcrypt hash the password in schema pre-save
+    
     const admin = new Admin({
       username,
       email,
-      password,             // Will be hashed in schema
-      encryptedPassword,    // Will be decrypted only for frontend display
+      password,             
+      encryptedPassword,    
       role: 1,
       contact
     });
@@ -173,6 +173,7 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: 'Invalid token' });
   }
 }
+
 // router.get('/getAllAdmins', async (req, res) => {
 //   try {
 //     const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
@@ -197,7 +198,7 @@ router.get('/getAllAdmins', async (req, res) => {
 
       return {
         ...admin.toObject(),
-        decryptedPassword // used in frontend input field
+        decryptedPassword           
       };
     });
 
@@ -244,7 +245,7 @@ router.get('/getAdminById/:id', async (req, res) => {
 
 
 
-const { encrypt } = require('../utils/encryption'); // Make sure this is imported
+const { encrypt } = require('../utils/encryption'); 
 
 router.put('/updateAdmin/:id', async (req, res) => {
   try {
@@ -254,7 +255,7 @@ router.put('/updateAdmin/:id', async (req, res) => {
     if (updateData.password && updateData.password.trim() !== '') {
       const hashed = await bcrypt.hash(updateData.password, 10);
       updateData.password = hashed;
-      updateData.encryptedPassword = encrypt(req.body.password); // for frontend display
+      updateData.encryptedPassword = encrypt(req.body.password); 
     } else {
       delete updateData.password;
     }
