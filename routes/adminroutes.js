@@ -14,7 +14,7 @@ router.post("/registerAsSuperadmin", async (req, res) => {
         }
         const exists = await Admin.findOne({ email });
         if (exists) return res.status(400).json({ error: "Email already registered" });
-        const admin = new Admin({ username, email, password, role: 2, contact });
+        const admin = new Admin({ username, email, password, role: 0, contact });
         await admin.save();
         res.status(201).json({ message: "SuperAdmin registered successfully" });
     } catch (err) {
