@@ -151,10 +151,13 @@
             pointer-events: none;
             user-select: none;
         }
+
+        #toast { z-index: 9999; }
     </style>
 </head>
 
 <body class="bg-blue-50 font-sans">
+    <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3"></div>
     <div id="overlay" class="overlay">
         <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
             <div class="text-center">
@@ -174,6 +177,8 @@
             </div>
         </div>
     </div>
+
+    <div id="toast" class="fixed top-6 right-6 z-50 hidden px-6 py-3 rounded-lg font-semibold text-white bg-green-600 shadow-lg transition-all"></div>
 
     <div class="p-3 flex justify-between items-center bg-white shadow">
         <div class="flex items-center">
@@ -580,9 +585,7 @@
             </div>
         </div>
     </section>
-
-    <!-- Custom Refresh Warning Modal -->
-    <div id="refreshWarningModal"
+<div id="refreshWarningModal"
         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
             <h2 class="text-xl font-bold mb-4 text-gray-800 text-center">Are you sure you want to refresh?</h2>
@@ -595,6 +598,9 @@
             </div>
         </div>
     </div>
+     </div>
+    <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
+        <div class="text-gray-500 font-semibold">medicare@2000</div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const ageSelect = document.getElementById("age");
@@ -740,7 +746,7 @@
                 displayDoctors();
                 updatePagination(lastFilteredDoctors.length);
             } catch (err) {
-                alert("Failed to load doctors: " + err.message);
+                showToast("Failed to load doctors: " + err.message, 'error');
             }
         });
 
@@ -1556,12 +1562,12 @@
                     editData = JSON.parse(localStorage.getItem("editAppointment"));
                 } catch (e) {
                     localStorage.removeItem("editAppointment");
-                    showAlert("Error: Corrupted appointment data for editing.");
+                    showSuccessModal("Error: Corrupted appointment data for editing.", "Appointment update failed.", "error");
                     return;
                 }
                 if (!editData || !editData._id) {
                     localStorage.removeItem("editAppointment");
-                    showAlert("Error: Missing or invalid appointment data for editing.");
+                    showSuccessModal("Error: Missing or invalid appointment data for editing.", "Appointment update failed.", "error");
                     return;
                 }
             }
@@ -1601,19 +1607,19 @@
                         confirmationData.patientData[key] === undefined ||
                         (key === "age" && isNaN(confirmationData.patientData[key]))
                     ) {
-                        showAlert("Missing or invalid patient data: " + key);
+                        showSuccessModal("Missing or invalid patient data: " + key, "Appointment update failed.", "error");
                         return;
                     }
                 }
                 for (const key in confirmationData.doctorData) {
                     if (!confirmationData.doctorData[key]) {
-                        showAlert("Missing doctor data: " + key);
+                        showSuccessModal("Missing doctor data: " + key, "Appointment update failed.", "error");
                         return;
                     }
                 }
                 for (const key in confirmationData.dateData) {
                     if (!confirmationData.dateData[key]) {
-                        showAlert("Missing appointment date/time: " + key);
+                        showSuccessModal("Missing appointment date/time: " + key, "Appointment update failed.", "error");
                         return;
                     }
                 }
@@ -1628,7 +1634,7 @@
                 if (isEditMode) {
                     const editData = JSON.parse(localStorage.getItem("editAppointment"));
                     if (!editData || !editData._id) {
-                        showAlert("Error: Missing or invalid appointment data for editing.");
+                        showSuccessModal("Error: Missing or invalid appointment data for editing.", "Appointment update failed.", "error");
                         return;
                     }
 
@@ -1666,7 +1672,7 @@
 
                 document.getElementById("step4").innerHTML = "✓";
 
-                showAlert(isEditMode ? "Appointment updated successfully!" : "Appointment booked successfully!");
+                showSuccessModal(isEditMode ? "Appointment updated successfully!" : "Appointment booked successfully!", "Appointment booked successfully!", "success");
 
                 if (isEditMode) {
                     localStorage.removeItem("editAppointment");
@@ -1677,7 +1683,7 @@
                 confirmButton.textContent = "Confirm Appointment";
                 confirmButton.classList.remove("opacity-75");
 
-                showAlert(error.message || "Failed to book appointment. Please try again.");
+                showSuccessModal(error.message || "Failed to book appointment. Please try again.", "Appointment booking failed.", "error");
             }
         }
 
@@ -1725,19 +1731,22 @@
             "5:00 PM",
         ];
 
-        function showAlert(message) {
+        function showSuccessModal(message, toastMessage = null, toastType = 'success') {
             document.getElementById("alertMessage").textContent = message;
             document.getElementById("overlay").style.display = "flex";
+            window._pendingToast = toastMessage ? { message: toastMessage, type: toastType } : null;
         }
-
         function hideAlert() {
             document.getElementById("overlay").style.display = "none";
+            if (window._pendingToast) {
+                showToast(window._pendingToast.message, window._pendingToast.type);
+                window._pendingToast = null;
+            }
             if (document.getElementById("alertMessage").textContent.includes("successfully")) {
                 localStorage.removeItem("appointmentData");
                 localStorage.removeItem("selectedDoctor");
                 localStorage.removeItem("patientData");
                 localStorage.removeItem("lastBookedPatient");
-
                 if (getQueryParam("edit") === "1") {
                     window.location.href = "admindasboard.html";
                 } else {
@@ -1782,7 +1791,7 @@
             try {
                 editData = JSON.parse(localStorage.getItem("editAppointment"));
                 if (!editData || !editData._id) {
-                    showAlert("Error: Missing or invalid appointment data for editing.");
+                    showSuccessModal("Error: Missing or invalid appointment data for editing.", "Appointment update failed.", "error");
                     localStorage.removeItem("editAppointment");
                     throw new Error("Invalid edit data");
                 }
@@ -1799,7 +1808,7 @@
                     })
                 );
             } catch (e) {
-                showAlert("Error: Corrupted appointment data for editing.");
+                showSuccessModal("Error: Corrupted appointment data for editing.", "Appointment update failed.", "error");
                 localStorage.removeItem("editAppointment");
             }
         }
@@ -1938,7 +1947,7 @@
 
                 closeCancelModal();
 
-                showAlert("Appointment cancelled successfully!");
+                showSuccessModal("Appointment cancelled successfully!", "Appointment cancelled successfully!", "success");
 
                 const currentDate = datePicker.value;
                 const searchTerm = searchInput.value.trim();
@@ -2092,6 +2101,17 @@
                 return 'Are you sure you want to refresh? After refreshing, your details will be removed.';
             }
         });
+
+        function showToast(message, type = 'success') {
+          const toast = document.getElementById('toast');
+          toast.textContent = message;
+          toast.className = 'fixed bottom-4 right-20 z-50 px-6 py-4 rounded-lg font-semibold text-white shadow-lg transition-all';
+          toast.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600');
+          toast.classList.remove('hidden');
+          setTimeout(() => {
+            toast.classList.add('hidden');
+          }, 2000);
+        }
     </script>
 </body>
 
