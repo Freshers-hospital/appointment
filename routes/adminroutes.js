@@ -14,31 +14,28 @@ router.post('/registerAsSuperadmin', async (req, res) => {
     }
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 2, contact });
+    const admin = new Admin({ username, email, password, role: 0, contact });
     await admin.save();
     res.status(201).json({ message: 'SuperAdmin registered successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
-// router.post('/register', async (req, res) => {
-//   try {
-//     const { username, email, password, contact } = req.body;
-//     if (!username || !email || !password || !contact) {
-//       return res.status(400).json({ error: 'All fields are required' });
-//     }
-//     const exists = await Admin.findOne({ email });
-//     if (exists) return res.status(400).json({ error: 'Email already registered' });
-//     const admin = new Admin({ username, email, password, role: 1, contact });
-//     await admin.save();
-//     res.status(201).json({ message: 'Admin registered successfully' });
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
-
-
-
+router.post('/register', async (req, res) => {
+  try {
+    const { username, email, password, contact } = req.body;
+    if (!username || !email || !password || !contact) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    const exists = await Admin.findOne({ email });
+    if (exists) return res.status(400).json({ error: 'Email already registered' });
+    const admin = new Admin({ username, email, password, role: 1, contact });
+    await admin.save();
+    res.status(201).json({ message: 'Admin registered successfully' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 router.post('/register', async (req, res) => {
   try {
@@ -102,25 +99,6 @@ router.post('/logout', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-// router.post('/resetPassword', async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     if (!email || !password) {
-//       return res.status(400).json({ error: 'All fields are required' });
-//     }
-//     const admin = await Admin.findOne({ email });
-//     if (!admin) return res.status(404).json({ error: 'Email does not exist' });
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const updateAdminPassword = await Admin.findOneAndUpdate({ email }, { password: hashedPassword }, { new: true })
-//     if (!updateAdminPassword) {
-//       res.status(404).json({ error: 'Email does not exist' });
-//     }
-//     res.status(201).json({ message: 'Password reset successfully' });
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
-
 
 
 

@@ -1382,8 +1382,12 @@ function editAdmin(id) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date, start, end }),
           });
-          if (!response.ok) throw new Error("Failed to save availability");
-          showToast("Failed to save availability", "error")
+          if (!response.ok) {
+  showToast("Failed to save availability", "error");
+  return;
+}
+showToast("Availability saved successfully!", "success");
+
           closeAvailabilityModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
         } catch (err) {
