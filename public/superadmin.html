@@ -590,18 +590,9 @@
         class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
     </div>
   </div>
- 
-
-
-
-
-<div id="addDoctorModalOverlay"
-  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-  
-    <div id="addDoctorModal" class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-xl relative">
-
-
-   
+  <div id="addDoctorModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
     <button id="closeAddDoctorModal"
       class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold">&times;</button>
 
@@ -625,10 +616,11 @@
       </div>
 
       <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-        <label for="doctorSpecialty" class="block text-sm font-medium text-gray-700 mb-1">Specialization</label>
-        <input type="text" id="doctorSpecialty" name="specialty"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required />
+        <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
+                    <select id="doctorSpecialty" name="specialty"
+                        class="w-full border border-gray-300 rounded px-0 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required>
+                    </select>
       </div>
 
       <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -666,13 +658,6 @@
   </div>
 </div>
 
-
-
-
-
-      </form>
-    </div>
-  </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const tabs = document.querySelectorAll('.tab');
@@ -1431,8 +1416,12 @@ function editAdmin(id) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date, start, end }),
           });
-          if (!response.ok) throw new Error("Failed to save availability");
-          showToast("Failed to save availability", "error")
+          if (!response.ok) {
+  showToast("Failed to save availability", "error");
+  return;
+}
+showToast("Availability saved successfully!", "success");
+
           closeAvailabilityModal();
           await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
         } catch (err) {
@@ -1640,6 +1629,32 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
     }
   }
 </script>
+</script>
+<script>
+  const specialties = [
+    "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+    "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+    "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+    "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+    "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+  ];
+
+  const select = document.getElementById("doctorSpecialty");
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent ="Select Specialty";
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  select.appendChild(defaultOption);
+
+  specialties.forEach(spec => {
+    const option = document.createElement("option");
+    option.value = spec;
+    option.textContent = spec;
+    select.appendChild(option);
+  });
+</script>
+
 
 
 <script>
