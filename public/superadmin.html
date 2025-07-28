@@ -414,6 +414,13 @@
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
+      <div class="sm:col-span-2 flex flex-col items-center mb-2">
+        <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
+        <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem">
+          <img src="" id="profileDoctorImage" alt="" class="w-24 h-24 rounded-full object-cover border shadow"
+            style="position: absolute; top: 0; left: 0" />
+        </div>
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">Name</p>
@@ -962,7 +969,7 @@
     <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx}" style="cursor:pointer;">
       ${doctor.image
             ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
-            : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+            : `<img src="/default.jpg" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
           }
     </div>
     <div>
@@ -1223,6 +1230,7 @@
           document.getElementById("profileDoctorGender").textContent = doctor.gender || "";
           document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
           document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
+          document.getElementById("profileDoctorImage").src = doctor.image || "/default.jpg";
           document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
           const ageWrapper = document.getElementById('profileDoctorAgeWrapper');
           const ageElement = document.getElementById('profileDoctorAge');
@@ -1290,6 +1298,18 @@
           document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
           document.body.classList.add("blurred-bg");
           e.target.closest(".action-menu").classList.add("hidden");
+          const photoPreview = document.getElementById("editDoctorPhotoPreview");
+          const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+          if (doctor.image) {
+            photoPreview.src = `http://localhost:3022${doctor.image}`;
+            photoPreview.style.display = "block";
+            defaultIcon.style.display = "none";
+          } else {
+            photoPreview.src = "";
+            photoPreview.style.display = "none";
+            defaultIcon.style.display = "flex";
+          }
+          document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
         }
       });
       document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
