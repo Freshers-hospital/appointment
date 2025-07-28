@@ -25,12 +25,6 @@ router.post("/", async (req, res) => {
         if (existing) {
             return res.status(400).json({ error: " A doctor with this name already exists." });
         }
-
-        const existingSpecialty = await Doctor.findOne({ specialty });
-        if (existingSpecialty) {
-            return res.status(400).json({ error: "A doctor with this specialty already exists." });
-        }
-
         const doctor = new Doctor({ firstName, lastName, specialty, ...rest, name: `Dr. ${firstName} ${lastName}` });
         await doctor.save();
         res.status(201).json(doctor);
@@ -87,31 +81,30 @@ router.post("/:doctorId/availability", async (req, res) => {
     }
 });
 
+router.put("/:doctorId", upload.single("photo"), async (req, res) => {
+    try {
+        const doctorId = req.params.doctorId;
+        const updateData = req.body;
 
-router.put('/:doctorId', upload.single('photo'), async (req, res) => {
-  try {
-    const doctorId = req.params.doctorId;
-    const updateData = req.body;
-   
-    if (updateData.phone) {
-      const phonePattern = /^[6-9][0-9]{9}$/;
-      if (!phonePattern.test(updateData.phone)) {
-        return res.status(400).json({ error: 'Phone number must be 10 digits and start with 6, 7, 8, or 9.' });
-      }
+        if (updateData.phone) {
+            const phonePattern = /^[6-9][0-9]{9}$/;
+            if (!phonePattern.test(updateData.phone)) {
+                return res.status(400).json({ error: "Phone number must be 10 digits and start with 6, 7, 8, or 9." });
+            }
+        }
+        if (req.file) {
+            updateData.image = `/uploads/${req.file.filename}`;
+        }
+        Object.keys(updateData).forEach((key) => {
+            if (updateData[key] === "") delete updateData[key];
+        });
+        const updatedDoctor = await Doctor.findByIdAndUpdate(doctorId, updateData, { new: true });
+        if (!updatedDoctor) return res.status(404).json({ error: "Doctor not found" });
+        res.json(updatedDoctor);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to update doctor" });
     }
-    if (req.file) {
-      updateData.image = `/uploads/${req.file.filename}`;
-    }
-    Object.keys(updateData).forEach(key => {
-      if (updateData[key] === '') delete updateData[key];
-    });
-    const updatedDoctor = await Doctor.findByIdAndUpdate(doctorId, updateData, { new: true });
-    if (!updatedDoctor) return res.status(404).json({ error: 'Doctor not found' });
-    res.json(updatedDoctor);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to update doctor' });
-  }
 });
 
 module.exports = router;
