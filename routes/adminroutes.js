@@ -204,7 +204,7 @@ router.get('/getAllAdmins', async (req, res) => {
 
       return {
         ...admin.toObject(),
-        decryptedPassword // used in frontend input field
+        decryptedPassword 
       };
     });
 
