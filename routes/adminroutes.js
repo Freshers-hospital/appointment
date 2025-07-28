@@ -141,14 +141,6 @@ router.get("/getAllAdmins", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
 router.get('/getAdminById/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -161,22 +153,6 @@ router.get('/getAdminById/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-// router.put('/updateAdmin/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const updateData = req.body;
-//     const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
-//     if (!admin) {
-//       return res.status(404).json({ message: 'Admin not found' });
-//     }
-//     res.json(admin);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-
-
 
 const { encrypt } = require('../utils/encryption'); // Make sure this is imported
 
@@ -201,16 +177,6 @@ router.put('/updateAdmin/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-
-
-
-
-
-
-
-
-
 
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
   try {
