@@ -833,6 +833,7 @@
                                     align-items: center;
                                     justify-content: center;
                                     border-radius: 50%;
+                                    background: #f3f4f6;
                                     z-index:1;
                                 ">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none"
@@ -2431,7 +2432,7 @@
                     }" style="cursor:pointer;">
       ${doctor.image
                         ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
-                        : `<img src="/default-profile.png" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+                        : `<img src="/default.jpg" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
                     }
     </div>
     <div>
@@ -2889,7 +2890,7 @@ if (document.getElementById("appointmentStatusFilter")) {
                     document.getElementById("profileDoctorGender").textContent = doctor.gender || "";
                     document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
                     document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
-                    document.getElementById("profileDoctorImage").src = doctor.image || "";
+                    document.getElementById("profileDoctorImage").src = doctor.image || "/default.jpg";
                     document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
                     const ageWrapper = document.getElementById('profileDoctorAgeWrapper');
                     const ageElement = document.getElementById('profileDoctorAge');
@@ -3018,7 +3019,7 @@ if (document.getElementById("appointmentStatusFilter")) {
             document.getElementById("editDoctorExperience").value = doctor.experience || "";
             document.getElementById("editDoctorAvailability").value = doctor.availability || "";
             document.getElementById("editDoctorQualification").value = doctor.qualification || "";
-            document.getElementById("editDoctorPhotoPreview").src = doctor.image ? `http://localhost:3022${doctor.image}` : "default-profile.png";
+            document.getElementById("editDoctorPhotoPreview").src = doctor.image ? `http://localhost:3022${doctor.image}` : "/default.jpg";
             document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
             const photoPreview = document.getElementById("editDoctorPhotoPreview");
             const defaultIcon = document.getElementById("editDoctorDefaultIcon");
