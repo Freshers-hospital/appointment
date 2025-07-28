@@ -1,10 +1,10 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const Admin = require('../models/admin');
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const Admin = require("../models/admin");
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 router.post('/registerAsSuperadmin', async (req, res) => {
   try {
@@ -21,28 +21,35 @@ router.post('/registerAsSuperadmin', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-router.post('/register', async (req, res) => {
-  try {
-    const { username, email, password, contact } = req.body;
-    if (!username || !email || !password || !contact) {
-      return res.status(400).json({ error: 'All fields are required' });
+
+router.post("/register", async (req, res) => {
+    try {
+        const { username, email, password, contact } = req.body;
+        if (!username || !email || !password || !contact) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
+
+        const exists = await Admin.findOne({ email });
+        if (exists) return res.status(400).json({ error: "Email already registered" });
+
+      
+        const encryptedPassword = encrypt(password);
+
+        const admin = new Admin({
+            username,
+            email,
+            password, 
+            encryptedPassword, 
+            role: 1,
+            contact,
+        });
+
+        await admin.save();
+
+        res.status(201).json({ message: "Admin registered successfully" });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
     }
-    const exists = await Admin.findOne({ email });
-    if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const encryptedPassword = encrypt(password);
-    const admin = new Admin({
-      username,
-      email,
-      password,             
-      encryptedPassword,    
-      role: 1,
-      contact
-    });
-    await admin.save();
-    res.status(201).json({ message: 'Admin registered successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
 });
 
 router.post('/login', async (req, res) => {
@@ -111,11 +118,11 @@ function authMiddleware(req, res, next) {
   }
 }
 
-const { decrypt } = require('../utils/encryption');
+const { decrypt } = require("../utils/encryption");
 
-router.get('/getAllAdmins', async (req, res) => {
-  try {
-    const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
+router.get("/getAllAdmins", async (req, res) => {
+    try {
+        const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
 
     const adminsWithPasswords = admins.map(admin => {
       const decryptedPassword = admin.encryptedPassword
@@ -145,28 +152,28 @@ router.get('/getAdminById/:id', async (req, res) => {
   }
 });
 
-const { encrypt } = require('../utils/encryption'); // Make sure this is imported
+const { encrypt } = require("../utils/encryption"); 
 
-router.put('/updateAdmin/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updateData = { ...req.body };
+router.put("/updateAdmin/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateData = { ...req.body };
 
-    if (updateData.password && updateData.password.trim() !== '') {
-      const hashed = await bcrypt.hash(updateData.password, 10);
-      updateData.password = hashed;
-      updateData.encryptedPassword = encrypt(req.body.password); 
-    } else {
-      delete updateData.password;
+        if (updateData.password && updateData.password.trim() !== "") {
+            const hashed = await bcrypt.hash(updateData.password, 10);
+            updateData.password = hashed;
+            updateData.encryptedPassword = encrypt(req.body.password); 
+        } else {
+            delete updateData.password;
+        }
+
+        const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
+        if (!admin) return res.status(404).json({ message: "Admin not found" });
+
+        res.json({ message: "Admin updated successfully", admin });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-
-    const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
-    if (!admin) return res.status(404).json({ message: 'Admin not found' });
-
-    res.json({ message: 'Admin updated successfully', admin });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 });
 
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
@@ -249,4 +256,4 @@ router.get('/getAdminProfile', async (req, res) => {
   }
 });
 
-module.exports = { router, authMiddleware }; 
+module.exports = { router, authMiddleware };
