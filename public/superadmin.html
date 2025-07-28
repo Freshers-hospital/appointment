@@ -230,12 +230,11 @@
                 <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
                   autocomplete="off" />
               </div>
-              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+
-                Add Doctor</button>
+              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Doctor</button>
                             </div>
                           </div>
                         
-          <div
+                    <div
             class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                             <div class="col-span-3">Doctor</div>
                             <div class="col-span-2">Specialization</div>
@@ -244,13 +243,13 @@
                             <div class="col-span-2">Actions</div>
                           </div>
                           <div id="doctorsList" class="space-y-2 mt-2"></div>
-                          <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
-            <button id="prevDoctorsPage"
-              class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
-                            <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
-            <button id="nextDoctorsPage"
-              class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
-                          </div>
+                           <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
+                        <button id="prevDoctorsPage"
+                          class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
+                        <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+                        <button id="nextDoctorsPage"
+                            class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -592,7 +591,8 @@
   </div>
   <div id="addDoctorModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-    <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+   <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
+
     <button id="closeAddDoctorModal"
       class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold">&times;</button>
 
@@ -700,7 +700,6 @@
         const res = await fetch("/api/admin/getAllAdmins");
 
         const admins = await res.json();
-
         if (!admins.length) {
           adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
           return;
@@ -749,8 +748,8 @@
       </span>
     </div>
     
-   <div class="col-span-2">
-  <div class="relative w-36"> <!-- Set smaller width here -->
+<div class="col-span-2">
+  <div class="relative w-36">
     <input
       type="password"
       value="${admin.decryptedPassword || '********'}"
@@ -759,12 +758,26 @@
     />
     <button
       type="button"
-      class="absolute inset-y-0 right-1 text-sm text-gray-500"
+      class="absolute inset-y-0 right-1 flex items-center"
       onclick="togglePasswordVisibility(this)">
-      👁️
+      
+      <!-- Eye hidden -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 eye-hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.957 9.957 0 012.186-3.302M6.42 6.42A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.959 9.959 0 01-4.063 5.148M15 12a3 3 0 01-4.95 2.121M3 3l18 18" />
+      </svg>
+
+      <!-- Eye open -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 eye-visible hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
+      </svg>
     </button>
   </div>
 </div>
+
 
     
     <div class="col-span-1 relative text-right">
@@ -775,7 +788,8 @@
         </div>
       ` : `
         <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-          <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}"
+      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || admin.phone || '-'}"
+
             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
           <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
           <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
@@ -799,9 +813,9 @@
       }
       if (totalPages > 1) {
         pagination.innerHTML = `
-          <button id="prevAdminsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+          <button id="prevAdminsPage" class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
           <span id="adminsPageInfo" class="text-sm text-gray-600">Page ${currentAdminsPage} of ${totalPages}</span>
-          <button id="nextAdminsPage" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+          <button id="nextAdminsPage" class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
         `;
         document.getElementById("prevAdminsPage").disabled = currentAdminsPage === 1;
         document.getElementById("nextAdminsPage").disabled = currentAdminsPage === totalPages;
@@ -1172,7 +1186,7 @@ function editAdmin(id) {
         body: JSON.stringify({
           username: name,
           email: email,
-          phone: contact,
+          contact     : contact,
           status: status
         })
       });
@@ -1578,7 +1592,7 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
       }
     };
   </script>
-  <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3">
+  <div id="toast-container" class="fixed bottom-4 right-0  z-[9999]  transform -translate-x-1/2 z-50 space-y-3">
   </div>
   <script>
     function showToast(message, type = "success") {
@@ -1728,6 +1742,25 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
     const joined = document.getElementById('superAdminProfileJoined');
     const email = document.getElementById('superAdminProfileEmail');
     const contact = document.getElementById('superAdminProfileContact');
+    superAdminProfileContact.addEventListener('keydown', function (e) {
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+  if (allowedKeys.includes(e.key)) return;
+
+  if (!/^[0-9]$/.test(e.key)) {
+    e.preventDefault();
+    return;
+  }
+
+  if (this.value.length >= 10) {
+    e.preventDefault();
+    return;
+  }
+
+  if (this.value.length === 0 && !/[6-9]/.test(e.key)) {
+    e.preventDefault();
+    return;
+  }
+});
     const editBtn = document.getElementById('editSuperAdminProfileBtn');
     const editActions = document.getElementById('editSuperAdminProfileActions');
     const saveBtn = document.getElementById('saveSuperAdminProfileBtn');
@@ -1839,6 +1872,26 @@ document.getElementById("userAvatar").textContent = getInitials(userName);
         };
     }
 </script>
+
+<script>
+  function togglePasswordVisibility(button) {
+    const container = button.closest(".relative");
+    const input = container.querySelector(".admin-password");
+    const eyeOpen = button.querySelector(".eye-visible");
+    const eyeSlash = button.querySelector(".eye-hidden");
+
+    if (input.type === "password") {
+      input.type = "text";
+      eyeOpen.classList.remove("hidden");
+      eyeSlash.classList.add("hidden");
+    } else {
+      input.type = "password";
+      eyeOpen.classList.add("hidden");
+      eyeSlash.classList.remove("hidden");
+    }
+  }
+</script>
+
 </body>
 
 </html>
