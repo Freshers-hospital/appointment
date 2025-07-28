@@ -59,15 +59,15 @@
     function showToast(message, type = "success") {
       const toast = document.createElement("div");
       const icons = {
-        success: `<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        success: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M5 13l4 4L19 7" />
         </svg>`,
-        error: `<svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        error: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M6 18L18 6M6 6l12 12" />
         </svg>`,
-        warning: `<svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        warning: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 9v2m0 4h.01M4.93 19h14.14c.88 0 1.34-1.06.71-1.71L13.41 4.59c-.38-.38-1.04-.38-1.41 0L4.22 17.29c-.63.65-.17 1.71.71 1.71z" />
         </svg>`
@@ -118,7 +118,7 @@
         showToast("Please fill in all fields.", "warning");
         return;
       }
-     const emailPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
+     const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
      if (!emailPattern.test(email)) {
     showToast("Enter a valid email with at least one letter and one number.", "warning");
     return;
