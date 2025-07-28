@@ -128,11 +128,13 @@ router.get("/getAllAdmins", async (req, res) => {
       const decryptedPassword = admin.encryptedPassword
         ? decrypt(admin.encryptedPassword)
         : '********';
+
       return {
         ...admin.toObject(),
         decryptedPassword // used in frontend input field
       };
     });
+
     res.json(adminsWithPasswords);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -152,12 +154,12 @@ router.get('/getAdminById/:id', async (req, res) => {
   }
 });
 
-const { encrypt } = require("../utils/encryption"); 
+const { encrypt } = require('../utils/encryption'); // Make sure this is imported
 
-router.put("/updateAdmin/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updateData = { ...req.body };
+router.put('/updateAdmin/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = { ...req.body };
 
         if (updateData.password && updateData.password.trim() !== "") {
             const hashed = await bcrypt.hash(updateData.password, 10);
