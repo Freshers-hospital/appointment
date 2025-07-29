@@ -509,8 +509,9 @@
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
-          <input type="text" id="editDoctorSpecialization" name="specialty"
-            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+          <select id="editDoctorSpecialization" name="specialty"
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+          </select>
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
@@ -623,18 +624,19 @@
             required />
         </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <label for="doctorSpecialty" class="block text-gray-700 text-sm font-semibold mb-2">Specialization</label>
-          <select id="doctorSpecialty" name="specialty"
-            class="w-full border border-gray-300 rounded px-0 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            required>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+          <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+          <select id="addDoctorSpecialization" name="specialty"
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+
           </select>
+
         </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <label for="doctorExperience" class="block text-sm font-medium text-gray-700 mb-1">Experience</label>
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+          <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
           <input type="text" id="doctorExperience" name="experience"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
         </div>
 
 
@@ -665,11 +667,10 @@
       </form>
     </div>
   </div>
-  <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+  <footer
+    class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
     <div class="text-gray-500 font-semibold">medicare@2000</div>
   </footer>
-
-
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     const tabs = document.querySelectorAll('.tab');
@@ -687,7 +688,6 @@
         if (targetId === "adminsTab") fetchAdmins();
       });
     });
-
     window.addEventListener("click", function (e) {
       document.querySelectorAll(".action-menu").forEach((menu) => {
         if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
@@ -697,7 +697,6 @@
     });
   </script>
   <script>
-
     let allAdmins = [];
     let currentAdminsPage = 1;
     const adminsPerPage = 7;
@@ -1302,7 +1301,8 @@
           const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
           currentDoctorForEditProfile = doctor;
           document.getElementById("editDoctorName").value = doctor.name || "";
-          document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+          populateSpecialtyDropdown("editDoctorSpecialization");
+          document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "").toLowerCase();
           document.getElementById("editDoctorExperience").value = doctor.experience || "";
           document.getElementById("editDoctorQualification").value = doctor.qualification || "";
           document.getElementById("editDoctorAvailability").value = doctor.availability || "";
@@ -1389,8 +1389,6 @@
           defaultIcon.style.display = "flex";
         }
       });
-
-
       let currentDoctorId = null;
       document.addEventListener("click", function (e) {
         if (e.target.classList.contains("manage-availability-btn")) {
@@ -1401,7 +1399,8 @@
           document.body.classList.add("blurred-bg");
           document.getElementById("availabilityForm").reset();
           const today = new Date();
-          document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
+          availabilityDatePicker.setDate(today, true);
+
           fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
           e.target.closest(".action-menu").classList.add("hidden");
         }
@@ -1414,14 +1413,17 @@
         currentDoctorId = null;
         document.getElementById("availabilityForm").reset();
       }
-      flatpickr("#availabilityDate", {
+      const availabilityDateInput = document.getElementById("availabilityDate");
+      const availabilityDatePicker = flatpickr(availabilityDateInput, {
         dateFormat: "Y-m-d",
         allowInput: false,
         static: true,
+        defaultDate: new Date(),
         onChange: function (selectedDates, dateStr) {
           fetchAndFillAvailabilityForDate(dateStr);
         },
       });
+
       flatpickr("#availabilityStart", {
         enableTime: true,
         noCalendar: true,
@@ -1677,21 +1679,31 @@
       "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
     ];
 
-    const select = document.getElementById("doctorSpecialty");
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Select Specialty";
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
-    select.appendChild(defaultOption);
+    function populateSpecialtyDropdown(selectId) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-    specialties.forEach(spec => {
-      const option = document.createElement("option");
-      option.value = spec
-      option.textContent = spec;
-      select.appendChild(option);
-    });
+      select.innerHTML = "";
+
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "Select Specialty";
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      select.appendChild(defaultOption);
+
+      specialties.forEach(spec => {
+        const option = document.createElement("option");
+        option.value = spec.toLowerCase();
+        option.textContent = spec;
+        select.appendChild(option);
+      });
+    }
+    populateSpecialtyDropdown("doctorSpecialty");
+    populateSpecialtyDropdown("addDoctorSpecialization");
+    populateSpecialtyDropdown("editDoctorSpecialization");
   </script>
+
 
   <div id="superAdminProfileModal"
     class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
@@ -1896,7 +1908,6 @@
       };
     }
   </script>
-
   <script>
     function togglePasswordVisibility(button) {
       const container = button.closest(".relative");
@@ -1915,7 +1926,6 @@
       }
     }
   </script>
-
 </body>
 
 </html>
