@@ -240,25 +240,25 @@
 
           <div
             class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-                            <div class="col-span-3">Doctor</div>
-                            <div class="col-span-2">Specialization</div>
-                            <div class="col-span-2">Today's Appointments</div>
-                            <div class="col-span-3">Availability</div>
-                            <div class="col-span-2">Actions</div>
-                          </div>
-                          <div id="doctorsList" class="space-y-2 mt-2"></div>
-                           <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
-                        <button id="prevDoctorsPage"
-                          class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
-                        <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
-                        <button id="nextDoctorsPage"
-                            class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
-                    </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="col-span-3">Doctor</div>
+            <div class="col-span-2">Specialization</div>
+            <div class="col-span-2">Today's Appointments</div>
+            <div class="col-span-3">Availability</div>
+            <div class="col-span-2">Actions</div>
+          </div>
+          <div id="doctorsList" class="space-y-2 mt-2"></div>
+          <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
+            <button id="prevDoctorsPage"
+              class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
+            <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+            <button id="nextDoctorsPage"
+              class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+  </div>
 
   <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
@@ -565,8 +565,8 @@
   <div id="availabilityModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
-            <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
+      <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+      <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
       <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
           <p class="text-gray-500 text-sm mb-1">Select Date</p>
@@ -665,9 +665,9 @@
       </form>
     </div>
   </div>
-<footer
-        class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
-        <div class="text-gray-500 font-semibold">medicare@2000</div></footer>
+  <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+    <div class="text-gray-500 font-semibold">medicare@2000</div>
+  </footer>
 
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -993,19 +993,19 @@
   </div>
 </div>
 `;
-document.querySelectorAll('.manage-availability-btn').forEach(button => {
-  button.addEventListener('click', function (e) {
-    e.preventDefault();
-    const doctor = JSON.parse(this.dataset.doctor);
-    const doctorNameDisplay = document.getElementById('manageDoctorName');
-    doctorNameDisplay.textContent = ` ${doctor.name} (${doctor.specialty || "General Medicine"})`;
-    document.getElementById('availabilityModalOverlay').classList.remove('hidden');
-    document.getElementById('closeAvailabilityModal')?.addEventListener('click', () => {
-      document.getElementById('availabilityModalOverlay').classList.add('hidden');
-    });
-  });
-});
- }); 
+        document.querySelectorAll('.manage-availability-btn').forEach(button => {
+          button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const doctor = JSON.parse(this.dataset.doctor);
+            const doctorNameDisplay = document.getElementById('manageDoctorName');
+            doctorNameDisplay.textContent = ` ${doctor.name} (${doctor.specialty || "General Medicine"})`;
+            document.getElementById('availabilityModalOverlay').classList.remove('hidden');
+            document.getElementById('closeAvailabilityModal')?.addEventListener('click', () => {
+              document.getElementById('availabilityModalOverlay').classList.add('hidden');
+            });
+          });
+        });
+      });
       updateDoctorsPagination(totalPages);
     }
 
@@ -1764,24 +1764,24 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
     const email = document.getElementById('superAdminProfileEmail');
     const contact = document.getElementById('superAdminProfileContact');
     superAdminProfileContact.addEventListener('keydown', function (e) {
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
-  if (allowedKeys.includes(e.key)) return;
+      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+      if (allowedKeys.includes(e.key)) return;
 
-  if (!/^[0-9]$/.test(e.key)) {
-    e.preventDefault();
-    return;
-  }
+      if (!/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
 
-  if (this.value.length >= 10) {
-    e.preventDefault();
-    return;
-  }
+      if (this.value.length >= 10) {
+        e.preventDefault();
+        return;
+      }
 
-  if (this.value.length === 0 && !/[6-9]/.test(e.key)) {
-    e.preventDefault();
-    return;
-  }
-});
+      if (this.value.length === 0 && !/[6-9]/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
+    });
     const editBtn = document.getElementById('editSuperAdminProfileBtn');
     const editActions = document.getElementById('editSuperAdminProfileActions');
     const saveBtn = document.getElementById('saveSuperAdminProfileBtn');
