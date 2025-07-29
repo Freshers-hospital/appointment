@@ -859,8 +859,9 @@
 
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                     <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
-                    <input type="text" id="editDoctorSpecialization" name="specialty"
-                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+                   <select id="editDoctorSpecialization" name="specialty"
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+          </select>
                 </div>
 
                 <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
@@ -1660,7 +1661,7 @@
             document.body.classList.add("blurred-bg");
             document.getElementById("availabilityForm").reset();
             const today = new Date();
-            document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
+            availabilityDatePicker.setDate(today, true); 
             fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
         }
 
@@ -1675,14 +1676,17 @@
         document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
         document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
 
-        flatpickr("#availabilityDate", {
-            dateFormat: "Y-m-d",
-            allowInput: false,
-            static: true,
-            onChange: function (selectedDates, dateStr) {
-                fetchAndFillAvailabilityForDate(dateStr);
-            },
-        });
+        const availabilityDateInput = document.getElementById("availabilityDate");
+const availabilityDatePicker = flatpickr(availabilityDateInput, {
+  dateFormat: "Y-m-d",
+  allowInput: false,
+  static: true,
+  defaultDate: new Date(), 
+  onChange: function (selectedDates, dateStr) {
+    fetchAndFillAvailabilityForDate(dateStr);
+  },
+});
+
         flatpickr("#availabilityStart", {
             enableTime: true,
             noCalendar: true,
@@ -2721,7 +2725,8 @@ if (document.getElementById("appointmentStatusFilter")) {
                     const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
                     currentDoctorForEditProfile = doctor;
                     document.getElementById("editDoctorName").value = doctor.name || "";
-                    document.getElementById("editDoctorSpecialization").value = doctor.specialty || "";
+                      populateSpecialtyDropdown("editDoctorSpecialization");
+          document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "").toLowerCase();
                     document.getElementById("editDoctorExperience").value = doctor.experience || "";
                     document.getElementById("editDoctorQualification").value = doctor.qualification || "";
                     document.getElementById("editDoctorAvailability").value = doctor.availability || "";
@@ -3669,31 +3674,39 @@ if (document.getElementById("appointmentStatusFilter")) {
             }, 2000);
         }
     </script>
-    <script>
-        const specialties = [
-            "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
-            "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
-            "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
-            "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
-            "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
-        ];
+      <script>
+    const specialties = [
+      "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+      "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+      "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+      "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+      "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+    ];
 
-        const select = document.getElementById("doctorSpecialty");
-        const defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.textContent = "Select Specialty";
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        select.appendChild(defaultOption);
+    function populateSpecialtyDropdown(selectId) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-        specialties.forEach(spec => {
-            const option = document.createElement("option");
-            option.value = spec;
-            option.textContent = spec;
-            select.appendChild(option);
-        });
+      select.innerHTML = "";
 
-    </script>
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "Select Specialty";
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      select.appendChild(defaultOption);
+
+      specialties.forEach(spec => {
+        const option = document.createElement("option");
+        option.value = spec.toLowerCase();
+        option.textContent = spec;
+        select.appendChild(option);
+      });
+    }
+    populateSpecialtyDropdown("doctorSpecialty");
+    populateSpecialtyDropdown("addDoctorSpecialization");
+    populateSpecialtyDropdown("editDoctorSpecialization");
+  </script>
 
 </body>
 
