@@ -131,7 +131,7 @@ router.get("/getAllAdmins", async (req, res) => {
 
       return {
         ...admin.toObject(),
-        decryptedPassword 
+        decryptedPassword           
       };
     });
 
