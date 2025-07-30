@@ -657,8 +657,7 @@
       </form>
     </div>
   </div>
-  <footer
-    class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
+  <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
     <div class="text-gray-500 font-semibold">medicare@2000</div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1915,6 +1914,12 @@ function openViewModal(btn) {
         eyeOpen.classList.add("hidden");
         eyeSlash.classList.remove("hidden");
       }
+    }
+  </script>
+  <script>
+    const role = localStorage.getItem('role');
+    if (role !== '0') {
+      window.location.href = "login.html";
     }
   </script>
 </body>
