@@ -196,7 +196,7 @@
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-semibold">Admins List</h3>
 
-              <a href="adminregister.html" class= "bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add
+              <a href="adminregister.html" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add
                 Admin</a>
             </div>
 
@@ -215,7 +215,7 @@
             </div>
           </div>
         </div>
-        <div id="doctorsTab`" class="tab-content hidden">
+        <div id="doctorsTab" class="tab-content hidden">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
             <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
@@ -668,7 +668,7 @@
     </div>
   </div>
   <footer
-    class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
+    class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
     <div class="text-gray-500 font-semibold">medicare@2000</div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -797,8 +797,7 @@
         </div>
       ` : `
         <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || admin.phone || '-'}"
-
+       <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}"
             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
           <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
           <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
