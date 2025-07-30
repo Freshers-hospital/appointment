@@ -336,43 +336,33 @@
 
   <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
-
-
-      <div class="mb-6 border-b pb-4">
+ <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Admin Profile</h2>
         <p class="text-sm text-gray-500 mt-1">Detailed administrator information</p>
       </div>
-
-      <div class="grid grid-cols-2 gap-6">
-        <div>
-          <label class="text-sm text-gray-500 mb-1 block">Full Name</label>
-          <div id="viewAdminName" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-
-          </div>
-        </div>
-
-        <div>
-          <label class="text-sm text-gray-500 mb-1 block">Email Address</label>
-          <div id="viewAdminEmail"
-            class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900 break-all">-</div>
-        </div>
-
-        <div>
-          <label class="text-sm text-gray-500 mb-1 block">Contact Number</label>
-          <div id="viewAdminContact" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-
-          </div>
-        </div>
-
-        <div>
-          <label class="text-sm text-gray-500 mb-1 block">Account Status</label>
-          <div id="viewAdminStatus"
-            class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">
-            -
-          </div>
-        </div>
-      </div>
-
-
-      <div class="mt-8 flex justify-end">
+<div class="grid grid-cols-2 gap-6">
+  <div>
+    <label class="text-sm text-gray-500 mb-1 block">Full Name</label>
+    <div id="viewAdminName" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-</div>
+  </div>
+<div>
+    <label class="text-sm text-gray-500 mb-1 block">Email Address</label>
+    <div id="viewAdminEmail" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900 break-all">-</div>
+  </div>
+<div>
+    <label class="text-sm text-gray-500 mb-1 block">Contact Number</label>
+    <div id="viewAdminContact" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-</div>
+  </div>
+<div>
+    <label class="text-sm text-gray-500 mb-1 block">Account Status</label>
+    <div id="viewAdminStatus" class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">-</div>
+  </div>
+  <div>
+    <label class="text-sm text-gray-500 mb-1 block">Password</label>
+    <div id="viewAdminPassword" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">********</div>
+  </div>
+</div>
+<div class="mt-8 flex justify-end">
         <button onclick="closeModals()"
           class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md shadow">
           Close
@@ -796,7 +786,8 @@
         </div>
       ` : `
         <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-       <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}"
+      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact ||'-'}" data-status="${admin.status || 'Active'}" " data-password="${admin.decryptedPassword || '********'}""
+
             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
           <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
           <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
@@ -847,14 +838,15 @@
 
     window.addEventListener("DOMContentLoaded", fetchAdmins);
 
+function openViewModal(btn) {
+  document.getElementById('viewModal').classList.remove('hidden');
+  document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
+  document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
+  document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
+  document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
+  document.getElementById('viewAdminPassword').textContent = btn.getAttribute('data-password'); 
+}
 
-    function openViewModal(btn) {
-      document.getElementById('viewModal').classList.remove('hidden');
-      document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
-      document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
-      document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
-      document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
-    }
 
     function editAdmin(id) {
       const admin = allAdmins.find(a => a._id === id);
