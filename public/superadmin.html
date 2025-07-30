@@ -795,10 +795,8 @@
           <button onclick="openRestoreModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
         </div>
       ` : `
-
-      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact ||'-'}" data-status="${admin.status || 'Active'}"
-
-
+        <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
+       <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}"
             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
           <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
           <button onclick="openDeleteModal('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
