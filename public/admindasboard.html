@@ -426,7 +426,7 @@
                     </div>
                 </div>
 
-                <div id=" patientsTab" class="tab-content hidden">
+                <div id="patientsTab" class="tab-content hidden">
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h3 class="text-xl font-semibold">Patients List</h3>
@@ -3698,6 +3698,12 @@
                 select.appendChild(option);
             });
 
+        </script>
+        <script>
+            const role = localStorage.getItem('role');
+            if (role !== '1') {
+                window.location.href = "login.html";
+            }
         </script>
 
 </body>
