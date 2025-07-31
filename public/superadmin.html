@@ -1402,7 +1402,7 @@
           currentDoctorForEditProfile = doctor;
           document.getElementById("editDoctorName").value = doctor.name || "";
           populateSpecialtyDropdown("editDoctorSpecialization");
-          document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "").toLowerCase();
+          document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "");
           document.getElementById("editDoctorExperience").value = doctor.experience || "";
           document.getElementById("editDoctorQualification").value = doctor.qualification || "";
           document.getElementById("editDoctorAvailability").value = doctor.availability || "";
@@ -1794,7 +1794,7 @@
 
       specialties.forEach(spec => {
         const option = document.createElement("option");
-        option.value = spec.toLowerCase();
+        option.value = spec;
         option.textContent = spec;
         select.appendChild(option);
       });

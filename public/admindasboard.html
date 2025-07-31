@@ -425,7 +425,7 @@
                             class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"">Next</button>
                     </div>
                 </div>
-<div id=" patientsTab" class="tab-content hidden">
+         <div id="patientsTab" class="tab-content hidden">
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h3 class="text-xl font-semibold">Patients List</h3>
@@ -2443,7 +2443,7 @@
                             : `<img src="/default.jpg" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
                         }
     </div>
-    <div>
+ <div>
       <div class="font-semibold text-gray-800 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.name}</div>
       <div class="text-xs text-gray-500 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${infoLine}</div>
     </div>
@@ -2738,7 +2738,7 @@
                         currentDoctorForEditProfile = doctor;
                         document.getElementById("editDoctorName").value = doctor.name || "";
                         populateSpecialtyDropdown("editDoctorSpecialization");
-                        document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "").toLowerCase();
+                        document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "");
                         document.getElementById("editDoctorExperience").value = doctor.experience || "";
                         document.getElementById("editDoctorQualification").value = doctor.qualification || "";
                         document.getElementById("editDoctorAvailability").value = doctor.availability || "";
@@ -3147,10 +3147,10 @@
                         formData.append("phone", document.getElementById("editDoctorPhone").value);
                         formData.append("address", document.getElementById("editDoctorAddress").value);
 
-                        const photoInput = document.getElementById("editDoctorPhoto");
-                        if (photoInput.files.length > 0) {
-                            formData.append("photo", photoInput.files[0]);
-                        }
+                        // const photoInput = document.getElementById("editDoctorPhoto");
+                        // if (photoInput.files.length > 0) {
+                        //     formData.append("photo", photoInput.files[0]);
+                        // }
 
                         try {
                             const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
@@ -3173,27 +3173,20 @@
                     };
                 }
 
-                if (document.getElementById("editDoctorPhoto")) {
-                    document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                document.getElementById("editDoctorPhotoPreview").src = e.target.result;
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                }
+                // if (document.getElementById("editDoctorPhoto")) {
+                //     document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+                //         const file = event.target.files[0];
+                //         if (file) {
+                //             const reader = new FileReader();
+                //             reader.onload = function (e) {
+                //                 document.getElementById("editDoctorPhotoPreview").src = e.target.result;
+                //             };
+                //             reader.readAsDataURL(file);
+                //         }
+                //     });
+                // }
             });
         </script>
-
-        <input type="file" id="doctorPhotoInput" style="display: none" accept="image/*" />
-        <div id="doctorPhotoModal"
-            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999">
-            <img id="doctorPhotoModalImg" src=""
-                style="max-width: 90vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 2px 16px #0008" />
-        </div>
         <script>
             document.getElementById("doctorsList").addEventListener("click", function (e) {
                 if (e.target.closest(".doctor-photo-placeholder")) {
@@ -3202,8 +3195,8 @@
                     const idx = photoDiv.getAttribute("data-doctor-index");
                     const doctor = allDoctors[parseInt(idx)];
                     const imgTag = photoDiv.querySelector("img");
-                    const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
-                    if (imageUrl.includes("default-profile.png")) {
+                    const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default.jpg";
+                    if (imageUrl.includes("default.jpg")) {
                         const fileInput = document.getElementById("doctorPhotoInput");
                         fileInput.value = "";
                         fileInput.onchange = function (event) {
@@ -3380,7 +3373,6 @@
                 }
             };
         </script>
-
         <div id="deleteDoctorModal"
             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -3736,18 +3728,18 @@
                 defaultOption.selected = true;
                 select.appendChild(defaultOption);
 
-                specialties.forEach(spec => {
-                    const option = document.createElement("option");
-                    option.value = spec.toLowerCase();
-                    option.textContent = spec;
-                    select.appendChild(option);
-                });
-            }
-            populateSpecialtyDropdown("doctorSpecialty");
-            populateSpecialtyDropdown("addDoctorSpecialization");
-            populateSpecialtyDropdown("editDoctorSpecialization");
-        </script>
-        <script>
+      specialties.forEach(spec => {
+        const option = document.createElement("option");
+        option.value = spec;
+        option.textContent = spec;
+        select.appendChild(option);
+      });
+    }
+    populateSpecialtyDropdown("doctorSpecialty");
+    populateSpecialtyDropdown("addDoctorSpecialization");
+    populateSpecialtyDropdown("editDoctorSpecialization");
+  </script>
+<script>
             let selectedDoctorId = null;
             function openDeleteDoctorModal(doctorId) {
                 selectedDoctorId = doctorId;
@@ -3820,7 +3812,6 @@
                 }
             }
         </script>
-
 </body>
 
 </html>
