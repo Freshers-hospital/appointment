@@ -762,7 +762,7 @@
                     <div style="position: relative; width: 96px; height: 96px; margin-bottom: 0.5rem">
                         <img src="" id="profileDoctorImage" alt=""
                             class="w-24 h-24 rounded-full object-cover border shadow"
-                            style="position: absolute; top: 0; left: 0" />
+                            style="position: absolute; top: 0; left: 0;" />
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -847,11 +847,11 @@
                                 </svg>
                             </div>
                         </div>
-                        <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+                        <!-- <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
                         <button type="button" onclick="document.getElementById('editDoctorPhoto').click()"
                             class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
                             Choose Photo
-                        </button>
+                        </button> -->
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
@@ -860,12 +860,12 @@
                             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
                     </div>
 
-                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-                    <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
-                   <select id="editDoctorSpecialization" name="specialty"
-            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
-          </select>
-                </div>
+                    <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+                        <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+                        <select id="editDoctorSpecialization" name="specialty"
+                            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+                        </select>
+                    </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
@@ -1657,17 +1657,17 @@
             let currentDoctor = null;
             let currentDoctorId = null;
 
-        async function openAvailabilityModal(doctor) {
-            if (!doctor || !doctor._id) return;
-            currentDoctor = doctor;
-            currentDoctorId = doctor._id;
-            document.getElementById("availabilityModalOverlay").classList.remove("hidden");
-            document.body.classList.add("blurred-bg");
-            document.getElementById("availabilityForm").reset();
-            const today = new Date();
-            availabilityDatePicker.setDate(today, true); 
-            fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
-        }
+            async function openAvailabilityModal(doctor) {
+                if (!doctor || !doctor._id) return;
+                currentDoctor = doctor;
+                currentDoctorId = doctor._id;
+                document.getElementById("availabilityModalOverlay").classList.remove("hidden");
+                document.body.classList.add("blurred-bg");
+                document.getElementById("availabilityForm").reset();
+                const today = new Date();
+                availabilityDatePicker.setDate(today, true);
+                fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
+            }
 
             function closeAvailabilityModal() {
                 document.getElementById("availabilityModalOverlay").classList.add("hidden");
@@ -1680,33 +1680,33 @@
             document.getElementById("cancelAvailability").onclick = closeAvailabilityModal;
             document.getElementById("closeAvailabilityModal").onclick = closeAvailabilityModal;
 
-        const availabilityDateInput = document.getElementById("availabilityDate");
-const availabilityDatePicker = flatpickr(availabilityDateInput, {
-  dateFormat: "Y-m-d",
-  allowInput: false,
-  static: true,
-  defaultDate: new Date(), 
-  onChange: function (selectedDates, dateStr) {
-    fetchAndFillAvailabilityForDate(dateStr);
-  },
-});
+            const availabilityDateInput = document.getElementById("availabilityDate");
+            const availabilityDatePicker = flatpickr(availabilityDateInput, {
+                dateFormat: "Y-m-d",
+                allowInput: false,
+                static: true,
+                defaultDate: new Date(),
+                onChange: function (selectedDates, dateStr) {
+                    fetchAndFillAvailabilityForDate(dateStr);
+                },
+            });
 
-        flatpickr("#availabilityStart", {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "h:i K",
-            time_24hr: false,
-            allowInput: false,
-            static: true,
-        });
-        flatpickr("#availabilityEnd", {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "h:i K",
-            time_24hr: false,
-            allowInput: false,
-            static: true,
-        });
+            flatpickr("#availabilityStart", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "h:i K",
+                time_24hr: false,
+                allowInput: false,
+                static: true,
+            });
+            flatpickr("#availabilityEnd", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "h:i K",
+                time_24hr: false,
+                allowInput: false,
+                static: true,
+            });
 
             async function fetchAndFillAvailabilityForDate(dateStr) {
                 if (!currentDoctorId) return;
@@ -2729,75 +2729,75 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
                 }
             });
 
-        let currentDoctorForEditProfile = null;
-        if (document.getElementById("doctorsList")) {
-            document.getElementById("doctorsList").addEventListener("click", function (e) {
-                if (e.target.classList.contains("edit-doctor-profile-btn")) {
-                    e.preventDefault();
-                    const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
-                    currentDoctorForEditProfile = doctor;
-                    document.getElementById("editDoctorName").value = doctor.name || "";
-                      populateSpecialtyDropdown("editDoctorSpecialization");
-          document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "").toLowerCase();
-                    document.getElementById("editDoctorExperience").value = doctor.experience || "";
-                    document.getElementById("editDoctorQualification").value = doctor.qualification || "";
-                    document.getElementById("editDoctorAvailability").value = doctor.availability || "";
-                    document.getElementById("editDoctorAge").value = doctor.age || "";
-                    document.getElementById("editDoctorGender").value = doctor.gender || "";
-                    document.getElementById("editDoctorPhone").value = doctor.phone || "";
-                    document.getElementById("editDoctorAddress").value = doctor.address || "";
-                    document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
-                    document.body.classList.add("blurred-bg");
-                    e.target.closest(".action-menu").classList.add("hidden");
-                }
-            });
-        }
-        document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
-        document.getElementById("editDoctorProfileModalOverlay").onclick = function (e) {
-            if (e.target === this) closeEditDoctorProfileModal();
-        };
-        function closeEditDoctorProfileModal() {
-            document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
-            document.body.classList.remove("blurred-bg");
-            currentDoctorForEditProfile = null;
-        }
-        document.getElementById("editDoctorForm").onsubmit = async function (e) {
-            e.preventDefault();
-            if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
-                showToast("No doctor selected for editing.", 'warning');
-                return;
-            }
-            const formData = new FormData();
-            formData.append("name", document.getElementById("editDoctorName").value);
-            formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
-            formData.append("experience", document.getElementById("editDoctorExperience").value);
-            formData.append("qualification", document.getElementById("editDoctorQualification").value);
-            formData.append("availability", document.getElementById("editDoctorAvailability").value);
-            formData.append("age", document.getElementById("editDoctorAge").value);
-            formData.append("gender", document.getElementById("editDoctorGender").value);
-            formData.append("phone", document.getElementById("editDoctorPhone").value);
-            formData.append("address", document.getElementById("editDoctorAddress").value);
-            const photoInput = document.getElementById("editDoctorPhoto");
-            if (photoInput.files && photoInput.files[0]) {
-                formData.append("photo", photoInput.files[0]);
-            }
-            try {
-                const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
-                    method: "PUT",
-                    body: formData,
+            let currentDoctorForEditProfile = null;
+            if (document.getElementById("doctorsList")) {
+                document.getElementById("doctorsList").addEventListener("click", function (e) {
+                    if (e.target.classList.contains("edit-doctor-profile-btn")) {
+                        e.preventDefault();
+                        const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
+                        currentDoctorForEditProfile = doctor;
+                        document.getElementById("editDoctorName").value = doctor.name || "";
+                        populateSpecialtyDropdown("editDoctorSpecialization");
+                        document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "");
+                        document.getElementById("editDoctorExperience").value = doctor.experience || "";
+                        document.getElementById("editDoctorQualification").value = doctor.qualification || "";
+                        document.getElementById("editDoctorAvailability").value = doctor.availability || "";
+                        document.getElementById("editDoctorAge").value = doctor.age || "";
+                        document.getElementById("editDoctorGender").value = doctor.gender || "";
+                        document.getElementById("editDoctorPhone").value = doctor.phone || "";
+                        document.getElementById("editDoctorAddress").value = doctor.address || "";
+                        document.getElementById("editDoctorProfileModalOverlay").classList.remove("hidden");
+                        document.body.classList.add("blurred-bg");
+                        e.target.closest(".action-menu").classList.add("hidden");
+                    }
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.error || "Failed to update doctor");
-                }
-                closeEditDoctorProfileModal();
-                await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
-                showToast("Doctor profile updated successfully!", 'success');
-            } catch (err) {
-                console.error("Error updating doctor:", err);
-                showToast("Error updating doctor: " + err.message, 'error');
             }
-        };
+            document.getElementById("closeEditDoctorProfileModal").onclick = closeEditDoctorProfileModal;
+            document.getElementById("editDoctorProfileModalOverlay").onclick = function (e) {
+                if (e.target === this) closeEditDoctorProfileModal();
+            };
+            function closeEditDoctorProfileModal() {
+                document.getElementById("editDoctorProfileModalOverlay").classList.add("hidden");
+                document.body.classList.remove("blurred-bg");
+                currentDoctorForEditProfile = null;
+            }
+            document.getElementById("editDoctorForm").onsubmit = async function (e) {
+                e.preventDefault();
+                if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
+                    showToast("No doctor selected for editing.", 'warning');
+                    return;
+                }
+                const formData = new FormData();
+                formData.append("name", document.getElementById("editDoctorName").value);
+                formData.append("specialty", document.getElementById("editDoctorSpecialization").value);
+                formData.append("experience", document.getElementById("editDoctorExperience").value);
+                formData.append("qualification", document.getElementById("editDoctorQualification").value);
+                formData.append("availability", document.getElementById("editDoctorAvailability").value);
+                formData.append("age", document.getElementById("editDoctorAge").value);
+                formData.append("gender", document.getElementById("editDoctorGender").value);
+                formData.append("phone", document.getElementById("editDoctorPhone").value);
+                formData.append("address", document.getElementById("editDoctorAddress").value);
+                const photoInput = document.getElementById("editDoctorPhoto");
+                if (photoInput.files && photoInput.files[0]) {
+                    formData.append("photo", photoInput.files[0]);
+                }
+                try {
+                    const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
+                        method: "PUT",
+                        body: formData,
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.error || "Failed to update doctor");
+                    }
+                    closeEditDoctorProfileModal();
+                    await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
+                    showToast("Doctor profile updated successfully!", 'success');
+                } catch (err) {
+                    console.error("Error updating doctor:", err);
+                    showToast("Error updating doctor: " + err.message, 'error');
+                }
+            };
 
             document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
                 const file = event.target.files[0];
@@ -3147,10 +3147,10 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
                         formData.append("phone", document.getElementById("editDoctorPhone").value);
                         formData.append("address", document.getElementById("editDoctorAddress").value);
 
-                        const photoInput = document.getElementById("editDoctorPhoto");
-                        if (photoInput.files.length > 0) {
-                            formData.append("photo", photoInput.files[0]);
-                        }
+                        // const photoInput = document.getElementById("editDoctorPhoto");
+                        // if (photoInput.files.length > 0) {
+                        //     formData.append("photo", photoInput.files[0]);
+                        // }
 
                         try {
                             const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
@@ -3173,27 +3173,20 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
                     };
                 }
 
-                if (document.getElementById("editDoctorPhoto")) {
-                    document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                document.getElementById("editDoctorPhotoPreview").src = e.target.result;
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                }
+                // if (document.getElementById("editDoctorPhoto")) {
+                //     document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+                //         const file = event.target.files[0];
+                //         if (file) {
+                //             const reader = new FileReader();
+                //             reader.onload = function (e) {
+                //                 document.getElementById("editDoctorPhotoPreview").src = e.target.result;
+                //             };
+                //             reader.readAsDataURL(file);
+                //         }
+                //     });
+                // }
             });
         </script>
-
-        <input type="file" id="doctorPhotoInput" style="display: none" accept="image/*" />
-        <div id="doctorPhotoModal"
-            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 9999">
-            <img id="doctorPhotoModalImg" src=""
-                style="max-width: 90vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 2px 16px #0008" />
-        </div>
         <script>
             document.getElementById("doctorsList").addEventListener("click", function (e) {
                 if (e.target.closest(".doctor-photo-placeholder")) {
@@ -3202,8 +3195,8 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
                     const idx = photoDiv.getAttribute("data-doctor-index");
                     const doctor = allDoctors[parseInt(idx)];
                     const imgTag = photoDiv.querySelector("img");
-                    const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default-profile.png";
-                    if (imageUrl.includes("default-profile.png")) {
+                    const imageUrl = imgTag ? imgTag.getAttribute("src") : "/default.jpg";
+                    if (imageUrl.includes("default.jpg")) {
                         const fileInput = document.getElementById("doctorPhotoInput");
                         fileInput.value = "";
                         fileInput.onchange = function (event) {
@@ -3412,7 +3405,6 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
                 </div>
             </div>
         </div>
-
         <div id="adminProfileModal"
             class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
@@ -3659,7 +3651,9 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
                                 if (data.admin.username) localStorage.setItem('name', data.admin.username);
                                 if (data.admin.email) localStorage.setItem('email', data.admin.email);
                                 if (data.admin.contact) localStorage.setItem('contact', data.admin.contact);
-
+                                document.getElementById("userName").textContent = newName;
+                                document.getElementById("userAvatar").textContent = getInitials(newName);
+                                adminProfileModal.classList.add('hidden');
                                 let adminsList = [];
                                 try {
                                     adminsList = JSON.parse(localStorage.getItem('adminsList') || '[]');
@@ -3701,43 +3695,43 @@ const availabilityDatePicker = flatpickr(availabilityDateInput, {
             class="fixed bottom-4 right-4 z-50 hidden px-6 py-4 rounded-lg font-semibold text-white bg-green-600 shadow-lg transition-all">
         </div>
 
-    <script>
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'fixed bottom-4 right-20 z-50 px-6 py-4 rounded-lg font-semibold text-white shadow-lg space-y-3 transition-all';
-            toast.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600');
-            toast.classList.remove('hidden');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 2000);
-        }
-    </script>
-      <script>
-    const specialties = [
-      "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
-      "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
-      "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
-      "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
-      "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
-    ];
+        <script>
+            function showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.className = 'fixed bottom-4 right-20 z-50 px-6 py-4 rounded-lg font-semibold text-white shadow-lg space-y-3 transition-all';
+                toast.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600');
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 2000);
+            }
+        </script>
+        <script>
+            const specialties = [
+                "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+                "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+                "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+                "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+                "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+            ];
 
-    function populateSpecialtyDropdown(selectId) {
-      const select = document.getElementById(selectId);
-      if (!select) return;
+            function populateSpecialtyDropdown(selectId) {
+                const select = document.getElementById(selectId);
+                if (!select) return;
 
-      select.innerHTML = "";
+                select.innerHTML = "";
 
-      const defaultOption = document.createElement("option");
-      defaultOption.value = "";
-      defaultOption.textContent = "Select Specialty";
-      defaultOption.disabled = true;
-      defaultOption.selected = true;
-      select.appendChild(defaultOption);
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Select Specialty";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                select.appendChild(defaultOption);
 
       specialties.forEach(spec => {
         const option = document.createElement("option");
-        option.value = spec.toLowerCase();
+        option.value = spec;
         option.textContent = spec;
         select.appendChild(option);
       });
