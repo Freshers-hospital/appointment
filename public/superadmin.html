@@ -196,7 +196,8 @@
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-semibold">Admins List</h3>
 
-              <a href="adminregister.html" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add
+              <a href="adminregister.html"
+                class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add
                 Admin</a>
             </div>
 
@@ -336,33 +337,38 @@
 
   <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
- <div class="mb-6 border-b pb-4">
+      <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Admin Profile</h2>
         <p class="text-sm text-gray-500 mt-1">Detailed administrator information</p>
       </div>
-<div class="grid grid-cols-2 gap-6">
-  <div>
-    <label class="text-sm text-gray-500 mb-1 block">Full Name</label>
-    <div id="viewAdminName" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-</div>
-  </div>
-<div>
-    <label class="text-sm text-gray-500 mb-1 block">Email Address</label>
-    <div id="viewAdminEmail" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900 break-all">-</div>
-  </div>
-<div>
-    <label class="text-sm text-gray-500 mb-1 block">Contact Number</label>
-    <div id="viewAdminContact" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-</div>
-  </div>
-<div>
-    <label class="text-sm text-gray-500 mb-1 block">Account Status</label>
-    <div id="viewAdminStatus" class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">-</div>
-  </div>
-  <div>
-    <label class="text-sm text-gray-500 mb-1 block">Password</label>
-    <div id="viewAdminPassword" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">********</div>
-  </div>
-</div>
-<div class="mt-8 flex justify-end">
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label class="text-sm text-gray-500 mb-1 block">Full Name</label>
+          <div id="viewAdminName" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-
+          </div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-500 mb-1 block">Email Address</label>
+          <div id="viewAdminEmail"
+            class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900 break-all">-</div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-500 mb-1 block">Contact Number</label>
+          <div id="viewAdminContact" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-
+          </div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-500 mb-1 block">Account Status</label>
+          <div id="viewAdminStatus"
+            class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">-</div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-500 mb-1 block">Password</label>
+          <div id="viewAdminPassword" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">
+            ********</div>
+        </div>
+      </div>
+      <div class="mt-8 flex justify-end">
         <button onclick="closeModals()"
           class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md shadow">
           Close
@@ -399,7 +405,25 @@
       </div>
     </div>
   </div>
-
+  <div id="deleteDoctorModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmDeleteDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div id="restoreDoctorModal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmRestoreDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
+      </div>
+    </div>
+  </div>
   <div id="viewDoctorProfileModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
@@ -486,11 +510,11 @@
               </svg>
             </div>
           </div>
-          <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+          <!-- <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
           <button type="button" onclick="document.getElementById('editDoctorPhoto').click()"
             class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
             Choose Photo
-          </button>
+          </button> -->
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Name</label>
@@ -742,7 +766,7 @@
         ${admin.status?.toLowerCase() === 'active'
           ? 'text-green-800 bg-green-100'
           : 'text-red-800 bg-red-100'}">
-        ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
+        ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status?.toLowerCase() === 'inactive' ? 'Inactive' : 'Deleted'}
       </span>
     </div>
     
@@ -786,7 +810,7 @@
         </div>
       ` : `
         <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact ||'-'}" data-status="${admin.status || 'Active'}" " data-password="${admin.decryptedPassword || '********'}""
+      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" " data-password="${admin.decryptedPassword || '********'}""
 
             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
           <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
@@ -838,14 +862,14 @@
 
     window.addEventListener("DOMContentLoaded", fetchAdmins);
 
-function openViewModal(btn) {
-  document.getElementById('viewModal').classList.remove('hidden');
-  document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
-  document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
-  document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
-  document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
-  document.getElementById('viewAdminPassword').textContent = btn.getAttribute('data-password'); 
-}
+    function openViewModal(btn) {
+      document.getElementById('viewModal').classList.remove('hidden');
+      document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
+      document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
+      document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
+      document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
+      document.getElementById('viewAdminPassword').textContent = btn.getAttribute('data-password');
+    }
 
 
     function editAdmin(id) {
@@ -875,8 +899,12 @@ function openViewModal(btn) {
       document.getElementById("viewModal")?.classList.add("hidden");
       document.getElementById("deleteAdminModal")?.classList.add("hidden");
       document.getElementById("restoreAdminModal")?.classList.add("hidden");
+      document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+      document.getElementById("restoreDoctorModal")?.classList.add("hidden");
       selectedAdminId = null;
       selectedRestoreAdminId = null;
+      selectedDoctorId = null;
+      selectedRestoreDoctorId = null;
     }
 
     let allDoctors = [];
@@ -965,20 +993,28 @@ function openViewModal(btn) {
           }
     </div>
     <div>
-      <div class="font-semibold text-gray-800">${doctor.name}</div>
-      <div class="text-xs text-gray-500">${infoLine}</div>
+      <div class="font-semibold text-gray-800 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.name}</div>
+      <div class="text-xs text-gray-500 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${infoLine}</div>
     </div>
   </div>
-  <div class="col-span-2 text-gray-600">${doctor.specialty || "General Medicine"}</div>
-  <div class="col-span-2 text-gray-600">${count}</div>
-  <div class="col-span-3 text-gray-600">${availabilities[idx]}</div>
+  <div class="col-span-2 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
+  <div class="col-span-2 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
+  <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${availabilities[idx]}</div>
   <div class="col-span-2 relative">
     <button class="action-btn text-xl">...</button>
+      ${doctor.isDeleted ? `
+        <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+          <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+        </div>
+      ` : `
+    
     <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
       <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
       <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
       <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+      <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
     </div>
+      `}
   </div>
 </div>
 `;
@@ -1168,6 +1204,80 @@ function openViewModal(btn) {
     }
   </script>
   <script>
+    let selectedDoctorId = null;
+    function openDeleteDoctorModal(doctorId) {
+      selectedDoctorId = doctorId;
+      document.getElementById('deleteDoctorModal').classList.remove('hidden');
+    }
+    async function confirmDeleteDoctor() {
+      if (!selectedDoctorId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to delete admin");
+          showToast(errData.message || "Failed to delete admin", "error")
+        }
+        showToast("Doctor deleted successfully", "success");
+        document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+        closeModals();
+        fetchAndDisplayDoctors();
+      } catch (err) {
+        showToast("Delete failed: " + err.message, "error")
+      }
+    }
+  </script>
+  <script>
+    let selectedRestoreDoctorId = null;
+    function openRestoreDoctorModal(doctorId) {
+      selectedRestoreDoctorId = doctorId;
+      document.getElementById('restoreDoctorModal').classList.remove('hidden');
+    }
+    async function confirmRestoreDoctor() {
+      if (!selectedRestoreDoctorId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error")
+        return;
+      }
+      try {
+        const res = await fetch(`/api/doctors/${selectedRestoreDoctorId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ doctorId: selectedRestoreDoctorId, isDeleted: false }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to restore admin");
+          showToast(errData.message || "Failed to restore admin", "error")
+        }
+        showToast('Doctor restored successfully', "success")
+        document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+        fetchAndDisplayDoctors();
+      } catch (err) {
+        showToast("Restore failed: " + err.message, "error")
+      }
+    }
+  </script>
+  <script>
     document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
       const id = window.currentEditingAdminId;
       const name = document.getElementById("editName").value.trim();
@@ -1340,10 +1450,10 @@ function openViewModal(btn) {
         formData.append("gender", document.getElementById("editDoctorGender").value);
         formData.append("phone", document.getElementById("editDoctorPhone").value);
         formData.append("address", document.getElementById("editDoctorAddress").value);
-        const photoInput = document.getElementById("editDoctorPhoto");
-        if (photoInput.files && photoInput.files[0]) {
-          formData.append("photo", photoInput.files[0]);
-        }
+        // const photoInput = document.getElementById("editDoctorPhoto");
+        // if (photoInput.files && photoInput.files[0]) {
+        //   formData.append("photo", photoInput.files[0]);
+        // }
         try {
           const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
             method: "PUT",
@@ -1361,24 +1471,24 @@ function openViewModal(btn) {
           showToast("Error updating doctor: " + err.message, "error")
         }
       };
-      document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
-        const file = event.target.files[0];
-        const photoPreview = document.getElementById("editDoctorPhotoPreview");
-        const defaultIcon = document.getElementById("editDoctorDefaultIcon");
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            photoPreview.src = e.target.result;
-            photoPreview.style.display = "block";
-            defaultIcon.style.display = "none";
-          };
-          reader.readAsDataURL(file);
-        } else {
-          photoPreview.src = "";
-          photoPreview.style.display = "none";
-          defaultIcon.style.display = "flex";
-        }
-      });
+      // document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+      //   const file = event.target.files[0];
+      //   const photoPreview = document.getElementById("editDoctorPhotoPreview");
+      //   const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+      //   if (file) {
+      //     const reader = new FileReader();
+      //     reader.onload = function (e) {
+      //       photoPreview.src = e.target.result;
+      //       photoPreview.style.display = "block";
+      //       defaultIcon.style.display = "none";
+      //     };
+      //     reader.readAsDataURL(file);
+      //   } else {
+      //     photoPreview.src = "";
+      //     photoPreview.style.display = "none";
+      //     defaultIcon.style.display = "flex";
+      //   }
+      // });
       let currentDoctorId = null;
       document.addEventListener("click", function (e) {
         if (e.target.classList.contains("manage-availability-btn")) {
@@ -1579,7 +1689,7 @@ function openViewModal(btn) {
       if (parts.length === 1) return parts[0][0].toUpperCase();
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
-    const AdminName = localStorage.getItem("name") || "superadmin";
+    const AdminName = localStorage.getItem("name");
     document.getElementById("userName").textContent = userName;
     document.getElementById("userAvatar").textContent = getInitials(userName);
   </script>
@@ -1830,8 +1940,30 @@ function openViewModal(btn) {
       });
     }
 
-    if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
-    if (closeBtn2) closeBtn2.onclick = () => modal.classList.add('hidden');
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        modal.classList.add('hidden');
+        resetModal();
+      };
+    } if (closeBtn2) {
+      closeBtn2.onclick = () => {
+        modal.classList.add('hidden');
+        resetModal();
+      };
+    }
+    function resetModal() {
+      name.readOnly = true;
+      nameTop.readOnly = true;
+      email.readOnly = true;
+      contact.readOnly = true;
+      joined.disabled = true;
+      editActions.classList.add('hidden');
+      editBtn.disabled = false;
+      name.value = origName;
+      nameTop.value = origName;
+      email.value = origEmail;
+      contact.value = origContact;
+    }
 
     if (editBtn) {
       editBtn.onclick = () => {
@@ -1888,6 +2020,12 @@ function openViewModal(btn) {
 
           if (res.ok) {
             showToast('Profile updated successfully!', 'success');
+            resetModal();
+            localStorage.setItem('name', newName);
+            localStorage.setItem('email', newEmail);
+            localStorage.setItem('contact', newContact);
+            document.getElementById("userName").textContent = newName;
+            document.getElementById("userAvatar").textContent = getInitials(newName);
             modal.classList.add('hidden');
           } else {
             showToast('Update failed.', 'error');
@@ -1914,12 +2052,6 @@ function openViewModal(btn) {
         eyeOpen.classList.add("hidden");
         eyeSlash.classList.remove("hidden");
       }
-    }
-  </script>
-  <script>
-    const role = localStorage.getItem('role');
-    if (role !== '0') {
-      window.location.href = "login.html";
     }
   </script>
 </body>

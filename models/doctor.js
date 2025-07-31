@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const doctorSchema = new mongoose.Schema({
@@ -19,10 +18,8 @@ const doctorSchema = new mongoose.Schema({
   age: { type: Number },
   gender: { type: String },
   phone: { type: String },
-  address: { type: String }
+  address: { type: String },
+  isDeleted: { type: Boolean, default: false }
 }, { timestamps: true });
-
 doctorSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
-
 module.exports = mongoose.model('Doctor', doctorSchema);
-
