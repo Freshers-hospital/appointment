@@ -105,6 +105,6 @@ router.put("/:doctorId", upload.single("photo"), async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Failed to update doctor" });
     }
-});
+})
 
 module.exports = router;
