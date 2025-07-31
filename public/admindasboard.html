@@ -807,7 +807,7 @@
 
                 <div class="flex justify-center mt-6">
                     <button id="closeViewDoctorProfileBtn"
-                        class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Close</button>
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Close</button>
                 </div>
             </div>
         </div>
@@ -902,7 +902,7 @@
                         <input type="tel" id="editDoctorPhone" name="phone"
                             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500"
                             pattern="^[6-9][0-9]{9}$" maxlength="10"
-                            title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
+                            title="Phone number must be 10 digits and start with 6, 7, 8, or 9." >
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
@@ -3453,10 +3453,11 @@
                         </div>
                     </div>
                     <div id="editProfileActions" class="flex gap-3 mt-6 hidden">
+                         <button id="cancelProfileBtn"
+                            class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
                         <button id="saveProfileBtn"
                             class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
-                        <button id="cancelProfileBtn"
-                            class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
+                       
                     </div>
                 </div>
                 <div class="flex justify-end mt-8">
