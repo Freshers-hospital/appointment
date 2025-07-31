@@ -23,33 +23,33 @@ router.post('/registerAsSuperadmin', async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    try {
-        const { username, email, password, contact } = req.body;
-        if (!username || !email || !password || !contact) {
-            return res.status(400).json({ error: "All fields are required" });
-        }
-
-        const exists = await Admin.findOne({ email });
-        if (exists) return res.status(400).json({ error: "Email already registered" });
-
-      
-        const encryptedPassword = encrypt(password);
-
-        const admin = new Admin({
-            username,
-            email,
-            password, 
-            encryptedPassword, 
-            role: 1,
-            contact,
-        });
-
-        await admin.save();
-
-        res.status(201).json({ message: "Admin registered successfully" });
-    } catch (err) {
-        res.status(400).json({ error: err.message });
+  try {
+    const { username, email, password, contact } = req.body;
+    if (!username || !email || !password || !contact) {
+      return res.status(400).json({ error: "All fields are required" });
     }
+
+    const exists = await Admin.findOne({ email });
+    if (exists) return res.status(400).json({ error: "Email already registered" });
+
+
+    const encryptedPassword = encrypt(password);
+
+    const admin = new Admin({
+      username,
+      email,
+      password,
+      encryptedPassword,
+      role: 1,
+      contact,
+    });
+
+    await admin.save();
+
+    res.status(201).json({ message: "Admin registered successfully" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
 router.post('/login', async (req, res) => {
@@ -58,6 +58,8 @@ router.post('/login', async (req, res) => {
     let admin;
     if (email.includes('@')) {
       admin = await Admin.findOne({ email });
+    } else {
+      admin = await Admin.findOne({ username: email });
     }
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
     if (admin.isDeleted) return res.status(401).json({ error: 'Account has been deleted' });
@@ -121,8 +123,8 @@ function authMiddleware(req, res, next) {
 const { decrypt } = require("../utils/encryption");
 
 router.get("/getAllAdmins", async (req, res) => {
-    try {
-        const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
+  try {
+    const admins = await Admin.find({ role: 1 }).sort({ isDeleted: 1, updatedAt: -1 });
 
     const adminsWithPasswords = admins.map(admin => {
       const decryptedPassword = admin.encryptedPassword
@@ -131,7 +133,7 @@ router.get("/getAllAdmins", async (req, res) => {
 
       return {
         ...admin.toObject(),
-        decryptedPassword           
+        decryptedPassword
       };
     });
 
@@ -161,21 +163,21 @@ router.put('/updateAdmin/:id', async (req, res) => {
     const { id } = req.params;
     const updateData = { ...req.body };
 
-        if (updateData.password && updateData.password.trim() !== "") {
-            const hashed = await bcrypt.hash(updateData.password, 10);
-            updateData.password = hashed;
-            updateData.encryptedPassword = encrypt(req.body.password); 
-        } else {
-            delete updateData.password;
-        }
-
-        const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
-        if (!admin) return res.status(404).json({ message: "Admin not found" });
-
-        res.json({ message: "Admin updated successfully", admin });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (updateData.password && updateData.password.trim() !== "") {
+      const hashed = await bcrypt.hash(updateData.password, 10);
+      updateData.password = hashed;
+      updateData.encryptedPassword = encrypt(req.body.password);
+    } else {
+      delete updateData.password;
     }
+
+    const admin = await Admin.findOneAndUpdate({ _id: id }, updateData, { new: true });
+    if (!admin) return res.status(404).json({ message: "Admin not found" });
+
+    res.json({ message: "Admin updated successfully", admin });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 router.put('/deleteAdmin/:id', authMiddleware, async (req, res) => {
