@@ -301,8 +301,9 @@
                                 </a>
                             </li>
                             <li>
-                                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
+                                <button onclick="showLogoutModal()"
                                     class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
+
                                     <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -902,7 +903,7 @@
                         <input type="tel" id="editDoctorPhone" name="phone"
                             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500"
                             pattern="^[6-9][0-9]{9}$" maxlength="10"
-                            title="Phone number must be 10 digits and start with 6, 7, 8, or 9." >
+                            title="Phone number must be 10 digits and start with 6, 7, 8, or 9.">
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
@@ -3333,14 +3334,22 @@
             });
         </script>
         <script>
+            function showLogoutModal() {
+                document.getElementById("logoutModal")?.classList.remove("hidden");
+                document.getElementById("blurredBg")?.classList.remove("hidden");
+
+            }
+
             function closeModals() {
                 document.getElementById("logoutModal")?.classList.add("hidden");
                 document.getElementById("deleteDoctorModal")?.classList.add("hidden");
                 document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+                document.getElementById("blurredBg")?.classList.add("hidden");
                 selectedDoctorId = null;
                 selectedRestoreDoctorId = null;
             }
         </script>
+
         <script>
             function getInitials(name) {
                 if (!name) return "";
@@ -3373,6 +3382,9 @@
                 }
             };
         </script>
+
+        <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"></div>
+
         <div id="deleteDoctorModal"
             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -3395,6 +3407,7 @@
                 </div>
             </div>
         </div>
+        <div id="blurredBg" class="fixed inset-0 bg-white/30 backdrop-blur-sm hidden z-40"></div>
         <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
             <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
                 <h2 class="text-xl font-semibold mb-4">Logout</h2>
@@ -3406,7 +3419,7 @@
             </div>
         </div>
         <div id="adminProfileModal"
-            class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+            class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
                 <button id="closeAdminProfileModal"
                     class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
@@ -3453,11 +3466,11 @@
                         </div>
                     </div>
                     <div id="editProfileActions" class="flex gap-3 mt-6 hidden">
-                         <button id="cancelProfileBtn"
+                        <button id="cancelProfileBtn"
                             class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
                         <button id="saveProfileBtn"
                             class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
-                       
+
                     </div>
                 </div>
                 <div class="flex justify-end mt-8">
@@ -3729,22 +3742,28 @@
                 defaultOption.selected = true;
                 select.appendChild(defaultOption);
 
-      specialties.forEach(spec => {
-        const option = document.createElement("option");
-        option.value = spec;
-        option.textContent = spec;
-        select.appendChild(option);
-      });
-    }
-    populateSpecialtyDropdown("doctorSpecialty");
-    populateSpecialtyDropdown("addDoctorSpecialization");
-    populateSpecialtyDropdown("editDoctorSpecialization");
-  </script>
-<script>
+                specialties.forEach(spec => {
+                    const option = document.createElement("option");
+                    option.value = spec;
+                    option.textContent = spec;
+                    select.appendChild(option);
+                });
+            }
+            populateSpecialtyDropdown("doctorSpecialty");
+            populateSpecialtyDropdown("addDoctorSpecialization");
+            populateSpecialtyDropdown("editDoctorSpecialization");
+        </script>
+        <script>
+            document.addEventListener("click", function () {
+                document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+            });
+
             let selectedDoctorId = null;
             function openDeleteDoctorModal(doctorId) {
                 selectedDoctorId = doctorId;
                 document.getElementById('deleteDoctorModal').classList.remove('hidden');
+                document.getElementById('blurredBg').classList.remove('hidden');
+                e.target.closest(".action-menu").classList.add("hidden");
             }
             async function confirmDeleteDoctor() {
                 if (!selectedDoctorId) return;
@@ -3770,8 +3789,10 @@
                     }
                     showToast("Doctor deleted successfully", "success");
                     document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+                    document.getElementById("blurredBg")?.classList.add("hidden");
                     closeModals();
                     fetchAndDisplayDoctors();
+
                 } catch (err) {
                     showToast("Delete failed: " + err.message, "error")
                 }
@@ -3782,6 +3803,8 @@
             function openRestoreDoctorModal(doctorId) {
                 selectedRestoreDoctorId = doctorId;
                 document.getElementById('restoreDoctorModal').classList.remove('hidden');
+                document.getElementById('blurredBg').classList.remove('hidden');
+                e.target.closest(".action-menu").classList.add("hidden");
             }
             async function confirmRestoreDoctor() {
                 if (!selectedRestoreDoctorId) return;
@@ -3805,9 +3828,11 @@
                         throw new Error(errData.message || "Failed to restore admin");
                         showToast(errData.message || "Failed to restore admin", "error")
                     }
-                    showToast('Doctor restored successfully', "success")
+                    showToast('Doctor restored successfully', "success");
                     document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+                    document.getElementById("blurredBg")?.classList.add("hidden");
                     fetchAndDisplayDoctors();
+
                 } catch (err) {
                     showToast("Restore failed: " + err.message, "error")
                 }
