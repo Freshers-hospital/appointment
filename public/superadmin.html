@@ -589,15 +589,36 @@
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">Start Time</p>
-          <input type="text" id="availabilityStart" name="start"
+          <select id="availabilityStart" name="start"
             class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="10:00 AM" required />
+            required>
+          
+            <option value="9:00 AM">9:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+          </select>
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">End Time</p>
-          <input type="text" id="availabilityEnd" name="end"
+          <select id="availabilityEnd" name="end"
             class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="05:00 PM" required />
+            required>
+            <option value="9:00 AM">9:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+          </select>
         </div>
         <div class="col-span-2 flex justify-center gap-4 mt-4">
           <button type="button" id="cancelAvailability"
@@ -1522,30 +1543,39 @@
         },
       });
 
-      flatpickr("#availabilityStart", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "h:i K",
-        time_24hr: false,
-        allowInput: false,
-        static: true,
-      });
-      flatpickr("#availabilityEnd", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "h:i K",
-        time_24hr: false,
-        allowInput: false,
-        static: true,
-      });
+      
       async function fetchAndFillAvailabilityForDate(dateStr) {
         if (!currentDoctorId) return;
         try {
           const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
           if (res.ok) {
             const data = await res.json();
-            document.getElementById("availabilityStart").value = data.start || "";
-            document.getElementById("availabilityEnd").value = data.end || "";
+            const startSelect = document.getElementById("availabilityStart");
+            const endSelect = document.getElementById("availabilityEnd");
+            
+            
+            if (data.start) {
+              const startOption = Array.from(startSelect.options).find(option => option.value === data.start);
+              if (startOption) {
+                startSelect.value = data.start;
+              } else {
+                startSelect.value = "";
+              }
+            } else {
+              startSelect.value = "";
+            }
+            
+            
+            if (data.end) {
+              const endOption = Array.from(endSelect.options).find(option => option.value === data.end);
+              if (endOption) {
+                endSelect.value = data.end;
+              } else {
+                endSelect.value = "";
+              }
+            } else {
+              endSelect.value = "";
+            }
           } else {
             document.getElementById("availabilityStart").value = "";
             document.getElementById("availabilityEnd").value = "";
