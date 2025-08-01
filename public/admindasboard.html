@@ -409,11 +409,11 @@
                     <div
                         class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                         <div class="col-span-3">Doctor</div>
-                        <div class="col-span-2">Specialization</div>
+                        <div class="col-span-3">Specialization</div>
 
-                        <div class="col-span-2">Today's Appointments</div>
+                        <div class="col-span-3">Today's Appointments</div>
                         <div class="col-span-3">Availability</div>
-                        <div class="col-span-2">Actions</div>
+                        <!-- <div class="col-span-2">Actions</div> -->
                     </div>
 
                     <div id="doctorsList" class="space-y-2 mt-2"></div>
@@ -2449,27 +2449,29 @@
       <div class="text-xs text-gray-500 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${infoLine}</div>
     </div>
   </div>
-  <div class="col-span-2 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
-  <div class="col-span-2 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
+  <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
+  <div class="col-span-3 text-gray-600 ml-16  ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${availabilities[idx]}</div>
-  <div class="col-span-2 relative">
-    <button class="action-btn text-xl">...</button>
-  ${doctor.isDeleted ? `
-        <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-          <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
-        </div>
-      ` : `
-    
-    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-      <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
-      <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
-      <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
-      <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-    </div>
-      `}
-  </div>
+  
 </div>
 `;
+
+// <div class="col-span-2 relative">
+//     <button class="action-btn text-xl">...</button>
+//   ${doctor.isDeleted ? `
+//         <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+//           <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+//         </div>
+//       ` : `
+    
+//     <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+//       <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
+//       <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
+//       <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+//       <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+//     </div>
+//       `}
+//   </div>
                     document.querySelectorAll('.manage-availability-btn').forEach(button => {
                         button.addEventListener('click', function (e) {
                             e.preventDefault();
