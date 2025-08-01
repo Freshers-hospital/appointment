@@ -592,16 +592,7 @@
           <select id="availabilityStart" name="start"
             class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
             required>
-          
-            <option value="9:00 AM">9:00 AM</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="12:00 PM">12:00 PM</option>
-            <option value="1:00 PM">1:00 PM</option>
-            <option value="2:00 PM">2:00 PM</option>
-            <option value="3:00 PM">3:00 PM</option>
-            <option value="4:00 PM">4:00 PM</option>
-            <option value="5:00 PM">5:00 PM</option>
+            <option value="">Select Start Time</option>
           </select>
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -609,15 +600,7 @@
           <select id="availabilityEnd" name="end"
             class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
             required>
-            <option value="9:00 AM">9:00 AM</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="12:00 PM">12:00 PM</option>
-            <option value="1:00 PM">1:00 PM</option>
-            <option value="2:00 PM">2:00 PM</option>
-            <option value="3:00 PM">3:00 PM</option>
-            <option value="4:00 PM">4:00 PM</option>
-            <option value="5:00 PM">5:00 PM</option>
+            <option value="">Select End Time</option>
           </select>
         </div>
         <div class="col-span-2 flex justify-center gap-4 mt-4">
@@ -1531,7 +1514,67 @@
         document.body.classList.remove("blurred-bg");
         currentDoctorId = null;
         document.getElementById("availabilityForm").reset();
+      -
+        populateStartTimeDropdown();
+        populateEndTimeDropdown("");
       }
+      
+      const timeSlots = [
+      "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+      "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
+      ];
+
+      
+      function populateStartTimeDropdown() {
+        const startSelect = document.getElementById("availabilityStart");
+        if (!startSelect) return;
+        
+        startSelect.innerHTML = '';
+        timeSlots.forEach(time => {
+          const option = document.createElement("option");
+          option.value = time;
+          option.textContent = time;
+          startSelect.appendChild(option);
+        });
+      }
+
+      
+      function populateEndTimeDropdown(selectedStartTime) {
+        const endSelect = document.getElementById("availabilityEnd");
+        if (!endSelect) return;
+        
+        endSelect.innerHTML = '';
+        
+        if (!selectedStartTime) return;
+        
+        
+        const startIndex = timeSlots.indexOf(selectedStartTime);
+        if (startIndex === -1) return;
+        
+        
+        for (let i = startIndex + 1; i < timeSlots.length; i++) {
+          const option = document.createElement("option");
+          option.value = timeSlots[i];
+          option.textContent = timeSlots[i];
+          endSelect.appendChild(option);
+        }
+      }
+
+      
+      document.addEventListener('change', function(e) {
+        if (e.target.id === 'availabilityStart') {
+          populateEndTimeDropdown(e.target.value);
+          
+          document.getElementById("availabilityEnd").value = "";
+        }
+      });
+
+    
+      document.addEventListener('DOMContentLoaded', function() {
+        populateStartTimeDropdown();
+        populateEndTimeDropdown("");
+      });
+
       const availabilityDateInput = document.getElementById("availabilityDate");
       const availabilityDatePicker = flatpickr(availabilityDateInput, {
         dateFormat: "Y-m-d",
@@ -1546,43 +1589,40 @@
       
       async function fetchAndFillAvailabilityForDate(dateStr) {
         if (!currentDoctorId) return;
+        
+        
+        populateStartTimeDropdown();
+        
         try {
           const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
           if (res.ok) {
             const data = await res.json();
-            const startSelect = document.getElementById("availabilityStart");
-            const endSelect = document.getElementById("availabilityEnd");
-            
             
             if (data.start) {
-              const startOption = Array.from(startSelect.options).find(option => option.value === data.start);
-              if (startOption) {
-                startSelect.value = data.start;
-              } else {
-                startSelect.value = "";
+            
+              document.getElementById("availabilityStart").value = data.start;
+              populateEndTimeDropdown(data.start);
+              
+              if (data.end) {
+                document.getElementById("availabilityEnd").value = data.end;
               }
             } else {
-              startSelect.value = "";
-            }
+              document.getElementById("availabilityStart").value = "";
+              document.getElementById("availabilityEnd").value = "";
             
-            
-            if (data.end) {
-              const endOption = Array.from(endSelect.options).find(option => option.value === data.end);
-              if (endOption) {
-                endSelect.value = data.end;
-              } else {
-                endSelect.value = "";
-              }
-            } else {
-              endSelect.value = "";
+              populateEndTimeDropdown("");
             }
           } else {
             document.getElementById("availabilityStart").value = "";
             document.getElementById("availabilityEnd").value = "";
+            
+            populateEndTimeDropdown("");
           }
         } catch (err) {
           document.getElementById("availabilityStart").value = "";
           document.getElementById("availabilityEnd").value = "";
+          
+          populateEndTimeDropdown("");
         }
       }
       document.getElementById("availabilityForm").onsubmit = async function (e) {
