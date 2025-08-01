@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -195,7 +196,8 @@
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-semibold">Admins List</h3>
 
-             <button id="openAdminModal" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
+              <button id="openAdminModal"
+                class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
 
             </div>
 
@@ -554,7 +556,7 @@
           <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
           <input type="tel" id="editDoctorPhone" name="phone"
             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" pattern="^[6-9][0-9]{9}$"
-            maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9." >
+            maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9.">
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
@@ -717,7 +719,7 @@
       adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
 
       try {
-        const res = await fetch("/api/admin/getAllAdmins");
+        const res = await fetch("/api/superadmin/getAllAdmins");
 
         const admins = await res.json();
         if (!admins.length) {
@@ -1142,7 +1144,7 @@
       }
 
       try {
-        const res = await fetch(`/api/admin/deleteAdmin/${selectedAdminId}`, {
+        const res = await fetch(`/api/superadmin/deleteAdmin/${selectedAdminId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1179,7 +1181,7 @@
         return;
       }
       try {
-        const res = await fetch(`/api/admin/updateAdmin/${selectedRestoreAdminId}`, {
+        const res = await fetch(`/api/superadmin/updateAdmin/${selectedRestoreAdminId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1296,7 +1298,7 @@
       }
 
       try {
-        const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        const res = await fetch(`/api/superadmin/updateAdmin/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1710,7 +1712,7 @@
     async function logout() {
       try {
         const token = localStorage.getItem('admin_jwt');
-        const res = await fetch("/api/admin/logout", {
+        const res = await fetch("/api/superadmin/logout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token }),
@@ -1756,7 +1758,6 @@
           ${svg}
           <span>${message}</span>
         </div>
-       
       `;
       document.getElementById("toast-container").appendChild(toast);
 
@@ -1778,28 +1779,28 @@
     ];
 
     function populateSpecialtyDropdown(selectId) {
-  const select = document.getElementById(selectId);
-  if (!select) return;
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-  select.innerHTML = "";
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "Select Specialty";
-  defaultOption.disabled = true;
-  defaultOption.selected = true;
-  select.appendChild(defaultOption);
-  specialties.forEach(spec => {
-    const option = document.createElement("option");
-    option.value = spec; 
-    option.textContent = spec;
-    select.appendChild(option);
-  });
-}
+      select.innerHTML = "";
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "Select Specialty";
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      select.appendChild(defaultOption);
+      specialties.forEach(spec => {
+        const option = document.createElement("option");
+        option.value = spec;
+        option.textContent = spec;
+        select.appendChild(option);
+      });
+    }
     populateSpecialtyDropdown("doctorSpecialty");
     populateSpecialtyDropdown("addDoctorSpecialization");
     populateSpecialtyDropdown("editDoctorSpecialization");
   </script>
-<div id="superAdminProfileModal"
+  <div id="superAdminProfileModal"
     class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
       <button id="closeSuperAdminProfileModal"
@@ -1845,10 +1846,10 @@
           </div>
         </div>
         <div id="editSuperAdminProfileActions" class="flex gap-3 mt-6 hidden">
-          
+
           <button id="cancelSuperAdminProfileBtn"
             class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
-            <button id="saveSuperAdminProfileBtn"
+          <button id="saveSuperAdminProfileBtn"
             class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
         </div>
       </div>
@@ -1910,7 +1911,7 @@
 
         try {
           const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/getAdminProfile', {
+          const res = await fetch('/api/superadmin/getAdminProfile', {
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
@@ -2003,7 +2004,7 @@
         }
         try {
           const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/updateProfile', {
+          const res = await fetch('/api/superadmin/updateProfile', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -2049,90 +2050,96 @@
     }
   </script>
   <div id="adminModalOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-  <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
-    <button id="closeAdminModal" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
-    <div class="flex flex-col items-center mb-4">
-      <div class="bg-blue-500 rounded-full p-3 mb-2">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
+    <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+      <button id="closeAdminModal" class="absolute top-1 right-3 text-gray-500 hover:text-black" style="font-size:24px;">&times;</button>
+      <div class="flex flex-col items-center mb-4">
+        <div class="bg-blue-500 rounded-full p-3 mb-2">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-semibold">Admin Registration</h2>
       </div>
-      <h2 class="text-xl font-semibold">Admin Registration</h2>
+      <form id="adminRegForm" autocomplete="off" novalidate>
+        <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg"
+          required />
+        <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
+        <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+          class="w-full px-4 py-2 mb-3 border rounded-lg"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+          required />
+        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg"
+          required />
+        <input type="password" name="confirmPassword" placeholder="Confirm Password"
+          class="w-full px-4 py-2 mb-4 border rounded-lg" required />
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
+      </form>
     </div>
-    <form id="adminRegForm" autocomplete="off" novalidate>
-      <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-      <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-      <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
-        class="w-full px-4 py-2 mb-3 border rounded-lg"
-        oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);" required />
-      <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-      <input type="password" name="confirmPassword" placeholder="Confirm Password" class="w-full px-4 py-2 mb-4 border rounded-lg" required />
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
-    </form>
   </div>
-</div>
-<script>
-  document.getElementById("openAdminModal").addEventListener("click", () => {
-    document.getElementById("adminModalOverlay").classList.remove("hidden");
-  });
+  <script>
+    document.getElementById("openAdminModal").addEventListener("click", () => {
+      document.getElementById("adminModalOverlay").classList.remove("hidden");
+    });
 
-  document.getElementById("closeAdminModal").addEventListener("click", () => {
-    document.getElementById("adminModalOverlay").classList.add("hidden");
-  });
-  document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const form = e.target;
-    const username = form.username.value.trim();
-    const email = form.email.value.trim();
-    const contact = form.contact.value.trim();
-    const password = form.password.value;
-    const confirmPassword = form.confirmPassword.value;
+    document.getElementById("closeAdminModal").addEventListener("click", () => {
+      document.getElementById("adminModalOverlay").classList.add("hidden");
+    });
+    document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const username = form.username.value.trim();
+      const email = form.email.value.trim();
+      const contact = form.contact.value.trim();
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
 
-    if (!username || !email || !password || !confirmPassword || !contact) {
-      showToast("Please fill in all fields.", "warning");
-      return;
-    }
-
-    const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
-    if (!emailPattern.test(email)) {
-      showToast("Enter a valid email with at least one letter and one number.", "warning");
-      return;
-    }
-
-    if (password.length < 6) {
-      showToast("Password must be at least 6 characters.", "warning");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      showToast("Passwords do not match.", "error");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/admin/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, contact }),
-      });
-
-      if (res.ok) {
-        showToast("Registration successful!", "success");
-        setTimeout(() => {
-          document.getElementById("adminModalOverlay").classList.add("hidden");
-          form.reset();
-    
-        }, 1000);
-      } else {
-        const err = await res.json();
-        showToast(err.error || "Registration failed", "error");
+      if (!username || !email || !password || !confirmPassword || !contact) {
+        showToast("Please fill in all fields.", "warning");
+        return;
       }
-    } catch (err) {
-      showToast("Error: " + err.message, "error");
-    }
-  });
-</script>
+
+      const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        showToast("Enter a valid email with at least one letter and one number.", "warning");
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast("Password must be at least 6 characters.", "warning");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast("Passwords do not match.", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password, contact }),
+        });
+
+        if (res.ok) {
+          showToast("Registration successful!", "success");
+          setTimeout(() => {
+            document.getElementById("adminModalOverlay").classList.add("hidden");
+            form.reset();
+            fetchAdmins();
+
+          }, 1000);
+        } else {
+          const err = await res.json();
+          showToast(err.error || "Registration failed", "error");
+        }
+      } catch (err) {
+        showToast("Error: " + err.message, "error");
+      }
+    });
+  </script>
 
 </body>
 
