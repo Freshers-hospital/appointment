@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -149,8 +150,8 @@
                 </a>
               </li>
               <li>
-                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
-                  class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
+                 <button onclick="showLogoutModal()"
+                   class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
                   <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
@@ -195,7 +196,8 @@
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-semibold">Admins List</h3>
 
-             <button id="openAdminModal" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
+              <button id="openAdminModal"
+                class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
 
             </div>
 
@@ -259,7 +261,7 @@
   </div>
   </div>
 
-  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50 hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Edit Admin</h2>
@@ -333,7 +335,8 @@
   </div>
 
 
-  <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
+  <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 backdrop-blur-lg flex items-center justify-center hidden">
+
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Admin Profile</h2>
@@ -375,17 +378,18 @@
     </div>
   </div>
 
-  <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <h2 class="text-xl font-semibold mb-4">Logout</h2>
-      <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
-      </div>
-    </div>
-  </div>
-  <div id="deleteAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div id="blurredBg" class="fixed inset-0 bg-white/30 bg-opacity-30 backdrop-blur-md hidden z-40"></div>
+        <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+                <h2 class="text-xl font-semibold mb-4">Logout</h2>
+                <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
+                </div>
+            </div>
+        </div>
+  <div id="deleteAdminModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
       <div class="flex justify-center gap-4">
@@ -394,7 +398,7 @@
       </div>
     </div>
   </div>
-  <div id="restoreAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div id="restoreAdminModal" class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
       <div class="flex justify-center gap-4">
@@ -403,27 +407,32 @@
       </div>
     </div>
   </div>
-  <div id="deleteDoctorModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmDeleteDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
-      </div>
-    </div>
-  </div>
-  <div id="restoreDoctorModal"
-    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmRestoreDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
-      </div>
-    </div>
-  </div>
+  <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md z-40"></div>
+
+        <div id="deleteDoctorModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+                <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button onclick="confirmDeleteDoctor()"
+                        class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div id="restoreDoctorModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+                <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button onclick="confirmRestoreDoctor()"
+                        class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
+                </div>
+            </div>
+        </div>
   <div id="viewDoctorProfileModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
       <div class="sm:col-span-2 flex flex-col items-center mb-2">
@@ -478,7 +487,7 @@
     </div>
   </div>
   <div id="editDoctorProfileModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg max-h-screen overflow-y-auto relative">
       <button id="closeEditDoctorProfileModal"
         class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
@@ -554,7 +563,7 @@
           <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
           <input type="tel" id="editDoctorPhone" name="phone"
             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" pattern="^[6-9][0-9]{9}$"
-            maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9." >
+            maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9.">
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
@@ -576,7 +585,7 @@
     </div>
   </div>
   <div id="availabilityModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
       <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
@@ -615,7 +624,7 @@
     </div>
   </div>
   <div id="addDoctorModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
 
       <button id="closeAddDoctorModal"
@@ -721,7 +730,7 @@
       adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
 
       try {
-        const res = await fetch("/api/admin/getAllAdmins");
+        const res = await fetch("/api/superadmin/getAllAdmins");
 
         const admins = await res.json();
         if (!admins.length) {
@@ -893,6 +902,11 @@
     let currentDeleteId = null;
 
 
+   function showLogoutModal() {
+        document.getElementById("logoutModal")?.classList.remove("hidden");
+        document.getElementById("blurredBg")?.classList.remove("hidden");
+        
+    }
 
     function closeModals() {
       document.getElementById("editModal")?.classList.add("hidden");
@@ -903,6 +917,7 @@
       document.getElementById("restoreAdminModal")?.classList.add("hidden");
       document.getElementById("deleteDoctorModal")?.classList.add("hidden");
       document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+       document.getElementById("blurredBg")?.classList.add("hidden");
       selectedAdminId = null;
       selectedRestoreAdminId = null;
       selectedDoctorId = null;
@@ -1146,7 +1161,7 @@
       }
 
       try {
-        const res = await fetch(`/api/admin/deleteAdmin/${selectedAdminId}`, {
+        const res = await fetch(`/api/superadmin/deleteAdmin/${selectedAdminId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1183,7 +1198,7 @@
         return;
       }
       try {
-        const res = await fetch(`/api/admin/updateAdmin/${selectedRestoreAdminId}`, {
+        const res = await fetch(`/api/superadmin/updateAdmin/${selectedRestoreAdminId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1206,79 +1221,84 @@
     }
   </script>
   <script>
-    let selectedDoctorId = null;
-    function openDeleteDoctorModal(doctorId) {
-      selectedDoctorId = doctorId;
-      document.getElementById('deleteDoctorModal').classList.remove('hidden');
-    }
-    async function confirmDeleteDoctor() {
-      if (!selectedDoctorId) return;
-      const token = localStorage.getItem("admin_jwt");
-      if (!token) {
-        showToast("You are not authorized. Please log in again.", "error");
-        return;
-      }
+            let selectedDoctorId = null;
+            function openDeleteDoctorModal(doctorId) {
+                selectedDoctorId = doctorId;
+                document.getElementById('deleteDoctorModal').classList.remove('hidden');
+                document.getElementById('blurredBg').classList.remove('hidden');
+            }
+            async function confirmDeleteDoctor() {
+                if (!selectedDoctorId) return;
+                const token = localStorage.getItem("admin_jwt");
+                if (!token) {
+                    showToast("You are not authorized. Please log in again.", "error");
+                    return;
+                }
+                try {
+                    const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
+                    });
 
-      try {
-        const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
-        });
+                    if (!res.ok) {
+                        const errData = await res.json();
+                        throw new Error(errData.message || "Failed to delete admin");
+                        showToast(errData.message || "Failed to delete admin", "error")
+                    }
+                    showToast("Doctor deleted successfully", "success");
+                    document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+                    document.getElementById("blurredBg")?.classList.add("hidden");
+                    closeModals();
+                    fetchAndDisplayDoctors();
 
-        if (!res.ok) {
-          const errData = await res.json();
-          throw new Error(errData.message || "Failed to delete admin");
-          showToast(errData.message || "Failed to delete admin", "error")
-        }
-        showToast("Doctor deleted successfully", "success");
-        document.getElementById("deleteDoctorModal")?.classList.add("hidden");
-        closeModals();
-        fetchAndDisplayDoctors();
-      } catch (err) {
-        showToast("Delete failed: " + err.message, "error")
-      }
-    }
-  </script>
-  <script>
-    let selectedRestoreDoctorId = null;
-    function openRestoreDoctorModal(doctorId) {
-      selectedRestoreDoctorId = doctorId;
-      document.getElementById('restoreDoctorModal').classList.remove('hidden');
-    }
-    async function confirmRestoreDoctor() {
-      if (!selectedRestoreDoctorId) return;
-      const token = localStorage.getItem("admin_jwt");
-      if (!token) {
-        showToast("You are not authorized. Please log in again.", "error")
-        return;
-      }
-      try {
-        const res = await fetch(`/api/doctors/${selectedRestoreDoctorId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ doctorId: selectedRestoreDoctorId, isDeleted: false }),
-        });
+                } catch (err) {
+                    showToast("Delete failed: " + err.message, "error")
+                }
+            }
+        </script>
+        <script>
+            let selectedRestoreDoctorId = null;
+            function openRestoreDoctorModal(doctorId) {
+                selectedRestoreDoctorId = doctorId;
+                document.getElementById('restoreDoctorModal').classList.remove('hidden');
+                document.getElementById('blurredBg').classList.remove('hidden');
+            }
+            async function confirmRestoreDoctor() {
+                if (!selectedRestoreDoctorId) return;
+                const token = localStorage.getItem("admin_jwt");
+                if (!token) {
+                    showToast("You are not authorized. Please log in again.", "error")
+                    return;
+                }
+                try {
+                    const res = await fetch(`/api/doctors/${selectedRestoreDoctorId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({ doctorId: selectedRestoreDoctorId, isDeleted: false }),
+                    });
 
-        if (!res.ok) {
-          const errData = await res.json();
-          throw new Error(errData.message || "Failed to restore admin");
-          showToast(errData.message || "Failed to restore admin", "error")
-        }
-        showToast('Doctor restored successfully', "success")
-        document.getElementById("restoreDoctorModal")?.classList.add("hidden");
-        fetchAndDisplayDoctors();
-      } catch (err) {
-        showToast("Restore failed: " + err.message, "error")
-      }
-    }
-  </script>
+                    if (!res.ok) {
+                        const errData = await res.json();
+                        throw new Error(errData.message || "Failed to restore admin");
+                        showToast(errData.message || "Failed to restore admin", "error")
+                    }
+                    showToast('Doctor restored successfully', "success");
+                    document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+                    document.getElementById("blurredBg")?.classList.add("hidden"); 
+                    fetchAndDisplayDoctors();
+
+                } catch (err) {
+                    showToast("Restore failed: " + err.message, "error")
+                }
+            }
+        </script>
   <script>
     document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
       const id = window.currentEditingAdminId;
@@ -1300,7 +1320,7 @@
       }
 
       try {
-        const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        const res = await fetch(`/api/superadmin/updateAdmin/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1780,7 +1800,7 @@
     async function logout() {
       try {
         const token = localStorage.getItem('admin_jwt');
-        const res = await fetch("/api/admin/logout", {
+        const res = await fetch("/api/superadmin/logout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token }),
@@ -1826,7 +1846,6 @@
           ${svg}
           <span>${message}</span>
         </div>
-       
       `;
       document.getElementById("toast-container").appendChild(toast);
 
@@ -1848,29 +1867,29 @@
     ];
 
     function populateSpecialtyDropdown(selectId) {
-  const select = document.getElementById(selectId);
-  if (!select) return;
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-  select.innerHTML = "";
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "Select Specialty";
-  defaultOption.disabled = true;
-  defaultOption.selected = true;
-  select.appendChild(defaultOption);
-  specialties.forEach(spec => {
-    const option = document.createElement("option");
-    option.value = spec; 
-    option.textContent = spec;
-    select.appendChild(option);
-  });
-}
+      select.innerHTML = "";
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "Select Specialty";
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      select.appendChild(defaultOption);
+      specialties.forEach(spec => {
+        const option = document.createElement("option");
+        option.value = spec;
+        option.textContent = spec;
+        select.appendChild(option);
+      });
+    }
     populateSpecialtyDropdown("doctorSpecialty");
     populateSpecialtyDropdown("addDoctorSpecialization");
     populateSpecialtyDropdown("editDoctorSpecialization");
   </script>
 <div id="superAdminProfileModal"
-    class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
       <button id="closeSuperAdminProfileModal"
         class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
@@ -1915,10 +1934,10 @@
           </div>
         </div>
         <div id="editSuperAdminProfileActions" class="flex gap-3 mt-6 hidden">
-          
+
           <button id="cancelSuperAdminProfileBtn"
             class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
-            <button id="saveSuperAdminProfileBtn"
+          <button id="saveSuperAdminProfileBtn"
             class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
         </div>
       </div>
@@ -1980,7 +1999,7 @@
 
         try {
           const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/getAdminProfile', {
+          const res = await fetch('/api/superadmin/getAdminProfile', {
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
@@ -2073,7 +2092,7 @@
         }
         try {
           const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/updateProfile', {
+          const res = await fetch('/api/superadmin/updateProfile', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -2118,7 +2137,7 @@
       }
     }
   </script>
-  <div id="adminModalOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+  <div id="adminModalOverlay" class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md z-50 hidden flex items-center justify-center">
   <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
     <button id="closeAdminModal" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
     <div class="flex flex-col items-center mb-4">
@@ -2147,62 +2166,63 @@
     document.getElementById("adminModalOverlay").classList.remove("hidden");
   });
 
-  document.getElementById("closeAdminModal").addEventListener("click", () => {
-    document.getElementById("adminModalOverlay").classList.add("hidden");
-  });
-  document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const form = e.target;
-    const username = form.username.value.trim();
-    const email = form.email.value.trim();
-    const contact = form.contact.value.trim();
-    const password = form.password.value;
-    const confirmPassword = form.confirmPassword.value;
+    document.getElementById("closeAdminModal").addEventListener("click", () => {
+      document.getElementById("adminModalOverlay").classList.add("hidden");
+    });
+    document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const username = form.username.value.trim();
+      const email = form.email.value.trim();
+      const contact = form.contact.value.trim();
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
 
-    if (!username || !email || !password || !confirmPassword || !contact) {
-      showToast("Please fill in all fields.", "warning");
-      return;
-    }
-
-    const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
-    if (!emailPattern.test(email)) {
-      showToast("Enter a valid email with at least one letter and one number.", "warning");
-      return;
-    }
-
-    if (password.length < 6) {
-      showToast("Password must be at least 6 characters.", "warning");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      showToast("Passwords do not match.", "error");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/admin/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, contact }),
-      });
-
-      if (res.ok) {
-        showToast("Registration successful!", "success");
-        setTimeout(() => {
-          document.getElementById("adminModalOverlay").classList.add("hidden");
-          form.reset();
-    
-        }, 1000);
-      } else {
-        const err = await res.json();
-        showToast(err.error || "Registration failed", "error");
+      if (!username || !email || !password || !confirmPassword || !contact) {
+        showToast("Please fill in all fields.", "warning");
+        return;
       }
-    } catch (err) {
-      showToast("Error: " + err.message, "error");
-    }
-  });
-</script>
+
+      const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        showToast("Enter a valid email with at least one letter and one number.", "warning");
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast("Password must be at least 6 characters.", "warning");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast("Passwords do not match.", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password, contact }),
+        });
+
+        if (res.ok) {
+          showToast("Registration successful!", "success");
+          setTimeout(() => {
+            document.getElementById("adminModalOverlay").classList.add("hidden");
+            form.reset();
+            fetchAdmins();
+
+          }, 1000);
+        } else {
+          const err = await res.json();
+          showToast(err.error || "Registration failed", "error");
+        }
+      } catch (err) {
+        showToast("Error: " + err.message, "error");
+      }
+    });
+  </script>
 
 </body>
 
