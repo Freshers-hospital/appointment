@@ -584,45 +584,97 @@
       </form>
     </div>
   </div>
-  <div id="availabilityModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-center justify-center z-50 hidden">
-    <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-      <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
-      <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
-      <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
-          <p class="text-gray-500 text-sm mb-1">Select Date</p>
-          <input type="text" id="availabilityDate" name="date"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="MM/DD/YYYY" required readonly />
-        </div>
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <p class="text-gray-500 text-sm mb-1">Start Time</p>
-          <select id="availabilityStart" name="start"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required>
-            <option value="">Select Start Time</option>
+
+
+<div id="availabilityModalOverlay"
+  class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
+  <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+    <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
+
+    <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Select Date -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
+        <p class="text-gray-500 text-sm mb-1">Select Date</p>
+        <input type="text" id="availabilityDate" name="date"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="MM/DD/YYYY" required readonly />
+      </div>
+
+      <!-- Start Time -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+        <label class="text-sm font-medium text-gray-500 mb-2 block">Start Time</label>
+        <div class="flex items-center gap-2">
+          <input type="number" id="doctorStartHour" min="1" max="12" placeholder="HH"
+            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+          <span>:</span>
+          <input type="number" id="doctorStartMinute" min="0" max="59" placeholder="MM"
+            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+          <select id="doctorStartAmPm"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+            <option>AM</option>
+            <option>PM</option>
           </select>
         </div>
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <p class="text-gray-500 text-sm mb-1">End Time</p>
-          <select id="availabilityEnd" name="end"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required>
-            <option value="">Select End Time</option>
+      </div>
+
+      <!-- End Time -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+        <label class="text-sm font-medium text-gray-500 mb-2 block">End Time</label>
+        <div class="flex items-center gap-2">
+          <input type="number" id="doctorEndHour" min="1" max="12" placeholder="HH"
+            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+          <span>:</span>
+          <input type="number" id="doctorEndMinute" min="0" max="59" placeholder="MM"
+            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+          <select id="doctorEndAmPm"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+            <option>AM</option>
+            <option>PM</option>
           </select>
         </div>
-        <div class="col-span-2 flex justify-center gap-4 mt-4">
-          <button type="button" id="cancelAvailability"
-            class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
-          <button type="submit"
-            class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Save</button>
-        </div>
-      </form>
-      <button id="closeAvailabilityModal"
-        class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
-    </div>
+      </div>
+
+      <!-- Hidden field for backend -->
+      <input type="hidden" id="doctorAvailability" name="availability" />
+
+      <!-- Preview -->
+      <div id="timePreview" class="col-span-2 text-center mt-2 text-sm font-medium text-gray-600 hidden">
+        Selected: <span class="text-blue-600 font-semibold" id="selectedTime"></span>
+      </div>
+
+      <!-- Buttons -->
+      <div class="col-span-2 flex justify-center gap-4 mt-4">
+        <button type="button" id="cancelAvailability"
+          class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">
+          Cancel
+        </button>
+        <button type="submit"
+          class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">
+          Save
+        </button>
+      </div>
+    </form>
+
+    <button id="closeAvailabilityModal"
+      class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div id="addDoctorModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
@@ -673,15 +725,57 @@
         </div>
 
 
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
-          <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
-          <input type="text" id="doctorAvailability" name="availability"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., 9:00 AM - 5:00 PM" required />
-        </div>
 
 
-        <div id="doctorErrorMsg" class="text-red-600 text-sm sm:col-span-2 hidden"></div>
+<div class="bg-gray-50 p-4 rounded-xl shadow-md sm:col-span-2">
+  <label class="block text-sm font-semibold text-gray-700 mb-4">Availability</label>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- Start Time -->
+    <div>
+      <label class="text-xs font-medium text-gray-500 mb-2 block">Start Time</label>
+      <div class="flex items-center gap-2">
+        <input type="number" id="doctorStartHour" min="1" max="12" placeholder="HH"
+          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+        <span>:</span>
+        <input type="number" id="doctorStartMinute" min="0" max="59" placeholder="MM"
+          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+        <select id="doctorStartAmPm"
+          class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+          <option>AM</option>
+          <option>PM</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- End Time -->
+    <div>
+      <label class="text-xs font-medium text-gray-500 mb-2 block">End Time</label>
+      <div class="flex items-center gap-2">
+        <input type="number" id="doctorEndHour" min="1" max="12" placeholder="HH"
+          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+        <span>:</span>
+        <input type="number" id="doctorEndMinute" min="0" max="59" placeholder="MM"
+          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
+        <select id="doctorEndAmPm"
+          class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+          <option>AM</option>
+          <option>PM</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden field for backend -->
+  <input type="hidden" id="doctorAvailability" name="availability" />
+
+  <!-- Preview -->
+  <div id="timePreview" class="mt-4 text-sm font-medium text-gray-600 hidden">
+    Selected: <span class="text-blue-600 font-semibold" id="selectedTime"></span>
+  </div>
+</div>
+
+<div id="doctorErrorMsg" class="text-red-600 text-sm sm:col-span-2 hidden"></div>
 
         <div class="sm:col-span-2 flex justify-end mt-2">
           <button type="submit"
@@ -2223,6 +2317,61 @@
       }
     });
   </script>
+
+<script>
+  const startHour = document.getElementById("doctorStartHour");
+  const startMinute = document.getElementById("doctorStartMinute");
+  const startAmPm = document.getElementById("doctorStartAmPm");
+
+  const endHour = document.getElementById("doctorEndHour");
+  const endMinute = document.getElementById("doctorEndMinute");
+  const endAmPm = document.getElementById("doctorEndAmPm");
+
+  const availabilityField = document.getElementById("doctorAvailability");
+  const previewBox = document.getElementById("timePreview");
+  const selectedTime = document.getElementById("selectedTime");
+
+  function formatHour(num) {
+    return num ? String(parseInt(num, 10)) : "";
+  }
+
+  function formatMinute(num) {
+    return num ? num.toString().padStart(2, "0") : "00";
+  }
+
+  function updateAvailability() {
+    const sh = startHour.value.trim();
+    const sm = startMinute.value.trim();
+    const sap = startAmPm.value;
+
+    const eh = endHour.value.trim();
+    const em = endMinute.value.trim();
+    const eap = endAmPm.value;
+
+    if (!availabilityField || !selectedTime || !previewBox) return;
+    if (!["AM", "PM"].includes(sap) || !["AM", "PM"].includes(eap)) return;
+
+    if (sh && sm && eh && em) {
+      const startFormatted = `${formatHour(sh)}:${formatMinute(sm)} ${sap}`;
+      const endFormatted = `${formatHour(eh)}:${formatMinute(em)} ${eap}`;
+
+      availabilityField.value = `${startFormatted} - ${endFormatted}`;
+      selectedTime.textContent = availabilityField.value;
+      previewBox.classList.remove("hidden");
+    } else {
+      previewBox.classList.add("hidden");
+      availabilityField.value = "";
+    }
+  }
+
+  [startHour, startMinute, startAmPm, endHour, endMinute, endAmPm].forEach(el =>
+    el?.addEventListener("input", updateAvailability)
+  );
+</script>
+
+
+
+
 
 </body>
 
