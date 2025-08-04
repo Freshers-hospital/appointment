@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const { encrypt } = require('../utils/encryption');
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
