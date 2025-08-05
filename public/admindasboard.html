@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard - MediCare</title>
+    <title> MediCare</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -611,8 +611,6 @@
         <div id="rescheduleModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="rescheduleModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeRescheduleModal"
-                    class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl font-bold mb-2">Reschedule Appointment</h2>
                 <div class="mb-4 text-gray-600" id="reschedulePatientName"></div>
                 <form id="rescheduleForm">
@@ -727,8 +725,6 @@
         <div id="patientDetailsModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closePatientDetailsModal"
-                    class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="font-semibold text-gray-600">Name</div>
@@ -1962,7 +1958,6 @@
                 rescheduleSelectedDate = null;
                 rescheduleSelectedTime = null;
             }
-            document.getElementById("closeRescheduleModal").onclick = closeRescheduleModal;
             document.getElementById("cancelRescheduleBtn").onclick = closeRescheduleModal;
 
             async function renderRescheduleCalendar(app) {
@@ -2335,7 +2330,7 @@
                 document.body.classList.remove("blurred-bg");
             }
 
-            document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
+           
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
    document.getElementById("patientsList").addEventListener("click", function (e) {
@@ -3422,8 +3417,6 @@
         <div id="adminProfileModal"
             class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
-                <button id="closeAdminProfileModal"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile & Settings</h2>
                 <div class="flex items-center gap-4 mb-6">
                     <div
