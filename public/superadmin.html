@@ -586,82 +586,47 @@
   </div>
 
 
-<div id="availabilityModalOverlay"
-  class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
-  <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
-    <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
 
-    <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <!-- Select Date -->
-      <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
-        <p class="text-gray-500 text-sm mb-1">Select Date</p>
-        <input type="text" id="availabilityDate" name="date"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="MM/DD/YYYY" required readonly />
-      </div>
-
-      <!-- Start Time -->
-      <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-        <label class="text-sm font-medium text-gray-500 mb-2 block">Start Time</label>
-        <div class="flex items-center gap-2">
-          <input type="number" id="doctorStartHour" min="1" max="12" placeholder="HH"
-            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-          <span>:</span>
-          <input type="number" id="doctorStartMinute" min="0" max="59" placeholder="MM"
-            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-          <select id="doctorStartAmPm"
-            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
-            <option>AM</option>
-            <option>PM</option>
+  
+  <div id="availabilityModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-center justify-center z-50 hidden">
+    <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+      <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+      <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
+      <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
+          <p class="text-gray-500 text-sm mb-1">Select Date</p>
+          <input type="text" id="availabilityDate" name="date"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="MM/DD/YYYY" required readonly />
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <p class="text-gray-500 text-sm mb-1">Start Time</p>
+          <select id="availabilityStart" name="start"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required>
+            <option value="">Select Start Time</option>
           </select>
         </div>
-      </div>
-
-      <!-- End Time -->
-      <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-        <label class="text-sm font-medium text-gray-500 mb-2 block">End Time</label>
-        <div class="flex items-center gap-2">
-          <input type="number" id="doctorEndHour" min="1" max="12" placeholder="HH"
-            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-          <span>:</span>
-          <input type="number" id="doctorEndMinute" min="0" max="59" placeholder="MM"
-            class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-          <select id="doctorEndAmPm"
-            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
-            <option>AM</option>
-            <option>PM</option>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <p class="text-gray-500 text-sm mb-1">End Time</p>
+          <select id="availabilityEnd" name="end"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required>
+            <option value="">Select End Time</option>
           </select>
         </div>
-      </div>
-
-      <!-- Hidden field for backend -->
-      <input type="hidden" id="doctorAvailability" name="availability" />
-
-      <!-- Preview -->
-      <div id="timePreview" class="col-span-2 text-center mt-2 text-sm font-medium text-gray-600 hidden">
-        Selected: <span class="text-blue-600 font-semibold" id="selectedTime"></span>
-      </div>
-
-      <!-- Buttons -->
-      <div class="col-span-2 flex justify-center gap-4 mt-4">
-        <button type="button" id="cancelAvailability"
-          class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">
-          Cancel
-        </button>
-        <button type="submit"
-          class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">
-          Save
-        </button>
-      </div>
-    </form>
-
-    <button id="closeAvailabilityModal"
-      class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+        <div class="col-span-2 flex justify-center gap-4 mt-4">
+          <button type="button" id="cancelAvailability"
+            class="px-6 py-2 bg-white border border-gray-300 text-black rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
+          <button type="submit"
+            class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Save</button>
+        </div>
+      </form>
+      <button id="closeAvailabilityModal"
+        class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
+    </div>
   </div>
-</div>
-
-
 
 
 
@@ -723,59 +688,80 @@
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="e.g., MBBS, MD, PhD" required />
         </div>
+<!-- 
+
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
+          <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+          <input type="text" id="doctorAvailability" name="availability"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="e.g., 9:00 AM - 5:00 PM" required />
+        </div> -->
 
 
 
 
-<div class="bg-gray-50 p-4 rounded-xl shadow-md sm:col-span-2">
-  <label class="block text-sm font-semibold text-gray-700 mb-4">Availability</label>
-
+<!-- Replace your Availability section with this -->
+<div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
+  <label class="block text-sm font-medium text-gray-700 mb-3">Availability</label>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
     <!-- Start Time -->
     <div>
-      <label class="text-xs font-medium text-gray-500 mb-2 block">Start Time</label>
-      <div class="flex items-center gap-2">
-        <input type="number" id="doctorStartHour" min="1" max="12" placeholder="HH"
-          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-        <span>:</span>
-        <input type="number" id="doctorStartMinute" min="0" max="59" placeholder="MM"
-          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-        <select id="doctorStartAmPm"
-          class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
-          <option>AM</option>
-          <option>PM</option>
+      <p class="text-sm font-medium text-gray-600 mb-2">Start Time</p>
+      <div class="flex items-center space-x-2">
+        <select id="doctorStartHour" required class="w-20 border rounded-lg px-3 py-2">
+          <option value="" disabled selected>HH</option>
+          <option>01</option><option>02</option><option>03</option>
+          <option>04</option><option>05</option><option>06</option>
+          <option>07</option><option>08</option><option>09</option>
+          <option>10</option><option>11</option><option>12</option>
+        </select>
+        <span class="text-lg">:</span>
+        <select id="doctorStartMinute" required class="w-20 border rounded-lg px-3 py-2">
+          <option value="" disabled selected>MM</option>
+          <option>00</option><option>15</option><option>30</option><option>45</option>
+        </select>
+        <select id="doctorStartPeriod" required class="w-24 border rounded-lg px-3 py-2">
+          <option value="" disabled selected>--</option>
+          <option>AM</option><option>PM</option>
         </select>
       </div>
     </div>
 
     <!-- End Time -->
     <div>
-      <label class="text-xs font-medium text-gray-500 mb-2 block">End Time</label>
-      <div class="flex items-center gap-2">
-        <input type="number" id="doctorEndHour" min="1" max="12" placeholder="HH"
-          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-        <span>:</span>
-        <input type="number" id="doctorEndMinute" min="0" max="59" placeholder="MM"
-          class="w-16 border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500" />
-        <select id="doctorEndAmPm"
-          class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
-          <option>AM</option>
-          <option>PM</option>
+      <p class="text-sm font-medium text-gray-600 mb-2">End Time</p>
+      <div class="flex items-center space-x-2">
+        <select id="doctorEndHour" required class="w-20 border rounded-lg px-3 py-2">
+          <option value="" disabled selected>HH</option>
+          <option>01</option><option>02</option><option>03</option>
+          <option>04</option><option>05</option><option>06</option>
+          <option>07</option><option>08</option><option>09</option>
+          <option>10</option><option>11</option><option>12</option>
+        </select>
+        <span class="text-lg">:</span>
+        <select id="doctorEndMinute" required class="w-20 border rounded-lg px-3 py-2">
+          <option value="" disabled selected>MM</option>
+          <option>00</option><option>15</option><option>30</option><option>45</option>
+        </select>
+        <select id="doctorEndPeriod" required class="w-24 border rounded-lg px-3 py-2">
+          <option value="" disabled selected>--</option>
+          <option>AM</option><option>PM</option>
         </select>
       </div>
     </div>
-  </div>
 
-  <!-- Hidden field for backend -->
-  <input type="hidden" id="doctorAvailability" name="availability" />
-
-  <!-- Preview -->
-  <div id="timePreview" class="mt-4 text-sm font-medium text-gray-600 hidden">
-    Selected: <span class="text-blue-600 font-semibold" id="selectedTime"></span>
   </div>
 </div>
 
-<div id="doctorErrorMsg" class="text-red-600 text-sm sm:col-span-2 hidden"></div>
+
+
+  <!-- Hidden availability field -->
+  <input type="hidden" id="doctorAvailability" name="availability" />
+
+  <!-- Error message -->
+  <div id="doctorErrorMsg" class="text-red-600 text-sm sm:col-span-2 hidden"></div>
+
 
         <div class="sm:col-span-2 flex justify-end mt-2">
           <button type="submit"
@@ -1067,7 +1053,14 @@
       doctorsList.innerHTML = "";
       const selectedDate = document.getElementById("datePicker")?.value || new Date().toISOString().split('T')[0];
       const availabilityPromises = currentDoctors.map(async (doctor) => {
-        let displayAvailability = doctor.availability || "Available";
+        let displayAvailability = "Available";
+if (doctor.availability && typeof doctor.availability === "object") {
+  const { startTime, endTime } = doctor.availability;
+  displayAvailability = `${startTime} - ${endTime}`;
+} else if (typeof doctor.availability === "string") {
+  displayAvailability = doctor.availability;
+}
+
         try {
           const res = await fetch(`/api/doctors/${doctor._id}/availability?date=${selectedDate}`);
           if (res.ok) {
@@ -1777,80 +1770,114 @@
       });
     })();
     (function () {
-      const addDoctorBtn = document.getElementById("addDoctorBtn");
-      const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
-      if (addDoctorModalOverlay) {
-        const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
-        const openModal = () => {
-          addDoctorModalOverlay.classList.remove("hidden");
-          document.body.classList.add("blurred-bg");
-        };
-        const closeModal = () => {
-          addDoctorModalOverlay.classList.add("hidden");
-          document.body.classList.remove("blurred-bg");
-          const form = document.getElementById("addDoctorForm");
-          if (form) form.reset();
-          showDoctorError("");
-        };
-        if (addDoctorBtn) {
-          addDoctorBtn.addEventListener("click", openModal);
-        }
-        if (closeAddDoctorModal) {
-          closeAddDoctorModal.addEventListener("click", closeModal);
-        }
-        const addDoctorForm = document.getElementById("addDoctorForm");
-        if (addDoctorForm) {
-          addDoctorForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const formData = new FormData(addDoctorForm);
-            const firstName = formData.get("firstName")?.trim() || "";
-            const lastName = formData.get("lastName")?.trim() || "";
-            const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
-            try {
-              const res = await fetch("/api/doctors");
-              const existingDoctors = await res.json();
-              const isDuplicate = existingDoctors.some((doc) => {
-                const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
-                return existingName === fullName;
-              });
-              if (isDuplicate) {
-                showDoctorError("Doctor already exists: duplicate name.");
-                return;
-              }
-            } catch (err) {
-              showDoctorError("Error checking existing doctors.");
-              return;
-            }
-            const doctorData = {
-              firstName,
-              lastName,
-              name: `Dr. ${firstName} ${lastName}`,
-              specialty: formData.get("specialty"),
-              experience: formData.get("experience"),
-              qualification: formData.get("qualification"),
-              availability: formData.get("availability"),
-            };
-            try {
-              const response = await fetch("/api/doctors", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(doctorData),
-              });
-              if (!response.ok) {
-                const errorData = await response.json();
-                showDoctorError(errorData.error || "Failed to add doctor.");
-                return;
-              }
-              showDoctorError("");
-              showToast("Doctor added successfully!", "success")
-              closeModal();
-              await fetchAndDisplayDoctors();
-            } catch (error) {
-              showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
-            }
+  document.addEventListener("DOMContentLoaded", function () {
+  const addDoctorBtn = document.getElementById("addDoctorBtn");
+  const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
+
+  if (addDoctorModalOverlay) {
+    const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
+
+    const openModal = () => {
+      addDoctorModalOverlay.classList.remove("hidden");
+      document.body.classList.add("blurred-bg");
+    };
+
+    const closeModal = () => {
+      addDoctorModalOverlay.classList.add("hidden");
+      document.body.classList.remove("blurred-bg");
+      const form = document.getElementById("addDoctorForm");
+      if (form) form.reset();
+      showDoctorError("");
+    };
+
+    if (addDoctorBtn) addDoctorBtn.addEventListener("click", openModal);
+    if (closeAddDoctorModal) closeAddDoctorModal.addEventListener("click", closeModal);
+
+    const addDoctorForm = document.getElementById("addDoctorForm");
+    if (addDoctorForm) {
+      addDoctorForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(addDoctorForm);
+
+        const firstName = formData.get("firstName")?.trim() || "";
+        const lastName = formData.get("lastName")?.trim() || "";
+        const fullName = `Dr. ${firstName} ${lastName}`.replace(/\s+/g, " ").trim().toLowerCase();
+
+        // Step 1: Check for duplicate doctor name
+        try {
+          const res = await fetch("/api/doctors");
+          const existingDoctors = await res.json();
+          const isDuplicate = existingDoctors.some((doc) => {
+            const existingName = (doc.name || "").replace(/\s+/g, " ").trim().toLowerCase();
+            return existingName === fullName;
           });
+          if (isDuplicate) {
+            showDoctorError("Doctor already exists: duplicate name.");
+            return;
+          }
+        } catch (err) {
+          showDoctorError("Error checking existing doctors.");
+          return;
         }
-      }
+
+        // Step 2: Build availability object from selectors
+        let sh = document.getElementById("doctorStartHour").value;
+        let sm = document.getElementById("doctorStartMinute").value;
+        let sp = document.getElementById("doctorStartPeriod").value;
+        let eh = document.getElementById("doctorEndHour").value;
+        let em = document.getElementById("doctorEndMinute").value;
+        let ep = document.getElementById("doctorEndPeriod").value;
+
+        // Default values if not set
+        if (!sh || !sm || !sp || !eh || !em || !ep) {
+          sh = "09"; sm = "00"; sp = "AM";
+          eh = "05"; em = "00"; ep = "PM";
+        }
+
+        const availability = {
+          startTime: `${sh}:${sm} ${sp}`,
+          endTime: `${eh}:${em} ${ep}`,
+        };
+
+        // Step 3: Final doctor data
+        const doctorData = {
+          firstName,
+          lastName,
+          name: `Dr. ${firstName} ${lastName}`,
+          specialty: formData.get("specialty"),
+          experience: formData.get("experience"),
+          qualification: formData.get("qualification"),
+          availability, // ✅ structured object
+        };
+
+        // Step 4: POST request
+        try {
+          const response = await fetch("/api/doctors", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(doctorData),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            showDoctorError(errorData.error || "Failed to add doctor.");
+            return;
+          }
+
+          // Success
+          showDoctorError("");
+          showToast("Doctor added successfully!", "success");
+          closeModal();
+          await fetchAndDisplayDoctors();
+
+        } catch (error) {
+          showDoctorError("Error adding doctor: " + (error.message || "Unknown error"));
+        }
+      });
+    }
+  }
+});
+
       function showDoctorError(msg) {
         const errorDiv = document.getElementById("doctorErrorMsg");
         if (!errorDiv) return;
@@ -2317,57 +2344,100 @@
       }
     });
   </script>
-
+  <!-- Doctor Detail Modal -->
+<div id="doctorDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-lg w-[400px] shadow-xl relative">
+    <button onclick="closeDoctorModal()" class="absolute top-2 right-2 text-gray-600 hover:text-red-500">&times;</button>
+    <h2 id="doctorName" class="text-xl font-bold mb-2"></h2>
+    <p id="doctorSpecialty" class="text-sm text-gray-700 mb-1"></p>
+    <p id="doctorExperience" class="text-sm text-gray-700 mb-1"></p>
+    <p id="doctorQualification" class="text-sm text-gray-700 mb-1"></p>
+    <p id="doctorAvailability" class="text-sm text-gray-700"></p>
+  </div>
+</div>
 <script>
-  const startHour = document.getElementById("doctorStartHour");
-  const startMinute = document.getElementById("doctorStartMinute");
-  const startAmPm = document.getElementById("doctorStartAmPm");
+  function showDoctorDetails(doctor, availability) {
+  document.getElementById("doctorDetailsModal").classList.remove("hidden");
+  document.getElementById("doctorName").textContent = doctor.name || "N/A";
+  document.getElementById("doctorSpecialty").textContent = "Specialty: " + (doctor.specialty || "General Medicine");
+  document.getElementById("doctorExperience").textContent = "Experience: " + (doctor.experience || "N/A") + " years";
+  document.getElementById("doctorQualification").textContent = "Qualification: " + (doctor.qualification || "N/A");
+  document.getElementById("doctorAvailability").textContent = "Availability: " + availability;
+}
 
-  const endHour = document.getElementById("doctorEndHour");
-  const endMinute = document.getElementById("doctorEndMinute");
-  const endAmPm = document.getElementById("doctorEndAmPm");
+function closeDoctorModal() {
+  document.getElementById("doctorDetailsModal").classList.add("hidden");
+}
 
-  const availabilityField = document.getElementById("doctorAvailability");
-  const previewBox = document.getElementById("timePreview");
-  const selectedTime = document.getElementById("selectedTime");
-
-  function formatHour(num) {
-    return num ? String(parseInt(num, 10)) : "";
-  }
-
-  function formatMinute(num) {
-    return num ? num.toString().padStart(2, "0") : "00";
-  }
-
-  function updateAvailability() {
-    const sh = startHour.value.trim();
-    const sm = startMinute.value.trim();
-    const sap = startAmPm.value;
-
-    const eh = endHour.value.trim();
-    const em = endMinute.value.trim();
-    const eap = endAmPm.value;
-
-    if (!availabilityField || !selectedTime || !previewBox) return;
-    if (!["AM", "PM"].includes(sap) || !["AM", "PM"].includes(eap)) return;
-
-    if (sh && sm && eh && em) {
-      const startFormatted = `${formatHour(sh)}:${formatMinute(sm)} ${sap}`;
-      const endFormatted = `${formatHour(eh)}:${formatMinute(em)} ${eap}`;
-
-      availabilityField.value = `${startFormatted} - ${endFormatted}`;
-      selectedTime.textContent = availabilityField.value;
-      previewBox.classList.remove("hidden");
-    } else {
-      previewBox.classList.add("hidden");
-      availabilityField.value = "";
-    }
-  }
-
-  [startHour, startMinute, startAmPm, endHour, endMinute, endAmPm].forEach(el =>
-    el?.addEventListener("input", updateAvailability)
-  );
 </script>
+
+
+
+  <!-- <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const addDoctorForm = document.getElementById("addDoctorForm");
+
+    addDoctorForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      let sh = document.getElementById("doctorStartHour").value;
+      let sm = document.getElementById("doctorStartMinute").value;
+      let sp = document.getElementById("doctorStartPeriod").value;
+      let eh = document.getElementById("doctorEndHour").value;
+      let em = document.getElementById("doctorEndMinute").value;
+      let ep = document.getElementById("doctorEndPeriod").value;
+
+      // Set default if any field is empty
+      if (!sh || !sm || !sp || !eh || !em || !ep) {
+        sh = "09";
+        sm = "00";
+        sp = "AM";
+        eh = "05";
+        em = "00";
+        ep = "PM";
+      }
+
+      const availability = {
+        startTime: `${sh}:${sm} ${sp}`,
+        endTime: `${eh}:${em} ${ep}`,
+      };
+
+      const doctorData = {
+        firstName: document.getElementById("doctorFirstName").value,
+        lastName: document.getElementById("doctorLastName").value,
+        specialty: document.getElementById("addDoctorSpecialization").value,
+        experience: document.getElementById("doctorExperience").value,
+        qualification: document.getElementById("doctorQualification").value,
+        availability: availability, // ✅ Correct format
+      };
+
+      try {
+        const res = await fetch("/api/doctors", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(doctorData),
+        });
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || "Failed to add doctor");
+
+        alert("Doctor added successfully!");
+        document.getElementById("addDoctorModalOverlay").classList.add("hidden");
+        fetchAndDisplayDoctors();
+      } catch (err) {
+        console.error(err);
+        document.getElementById("doctorErrorMsg").textContent = err.message;
+        document.getElementById("doctorErrorMsg").classList.remove("hidden");
+      }
+    });
+  });
+</script> -->
+
+
+
+
+
+
 
 
 

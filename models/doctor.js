@@ -7,7 +7,13 @@ const doctorSchema = new mongoose.Schema({
   specialty: { type: String, required: true },
   experience: { type: String },
   qualification: { type: String },
-  availability: { type: String, required: true },
+
+  // ✅ FIXED HERE
+  availability: {
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true }
+  },
+
   availabilityByDate: {
     type: Map,
     of: new mongoose.Schema({ start: String, end: String }, { _id: false }),
@@ -21,5 +27,7 @@ const doctorSchema = new mongoose.Schema({
   address: { type: String },
   isDeleted: { type: Boolean, default: false }
 }, { timestamps: true });
+
 doctorSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
+
 module.exports = mongoose.model('Doctor', doctorSchema);

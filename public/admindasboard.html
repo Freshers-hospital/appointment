@@ -410,7 +410,6 @@
                         class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
                         <div class="col-span-3">Doctor</div>
                         <div class="col-span-3">Specialization</div>
-
                         <div class="col-span-3">Today's Appointments</div>
                         <div class="col-span-3">Availability</div>
                         <!-- <div class="col-span-2">Actions</div> -->
@@ -747,14 +746,12 @@
                     <div class="font-semibold text-gray-600">Last Visit</div>
                     <div id="modalPatientLastVisit" class="text-gray-900"></div>
                 </div>
-<div class="flex justify-end mt-6">
-  <button id="closePatientDetailsBtn"
-    class="px-6 py-2 rounded bg-blue-600 text-white !text-white font-semibold hover:bg-blue-700 transition-colors duration-200">
-    Close
-  </button>
-</div>
- </div>
-</div>
+                <div class="flex justify-end mt-6">
+                    <button id="closePatientDetailsBtn"
+                        class="px-4 py-2 rounded bg-blue-600 text-white  font-bold hover:bg-blue-700 transition-colors duration-200">Close</button>
+                </div>
+            </div>
+        </div>
 
         <div id="viewDoctorProfileModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -1587,23 +1584,31 @@
                     const allCancelled =
                         patient.appointments.length > 0 && patient.appointments.every((a) => (a.status || "").toLowerCase() === "canceled" || (a.status || "").toLowerCase() === "cancelled");
 
-           patientsHTML += `
-  <div class="patient-row grid grid-cols-12 gap-4 px-4 py-3 text-sm text-gray-800 border-b cursor-pointer hover:bg-gray-100"
-       data-patient='${JSON.stringify({
-            name: patient.details.name || "N/A",
-            age: patient.details.age || "N/A",
-            gender: patient.details.gender || "N/A",
-            blood: patient.details.blood || "N/A",
-            contact: patient.details.contact || "N/A",
-            upcomingDate,
-            lastVisit
-       })}'>
-    <div class="col-span-3">${patient.details.name || "N/A"}</div>
-    <div class="col-span-2">${patient.details.age || "N/A"} / ${patient.details.gender || "N/A"}</div>
-    <div class="col-span-1">${patient.details.blood || "N/A"}</div>
-    <div class="col-span-2">${patient.details.contact || "N/A"}</div>
-    <div class="col-span-2">${upcomingDate}</div>
-    <div class="col-span-2">${lastVisit}</div>
+      patientsHTML += `
+  <div 
+    class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+    data-patient='${JSON.stringify({
+      name: patient.details.name || "N/A",
+      age: patient.details.age || "N/A",
+      gender: patient.details.gender || "N/A",
+      blood: patient.details.blood || "N/A",
+      contact: patient.details.contact || "N/A",
+      upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
+      lastVisit: lastVisit.replace(/<[^>]+>/g, "")
+    })}'
+  >
+    <div class="col-span-3 flex items-center">
+      <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
+      <div>
+        <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">${patient.details.name || "N/A"}</div>
+        <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}</div>
+      </div>
+    </div>
+    <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
+    <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
+    <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
+    <div class="col-span-2 text-gray-600">${upcomingDate}</div>
+    <div class="col-span-2 text-gray-600">${lastVisit}</div>
   </div>
 `;
 
@@ -2320,10 +2325,7 @@
                 document.getElementById("modalPatientBlood").textContent = blood;
                 document.getElementById("modalPatientContact").textContent = contact;
                 document.getElementById("modalPatientUpcoming").textContent = patient.upcomingDate || "N/A";
-              document.getElementById("modalPatientLastVisit").innerHTML = patient.lastVisit 
-    ? patient.lastVisit 
-    : '<span class="text-gray-400">N/A</span>';
-
+                document.getElementById("modalPatientLastVisit").textContent = patient.lastVisit || "N/A";
                 document.getElementById("patientDetailsModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
             }
@@ -2336,18 +2338,15 @@
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
-         document.getElementById("patientsList").addEventListener("click", function (e) {
-    const row = e.target.closest(".patient-row");
-    if (row && row.hasAttribute("data-patient")) {
-        try {
-            const patientData = JSON.parse(row.getAttribute("data-patient"));
-            console.log("Opening modal for:", patientData);
-            openPatientDetailsModal(patientData);
-        } catch (error) {
-            console.error("Invalid patient data", error);
-        }
+   document.getElementById("patientsList").addEventListener("click", function (e) {
+    const card = e.target.closest("[data-patient]");
+    if (card) {
+        const patientData = JSON.parse(card.getAttribute("data-patient"));
+        openPatientDetailsModal(patientData);
     }
 });
+
+
 
             let allDoctors = [];
             let currentDoctorsPage = 1;
