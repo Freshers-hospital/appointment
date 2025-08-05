@@ -3,24 +3,9 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const { encrypt } = require('../utils/encryption');
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
-
-router.post('/registerAsSuperadmin', async (req, res) => {
-  try {
-    const { username, email, password, contact } = req.body;
-    if (!username || !email || !password || !contact) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
-    const exists = await Admin.findOne({ email });
-    if (exists) return res.status(400).json({ error: 'Email already registered' });
-    const admin = new Admin({ username, email, password, role: 0, contact });
-    await admin.save();
-    res.status(201).json({ message: 'SuperAdmin registered successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
 
 router.post("/register", async (req, res) => {
   try {
@@ -28,13 +13,9 @@ router.post("/register", async (req, res) => {
     if (!username || !email || !password || !contact) {
       return res.status(400).json({ error: "All fields are required" });
     }
-
-    const exists = await Admin.findOne({ email });
-    if (exists) return res.status(400).json({ error: "Email already registered" });
-
-
+    const exists = await Admin.findOne({ username });
+    if (exists) return res.status(400).json({ error: "Username already registered. Please try any name." });
     const encryptedPassword = encrypt(password);
-
     const admin = new Admin({
       username,
       email,
@@ -43,9 +24,7 @@ router.post("/register", async (req, res) => {
       role: 1,
       contact,
     });
-
     await admin.save();
-
     res.status(201).json({ message: "Admin registered successfully" });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -54,13 +33,9 @@ router.post("/register", async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     let admin;
-    if (email.includes('@')) {
-      admin = await Admin.findOne({ email });
-    } else {
-      admin = await Admin.findOne({ username: email });
-    }
+    admin = await Admin.findOne({ username });
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
     if (admin.isDeleted) return res.status(401).json({ error: 'Account has been deleted' });
     const isMatch = await admin.comparePassword(password);
@@ -88,19 +63,19 @@ router.post('/logout', async (req, res) => {
 
 router.post('/resetPassword', async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { username, password } = req.body;
+    if (!username || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const encryptedPassword = encrypt(password);
     const updated = await Admin.findOneAndUpdate(
-      { email },
+      { username },
       { password: hashedPassword, encryptedPassword },
       { new: true }
     );
 
-    if (!updated) return res.status(404).json({ error: 'Email does not exist' });
+    if (!updated) return res.status(404).json({ error: 'Username does not exist' });
     res.status(201).json({ message: 'Password reset successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });

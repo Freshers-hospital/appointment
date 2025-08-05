@@ -1,12 +1,13 @@
 const express = require("express");
+const CORS = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoURI = process.env.DATABASE_URL;
-console.log( mongoURI);
-console.log(typeof(mongoURI));
+console.log(mongoURI);
+console.log(typeof (mongoURI));
 const port = process.env.PORT;
 
 const confirmationRoutes = require("./routes/confirmationsroutes");
@@ -18,6 +19,7 @@ const { router: superadminRoutes } = require('./routes/superadminroutes');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
+app.use(CORS());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -41,7 +43,7 @@ app.post('/test-upload', upload.single('photo'), (req, res) => {
 
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
 
@@ -51,10 +53,10 @@ app.get("/superadmin", (req, res) => {
 
 
 mongoose.connect(mongoURI).then(() => {
-    app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
-    });
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
 }).catch((err) => {
-    console.error("MongoDB connection error:", err);
-    process.exit(1);
+  console.error("MongoDB connection error:", err);
+  process.exit(1);
 }); 
