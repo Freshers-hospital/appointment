@@ -906,7 +906,7 @@
     function showLogoutModal() {
       document.getElementById("logoutModal")?.classList.remove("hidden");
       document.getElementById("blurredBg")?.classList.remove("hidden");
-
+      dropdownMenu.classList.add("hidden");
     }
 
     function closeModals() {
@@ -2235,31 +2235,32 @@
     });
   </script>
   <!-- Doctor Detail Modal -->
-<div id="doctorDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-lg w-[400px] shadow-xl relative">
-    <button onclick="closeDoctorModal()" class="absolute top-2 right-2 text-gray-600 hover:text-red-500">&times;</button>
-    <h2 id="doctorName" class="text-xl font-bold mb-2"></h2>
-    <p id="doctorSpecialty" class="text-sm text-gray-700 mb-1"></p>
-    <p id="doctorExperience" class="text-sm text-gray-700 mb-1"></p>
-    <p id="doctorQualification" class="text-sm text-gray-700 mb-1"></p>
-    <p id="doctorAvailability" class="text-sm text-gray-700"></p>
+  <div id="doctorDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-[400px] shadow-xl relative">
+      <button onclick="closeDoctorModal()"
+        class="absolute top-2 right-2 text-gray-600 hover:text-red-500">&times;</button>
+      <h2 id="doctorName" class="text-xl font-bold mb-2"></h2>
+      <p id="doctorSpecialty" class="text-sm text-gray-700 mb-1"></p>
+      <p id="doctorExperience" class="text-sm text-gray-700 mb-1"></p>
+      <p id="doctorQualification" class="text-sm text-gray-700 mb-1"></p>
+      <p id="doctorAvailability" class="text-sm text-gray-700"></p>
+    </div>
   </div>
-</div>
-<script>
-  function showDoctorDetails(doctor, availability) {
-  document.getElementById("doctorDetailsModal").classList.remove("hidden");
-  document.getElementById("doctorName").textContent = doctor.name || "N/A";
-  document.getElementById("doctorSpecialty").textContent = "Specialty: " + (doctor.specialty || "General Medicine");
-  document.getElementById("doctorExperience").textContent = "Experience: " + (doctor.experience || "N/A") + " years";
-  document.getElementById("doctorQualification").textContent = "Qualification: " + (doctor.qualification || "N/A");
-  document.getElementById("doctorAvailability").textContent = "Availability: " + availability;
-}
+  <script>
+    function showDoctorDetails(doctor, availability) {
+      document.getElementById("doctorDetailsModal").classList.remove("hidden");
+      document.getElementById("doctorName").textContent = doctor.name || "N/A";
+      document.getElementById("doctorSpecialty").textContent = "Specialty: " + (doctor.specialty || "General Medicine");
+      document.getElementById("doctorExperience").textContent = "Experience: " + (doctor.experience || "N/A") + " years";
+      document.getElementById("doctorQualification").textContent = "Qualification: " + (doctor.qualification || "N/A");
+      document.getElementById("doctorAvailability").textContent = "Availability: " + availability;
+    }
 
-function closeDoctorModal() {
-  document.getElementById("doctorDetailsModal").classList.add("hidden");
-}
+    function closeDoctorModal() {
+      document.getElementById("doctorDetailsModal").classList.add("hidden");
+    }
 
-</script>
+  </script>
 
 </body>
 
