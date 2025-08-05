@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard - MediCare</title>
+    <title>MediCare</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -2346,6 +2346,10 @@
             async function fetchAndDisplayDoctors() {
                 const res = await fetch("/api/doctors");
                 const doctors = await res.json();
+                if (!doctors.length) {
+                    doctorsList.innerHTML = `<div class="text-gray-500 text-center py-4">No doctors found.</div>`;
+                    return;
+                }
 
             }
 
@@ -2434,7 +2438,10 @@
                         throw new Error("Failed to fetch doctors");
                     }
                     allDoctors = await response.json();
-
+                    if (!allDoctors.length) {
+                        doctorsList.innerHTML = `<div class="text-gray-500 text-center py-4">No doctors found.</div>`;
+                        return;
+                    }
                     allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                     currentDoctorsPage = 1;
