@@ -150,8 +150,8 @@
                 </a>
               </li>
               <li>
-                 <button onclick="showLogoutModal()"
-                   class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
+                <button onclick="showLogoutModal()"
+                  class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
                   <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
@@ -261,7 +261,8 @@
   </div>
   </div>
 
-  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50 hidden">
+  <div id="editModal"
+    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50 hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Edit Admin</h2>
@@ -335,7 +336,8 @@
   </div>
 
 
-  <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 backdrop-blur-lg flex items-center justify-center hidden">
+  <div id="viewModal"
+    class="fixed inset-0 z-50 bg-black bg-opacity-40 backdrop-blur-lg flex items-center justify-center hidden">
 
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
       <div class="mb-6 border-b pb-4">
@@ -379,17 +381,18 @@
   </div>
 
   <div id="blurredBg" class="fixed inset-0 bg-white/30 bg-opacity-30 backdrop-blur-md hidden z-40"></div>
-        <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-                <h2 class="text-xl font-semibold mb-4">Logout</h2>
-                <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
-                </div>
-            </div>
-        </div>
-  <div id="deleteAdminModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
+  <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <h2 class="text-xl font-semibold mb-4">Logout</h2>
+      <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
+      </div>
+    </div>
+  </div>
+  <div id="deleteAdminModal"
+    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
       <div class="flex justify-center gap-4">
@@ -398,7 +401,8 @@
       </div>
     </div>
   </div>
-  <div id="restoreAdminModal" class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md flex justify-center items-center hidden z-50">
+  <div id="restoreAdminModal"
+    class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
       <div class="flex justify-center gap-4">
@@ -409,28 +413,25 @@
   </div>
   <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md z-40"></div>
 
-        <div id="deleteDoctorModal"
-            class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-                <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="confirmDeleteDoctor()"
-                        class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
-                </div>
-            </div>
-        </div>
-        <div id="restoreDoctorModal"
-            class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-                <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="confirmRestoreDoctor()"
-                        class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
-                </div>
-            </div>
-        </div>
+  <div id="deleteDoctorModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmDeleteDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div id="restoreDoctorModal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmRestoreDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
+      </div>
+    </div>
+  </div>
   <div id="viewDoctorProfileModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
@@ -902,10 +903,10 @@
     let currentDeleteId = null;
 
 
-   function showLogoutModal() {
-        document.getElementById("logoutModal")?.classList.remove("hidden");
-        document.getElementById("blurredBg")?.classList.remove("hidden");
-        
+    function showLogoutModal() {
+      document.getElementById("logoutModal")?.classList.remove("hidden");
+      document.getElementById("blurredBg")?.classList.remove("hidden");
+
     }
 
     function closeModals() {
@@ -917,7 +918,7 @@
       document.getElementById("restoreAdminModal")?.classList.add("hidden");
       document.getElementById("deleteDoctorModal")?.classList.add("hidden");
       document.getElementById("restoreDoctorModal")?.classList.add("hidden");
-       document.getElementById("blurredBg")?.classList.add("hidden");
+      document.getElementById("blurredBg")?.classList.add("hidden");
       selectedAdminId = null;
       selectedRestoreAdminId = null;
       selectedDoctorId = null;
@@ -937,6 +938,10 @@
           showToast("Failed to fetch doctors", "error")
         }
         allDoctors = await response.json();
+        if (!allDoctors.length) {
+          doctorsList.innerHTML = `<div class="text-gray-500 text-center py-4">No doctors found.</div>`;
+          return;
+        }
         allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         currentDoctorsPage = 1;
         const appointmentsRes = await fetch("/api/confirmations");
@@ -1221,84 +1226,84 @@
     }
   </script>
   <script>
-            let selectedDoctorId = null;
-            function openDeleteDoctorModal(doctorId) {
-                selectedDoctorId = doctorId;
-                document.getElementById('deleteDoctorModal').classList.remove('hidden');
-                document.getElementById('blurredBg').classList.remove('hidden');
-            }
-            async function confirmDeleteDoctor() {
-                if (!selectedDoctorId) return;
-                const token = localStorage.getItem("admin_jwt");
-                if (!token) {
-                    showToast("You are not authorized. Please log in again.", "error");
-                    return;
-                }
-                try {
-                    const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`,
-                        },
-                        body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
-                    });
+    let selectedDoctorId = null;
+    function openDeleteDoctorModal(doctorId) {
+      selectedDoctorId = doctorId;
+      document.getElementById('deleteDoctorModal').classList.remove('hidden');
+      document.getElementById('blurredBg').classList.remove('hidden');
+    }
+    async function confirmDeleteDoctor() {
+      if (!selectedDoctorId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error");
+        return;
+      }
+      try {
+        const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
+        });
 
-                    if (!res.ok) {
-                        const errData = await res.json();
-                        throw new Error(errData.message || "Failed to delete admin");
-                        showToast(errData.message || "Failed to delete admin", "error")
-                    }
-                    showToast("Doctor deleted successfully", "success");
-                    document.getElementById("deleteDoctorModal")?.classList.add("hidden");
-                    document.getElementById("blurredBg")?.classList.add("hidden");
-                    closeModals();
-                    fetchAndDisplayDoctors();
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to delete admin");
+          showToast(errData.message || "Failed to delete admin", "error")
+        }
+        showToast("Doctor deleted successfully", "success");
+        document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+        document.getElementById("blurredBg")?.classList.add("hidden");
+        closeModals();
+        fetchAndDisplayDoctors();
 
-                } catch (err) {
-                    showToast("Delete failed: " + err.message, "error")
-                }
-            }
-        </script>
-        <script>
-            let selectedRestoreDoctorId = null;
-            function openRestoreDoctorModal(doctorId) {
-                selectedRestoreDoctorId = doctorId;
-                document.getElementById('restoreDoctorModal').classList.remove('hidden');
-                document.getElementById('blurredBg').classList.remove('hidden');
-            }
-            async function confirmRestoreDoctor() {
-                if (!selectedRestoreDoctorId) return;
-                const token = localStorage.getItem("admin_jwt");
-                if (!token) {
-                    showToast("You are not authorized. Please log in again.", "error")
-                    return;
-                }
-                try {
-                    const res = await fetch(`/api/doctors/${selectedRestoreDoctorId}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`,
-                        },
-                        body: JSON.stringify({ doctorId: selectedRestoreDoctorId, isDeleted: false }),
-                    });
+      } catch (err) {
+        showToast("Delete failed: " + err.message, "error")
+      }
+    }
+  </script>
+  <script>
+    let selectedRestoreDoctorId = null;
+    function openRestoreDoctorModal(doctorId) {
+      selectedRestoreDoctorId = doctorId;
+      document.getElementById('restoreDoctorModal').classList.remove('hidden');
+      document.getElementById('blurredBg').classList.remove('hidden');
+    }
+    async function confirmRestoreDoctor() {
+      if (!selectedRestoreDoctorId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error")
+        return;
+      }
+      try {
+        const res = await fetch(`/api/doctors/${selectedRestoreDoctorId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ doctorId: selectedRestoreDoctorId, isDeleted: false }),
+        });
 
-                    if (!res.ok) {
-                        const errData = await res.json();
-                        throw new Error(errData.message || "Failed to restore admin");
-                        showToast(errData.message || "Failed to restore admin", "error")
-                    }
-                    showToast('Doctor restored successfully', "success");
-                    document.getElementById("restoreDoctorModal")?.classList.add("hidden");
-                    document.getElementById("blurredBg")?.classList.add("hidden"); 
-                    fetchAndDisplayDoctors();
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to restore admin");
+          showToast(errData.message || "Failed to restore admin", "error")
+        }
+        showToast('Doctor restored successfully', "success");
+        document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+        document.getElementById("blurredBg")?.classList.add("hidden");
+        fetchAndDisplayDoctors();
 
-                } catch (err) {
-                    showToast("Restore failed: " + err.message, "error")
-                }
-            }
-        </script>
+      } catch (err) {
+        showToast("Restore failed: " + err.message, "error")
+      }
+    }
+  </script>
   <script>
     document.querySelector('#editModal button.bg-blue-600').addEventListener('click', async function () {
       const id = window.currentEditingAdminId;
@@ -1534,21 +1539,21 @@
         document.body.classList.remove("blurred-bg");
         currentDoctorId = null;
         document.getElementById("availabilityForm").reset();
-      -
-        populateStartTimeDropdown();
+        -
+          populateStartTimeDropdown();
         populateEndTimeDropdown("");
       }
-      
+
       const timeSlots = [
-      "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
-      "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM" 
+        "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+        "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
       ];
 
-      
+
       function populateStartTimeDropdown() {
         const startSelect = document.getElementById("availabilityStart");
         if (!startSelect) return;
-        
+
         startSelect.innerHTML = '';
         timeSlots.forEach(time => {
           const option = document.createElement("option");
@@ -1558,20 +1563,20 @@
         });
       }
 
-      
+
       function populateEndTimeDropdown(selectedStartTime) {
         const endSelect = document.getElementById("availabilityEnd");
         if (!endSelect) return;
-        
+
         endSelect.innerHTML = '';
-        
+
         if (!selectedStartTime) return;
-        
-        
+
+
         const startIndex = timeSlots.indexOf(selectedStartTime);
         if (startIndex === -1) return;
-        
-        
+
+
         for (let i = startIndex + 1; i < timeSlots.length; i++) {
           const option = document.createElement("option");
           option.value = timeSlots[i];
@@ -1580,17 +1585,17 @@
         }
       }
 
-      
-      document.addEventListener('change', function(e) {
+
+      document.addEventListener('change', function (e) {
         if (e.target.id === 'availabilityStart') {
           populateEndTimeDropdown(e.target.value);
-          
+
           document.getElementById("availabilityEnd").value = "";
         }
       });
 
-    
-      document.addEventListener('DOMContentLoaded', function() {
+
+      document.addEventListener('DOMContentLoaded', function () {
         populateStartTimeDropdown();
         populateEndTimeDropdown("");
       });
@@ -1606,42 +1611,42 @@
         },
       });
 
-      
+
       async function fetchAndFillAvailabilityForDate(dateStr) {
         if (!currentDoctorId) return;
-        
-        
+
+
         populateStartTimeDropdown();
-        
+
         try {
           const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
           if (res.ok) {
             const data = await res.json();
-            
+
             if (data.start) {
-            
+
               document.getElementById("availabilityStart").value = data.start;
               populateEndTimeDropdown(data.start);
-              
+
               if (data.end) {
                 document.getElementById("availabilityEnd").value = data.end;
               }
             } else {
               document.getElementById("availabilityStart").value = "";
               document.getElementById("availabilityEnd").value = "";
-            
+
               populateEndTimeDropdown("");
             }
           } else {
             document.getElementById("availabilityStart").value = "";
             document.getElementById("availabilityEnd").value = "";
-            
+
             populateEndTimeDropdown("");
           }
         } catch (err) {
           document.getElementById("availabilityStart").value = "";
           document.getElementById("availabilityEnd").value = "";
-          
+
           populateEndTimeDropdown("");
         }
       }
@@ -1888,7 +1893,7 @@
     populateSpecialtyDropdown("addDoctorSpecialization");
     populateSpecialtyDropdown("editDoctorSpecialization");
   </script>
-<div id="superAdminProfileModal"
+  <div id="superAdminProfileModal"
     class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
       <!-- <button id="closeSuperAdminProfileModal"
@@ -2137,34 +2142,40 @@
       }
     }
   </script>
-  <div id="adminModalOverlay" class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md z-50 hidden flex items-center justify-center">
-  <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
-    <button id="closeAdminModal" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
-    <div class="flex flex-col items-center mb-4">
-      <div class="bg-blue-500 rounded-full p-3 mb-2">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
+  <div id="adminModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md z-50 hidden flex items-center justify-center">
+    <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+      <button id="closeAdminModal" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
+      <div class="flex flex-col items-center mb-4">
+        <div class="bg-blue-500 rounded-full p-3 mb-2">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-semibold">Admin Registration</h2>
       </div>
-      <h2 class="text-xl font-semibold">Admin Registration</h2>
+      <form id="adminRegForm" autocomplete="off" novalidate>
+        <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg"
+          required />
+        <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
+        <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+          class="w-full px-4 py-2 mb-3 border rounded-lg"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+          required />
+        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg"
+          required />
+        <input type="password" name="confirmPassword" placeholder="Confirm Password"
+          class="w-full px-4 py-2 mb-4 border rounded-lg" required />
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
+      </form>
     </div>
-    <form id="adminRegForm" autocomplete="off" novalidate>
-      <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-      <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-      <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
-        class="w-full px-4 py-2 mb-3 border rounded-lg"
-        oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);" required />
-      <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-      <input type="password" name="confirmPassword" placeholder="Confirm Password" class="w-full px-4 py-2 mb-4 border rounded-lg" required />
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
-    </form>
   </div>
-</div>
-<script>
-  document.getElementById("openAdminModal").addEventListener("click", () => {
-    document.getElementById("adminModalOverlay").classList.remove("hidden");
-  });
+  <script>
+    document.getElementById("openAdminModal").addEventListener("click", () => {
+      document.getElementById("adminModalOverlay").classList.remove("hidden");
+    });
 
     document.getElementById("closeAdminModal").addEventListener("click", () => {
       document.getElementById("adminModalOverlay").classList.add("hidden");

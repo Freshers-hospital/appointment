@@ -118,6 +118,28 @@
             background-color: white;
             color: #4b5563;
             border-bottom: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .doctor-row:hover {
+            background-color: #f8fafc;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .doctor-row:hover::after {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #3b82f6;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0.9;
+            pointer-events: none;
         }
 
         .doctor-row.active {
@@ -232,15 +254,65 @@
         }
 
         .action-menu {
-            position: fixed !important;
+            position: absolute !important;
             z-index: 9999 !important;
-            right: auto;
-            margin-top: 0;
+            right: 0;
+            top: 100%;
+            margin-top: 4px;
+            min-width: 160px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .action-menu a,
+        .action-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .action-menu a:hover,
+        .action-menu button:hover {
+            background-color: #f3f4f6;
+        }
+
+        .action-menu a:first-child,
+        .action-menu button:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .action-menu a:last-child,
+        .action-menu button:last-child {
+            border-radius: 0 0 8px 8px;
         }
 
         .bg-white.p-6.rounded-lg.shadow,
         .px-20 {
             overflow: visible !important;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .action-btn:hover {
+            background-color: #f3f4f6;
         }
 
         .overflow-x-auto {
@@ -752,6 +824,8 @@
         <div id="viewDoctorProfileModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
+                <button id="closeViewDoctorProfileModal"
+                    class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
                 <div class="sm:col-span-2 flex flex-col items-center mb-2">
                     <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
@@ -2267,6 +2341,10 @@
             async function fetchAndDisplayDoctors() {
                 const res = await fetch("/api/doctors");
                 const doctors = await res.json();
+                if (!doctors.length) {
+                    doctorsList.innerHTML = `<div class="text-gray-500 text-center py-4">No doctors found.</div>`;
+                    return;
+                }
 
             }
 
@@ -2355,7 +2433,10 @@
                         throw new Error("Failed to fetch doctors");
                     }
                     allDoctors = await response.json();
-
+                    if (!allDoctors.length) {
+                        doctorsList.innerHTML = `<div class="text-gray-500 text-center py-4">No doctors found.</div>`;
+                        return;
+                    }
                     allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                     currentDoctorsPage = 1;
@@ -2428,8 +2509,16 @@
                     if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
                         count = todaysAppointmentsCountMap[doctorName];
                     }
-                    doctorsList.innerHTML += `
-<div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+                    
+                    
+                    const doctorRow = document.createElement('div');
+                    doctorRow.className = 'grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 doctor-row';
+                    doctorRow.style.cursor = 'pointer';
+                    
+                    
+                    doctorRow.doctorData = doctor;
+                    
+                    doctorRow.innerHTML = `
   <div class="col-span-3 flex items-center">
     <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx
                         }" style="cursor:pointer;">
@@ -2446,26 +2535,37 @@
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
   <div class="col-span-3 text-gray-600 ml-16  ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${availabilities[idx]}</div>
-  
-</div>
-`;
-
-// <div class="col-span-2 relative">
-//     <button class="action-btn text-xl">...</button>
-//   ${doctor.isDeleted ? `
-//         <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-//           <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
-//         </div>
-//       ` : `
+  <div class="col-span-2 relative">
+    <!-- Action button commented out
+    <button class="action-btn text-xl">...</button>
+  ${doctor.isDeleted ? `
+        <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+          <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+        </div>
+      ` : `
     
-//     <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-//       <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
-//       <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
-//       <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
-//       <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-//     </div>
-//       `}
-//   </div>
+    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+      <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
+      <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
+      <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+      <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+    </div>
+      `}
+    -->
+  </div>
+`;
+                    
+    
+                    doctorRow.addEventListener('click', function(e) {
+                        
+                        if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
+                            showDoctorProfileModal(this.doctorData);
+                        }
+                    });
+                    
+                    doctorsList.appendChild(doctorRow);
+                    // Manage availability button event listeners commented out
+                    /*
                     document.querySelectorAll('.manage-availability-btn').forEach(button => {
                         button.addEventListener('click', function (e) {
                             e.preventDefault();
@@ -2478,7 +2578,11 @@
                             });
                         });
                     });
+                    */
                 });
+                
+                // Setup action menus after rendering - commented out
+                // setupActionMenus();
                 updateDoctorsPagination(totalPages);
             }
 
@@ -2603,12 +2707,68 @@
                 currentDoctorForEdit = null;
             }
 
+            function showDoctorProfileModal(doctor) {
+        
+                document.getElementById("profileDoctorName").textContent = doctor.name || "";
+                document.getElementById("profileDoctorSpecialty").textContent = doctor.specialty || "";
+                document.getElementById("profileDoctorExperience").textContent = doctor.experience || "";
+                document.getElementById("profileDoctorQualification").textContent = doctor.qualification || "";
+                document.getElementById("profileDoctorAvailability").textContent = doctor.availability || "";
+                document.getElementById("profileDoctorAge").textContent = doctor.age || "";
+                document.getElementById("profileDoctorGender").textContent = doctor.gender || "";
+                document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
+                document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
+                
+                
+                const profileImage = document.getElementById("profileDoctorImage");
+                if (doctor.image) {
+                    profileImage.src = doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image;
+                } else {
+                    profileImage.src = "/default.jpg";
+                }
+                
+            
+                const ageWrapper = document.getElementById('profileDoctorAgeWrapper');
+                const genderWrapper = document.getElementById('profileDoctorGenderWrapper');
+                const phoneWrapper = document.getElementById('profileDoctorPhoneWrapper');
+                const addressWrapper = document.getElementById('profileDoctorAddressWrapper');
+                
+                if (doctor.age) {
+                    ageWrapper.classList.remove("hidden");
+                } else {
+                    ageWrapper.classList.add("hidden");
+                }
+                
+                if (doctor.gender) {
+                    genderWrapper.classList.remove("hidden");
+                } else {
+                    genderWrapper.classList.add("hidden");
+                }
+                
+                if (doctor.phone) {
+                    phoneWrapper.classList.remove("hidden");
+                } else {
+                    phoneWrapper.classList.add("hidden");
+                }
+                
+                if (doctor.address) {
+                    addressWrapper.classList.remove("hidden");
+                } else {
+                    addressWrapper.classList.add("hidden");
+                }
+                
+                
+                document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
+                document.body.classList.add("blurred-bg");
+            }
+
             document.getElementById("closeEditDoctorModal").onclick = closeEditDoctorModal;
             document.getElementById("editDoctorModalOverlay").onclick = function (e) {
                 if (e.target === this) closeEditDoctorModal();
             };
 
-            document.getElementById("doctorsList").addEventListener("click", function (e) {
+        
+            document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("edit-doctor-profile-btn")) {
                     e.preventDefault();
                     const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
@@ -2949,6 +3109,7 @@
                     }
                 });
             }
+        
             document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
 
@@ -2956,6 +3117,7 @@
                 document.getElementById("viewDoctorProfileModalOverlay").classList.add("hidden");
                 document.body.classList.remove("blurred-bg");
             }
+
         </script>
         <script>
             if (document.getElementById("doctorsList")) {
@@ -2991,39 +3153,25 @@
             function setupActionMenus() {
                 document.querySelectorAll(".action-btn").forEach((btn) => {
                     btn.onclick = function (e) {
-                        document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-                        const menu = btn.nextElementSibling;
-                        if (menu) {
-                            const rect = btn.getBoundingClientRect();
-
-                            menu.style.visibility = "hidden";
-                            menu.style.display = "block";
-                            menu.style.top = "-9999px";
-                            menu.style.left = "-9999px";
-
-                            const menuHeight = menu.offsetHeight;
-                            let top = rect.top + window.scrollY;
-
-                            if (rect.bottom + menuHeight > window.innerHeight) {
-                                top = rect.top + window.scrollY - menuHeight;
-
-                                if (top < window.scrollY) {
-                                    top = window.scrollY;
-                                }
-                            }
-                            let left = rect.left + window.scrollX;
-
-                            menu.style.top = top + "px";
-                            menu.style.left = left + "px";
-                            menu.style.visibility = "visible";
-                            menu.style.display = "block";
-                            menu.classList.remove("hidden");
-                        }
                         e.stopPropagation();
+                        e.preventDefault();
+                        
+                        
+                        document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+                        
+                        const menu = btn.nextElementSibling;
+                        if (menu && menu.classList.contains("action-menu")) {
+                        
+                            menu.classList.toggle("hidden");
+                        }
                     };
                 });
-                document.addEventListener("click", function () {
-                    document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+                
+                
+                document.addEventListener("click", function (e) {
+                    if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
+                        document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+                    }
                 });
             }
 
