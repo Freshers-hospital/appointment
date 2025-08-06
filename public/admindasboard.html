@@ -483,10 +483,7 @@
                         <div class="col-span-3">Doctor</div>
                         <div class="col-span-3">Specialization</div>
                         <div class="col-span-3">Today's Appointments</div>
-                        <div class="col-span-3">Specialization</div>
-                        <div class="col-span-3">Today's Appointments</div>
                         <div class="col-span-3">Availability</div>
-                        <!-- <div class="col-span-2">Actions</div> -->
                         <!-- <div class="col-span-2">Actions</div> -->
                     </div>
 
@@ -500,7 +497,7 @@
                             class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"">Next</button>
                     </div>
                 </div>
-         <div id="patientsTab" class="tab-content hidden">
+                        <div id="patientsTab" class="tab-content hidden">
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h3 class="text-xl font-semibold">Patients List</h3>
@@ -679,7 +676,6 @@
                 <div class="flex justify-end mt-6">
                     <button id="okViewDetailsModal"
                         class="px-6 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Close</button>
-                        class="px-6 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200">Close</button>
                 </div>
             </div>
         </div>
@@ -824,7 +820,6 @@
                 </div>
                 <div class="flex justify-end mt-6">
                     <button id="closePatientDetailsBtn"
-                        class="px-4 py-2 rounded bg-blue-600 text-white  font-bold hover:bg-blue-700 transition-colors duration-200">Close</button>
                         class="px-4 py-2 rounded bg-blue-600 text-white  font-bold hover:bg-blue-700 transition-colors duration-200">Close</button>
                 </div>
             </div>
@@ -1663,46 +1658,18 @@
                     const allCancelled =
                         patient.appointments.length > 0 && patient.appointments.every((a) => (a.status || "").toLowerCase() === "canceled" || (a.status || "").toLowerCase() === "cancelled");
 
-      patientsHTML += `
+                    patientsHTML += `
   <div 
     class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 cursor-pointer"
     data-patient='${JSON.stringify({
-      name: patient.details.name || "N/A",
-      age: patient.details.age || "N/A",
-      gender: patient.details.gender || "N/A",
-      blood: patient.details.blood || "N/A",
-      contact: patient.details.contact || "N/A",
-      upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
-      lastVisit: lastVisit.replace(/<[^>]+>/g, "")
-    })}'
-  >
-    <div class="col-span-3 flex items-center">
-      <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-      <div>
-        <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">${patient.details.name || "N/A"}</div>
-        <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}</div>
-      </div>
-    </div>
-    <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
-    <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${upcomingDate}</div>
-    <div class="col-span-2 text-gray-600">${lastVisit}</div>
-  </div>
-`;
-
-      patientsHTML += `
-  <div 
-    class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 cursor-pointer"
-    data-patient='${JSON.stringify({
-      name: patient.details.name || "N/A",
-      age: patient.details.age || "N/A",
-      gender: patient.details.gender || "N/A",
-      blood: patient.details.blood || "N/A",
-      contact: patient.details.contact || "N/A",
-      upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
-      lastVisit: lastVisit.replace(/<[^>]+>/g, "")
-    })}'
+                        name: patient.details.name || "N/A",
+                        age: patient.details.age || "N/A",
+                        gender: patient.details.gender || "N/A",
+                        blood: patient.details.blood || "N/A",
+                        contact: patient.details.contact || "N/A",
+                        upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
+                        lastVisit: lastVisit.replace(/<[^>]+>/g, "")
+                    })}'
   >
     <div class="col-span-3 flex items-center">
       <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
@@ -2449,22 +2416,13 @@
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
-   document.getElementById("patientsList").addEventListener("click", function (e) {
-    const card = e.target.closest("[data-patient]");
-    if (card) {
-        const patientData = JSON.parse(card.getAttribute("data-patient"));
-        openPatientDetailsModal(patientData);
-    }
-});
-
-
-   document.getElementById("patientsList").addEventListener("click", function (e) {
-    const card = e.target.closest("[data-patient]");
-    if (card) {
-        const patientData = JSON.parse(card.getAttribute("data-patient"));
-        openPatientDetailsModal(patientData);
-    }
-});
+            document.getElementById("patientsList").addEventListener("click", function (e) {
+                const card = e.target.closest("[data-patient]");
+                if (card) {
+                    const patientData = JSON.parse(card.getAttribute("data-patient"));
+                    openPatientDetailsModal(patientData);
+                }
+            });
 
 
 
@@ -2556,15 +2514,15 @@
                     if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
                         count = todaysAppointmentsCountMap[doctorName];
                     }
-                    
-                    
+
+
                     const doctorRow = document.createElement('div');
                     doctorRow.className = 'grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 doctor-row';
                     doctorRow.style.cursor = 'pointer';
-                    
-                    
+
+
                     doctorRow.doctorData = doctor;
-                    
+
                     doctorRow.innerHTML = `
   <div class="col-span-3 flex items-center">
     <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx
@@ -2581,29 +2539,38 @@
   </div>
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
   <div class="col-span-3 text-gray-600 ml-16  ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
-  <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
-  <div class="col-span-3 text-gray-600 ml-16  ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${availabilities[idx]}</div>
-  
-</div>
+  <div class="col-span-2 relative">
+    <!-- Action button commented out
+    <button class="action-btn text-xl">...</button>
+  ${doctor.isDeleted ? `
+        <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+          <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+        </div>
+      ` : `
+    
+    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+      <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
+      <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
+      <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+      <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
+    </div>
+      `}
+    -->
+  </div>
 `;
 
-// <div class="col-span-2 relative">
-//     <button class="action-btn text-xl">...</button>
-//   ${doctor.isDeleted ? `
-//         <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-//           <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
-//         </div>
-//       ` : `
-    
-//     <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-//       <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
-//       <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
-//       <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
-//       <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-//     </div>
-//       `}
-//   </div>
+
+                    doctorRow.addEventListener('click', function (e) {
+
+                        if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
+                            showDoctorProfileModal(this.doctorData);
+                        }
+                    });
+
+                    doctorsList.appendChild(doctorRow);
+                    // Manage availability button event listeners commented out
+                    /*
                     document.querySelectorAll('.manage-availability-btn').forEach(button => {
                         button.addEventListener('click', function (e) {
                             e.preventDefault();
@@ -2618,7 +2585,7 @@
                     });
                     */
                 });
-                
+
                 // Setup action menus after rendering - commented out
                 // setupActionMenus();
                 updateDoctorsPagination(totalPages);
@@ -2746,7 +2713,7 @@
             }
 
             function showDoctorProfileModal(doctor) {
-        
+
                 document.getElementById("profileDoctorName").textContent = doctor.name || "";
                 document.getElementById("profileDoctorSpecialty").textContent = doctor.specialty || "";
                 document.getElementById("profileDoctorExperience").textContent = doctor.experience || "";
@@ -2756,46 +2723,46 @@
                 document.getElementById("profileDoctorGender").textContent = doctor.gender || "";
                 document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
                 document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
-                
-                
+
+
                 const profileImage = document.getElementById("profileDoctorImage");
                 if (doctor.image) {
                     profileImage.src = doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image;
                 } else {
                     profileImage.src = "/default.jpg";
                 }
-                
-            
+
+
                 const ageWrapper = document.getElementById('profileDoctorAgeWrapper');
                 const genderWrapper = document.getElementById('profileDoctorGenderWrapper');
                 const phoneWrapper = document.getElementById('profileDoctorPhoneWrapper');
                 const addressWrapper = document.getElementById('profileDoctorAddressWrapper');
-                
+
                 if (doctor.age) {
                     ageWrapper.classList.remove("hidden");
                 } else {
                     ageWrapper.classList.add("hidden");
                 }
-                
+
                 if (doctor.gender) {
                     genderWrapper.classList.remove("hidden");
                 } else {
                     genderWrapper.classList.add("hidden");
                 }
-                
+
                 if (doctor.phone) {
                     phoneWrapper.classList.remove("hidden");
                 } else {
                     phoneWrapper.classList.add("hidden");
                 }
-                
+
                 if (doctor.address) {
                     addressWrapper.classList.remove("hidden");
                 } else {
                     addressWrapper.classList.add("hidden");
                 }
-                
-                
+
+
                 document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
             }
@@ -2805,7 +2772,7 @@
                 if (e.target === this) closeEditDoctorModal();
             };
 
-        
+
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("edit-doctor-profile-btn")) {
                     e.preventDefault();
@@ -3147,7 +3114,7 @@
                     }
                 });
             }
-        
+
             document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
 
@@ -3193,19 +3160,19 @@
                     btn.onclick = function (e) {
                         e.stopPropagation();
                         e.preventDefault();
-                        
-                        
+
+
                         document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-                        
+
                         const menu = btn.nextElementSibling;
                         if (menu && menu.classList.contains("action-menu")) {
-                        
+
                             menu.classList.toggle("hidden");
                         }
                     };
                 });
-                
-                
+
+
                 document.addEventListener("click", function (e) {
                     if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
                         document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
@@ -3519,6 +3486,7 @@
             function showLogoutModal() {
                 document.getElementById("logoutModal")?.classList.remove("hidden");
                 document.getElementById("blurredBg")?.classList.remove("hidden");
+                dropdownMenu.classList.add("hidden");
 
             }
 
