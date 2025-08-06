@@ -101,6 +101,28 @@
       border: none !important;
     }
 
+    /* Time picker styling */
+    .time-picker-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .time-picker-container select {
+      min-width: 60px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .time-picker-container .time-separator {
+      color: #6b7280;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+
+
     .flatpickr-current-month .numInputWrapper,
     .flatpickr-current-month .flatpickr-year {
       display: none !important;
@@ -599,17 +621,13 @@
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">Start Time</p>
-          <select id="availabilityStart" name="start"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required>
+          <select id="startTime" class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             <option value="">Select Start Time</option>
           </select>
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">End Time</p>
-          <select id="availabilityEnd" name="end"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required>
+          <select id="endTime" class="w-full px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             <option value="">Select End Time</option>
           </select>
         </div>
@@ -1539,65 +1557,68 @@
         document.body.classList.remove("blurred-bg");
         currentDoctorId = null;
         document.getElementById("availabilityForm").reset();
-        -
-          populateStartTimeDropdown();
-        populateEndTimeDropdown("");
+        
+        clearTimeSelections();
       }
-
-      const timeSlots = [
-        "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-        "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
+  
+      const timeOptions = [
+        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", 
+        "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", 
+        "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
       ];
 
+      function populateTimeDropdowns() {
+        const startTimeSelect = document.getElementById('startTime');
+        const endTimeSelect = document.getElementById('endTime');
 
-      function populateStartTimeDropdown() {
-        const startSelect = document.getElementById("availabilityStart");
-        if (!startSelect) return;
+        
+        startTimeSelect.innerHTML = '<option value="">Select Start Time</option>';
+        endTimeSelect.innerHTML = '<option value="">Select End Time</option>';
 
-        startSelect.innerHTML = '';
-        timeSlots.forEach(time => {
-          const option = document.createElement("option");
+        
+        timeOptions.forEach(time => {
+          const option = document.createElement('option');
           option.value = time;
           option.textContent = time;
-          startSelect.appendChild(option);
+          startTimeSelect.appendChild(option);
+        });
+
+        
+        timeOptions.forEach(time => {
+          const option = document.createElement('option');
+          option.value = time;
+          option.textContent = time;
+          endTimeSelect.appendChild(option);
         });
       }
 
+      function getSelectedStartTime() {
+        return document.getElementById('startTime').value;
+      }
 
-      function populateEndTimeDropdown(selectedStartTime) {
-        const endSelect = document.getElementById("availabilityEnd");
-        if (!endSelect) return;
+      function getSelectedEndTime() {
+        return document.getElementById('endTime').value;
+      }
 
-        endSelect.innerHTML = '';
-
-        if (!selectedStartTime) return;
-
-
-        const startIndex = timeSlots.indexOf(selectedStartTime);
-        if (startIndex === -1) return;
-
-
-        for (let i = startIndex + 1; i < timeSlots.length; i++) {
-          const option = document.createElement("option");
-          option.value = timeSlots[i];
-          option.textContent = timeSlots[i];
-          endSelect.appendChild(option);
+      function setSelectedStartTime(timeString) {
+        if (timeString) {
+          document.getElementById('startTime').value = timeString;
         }
       }
 
-
-      document.addEventListener('change', function (e) {
-        if (e.target.id === 'availabilityStart') {
-          populateEndTimeDropdown(e.target.value);
-
-          document.getElementById("availabilityEnd").value = "";
+      function setSelectedEndTime(timeString) {
+        if (timeString) {
+          document.getElementById('endTime').value = timeString;
         }
-      });
+      }
 
+      function clearTimeSelections() {
+        document.getElementById('startTime').value = '';
+        document.getElementById('endTime').value = '';
+      }
 
       document.addEventListener('DOMContentLoaded', function () {
-        populateStartTimeDropdown();
-        populateEndTimeDropdown("");
+        populateTimeDropdowns();
       });
 
       const availabilityDateInput = document.getElementById("availabilityDate");
@@ -1615,8 +1636,8 @@
       async function fetchAndFillAvailabilityForDate(dateStr) {
         if (!currentDoctorId) return;
 
-
-        populateStartTimeDropdown();
+        
+        populateTimeDropdowns();
 
         try {
           const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
@@ -1624,38 +1645,37 @@
             const data = await res.json();
 
             if (data.start) {
-
-              document.getElementById("availabilityStart").value = data.start;
-              populateEndTimeDropdown(data.start);
-
+              setSelectedStartTime(data.start);
+              
               if (data.end) {
-                document.getElementById("availabilityEnd").value = data.end;
+                setSelectedEndTime(data.end);
+              } else {
+                clearTimeSelections();
               }
             } else {
-              document.getElementById("availabilityStart").value = "";
-              document.getElementById("availabilityEnd").value = "";
-
-              populateEndTimeDropdown("");
+              clearTimeSelections();
             }
           } else {
-            document.getElementById("availabilityStart").value = "";
-            document.getElementById("availabilityEnd").value = "";
-
-            populateEndTimeDropdown("");
+            clearTimeSelections();
           }
         } catch (err) {
-          document.getElementById("availabilityStart").value = "";
-          document.getElementById("availabilityEnd").value = "";
-
-          populateEndTimeDropdown("");
+          clearTimeSelections();
         }
       }
       document.getElementById("availabilityForm").onsubmit = async function (e) {
         e.preventDefault();
         const date = document.getElementById("availabilityDate").value;
-        const start = document.getElementById("availabilityStart").value;
-        const end = document.getElementById("availabilityEnd").value;
+        const start = getSelectedStartTime();
+        const end = getSelectedEndTime();
+        
         if (!currentDoctorId) return;
+        
+        
+        if (!start || !end) {
+          showToast("Please select both start and end times", "error");
+          return;
+        }
+        
         try {
           const response = await fetch(`/api/doctors/${currentDoctorId}/availability`, {
             method: "POST",
