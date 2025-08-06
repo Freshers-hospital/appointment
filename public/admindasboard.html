@@ -553,7 +553,7 @@
                             class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"">Next</button>
                     </div>
                 </div>
-         <div id="patientsTab" class="tab-content hidden">
+                        <div id="patientsTab" class="tab-content hidden">
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h3 class="text-xl font-semibold">Patients List</h3>
@@ -1714,18 +1714,18 @@
                     const allCancelled =
                         patient.appointments.length > 0 && patient.appointments.every((a) => (a.status || "").toLowerCase() === "canceled" || (a.status || "").toLowerCase() === "cancelled");
 
-      patientsHTML += `
+                    patientsHTML += `
   <div 
     class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 cursor-pointer"
     data-patient='${JSON.stringify({
-      name: patient.details.name || "N/A",
-      age: patient.details.age || "N/A",
-      gender: patient.details.gender || "N/A",
-      blood: patient.details.blood || "N/A",
-      contact: patient.details.contact || "N/A",
-      upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
-      lastVisit: lastVisit.replace(/<[^>]+>/g, "")
-    })}'
+                        name: patient.details.name || "N/A",
+                        age: patient.details.age || "N/A",
+                        gender: patient.details.gender || "N/A",
+                        blood: patient.details.blood || "N/A",
+                        contact: patient.details.contact || "N/A",
+                        upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
+                        lastVisit: lastVisit.replace(/<[^>]+>/g, "")
+                    })}'
   >
     <div class="col-span-3 flex items-center">
       <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
@@ -2493,13 +2493,13 @@
             document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
-   document.getElementById("patientsList").addEventListener("click", function (e) {
-    const card = e.target.closest("[data-patient]");
-    if (card) {
-        const patientData = JSON.parse(card.getAttribute("data-patient"));
-        openPatientDetailsModal(patientData);
-    }
-});
+            document.getElementById("patientsList").addEventListener("click", function (e) {
+                const card = e.target.closest("[data-patient]");
+                if (card) {
+                    const patientData = JSON.parse(card.getAttribute("data-patient"));
+                    openPatientDetailsModal(patientData);
+                }
+            });
 
 
 
@@ -2591,15 +2591,15 @@
                     if (todaysAppointmentsCountMap && doctorName in todaysAppointmentsCountMap) {
                         count = todaysAppointmentsCountMap[doctorName];
                     }
-                    
-                    
+
+
                     const doctorRow = document.createElement('div');
                     doctorRow.className = 'grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 doctor-row';
                     doctorRow.style.cursor = 'pointer';
-                    
-                    
+
+
                     doctorRow.doctorData = doctor;
-                    
+
                     doctorRow.innerHTML = `
   <div class="col-span-3 flex items-center">
     <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx
@@ -2636,15 +2636,15 @@
     -->
   </div>
 `;
-                    
-    
-                    doctorRow.addEventListener('click', function(e) {
-                        
+
+
+                    doctorRow.addEventListener('click', function (e) {
+
                         if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
                             showDoctorProfileModal(this.doctorData);
                         }
                     });
-                    
+
                     doctorsList.appendChild(doctorRow);
                     // Manage availability button event listeners commented out
                     /*
@@ -2662,7 +2662,7 @@
                     });
                     */
                 });
-                
+
                 // Setup action menus after rendering - commented out
                 // setupActionMenus();
                 updateDoctorsPagination(totalPages);
@@ -2790,7 +2790,7 @@
             }
 
             function showDoctorProfileModal(doctor) {
-        
+
                 document.getElementById("profileDoctorName").textContent = doctor.name || "";
                 document.getElementById("profileDoctorSpecialty").textContent = doctor.specialty || "";
                 document.getElementById("profileDoctorExperience").textContent = doctor.experience || "";
@@ -2800,46 +2800,46 @@
                 document.getElementById("profileDoctorGender").textContent = doctor.gender || "";
                 document.getElementById("profileDoctorPhone").textContent = doctor.phone || "";
                 document.getElementById("profileDoctorAddress").textContent = doctor.address || "";
-                
-                
+
+
                 const profileImage = document.getElementById("profileDoctorImage");
                 if (doctor.image) {
                     profileImage.src = doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image;
                 } else {
                     profileImage.src = "/default.jpg";
                 }
-                
-            
+
+
                 const ageWrapper = document.getElementById('profileDoctorAgeWrapper');
                 const genderWrapper = document.getElementById('profileDoctorGenderWrapper');
                 const phoneWrapper = document.getElementById('profileDoctorPhoneWrapper');
                 const addressWrapper = document.getElementById('profileDoctorAddressWrapper');
-                
+
                 if (doctor.age) {
                     ageWrapper.classList.remove("hidden");
                 } else {
                     ageWrapper.classList.add("hidden");
                 }
-                
+
                 if (doctor.gender) {
                     genderWrapper.classList.remove("hidden");
                 } else {
                     genderWrapper.classList.add("hidden");
                 }
-                
+
                 if (doctor.phone) {
                     phoneWrapper.classList.remove("hidden");
                 } else {
                     phoneWrapper.classList.add("hidden");
                 }
-                
+
                 if (doctor.address) {
                     addressWrapper.classList.remove("hidden");
                 } else {
                     addressWrapper.classList.add("hidden");
                 }
-                
-                
+
+
                 document.getElementById("viewDoctorProfileModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
             }
@@ -2849,7 +2849,7 @@
                 if (e.target === this) closeEditDoctorModal();
             };
 
-        
+
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("edit-doctor-profile-btn")) {
                     e.preventDefault();
@@ -3191,7 +3191,7 @@
                     }
                 });
             }
-        
+
             document.getElementById("closeViewDoctorProfileModal").onclick = closeViewDoctorProfileModal;
             document.getElementById("closeViewDoctorProfileBtn").onclick = closeViewDoctorProfileModal;
 
@@ -3237,19 +3237,19 @@
                     btn.onclick = function (e) {
                         e.stopPropagation();
                         e.preventDefault();
-                        
-                        
+
+
                         document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
-                        
+
                         const menu = btn.nextElementSibling;
                         if (menu && menu.classList.contains("action-menu")) {
-                        
+
                             menu.classList.toggle("hidden");
                         }
                     };
                 });
-                
-                
+
+
                 document.addEventListener("click", function (e) {
                     if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
                         document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
@@ -3563,6 +3563,7 @@
             function showLogoutModal() {
                 document.getElementById("logoutModal")?.classList.remove("hidden");
                 document.getElementById("blurredBg")?.classList.remove("hidden");
+                dropdownMenu.classList.add("hidden");
 
             }
 
