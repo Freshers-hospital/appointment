@@ -142,7 +142,6 @@
         }
 
         .blurred-bg>*:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(#addDoctorModalOverlay):not(#patientDetailsModalOverlay):not(#successModalOverlay):not(#viewDoctorProfileModalOverlay):not(#editDoctorProfileModalOverlay):not(#toast) {
-        .blurred-bg>*:not(#viewDetailsModalOverlay):not(#appointmentDetailsModalOverlay):not(#availabilityModalOverlay):not(#rescheduleModalOverlay):not(#cancelModalOverlay):not(#addDoctorModalOverlay):not(#patientDetailsModalOverlay):not(#successModalOverlay):not(#viewDoctorProfileModalOverlay):not(#editDoctorProfileModalOverlay):not(#toast) {
             filter: blur(4px);
             pointer-events: none;
             user-select: none;
@@ -270,52 +269,6 @@
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
                 <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
-            </div>
-            <div class="flex items-center">
-                <div class="flex items-center gap-2">
-                    <div id="userAvatar"
-                        class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-lg">
-                    </div>
-                    <span id="userName" class="font-bold text-sm text-black"></span>
-                    <div class="mr-2 font-bold text-sm text-black cursor-pointer flex items-center gap-1"
-                        id="userDropdownToggle">
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" fill="none" width="24" height="24" />
-                            <g>
-                                <path d="M7 10l5 5 5-5" />
-                            </g>
-                        </svg>
-                    </div>
-                    <div id="userDropdownMenu"
-                        class="absolute right-0 mt-32 w-44 bg-white border border-gray-200 rounded shadow-md hidden z-50">
-                        <ul class="py-1 text-sm text-gray-700">
-                            <li>
-                                <a href=""
-                                    class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors duration-150">
-                                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
-                                            fill="#000000" />
-                                    </svg>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
-                                    class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
-                                    <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z"
-                                            fill="#ff0000" />
-                                    </svg>
-                                    <span>Logout</span>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             <div class="flex items-center">
                 <div class="flex items-center gap-2">
@@ -759,7 +712,7 @@
             </div>
         </form>
     </div>
-</div>
+</div> -->
 <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
                 <p id="alertMessage" class="text-center text-lg"></p>
@@ -1018,8 +971,6 @@
                 class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
         </div>
     </div>
-    <footer
-        class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
     <footer
         class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
         <div class="text-gray-500 font-semibold">medicare@2000</div>
@@ -1788,7 +1739,6 @@ if (patientsHeader) {
                 }
             } catch (err) {
                 showToast("Error saving availability: " + err.message, 'error');
-                showToast("Error saving availability: " + err.message, 'error');
             }
         };
 
@@ -1850,7 +1800,6 @@ if (patientsHeader) {
             } catch (error) {
                 console.error("Error loading doctors:", error);
                 showToast("Failed to load doctors. Please try again.", 'error');
-                showToast("Failed to load doctors. Please try again.", 'error');
             }
         }
 
@@ -1880,7 +1829,6 @@ if (patientsHeader) {
             const doctorId = document.getElementById("doctorSelect").value;
             if (!doctorId) {
                 showToast("Please select a doctor", 'warning');
-                showToast("Please select a doctor", 'warning');
                 return;
             }
 
@@ -1901,10 +1849,8 @@ if (patientsHeader) {
 
                 closeAssignDoctorModal();
                 showToast("Doctor assigned successfully!", 'success');
-                showToast("Doctor assigned successfully!", 'success');
             } catch (error) {
                 console.error("Error assigning doctor:", error);
-                showToast("Failed to assign doctor. Please try again.", 'error');
                 showToast("Failed to assign doctor. Please try again.", 'error');
             }
         };
@@ -1944,7 +1890,6 @@ if (patientsHeader) {
                     const appointmentData = JSON.parse(e.target.getAttribute("data-appointment"));
 
                     if (!appointmentData._id) {
-                        showToast("Error: Appointment ID missing. Cannot edit this appointment.", 'error');
                         showToast("Error: Appointment ID missing. Cannot edit this appointment.", 'error');
                         return;
                     }
@@ -2126,11 +2071,9 @@ if (patientsHeader) {
             e.preventDefault();
             if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
                 showToast("Error: Missing appointment ID.", 'error');
-                showToast("Error: Missing appointment ID.", 'error');
                 return;
             }
             if (!rescheduleSelectedDate || !rescheduleSelectedTime) {
-                showToast("Please select both date and time.", 'warning');
                 showToast("Please select both date and time.", 'warning');
                 return;
             }
@@ -2149,7 +2092,6 @@ if (patientsHeader) {
                 if (!response.ok) throw new Error("Failed to reschedule appointment");
                 closeRescheduleModal();
                 showSuccessModal("Appointment rescheduled successfully!", "Appointment rescheduled successfully!", "success");
-                showSuccessModal("Appointment rescheduled successfully!", "Appointment rescheduled successfully!", "success");
                 try {
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
@@ -2159,7 +2101,6 @@ if (patientsHeader) {
                     window.location.reload();
                 }
             } catch (err) {
-                showToast("Error rescheduling appointment: " + err.message, 'error');
                 showToast("Error rescheduling appointment: " + err.message, 'error');
             }
         };
@@ -2192,7 +2133,6 @@ if (patientsHeader) {
         document.getElementById("confirmCancelBtn").onclick = async function () {
             if (!cancelAppointmentData || !cancelAppointmentData._id) {
                 showToast("Error: Missing appointment ID.", 'error');
-                showToast("Error: Missing appointment ID.", 'error');
                 return;
             }
             const confirmButton = document.getElementById("confirmCancelBtn");
@@ -2215,7 +2155,6 @@ if (patientsHeader) {
                 }
                 closeCancelModal();
                 showSuccessModal("Appointment cancelled successfully!", "Appointment cancelled successfully!", "success");
-                showSuccessModal("Appointment cancelled successfully!", "Appointment cancelled successfully!", "success");
                 try {
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
@@ -2224,7 +2163,6 @@ if (patientsHeader) {
                     window.location.reload();
                 }
             } catch (error) {
-                showToast("Error cancelling appointment: " + error.message, 'error');
                 showToast("Error cancelling appointment: " + error.message, 'error');
                 confirmButton.disabled = false;
                 confirmButton.textContent = "Yes, Cancel";
@@ -2337,21 +2275,14 @@ if (patientsHeader) {
 
         let pendingToast = null;
         function showSuccessModal(message, toastMessage = null, toastType = 'success') {
-        let pendingToast = null;
-        function showSuccessModal(message, toastMessage = null, toastType = 'success') {
             document.getElementById("successModalMessage").textContent = message;
             document.getElementById("successModalOverlay").classList.remove("hidden");
             document.body.classList.add("blurred-bg");
-            pendingToast = toastMessage ? { message: toastMessage, type: toastType } : null;
             pendingToast = toastMessage ? { message: toastMessage, type: toastType } : null;
         }
         function hideSuccessModal() {
             document.getElementById("successModalOverlay").classList.add("hidden");
             document.body.classList.remove("blurred-bg");
-            if (pendingToast) {
-                showToast(pendingToast.message, pendingToast.type);
-                pendingToast = null;
-            }
             if (pendingToast) {
                 showToast(pendingToast.message, pendingToast.type);
                 pendingToast = null;
@@ -2718,7 +2649,6 @@ if (patientsHeader) {
 
             if (!appointmentId || !newDate || !newTime) {
                 showToast("Please select both date and time.", 'warning');
-                showToast("Please select both date and time.", 'warning');
                 return;
             }
 
@@ -2739,7 +2669,6 @@ if (patientsHeader) {
 
                 if (response.ok) {
                     showToast("Appointment successfully rescheduled!", 'success');
-                    showToast("Appointment successfully rescheduled!", 'success');
                     document.getElementById("rescheduleModalOverlay").classList.add("hidden");
 
                     const date = document.getElementById("datePicker").value;
@@ -2749,7 +2678,6 @@ if (patientsHeader) {
                     throw new Error(result.error || "Failed to reschedule appointment");
                 }
             } catch (err) {
-                showToast("Error rescheduling appointment: " + err.message, 'error');
                 showToast("Error rescheduling appointment: " + err.message, 'error');
             }
         });
@@ -2811,7 +2739,6 @@ if (patientsHeader) {
             e.preventDefault();
             if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
                 showToast("No doctor selected for editing.", 'warning');
-                showToast("No doctor selected for editing.", 'warning');
                 return;
             }
             const formData = new FormData();
@@ -2840,10 +2767,8 @@ if (patientsHeader) {
                 closeEditDoctorProfileModal();
                 await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
                 showToast("Doctor profile updated successfully!", 'success');
-                showToast("Doctor profile updated successfully!", 'success');
             } catch (err) {
                 console.error("Error updating doctor:", err);
-                showToast("Error updating doctor: " + err.message, 'error');
                 showToast("Error updating doctor: " + err.message, 'error');
             }
         };
@@ -3169,7 +3094,6 @@ if (patientsHeader) {
 
                     if (!currentDoctorForEditProfile || !currentDoctorForEditProfile._id) {
                         showToast("No doctor selected for editing.", 'warning');
-                        showToast("No doctor selected for editing.", 'warning');
                         return;
                     }
 
@@ -3203,10 +3127,8 @@ if (patientsHeader) {
                         closeEditDoctorProfileModal();
                         await fetchAndDisplayDoctors(document.getElementById("datePicker").value);
                         showToast("Doctor profile updated successfully!", 'success');
-                        showToast("Doctor profile updated successfully!", 'success');
                     } catch (err) {
                         console.error("Error updating doctor:", err);
-                        showToast("Error updating doctor: " + err.message, 'error');
                         showToast("Error updating doctor: " + err.message, 'error');
                     }
                 };
@@ -3261,10 +3183,8 @@ if (patientsHeader) {
                                         renderDoctorsPage();
                                     } else {
                                         showToast("Upload failed", 'error');
-                                        showToast("Upload failed", 'error');
                                     }
                                 })
-                                .catch(() => showToast("Upload error", 'error'));
                                 .catch(() => showToast("Upload error", 'error'));
                         }
                     };
@@ -3309,7 +3229,6 @@ if (patientsHeader) {
                 const phone = editDoctorPhone.value;
                 const phonePattern = /^[6-9][0-9]{9}$/;
                 if (!phonePattern.test(phone)) {
-                    showToast("Phone number must be 10 digits and start with 6, 7, 8, or 9.", 'warning');
                     showToast("Phone number must be 10 digits and start with 6, 7, 8, or 9.", 'warning');
                     editDoctorPhone.focus();
                     e.preventDefault();
@@ -3367,9 +3286,6 @@ if (patientsHeader) {
         const userName = localStorage.getItem("name");
         document.getElementById("userName").textContent = userName;
     </script>
-        const userName = localStorage.getItem("name");
-        document.getElementById("userName").textContent = userName;
-    </script>
     <script>
         const dropdownToggle = document.getElementById("userDropdownToggle");
         const dropdownMenu = document.getElementById("userDropdownMenu");
@@ -3401,17 +3317,6 @@ if (patientsHeader) {
         document.getElementById("userAvatar").textContent = getInitials(userName);
     </script>
     <script>
-        function getInitials(name) {
-            if (!name) return "";
-            const parts = name.trim().split(" ");
-            if (parts.length === 1) return parts[0][0].toUpperCase();
-            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-        }
-        const AdminName = localStorage.getItem("name") || "admin";
-        document.getElementById("userName").textContent = userName;
-        document.getElementById("userAvatar").textContent = getInitials(userName);
-    </script>
-    <script>
         async function logout() {
             try {
                 const token = localStorage.getItem('admin_jwt');
@@ -3426,10 +3331,8 @@ if (patientsHeader) {
                     window.location.href = "login.html";
                 } else {
                     showToast(result.error, 'error');
-                    showToast(result.error, 'error');
                 }
             } catch (err) {
-                showToast("Error: " + err.message, 'error');
                 showToast("Error: " + err.message, 'error');
             }
         };

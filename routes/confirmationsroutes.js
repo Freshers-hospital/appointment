@@ -160,22 +160,13 @@ router.get("/booked-slots", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const { action, date, time, patientData, doctorName } = req.body;
-    try {
-        const { action, date, time, patientData, doctorName } = req.body;
 
         const confirmation = await Confirmation.findById(req.params.id).populate("date").populate("doctor");
-      
-        if (!confirmation) {
-            return res.status(404).json({ error: "Confirmation not found" });
-        }
+
         if (!confirmation) {
             return res.status(404).json({ error: "Confirmation not found" });
         }
 
-        if (action === "reschedule") {
-            if (!date || !time) {
-                return res.status(400).json({ error: "Date and time are required for rescheduling." });
-            }
         if (action === "reschedule") {
             if (!date || !time) {
                 return res.status(400).json({ error: "Date and time are required for rescheduling." });
@@ -185,17 +176,9 @@ router.put("/:id", async (req, res) => {
                 doctor: confirmation.doctor._id,
                 _id: { $ne: confirmation._id },
             }).populate("date");
-            const existingConfirmations = await Confirmation.find({
-                doctor: confirmation.doctor._id,
-                _id: { $ne: confirmation._id },
-            }).populate("date");
 
             const slotTaken = existingConfirmations.some((conf) => conf.date?.date === date && conf.date?.time === time);
-            const slotTaken = existingConfirmations.some((conf) => conf.date?.date === date && conf.date?.time === time);
 
-            if (slotTaken) {
-                return res.status(400).json({ error: "This time slot is already booked for this doctor." });
-            }
             if (slotTaken) {
                 return res.status(400).json({ error: "This time slot is already booked for this doctor." });
             }
@@ -205,38 +188,14 @@ router.put("/:id", async (req, res) => {
                 dateDoc = new DateModel({ date, time });
                 await dateDoc.save();
             }
-            let dateDoc = await DateModel.findOne({ date, time });
-            if (!dateDoc) {
-                dateDoc = new DateModel({ date, time });
-                await dateDoc.save();
-            }
 
-            confirmation.date = dateDoc._id;
-            confirmation.status = "rescheduled";
-            await confirmation.save();
             confirmation.date = dateDoc._id;
             confirmation.status = "rescheduled";
             await confirmation.save();
 
             return res.json({ message: "Appointment rescheduled", confirmation });
         }
-            return res.json({ message: "Appointment rescheduled", confirmation });
-        }
 
-        if (action === "cancel") {
-            confirmation.status = "cancelled";
-            await confirmation.save();
-            return res.json({ message: "Appointment cancelled", confirmation });
-        }
-
-        if (action === "edit") {
-            if (patientData) {
-                const patient = await Patient.findById(confirmation.patient);
-                if (patient) {
-                    Object.assign(patient, patientData);
-                    await patient.save();
-                }
-            }
         if (action === "cancel") {
             confirmation.status = "cancelled";
             await confirmation.save();
@@ -260,14 +219,6 @@ router.put("/:id", async (req, res) => {
                 confirmation.doctor = doctor._id;
                 confirmation.doctorName = doctor.name;
             }
-            if (doctorName) {
-                const doctor = await Doctor.findOne({ name: doctorName });
-                if (!doctor) {
-                    return res.status(400).json({ error: "Doctor not found" });
-                }
-                confirmation.doctor = doctor._id;
-                confirmation.doctorName = doctor.name;
-            }
 
             if (date && time) {
                 let dateDoc = await DateModel.findOne({ date, time });
@@ -277,24 +228,7 @@ router.put("/:id", async (req, res) => {
                 }
                 confirmation.date = dateDoc._id;
             }
-            if (date && time) {
-                let dateDoc = await DateModel.findOne({ date, time });
-                if (!dateDoc) {
-                    dateDoc = new DateModel({ date, time });
-                    await dateDoc.save();
-                }
-                confirmation.date = dateDoc._id;
-            }
 
-            await confirmation.save();
-            return res.json({ message: "Appointment updated", confirmation });
-        }
-
-        res.status(400).json({ error: "Invalid action or missing data" });
-    } catch (error) {
-        console.error("ERROR in PUT /api/confirmations/:id:", error.message);
-        res.status(500).json({ error: error.message });
-    }
             await confirmation.save();
             return res.json({ message: "Appointment updated", confirmation });
         }
