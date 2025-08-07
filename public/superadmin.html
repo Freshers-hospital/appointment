@@ -676,32 +676,32 @@
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
           <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
-          
-<!--           
+
+          <!--           
           <input type="text" id="doctorAvailability" name="availability"
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="e.g., 9:00 AM - 5:00 PM" required /> -->
 
-<div class="grid grid-cols-2 gap-4">
-  <!-- Start Time -->
-  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-    <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
-    <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-      <!-- JS will fill options -->
-    </select>
-  </div>
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Start Time -->
+            <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+              <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+              <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+                <!-- JS will fill options -->
+              </select>
+            </div>
 
-  <!-- End Time -->
-  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-    <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
-    <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-      <!-- JS will fill options -->
-    </select>
-  </div>
-</div>
+            <!-- End Time -->
+            <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+              <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+              <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+                <!-- JS will fill options -->
+              </select>
+            </div>
+          </div>
 
-<!-- Hidden input to store formatted availability -->
-<input type="hidden" id="doctorAvailability" name="availability" required />
+          <!-- Hidden input to store formatted availability -->
+          <input type="hidden" id="doctorAvailability" name="availability" required />
 
 
 
@@ -1718,10 +1718,23 @@
       const addDoctorModalOverlay = document.getElementById("addDoctorModalOverlay");
       if (addDoctorModalOverlay) {
         const closeAddDoctorModal = document.getElementById("closeAddDoctorModal");
-        const openModal = () => {
-          addDoctorModalOverlay.classList.remove("hidden");
-          document.body.classList.add("blurred-bg");
-        };
+       const openModal = () => {
+  addDoctorModalOverlay.classList.remove("hidden");
+  document.body.classList.add("blurred-bg");
+
+  const form = document.getElementById("addDoctorForm");
+  if (form) form.reset();
+
+
+  populateSpecialtyDropdown("addDoctorSpecialization");
+  const specialtyDropdown = document.getElementById("addDoctorSpecialization");
+  if (specialtyDropdown) {
+    specialtyDropdown.selectedIndex = 0;
+  }
+
+  showDoctorError("");
+};
+
         const closeModal = () => {
           addDoctorModalOverlay.classList.add("hidden");
           document.body.classList.remove("blurred-bg");
@@ -1915,6 +1928,7 @@
         select.appendChild(option);
       });
     }
+    
     populateSpecialtyDropdown("doctorSpecialty");
     populateSpecialtyDropdown("addDoctorSpecialization");
     populateSpecialtyDropdown("editDoctorSpecialization");
@@ -2289,25 +2303,48 @@
   </script>
 
 
-
 <script>
-  function populateTimeOptions(selectElement) {
+  function populateTimeOptions(selectElement, minTime = null) {
+    selectElement.innerHTML = "";
+
+    const defaultOption = document.createElement("option");
+    defaultOption.text = "Select Time";
+    defaultOption.value = "";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    selectElement.appendChild(defaultOption);
+
     const start = new Date();
-    start.setHours(6, 0); // 6:00 AM
+    start.setHours(6, 0);
     const end = new Date();
-    end.setHours(23, 30); // 11:30 PM
+    end.setHours(23, 30);
 
     while (start <= end) {
       const timeStr = start.toLocaleTimeString("en-US", {
         hour: 'numeric',
         minute: '2-digit'
       });
-      const option = document.createElement("option");
-      option.value = timeStr;
-      option.text = timeStr;
-      selectElement.appendChild(option);
+
+      const currentMinutes = start.getHours() * 60 + start.getMinutes();
+      const minMinutes = minTime ? convertToMinutes(minTime) : 0;
+
+      if (!minTime || currentMinutes > minMinutes) {
+        const option = document.createElement("option");
+        option.value = timeStr;
+        option.text = timeStr;
+        selectElement.appendChild(option);
+      }
+
       start.setMinutes(start.getMinutes() + 30);
     }
+  }
+
+  function convertToMinutes(timeStr) {
+    const [time, modifier] = timeStr.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+    if (modifier === "PM" && hours !== 12) hours += 12;
+    if (modifier === "AM" && hours === 12) hours = 0;
+    return hours * 60 + minutes;
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -2315,26 +2352,44 @@
     const endTime = document.getElementById("endTime");
     const availabilityInput = document.getElementById("doctorAvailability");
 
-    if (startTime && endTime) {
-      populateTimeOptions(startTime);
-      populateTimeOptions(endTime);
+    function resetTimeDropdowns() {
+      if (startTime && endTime) {
+        populateTimeOptions(startTime);
+        populateTimeOptions(endTime);
+        availabilityInput.value = "";
+      }
+    }
 
-      function updateAvailability() {
-        const start = startTime.value;
-        const end = endTime.value;
-        if (start && end) {
-          availabilityInput.value = `${start} - ${end}`;
-        }
+    resetTimeDropdowns();
+
+    const openModalBtn = document.getElementById("addDoctorBtn");
+    if (openModalBtn) {
+      openModalBtn.addEventListener("click", resetTimeDropdowns);
+    }
+
+    function updateAvailability() {
+      const start = startTime.value;
+      const end = endTime.value;
+
+      if (start) {
+        populateTimeOptions(endTime, start); 
       }
 
-      startTime.addEventListener("change", updateAvailability);
-      endTime.addEventListener("change", updateAvailability);
+      if (start && end) {
+        availabilityInput.value = `${start} - ${end}`;
+      } else {
+        availabilityInput.value = "";
+      }
     }
+
+    startTime.addEventListener("change", updateAvailability);
+    endTime.addEventListener("change", updateAvailability);
   });
 </script>
 
 
 
+  
 
 
 
