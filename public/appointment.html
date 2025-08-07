@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book Appointment - MediCare</title>
+    <title>Medicare</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -189,10 +189,15 @@
             <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
         </div>
         <button onclick="window.location.href='admindasboard.html'"
-            class="text-gray-600 hover:text-gray-800 flex items-center">
-            Back to Dashboard
-            <svg class="w-4 h-4 mr-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
-        </button>
+        class="mr-24 flex items-center bg-gray-700 hover:bg-gray-900 text-white font-semibold px-6 py-2 rounded-full shadow-md transition duration-200 ease-in-out">
+    
+    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+     Back to Dashboard
+</button>
+
     </div>
 
     <div class="max-w-4xl mx-auto mt-8">
@@ -599,8 +604,7 @@
         </div>
     </div>
      </div>
-    <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
-        <div class="text-gray-500 font-semibold">medicare@2000</div>
+    
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const ageSelect = document.getElementById("age");

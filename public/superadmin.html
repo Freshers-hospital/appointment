@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Super Admin Dashboard</title>
+  <title>Medicare</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -150,7 +150,7 @@
                 </a>
               </li>
               <li>
-                <button onclick="document.getElementById('logoutModal').classList.remove('hidden')"
+                <button onclick="showLogoutModal()"
                   class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
                   <svg width="20px" height="20px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -196,8 +196,9 @@
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-semibold">Admins List</h3>
 
-              <a href="adminregister.html" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">+ Add
-                Admin</a>
+              <button id="openAdminModal"
+                class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
+
             </div>
 
             <div
@@ -240,27 +241,28 @@
 
           <div
             class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-                            <div class="col-span-3">Doctor</div>
-                            <div class="col-span-2">Specialization</div>
-                            <div class="col-span-2">Today's Appointments</div>
-                            <div class="col-span-3">Availability</div>
-                            <div class="col-span-2">Actions</div>
-                          </div>
-                          <div id="doctorsList" class="space-y-2 mt-2"></div>
-                           <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
-                        <button id="prevDoctorsPage"
-                          class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
-                        <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
-                        <button id="nextDoctorsPage"
-                            class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
-                    </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="col-span-3">Doctor</div>
+            <div class="col-span-2">Specialization</div>
+            <div class="col-span-2">Today's Appointments</div>
+            <div class="col-span-3">Availability</div>
+            <div class="col-span-2">Actions</div>
+          </div>
+          <div id="doctorsList" class="space-y-2 mt-2"></div>
+          <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
+            <button id="prevDoctorsPage"
+              class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
+            <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+            <button id="nextDoctorsPage"
+              class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+  </div>
 
-  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+  <div id="editModal"
+    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50 hidden">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Edit Admin</h2>
@@ -334,53 +336,51 @@
   </div>
 
 
-  <div id="viewModal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
+  <div id="viewModal"
+    class="fixed inset-0 z-50 bg-black bg-opacity-40 backdrop-blur-lg flex items-center justify-center hidden">
+
     <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl px-10 py-8 relative">
-
-
       <div class="mb-6 border-b pb-4">
         <h2 class="text-3xl font-semibold text-gray-800">Admin Profile</h2>
         <p class="text-sm text-gray-500 mt-1">Detailed administrator information</p>
       </div>
-
       <div class="grid grid-cols-2 gap-6">
         <div>
           <label class="text-sm text-gray-500 mb-1 block">Full Name</label>
           <div id="viewAdminName" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-
           </div>
         </div>
-
         <div>
           <label class="text-sm text-gray-500 mb-1 block">Email Address</label>
           <div id="viewAdminEmail"
             class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900 break-all">-</div>
         </div>
-
         <div>
           <label class="text-sm text-gray-500 mb-1 block">Contact Number</label>
           <div id="viewAdminContact" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">-
           </div>
         </div>
-
         <div>
           <label class="text-sm text-gray-500 mb-1 block">Account Status</label>
           <div id="viewAdminStatus"
-            class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">
-            -
-          </div>
+            class="bg-gray-50 border text-gray-900 rounded-md px-4 py-3 text-lg font-semibold capitalize">-</div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-500 mb-1 block">Password</label>
+          <div id="viewAdminPassword" class="bg-gray-50 border rounded-md px-4 py-3 text-lg font-medium text-gray-900">
+            ********</div>
         </div>
       </div>
-
-
       <div class="mt-8 flex justify-end">
         <button onclick="closeModals()"
-          class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md shadow">
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md shadow">
           Close
         </button>
       </div>
     </div>
   </div>
 
+  <div id="blurredBg" class="fixed inset-0 bg-white/30 bg-opacity-30 backdrop-blur-md hidden z-40"></div>
   <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <h2 class="text-xl font-semibold mb-4">Logout</h2>
@@ -391,7 +391,8 @@
       </div>
     </div>
   </div>
-  <div id="deleteAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div id="deleteAdminModal"
+    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
       <div class="flex justify-center gap-4">
@@ -400,7 +401,8 @@
       </div>
     </div>
   </div>
-  <div id="restoreAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div id="restoreAdminModal"
+    class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
       <div class="flex justify-center gap-4">
@@ -409,9 +411,29 @@
       </div>
     </div>
   </div>
+  <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md z-40"></div>
 
+  <div id="deleteDoctorModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmDeleteDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div id="restoreDoctorModal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
+      <p class="mb-8 text-gray-600">Are you sure you want to restore?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="confirmRestoreDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Restore</button>
+      </div>
+    </div>
+  </div>
   <div id="viewDoctorProfileModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
       <div class="sm:col-span-2 flex flex-col items-center mb-2">
@@ -461,12 +483,12 @@
       </div>
       <div class="flex justify-center mt-6">
         <button id="closeViewDoctorProfileBtn"
-          class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Close</button>
+          class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Close</button>
       </div>
     </div>
   </div>
   <div id="editDoctorProfileModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg max-h-screen overflow-y-auto relative">
       <button id="closeEditDoctorProfileModal"
         class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
@@ -496,11 +518,11 @@
               </svg>
             </div>
           </div>
-          <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
+          <!-- <input type="file" id="editDoctorPhoto" accept="image/*" class="hidden" />
           <button type="button" onclick="document.getElementById('editDoctorPhoto').click()"
             class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-xs font-medium">
             Choose Photo
-          </button>
+          </button> -->
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Name</label>
@@ -509,8 +531,9 @@
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
-           <select id="editDoctorSpecialization" name="specialty"
-                    class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+          <select id="editDoctorSpecialization" name="specialty"
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+          </select>
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
@@ -541,7 +564,7 @@
           <label class="text-sm font-medium text-gray-600 mb-1 block">Phone Number</label>
           <input type="tel" id="editDoctorPhone" name="phone"
             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" pattern="^[6-9][0-9]{9}$"
-            maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9." required />
+            maxlength="10" title="Phone number must be 10 digits and start with 6, 7, 8, or 9.">
         </div>
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
           <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
@@ -563,10 +586,10 @@
     </div>
   </div>
   <div id="availabilityModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
-            <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
+      <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
+      <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
       <form id="availabilityForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm col-span-2">
           <p class="text-gray-500 text-sm mb-1">Select Date</p>
@@ -576,15 +599,19 @@
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">Start Time</p>
-          <input type="text" id="availabilityStart" name="start"
+          <select id="availabilityStart" name="start"
             class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="10:00 AM" required />
+            required>
+            <option value="">Select Start Time</option>
+          </select>
         </div>
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
           <p class="text-gray-500 text-sm mb-1">End Time</p>
-          <input type="text" id="availabilityEnd" name="end"
+          <select id="availabilityEnd" name="end"
             class="w-full px-4 py-2 border border-gray-300 rounded-md text-center text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="05:00 PM" required />
+            required>
+            <option value="">Select End Time</option>
+          </select>
         </div>
         <div class="col-span-2 flex justify-center gap-4 mt-4">
           <button type="button" id="cancelAvailability"
@@ -598,7 +625,7 @@
     </div>
   </div>
   <div id="addDoctorModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
 
       <button id="closeAddDoctorModal"
@@ -624,19 +651,19 @@
         </div>
 
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-                    <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
-                   <select id="editDoctorSpecialization" name="specialty"
-                    class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
-    
-                  </select>
+          <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+          <select id="addDoctorSpecialization" name="specialty"
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
 
-                </div>
+          </select>
 
-                <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-                    <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
-                    <input type="text" id="editDoctorExperience" name="experience"
-                        class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
-                </div>
+        </div>
+
+        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+          <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
+          <input type="text" id="doctorExperience" name="experience"
+            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
+        </div>
 
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
@@ -649,9 +676,35 @@
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
           <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+          
+<!--           
           <input type="text" id="doctorAvailability" name="availability"
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., 9:00 AM - 5:00 PM" required />
+            placeholder="e.g., 9:00 AM - 5:00 PM" required /> -->
+
+<div class="grid grid-cols-2 gap-4">
+  <!-- Start Time -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+    <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+      <!-- JS will fill options -->
+    </select>
+  </div>
+
+  <!-- End Time -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+    <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+      <!-- JS will fill options -->
+    </select>
+  </div>
+</div>
+
+<!-- Hidden input to store formatted availability -->
+<input type="hidden" id="doctorAvailability" name="availability" required />
+
+
+
         </div>
 
 
@@ -666,9 +719,9 @@
       </form>
     </div>
   </div>
-<footer
-        class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-between px-[900px]">
-        <div class="text-gray-500 font-semibold">medicare@2000</div></footer>
+  <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+    <div class="text-gray-500 font-semibold">medicare@2000</div>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     const tabs = document.querySelectorAll('.tab');
@@ -686,7 +739,7 @@
         if (targetId === "adminsTab") fetchAdmins();
       });
     });
-      window.addEventListener("click", function (e) {
+    window.addEventListener("click", function (e) {
       document.querySelectorAll(".action-menu").forEach((menu) => {
         if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
           menu.classList.add("hidden");
@@ -704,7 +757,7 @@
       adminList.innerHTML = `<div class="text-gray-500 text-center py-4">Loading admins...</div>`;
 
       try {
-        const res = await fetch("/api/admin/getAllAdmins");
+        const res = await fetch("/api/superadmin/getAllAdmins");
 
         const admins = await res.json();
         if (!admins.length) {
@@ -751,7 +804,7 @@
         ${admin.status?.toLowerCase() === 'active'
           ? 'text-green-800 bg-green-100'
           : 'text-red-800 bg-red-100'}">
-        ${admin.status?.toLowerCase() === 'active' ? 'Active' : 'Inactive'}
+        ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status?.toLowerCase() === 'inactive' ? 'Inactive' : 'Deleted'}
       </span>
     </div>
     
@@ -795,7 +848,7 @@
         </div>
       ` : `
         <div class="action-menu absolute right-0 mt-2 w-24 bg-white border border-gray-200 rounded shadow-md hidden z-10">
-      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || admin.phone || '-'}"
+      <button onclick="openViewModal(this)" data-name="${admin.username}" data-email="${admin.email}" data-contact="${admin.contact || '-'}" data-status="${admin.status || 'Active'}" " data-password="${admin.decryptedPassword || '********'}""
 
             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</button>
           <button onclick="editAdmin('${admin._id}')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
@@ -847,14 +900,15 @@
 
     window.addEventListener("DOMContentLoaded", fetchAdmins);
 
-
     function openViewModal(btn) {
       document.getElementById('viewModal').classList.remove('hidden');
       document.getElementById('viewAdminName').textContent = btn.getAttribute('data-name');
       document.getElementById('viewAdminEmail').textContent = btn.getAttribute('data-email');
       document.getElementById('viewAdminContact').textContent = btn.getAttribute('data-contact');
       document.getElementById('viewAdminStatus').textContent = btn.getAttribute('data-status');
+      document.getElementById('viewAdminPassword').textContent = btn.getAttribute('data-password');
     }
+
 
     function editAdmin(id) {
       const admin = allAdmins.find(a => a._id === id);
@@ -875,6 +929,11 @@
     let currentDeleteId = null;
 
 
+    function showLogoutModal() {
+      document.getElementById("logoutModal")?.classList.remove("hidden");
+      document.getElementById("blurredBg")?.classList.remove("hidden");
+      dropdownMenu.classList.add("hidden");      dropdownMenu.classList.add("hidden");
+    }
 
     function closeModals() {
       document.getElementById("editModal")?.classList.add("hidden");
@@ -883,8 +942,13 @@
       document.getElementById("viewModal")?.classList.add("hidden");
       document.getElementById("deleteAdminModal")?.classList.add("hidden");
       document.getElementById("restoreAdminModal")?.classList.add("hidden");
+      document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+      document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+      document.getElementById("blurredBg")?.classList.add("hidden");
       selectedAdminId = null;
       selectedRestoreAdminId = null;
+      selectedDoctorId = null;
+      selectedRestoreDoctorId = null;
     }
 
     let allDoctors = [];
@@ -900,6 +964,10 @@
           showToast("Failed to fetch doctors", "error")
         }
         allDoctors = await response.json();
+        if (!allDoctors.length) {
+          doctorsList.innerHTML = `<div class="text-gray-500 text-center py-4">No doctors found.</div>`;
+          return;
+        }
         allDoctors.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         currentDoctorsPage = 1;
         const appointmentsRes = await fetch("/api/confirmations");
@@ -973,36 +1041,44 @@
           }
     </div>
     <div>
-      <div class="font-semibold text-gray-800">${doctor.name}</div>
-      <div class="text-xs text-gray-500">${infoLine}</div>
+      <div class="font-semibold text-gray-800 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.name}</div>
+      <div class="text-xs text-gray-500 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${infoLine}</div>
     </div>
   </div>
-  <div class="col-span-2 text-gray-600">${doctor.specialty || "General Medicine"}</div>
-  <div class="col-span-2 text-gray-600">${count}</div>
-  <div class="col-span-3 text-gray-600">${availabilities[idx]}</div>
+  <div class="col-span-2 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
+  <div class="col-span-2 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
+  <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${availabilities[idx]}</div>
   <div class="col-span-2 relative">
     <button class="action-btn text-xl">...</button>
+      ${doctor.isDeleted ? `
+        <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
+          <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
+        </div>
+      ` : `
+    
     <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
       <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
       <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
       <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
+      <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
     </div>
+      `}
   </div>
 </div>
 `;
-document.querySelectorAll('.manage-availability-btn').forEach(button => {
-  button.addEventListener('click', function (e) {
-    e.preventDefault();
-    const doctor = JSON.parse(this.dataset.doctor);
-    const doctorNameDisplay = document.getElementById('manageDoctorName');
-    doctorNameDisplay.textContent = ` ${doctor.name} (${doctor.specialty || "General Medicine"})`;
-    document.getElementById('availabilityModalOverlay').classList.remove('hidden');
-    document.getElementById('closeAvailabilityModal')?.addEventListener('click', () => {
-      document.getElementById('availabilityModalOverlay').classList.add('hidden');
-    });
-  });
-});
- }); 
+        document.querySelectorAll('.manage-availability-btn').forEach(button => {
+          button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const doctor = JSON.parse(this.dataset.doctor);
+            const doctorNameDisplay = document.getElementById('manageDoctorName');
+            doctorNameDisplay.textContent = ` ${doctor.name} (${doctor.specialty || "General Medicine"})`;
+            document.getElementById('availabilityModalOverlay').classList.remove('hidden');
+            document.getElementById('closeAvailabilityModal')?.addEventListener('click', () => {
+              document.getElementById('availabilityModalOverlay').classList.add('hidden');
+            });
+          });
+        });
+      });
       updateDoctorsPagination(totalPages);
     }
 
@@ -1116,7 +1192,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
       }
 
       try {
-        const res = await fetch(`/api/admin/deleteAdmin/${selectedAdminId}`, {
+        const res = await fetch(`/api/superadmin/deleteAdmin/${selectedAdminId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1153,7 +1229,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
         return;
       }
       try {
-        const res = await fetch(`/api/admin/updateAdmin/${selectedRestoreAdminId}`, {
+        const res = await fetch(`/api/superadmin/updateAdmin/${selectedRestoreAdminId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1170,6 +1246,85 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
         showToast('Admin restored successfully', "success")
         document.getElementById("restoreAdminModal")?.classList.add("hidden");
         fetchAdmins();
+      } catch (err) {
+        showToast("Restore failed: " + err.message, "error")
+      }
+    }
+  </script>
+  <script>
+    let selectedDoctorId = null;
+    function openDeleteDoctorModal(doctorId) {
+      selectedDoctorId = doctorId;
+      document.getElementById('deleteDoctorModal').classList.remove('hidden');
+      document.getElementById('blurredBg').classList.remove('hidden');
+    }
+    async function confirmDeleteDoctor() {
+      if (!selectedDoctorId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error");
+        return;
+      }
+      try {
+        const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to delete admin");
+          showToast(errData.message || "Failed to delete admin", "error")
+        }
+        showToast("Doctor deleted successfully", "success");
+        document.getElementById("deleteDoctorModal")?.classList.add("hidden");
+        document.getElementById("blurredBg")?.classList.add("hidden");
+        closeModals();
+        fetchAndDisplayDoctors();
+
+      } catch (err) {
+        showToast("Delete failed: " + err.message, "error")
+      }
+    }
+  </script>
+  <script>
+    let selectedRestoreDoctorId = null;
+    function openRestoreDoctorModal(doctorId) {
+      selectedRestoreDoctorId = doctorId;
+      document.getElementById('restoreDoctorModal').classList.remove('hidden');
+      document.getElementById('blurredBg').classList.remove('hidden');
+    }
+    async function confirmRestoreDoctor() {
+      if (!selectedRestoreDoctorId) return;
+      const token = localStorage.getItem("admin_jwt");
+      if (!token) {
+        showToast("You are not authorized. Please log in again.", "error")
+        return;
+      }
+      try {
+        const res = await fetch(`/api/doctors/${selectedRestoreDoctorId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ doctorId: selectedRestoreDoctorId, isDeleted: false }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to restore admin");
+          showToast(errData.message || "Failed to restore admin", "error")
+        }
+        showToast('Doctor restored successfully', "success");
+        document.getElementById("restoreDoctorModal")?.classList.add("hidden");
+        document.getElementById("blurredBg")?.classList.add("hidden");
+        fetchAndDisplayDoctors();
+
       } catch (err) {
         showToast("Restore failed: " + err.message, "error")
       }
@@ -1196,7 +1351,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
       }
 
       try {
-        const res = await fetch(`/api/admin/updateAdmin/${id}`, {
+        const res = await fetch(`/api/superadmin/updateAdmin/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1299,8 +1454,8 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
           const doctor = JSON.parse(e.target.getAttribute("data-doctor"));
           currentDoctorForEditProfile = doctor;
           document.getElementById("editDoctorName").value = doctor.name || "";
-           populateSpecialtyDropdown("editDoctorSpecialization");
-            document.getElementById("editDoctorSpecialization").value =(doctor.specialty || "").toLowerCase();
+          populateSpecialtyDropdown("editDoctorSpecialization");
+          document.getElementById("editDoctorSpecialization").value = (doctor.specialty || "")
           document.getElementById("editDoctorExperience").value = doctor.experience || "";
           document.getElementById("editDoctorQualification").value = doctor.qualification || "";
           document.getElementById("editDoctorAvailability").value = doctor.availability || "";
@@ -1348,10 +1503,10 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
         formData.append("gender", document.getElementById("editDoctorGender").value);
         formData.append("phone", document.getElementById("editDoctorPhone").value);
         formData.append("address", document.getElementById("editDoctorAddress").value);
-        const photoInput = document.getElementById("editDoctorPhoto");
-        if (photoInput.files && photoInput.files[0]) {
-          formData.append("photo", photoInput.files[0]);
-        }
+        // const photoInput = document.getElementById("editDoctorPhoto");
+        // if (photoInput.files && photoInput.files[0]) {
+        //   formData.append("photo", photoInput.files[0]);
+        // }
         try {
           const response = await fetch(`/api/doctors/${currentDoctorForEditProfile._id}`, {
             method: "PUT",
@@ -1369,26 +1524,24 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
           showToast("Error updating doctor: " + err.message, "error")
         }
       };
-      document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
-        const file = event.target.files[0];
-        const photoPreview = document.getElementById("editDoctorPhotoPreview");
-        const defaultIcon = document.getElementById("editDoctorDefaultIcon");
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            photoPreview.src = e.target.result;
-            photoPreview.style.display = "block";
-            defaultIcon.style.display = "none";
-          };
-          reader.readAsDataURL(file);
-        } else {
-          photoPreview.src = "";
-          photoPreview.style.display = "none";
-          defaultIcon.style.display = "flex";
-        }
-      });
-
-
+      // document.getElementById("editDoctorPhoto").addEventListener("change", function (event) {
+      //   const file = event.target.files[0];
+      //   const photoPreview = document.getElementById("editDoctorPhotoPreview");
+      //   const defaultIcon = document.getElementById("editDoctorDefaultIcon");
+      //   if (file) {
+      //     const reader = new FileReader();
+      //     reader.onload = function (e) {
+      //       photoPreview.src = e.target.result;
+      //       photoPreview.style.display = "block";
+      //       defaultIcon.style.display = "none";
+      //     };
+      //     reader.readAsDataURL(file);
+      //   } else {
+      //     photoPreview.src = "";
+      //     photoPreview.style.display = "none";
+      //     defaultIcon.style.display = "flex";
+      //   }
+      // });
       let currentDoctorId = null;
       document.addEventListener("click", function (e) {
         if (e.target.classList.contains("manage-availability-btn")) {
@@ -1399,7 +1552,8 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
           document.body.classList.add("blurred-bg");
           document.getElementById("availabilityForm").reset();
           const today = new Date();
-          document.getElementById("availabilityDate").value = today.toISOString().split("T")[0];
+          availabilityDatePicker.setDate(today, true);
+
           fetchAndFillAvailabilityForDate(today.toISOString().split("T")[0]);
           e.target.closest(".action-menu").classList.add("hidden");
         }
@@ -1411,46 +1565,115 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
         document.body.classList.remove("blurred-bg");
         currentDoctorId = null;
         document.getElementById("availabilityForm").reset();
+        -
+          populateStartTimeDropdown();
+        populateEndTimeDropdown("");
       }
-      flatpickr("#availabilityDate", {
+
+      const timeSlots = [
+        "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+        "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
+      ];
+
+
+      function populateStartTimeDropdown() {
+        const startSelect = document.getElementById("availabilityStart");
+        if (!startSelect) return;
+
+        startSelect.innerHTML = '';
+        timeSlots.forEach(time => {
+          const option = document.createElement("option");
+          option.value = time;
+          option.textContent = time;
+          startSelect.appendChild(option);
+        });
+      }
+
+
+      function populateEndTimeDropdown(selectedStartTime) {
+        const endSelect = document.getElementById("availabilityEnd");
+        if (!endSelect) return;
+
+        endSelect.innerHTML = '';
+
+        if (!selectedStartTime) return;
+
+
+        const startIndex = timeSlots.indexOf(selectedStartTime);
+        if (startIndex === -1) return;
+
+
+        for (let i = startIndex + 1; i < timeSlots.length; i++) {
+          const option = document.createElement("option");
+          option.value = timeSlots[i];
+          option.textContent = timeSlots[i];
+          endSelect.appendChild(option);
+        }
+      }
+
+
+      document.addEventListener('change', function (e) {
+        if (e.target.id === 'availabilityStart') {
+          populateEndTimeDropdown(e.target.value);
+
+          document.getElementById("availabilityEnd").value = "";
+        }
+      });
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+        populateStartTimeDropdown();
+        populateEndTimeDropdown("");
+      });
+
+      const availabilityDateInput = document.getElementById("availabilityDate");
+      const availabilityDatePicker = flatpickr(availabilityDateInput, {
         dateFormat: "Y-m-d",
         allowInput: false,
         static: true,
+        defaultDate: new Date(),
         onChange: function (selectedDates, dateStr) {
           fetchAndFillAvailabilityForDate(dateStr);
         },
       });
-      flatpickr("#availabilityStart", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "h:i K",
-        time_24hr: false,
-        allowInput: false,
-        static: true,
-      });
-      flatpickr("#availabilityEnd", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "h:i K",
-        time_24hr: false,
-        allowInput: false,
-        static: true,
-      });
+
+
       async function fetchAndFillAvailabilityForDate(dateStr) {
         if (!currentDoctorId) return;
+
+
+        populateStartTimeDropdown();
+
         try {
           const res = await fetch(`/api/doctors/${currentDoctorId}/availability?date=${dateStr}`);
           if (res.ok) {
             const data = await res.json();
-            document.getElementById("availabilityStart").value = data.start || "";
-            document.getElementById("availabilityEnd").value = data.end || "";
+
+            if (data.start) {
+
+              document.getElementById("availabilityStart").value = data.start;
+              populateEndTimeDropdown(data.start);
+
+              if (data.end) {
+                document.getElementById("availabilityEnd").value = data.end;
+              }
+            } else {
+              document.getElementById("availabilityStart").value = "";
+              document.getElementById("availabilityEnd").value = "";
+
+              populateEndTimeDropdown("");
+            }
           } else {
             document.getElementById("availabilityStart").value = "";
             document.getElementById("availabilityEnd").value = "";
+
+            populateEndTimeDropdown("");
           }
         } catch (err) {
           document.getElementById("availabilityStart").value = "";
           document.getElementById("availabilityEnd").value = "";
+
+          populateEndTimeDropdown("");
         }
       }
       document.getElementById("availabilityForm").onsubmit = async function (e) {
@@ -1585,7 +1808,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
       if (parts.length === 1) return parts[0][0].toUpperCase();
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
-    const AdminName = localStorage.getItem("name") || "superadmin";
+    const AdminName = localStorage.getItem("name");
     document.getElementById("userName").textContent = userName;
     document.getElementById("userAvatar").textContent = getInitials(userName);
   </script>
@@ -1608,7 +1831,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
     async function logout() {
       try {
         const token = localStorage.getItem('admin_jwt');
-        const res = await fetch("/api/admin/logout", {
+        const res = await fetch("/api/superadmin/logout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token }),
@@ -1654,7 +1877,6 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
           ${svg}
           <span>${message}</span>
         </div>
-       
       `;
       document.getElementById("toast-container").appendChild(toast);
 
@@ -1667,44 +1889,38 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
 
 
   <script>
-  const specialties = [
-    "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
-    "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
-    "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
-    "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
-    "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
-  ];
+    const specialties = [
+      "Cardiology", "Neurology", "Dermatology", "Pediatrics", "Orthopedics", "Radiology",
+      "Psychiatry", "ENT", "Gastroenterology", "Oncology", "Anesthesiology", "Pathology",
+      "Pulmonology", "Urology", "Nephrology", "Ophthalmology", "General Surgery",
+      "Plastic Surgery", "Diabetology", "Rheumatology", "Hematology", "Infectious Disease",
+      "Endocrinology", "Obstetrics & Gynecology", "Family Medicine"
+    ];
 
-  function populateSpecialtyDropdown(selectId) {
-    const select = document.getElementById(selectId);
-    if (!select) return;
+    function populateSpecialtyDropdown(selectId) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-    select.innerHTML = "";
-
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Select Specialty";
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
-    select.appendChild(defaultOption);
-
-    specialties.forEach(spec => {
-      const option = document.createElement("option");
-      option.value = spec.toLowerCase();   
-      option.textContent = spec;
-      select.appendChild(option);
-    });
-  }
-
-  // Call once on page load
-     populateSpecialtyDropdown("doctorSpecialty");
-  populateSpecialtyDropdown("editDoctorSpecialization");
- 
-</script>
-
-
+      select.innerHTML = "";
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "Select Specialty";
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      select.appendChild(defaultOption);
+      specialties.forEach(spec => {
+        const option = document.createElement("option");
+        option.value = spec;
+        option.textContent = spec;
+        select.appendChild(option);
+      });
+    }
+    populateSpecialtyDropdown("doctorSpecialty");
+    populateSpecialtyDropdown("addDoctorSpecialization");
+    populateSpecialtyDropdown("editDoctorSpecialization");
+  </script>
   <div id="superAdminProfileModal"
-    class="fixed inset-0 bg-gray-100 bg-opacity-90 flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
       <button id="closeSuperAdminProfileModal"
         class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
@@ -1749,10 +1965,11 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
           </div>
         </div>
         <div id="editSuperAdminProfileActions" class="flex gap-3 mt-6 hidden">
-          <button id="saveSuperAdminProfileBtn"
-            class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
+
           <button id="cancelSuperAdminProfileBtn"
             class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400">Cancel</button>
+          <button id="saveSuperAdminProfileBtn"
+            class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Save</button>
         </div>
       </div>
       <div class="flex justify-end mt-8">
@@ -1763,7 +1980,6 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
   </div>
   <script>
     const profileLink = document.querySelector('#userDropdownMenu a[href=""]');
-
     const modal = document.getElementById('superAdminProfileModal');
     const closeBtn = document.getElementById('closeSuperAdminProfileModal');
     const closeBtn2 = document.getElementById('closeSuperAdminProfileBtn');
@@ -1774,24 +1990,24 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
     const email = document.getElementById('superAdminProfileEmail');
     const contact = document.getElementById('superAdminProfileContact');
     superAdminProfileContact.addEventListener('keydown', function (e) {
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
-  if (allowedKeys.includes(e.key)) return;
+      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+      if (allowedKeys.includes(e.key)) return;
 
-  if (!/^[0-9]$/.test(e.key)) {
-    e.preventDefault();
-    return;
-  }
+      if (!/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
 
-  if (this.value.length >= 10) {
-    e.preventDefault();
-    return;
-  }
+      if (this.value.length >= 10) {
+        e.preventDefault();
+        return;
+      }
 
-  if (this.value.length === 0 && !/[6-9]/.test(e.key)) {
-    e.preventDefault();
-    return;
-  }
-});
+      if (this.value.length === 0 && !/[6-9]/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
+    });
     const editBtn = document.getElementById('editSuperAdminProfileBtn');
     const editActions = document.getElementById('editSuperAdminProfileActions');
     const saveBtn = document.getElementById('saveSuperAdminProfileBtn');
@@ -1814,7 +2030,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
 
         try {
           const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/getAdminProfile', {
+          const res = await fetch('/api/superadmin/getAdminProfile', {
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
@@ -1838,8 +2054,30 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
       });
     }
 
-    if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
-    if (closeBtn2) closeBtn2.onclick = () => modal.classList.add('hidden');
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        modal.classList.add('hidden');
+        resetModal();
+      };
+    } if (closeBtn2) {
+      closeBtn2.onclick = () => {
+        modal.classList.add('hidden');
+        resetModal();
+      };
+    }
+    function resetModal() {
+      name.readOnly = true;
+      nameTop.readOnly = true;
+      email.readOnly = true;
+      contact.readOnly = true;
+      joined.disabled = true;
+      editActions.classList.add('hidden');
+      editBtn.disabled = false;
+      name.value = origName;
+      nameTop.value = origName;
+      email.value = origEmail;
+      contact.value = origContact;
+    }
 
     if (editBtn) {
       editBtn.onclick = () => {
@@ -1885,7 +2123,7 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
         }
         try {
           const token = localStorage.getItem('admin_jwt');
-          const res = await fetch('/api/admin/updateProfile', {
+          const res = await fetch('/api/superadmin/updateProfile', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -1896,6 +2134,12 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
 
           if (res.ok) {
             showToast('Profile updated successfully!', 'success');
+            resetModal();
+            localStorage.setItem('name', newName);
+            localStorage.setItem('email', newEmail);
+            localStorage.setItem('contact', newContact);
+            document.getElementById("userName").textContent = newName;
+            document.getElementById("userAvatar").textContent = getInitials(newName);
             modal.classList.add('hidden');
           } else {
             showToast('Update failed.', 'error');
@@ -1906,7 +2150,6 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
       };
     }
   </script>
-
   <script>
     function togglePasswordVisibility(button) {
       const container = button.closest(".relative");
@@ -1925,6 +2168,175 @@ document.querySelectorAll('.manage-availability-btn').forEach(button => {
       }
     }
   </script>
+  <div id="adminModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md z-50 hidden flex items-center justify-center">
+    <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+      <button id="closeAdminModal" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
+      <div class="flex flex-col items-center mb-4">
+        <div class="bg-blue-500 rounded-full p-3 mb-2">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-semibold">Admin Registration</h2>
+      </div>
+      <form id="adminRegForm" autocomplete="off" novalidate>
+        <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg"
+          required />
+        <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
+        <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+          class="w-full px-4 py-2 mb-3 border rounded-lg"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+          required />
+        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg"
+          required />
+        <input type="password" name="confirmPassword" placeholder="Confirm Password"
+          class="w-full px-4 py-2 mb-4 border rounded-lg" required />
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.getElementById("openAdminModal").addEventListener("click", () => {
+      document.getElementById("adminModalOverlay").classList.remove("hidden");
+    });
+
+    document.getElementById("closeAdminModal").addEventListener("click", () => {
+      document.getElementById("adminModalOverlay").classList.add("hidden");
+    });
+    document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const username = form.username.value.trim();
+      const email = form.email.value.trim();
+      const contact = form.contact.value.trim();
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      if (!username || !email || !password || !confirmPassword || !contact) {
+        showToast("Please fill in all fields.", "warning");
+        return;
+      }
+
+      const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        showToast("Enter a valid email with at least one letter and one number.", "warning");
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast("Password must be at least 6 characters.", "warning");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast("Passwords do not match.", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password, contact }),
+        });
+
+        if (res.ok) {
+          showToast("Registration successful!", "success");
+          setTimeout(() => {
+            document.getElementById("adminModalOverlay").classList.add("hidden");
+            form.reset();
+            fetchAdmins();
+
+          }, 1000);
+        } else {
+          const err = await res.json();
+          showToast(err.error || "Registration failed", "error");
+        }
+      } catch (err) {
+        showToast("Error: " + err.message, "error");
+      }
+    });
+  </script>
+  <!-- Doctor Detail Modal -->
+  <div id="doctorDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-[400px] shadow-xl relative">
+      <button onclick="closeDoctorModal()"
+        class="absolute top-2 right-2 text-gray-600 hover:text-red-500">&times;</button>
+      <h2 id="doctorName" class="text-xl font-bold mb-2"></h2>
+      <p id="doctorSpecialty" class="text-sm text-gray-700 mb-1"></p>
+      <p id="doctorExperience" class="text-sm text-gray-700 mb-1"></p>
+      <p id="doctorQualification" class="text-sm text-gray-700 mb-1"></p>
+      <p id="doctorAvailability" class="text-sm text-gray-700"></p>
+    </div>
+  </div>
+  <script>
+    function showDoctorDetails(doctor, availability) {
+      document.getElementById("doctorDetailsModal").classList.remove("hidden");
+      document.getElementById("doctorName").textContent = doctor.name || "N/A";
+      document.getElementById("doctorSpecialty").textContent = "Specialty: " + (doctor.specialty || "General Medicine");
+      document.getElementById("doctorExperience").textContent = "Experience: " + (doctor.experience || "N/A") + " years";
+      document.getElementById("doctorQualification").textContent = "Qualification: " + (doctor.qualification || "N/A");
+      document.getElementById("doctorAvailability").textContent = "Availability: " + availability;
+    }
+
+    function closeDoctorModal() {
+      document.getElementById("doctorDetailsModal").classList.add("hidden");
+    }
+
+  </script>
+
+
+
+<script>
+  function populateTimeOptions(selectElement) {
+    const start = new Date();
+    start.setHours(6, 0); // 6:00 AM
+    const end = new Date();
+    end.setHours(23, 30); // 11:30 PM
+
+    while (start <= end) {
+      const timeStr = start.toLocaleTimeString("en-US", {
+        hour: 'numeric',
+        minute: '2-digit'
+      });
+      const option = document.createElement("option");
+      option.value = timeStr;
+      option.text = timeStr;
+      selectElement.appendChild(option);
+      start.setMinutes(start.getMinutes() + 30);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const startTime = document.getElementById("startTime");
+    const endTime = document.getElementById("endTime");
+    const availabilityInput = document.getElementById("doctorAvailability");
+
+    if (startTime && endTime) {
+      populateTimeOptions(startTime);
+      populateTimeOptions(endTime);
+
+      function updateAvailability() {
+        const start = startTime.value;
+        const end = endTime.value;
+        if (start && end) {
+          availabilityInput.value = `${start} - ${end}`;
+        }
+      }
+
+      startTime.addEventListener("change", updateAvailability);
+      endTime.addEventListener("change", updateAvailability);
+    }
+  });
+</script>
+
+
+
+
+
 
 </body>
 
