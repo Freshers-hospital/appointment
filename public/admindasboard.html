@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MediCare</title>
+    <title> MediCare</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -323,6 +323,32 @@
         #closeCancelModal {
             display: none !important;
         }
+
+.action-menu {
+  max-height: 200px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.action-menu::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+.appointments-list .action-menu{
+
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.appointments-list .action-menu::-webkit-scrollbar{
+
+  display: none;
+}
+
+
     </style>
 </head>
 
@@ -465,7 +491,7 @@
                                 class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
                                 Appointment</button></a>
                     </div>
-                    <div id="appointmentsList"></div>
+                    <div id="appointmentsList" ></div>
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
@@ -683,8 +709,6 @@
         <div id="rescheduleModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="rescheduleModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closeRescheduleModal"
-                    class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl font-bold mb-2">Reschedule Appointment</h2>
                 <div class="mb-4 text-gray-600" id="reschedulePatientName"></div>
                 <form id="rescheduleForm">
@@ -799,8 +823,6 @@
         <div id="patientDetailsModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <button id="closePatientDetailsModal"
-                    class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="font-semibold text-gray-600">Name</div>
@@ -828,8 +850,6 @@
         <div id="viewDoctorProfileModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="viewDoctorProfileModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
-                <button id="closeViewDoctorProfileModal"
-                    class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Doctor Profile</h2>
                 <div class="sm:col-span-2 flex flex-col items-center mb-2">
                     <label class="text-sm font-semibold text-gray-600 block mb-2">Profile Photo</label>
@@ -2036,7 +2056,6 @@
                 rescheduleSelectedDate = null;
                 rescheduleSelectedTime = null;
             }
-            document.getElementById("closeRescheduleModal").onclick = closeRescheduleModal;
             document.getElementById("cancelRescheduleBtn").onclick = closeRescheduleModal;
 
             async function renderRescheduleCalendar(app) {
@@ -2413,7 +2432,7 @@
                 document.body.classList.remove("blurred-bg");
             }
 
-            document.getElementById("closePatientDetailsModal").onclick = closePatientDetailsModal;
+           
             document.getElementById("closePatientDetailsBtn").onclick = closePatientDetailsModal;
 
             document.getElementById("patientsList").addEventListener("click", function (e) {
@@ -3571,9 +3590,7 @@
         <div id="adminProfileModal"
             class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
-                <button id="closeAdminProfileModal"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-2xl">&times;</button>
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile & Settings</h2>
                 <div class="flex items-center gap-4 mb-6">
                     <div
                         class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600">

@@ -48,6 +48,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 router.post('/logout', async (req, res) => {
   try {
     const { token } = req.body;
@@ -60,6 +61,7 @@ router.post('/logout', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 router.post('/resetPassword', async (req, res) => {
   try {
