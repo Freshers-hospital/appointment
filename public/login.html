@@ -7,6 +7,10 @@
   <title>Login</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Enable class-based dark mode for Tailwind CDN
+    tailwind.config = { darkMode: 'class' };
+  </script>
   <style>
     @keyframes slide-in {
       0% {
@@ -26,34 +30,45 @@
   </style>
 </head>
 
-<body class="bg-blue-50 min-h-screen flex flex-col">
-
-  <div class="w-full bg-white shadow py-3 px-6 flex items-center pl-32">
-    <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<body class="bg-blue-50 dark:bg-gray-900 min-h-screen flex flex-col text-gray-900 dark:text-gray-100">
+  <!-- Top bar -->
+  <div class="w-full bg-white dark:bg-gray-800/80 backdrop-blur shadow py-3 px-6 flex items-center gap-3 sm:pl-32">
+    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
     </svg>
-    <h1 class="text-xl font-bold text-blue-600 ml-1">MediCare</h1>
+    <h1 class="text-xl font-bold text-blue-600 dark:text-blue-400">MediCare</h1>
+
+    <!-- Theme toggle -->
+    <button id="themeToggle" type="button"
+      class="ml-auto inline-flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      aria-label="Toggle color theme">
+      <span id="themeIcon" class="grid place-items-center">
+        <!-- Icon inserted by JS -->
+      </span>
+      <span id="themeText" class="hidden sm:inline"></span>
+    </button>
   </div>
 
+  <!-- Main -->
   <div class="flex-grow flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md -mt-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md -mt-12 border border-gray-100 dark:border-gray-700">
       <div class="flex flex-col items-center">
-        <div class="bg-blue-500 rounded-full p-3 mb-4">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-blue-500 dark:bg-blue-600 rounded-full p-3 mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M5.121 17.804A13.937 13.937 0 0112 15c2.003 0 3.89.435 5.56 1.21M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </div>
 
         <div class="flex items-center justify-center space-x-6 mb-4">
-          <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="role" value="admin" id="adminRadio" class="cursor-pointer form-radio text-blue-600" checked>
-            <span class="text-sm font-medium text-gray-700">Admin</span>
+          <label class="flex items-center space-x-2 cursor-pointer select-none">
+            <input type="radio" name="role" value="admin" id="adminRadio" class="cursor-pointer form-radio text-blue-600 dark:text-blue-400" checked>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Admin</span>
           </label>
-          <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="role" value="superadmin" id="superAdminRadio" class="cursor-pointer form-radio text-blue-600">
-            <span class="text-sm font-medium text-gray-700">Super Admin</span>
+          <label class="flex items-center space-x-2 cursor-pointer select-none">
+            <input type="radio" name="role" value="superadmin" id="superAdminRadio" class="cursor-pointer form-radio text-blue-600 dark:text-blue-400">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Super Admin</span>
           </label>
         </div>
 
@@ -62,30 +77,65 @@
 
       <form id="loginForm" autocomplete="off" novalidate>
         <input type="text" name="username" placeholder="Username"
-          class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500"
           required />
         <input type="password" name="password" placeholder="Password"
-          class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500"
           required />
         <button type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">LOGIN</button>
+          class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white py-2 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400">LOGIN</button>
       </form>
 
-      <p class="text-right text-sm mt-4 text-blue-600 hover:underline">
-        <a href="forgotpassword.html">Forgot Password?</a>
+      <p class="text-right text-sm mt-4">
+        <a class="text-blue-600 dark:text-blue-400 hover:underline" href="forgotpassword.html">Forgot Password?</a>
       </p>
     </div>
   </div>
 
-  <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
-    <div class="text-gray-500 font-semibold">medicare@2000</div>
-  </footer>
-
+  <!-- Toasts -->
   <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3"></div>
 
   <script>
-    let isSuperAdmin = false;
+    // --- THEME LOGIC ---
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
 
+    function setTheme(theme) {
+      const root = document.documentElement;
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        themeIcon.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>`; // moon
+        themeText.textContent = 'Dark';
+      } else {
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        themeIcon.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M10 15a5 5 0 100-10 5 5 0 000 10zm0 3a1 1 0 011 1v0a1 1 0 11-2 0v0a1 1 0 011-1zm0-16a1 1 0 011-1v0a1 1 0 10-2 0v0a1 1 0 011 1zm9 7a1 1 0 100-2v0a1 1 0 100 2zm-16 0a1 1 0 100-2v0a1 1 0 100 2zm12.364 6.364a1 1 0 10-1.414-1.414v0a1 1 0 001.414 1.414zM5.05 5.05a1 1 0 10-1.414-1.414v0A1 1 0 105.05 5.05zm10.607-1.414a1 1 0 10-1.414 1.414v0a1 1 0 001.414-1.414zM5.05 14.95a1 1 0 10-1.414 1.414v0A1 1 0 105.05 14.95z" />
+          </svg>`; // sun
+        themeText.textContent = 'Light';
+      }
+    }
+
+    // Initialize theme on load (localStorage -> system preference fallback)
+    (function initTheme() {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(stored || (prefersDark ? 'dark' : 'light'));
+    })();
+
+    themeToggleBtn.addEventListener('click', () => {
+      const current = localStorage.getItem('theme') || 'light';
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // --- ROLE TOGGLE + LOGIN (original logic) ---
+    let isSuperAdmin = false;
     const adminRadio = document.getElementById("adminRadio");
     const superAdminRadio = document.getElementById("superAdminRadio");
     const loginHeading = document.getElementById("loginHeading");
@@ -102,10 +152,9 @@
 
     adminRadio.addEventListener("change", updateRole);
     superAdminRadio.addEventListener("change", updateRole);
-
     updateRole();
 
-   function showToast(message, type = "success") {
+    function showToast(message, type = "success") {
       const toast = document.createElement("div");
       const types = {
         success: {
