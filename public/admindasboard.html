@@ -267,6 +267,60 @@
             overflow: hidden;
         }
 
+
+        .overflow-x-auto {
+            overflow: visible !important;
+        }
+
+        .overflow-x-auto table {
+            overflow: visible !important;
+        }
+
+        .overflow-x-auto tbody {
+            overflow: visible !important;
+        }
+
+        .overflow-x-auto tr {
+            overflow: visible !important;
+        }
+
+        .overflow-x-auto td {
+            overflow: visible !important;
+        }
+
+
+        td.relative {
+            overflow: visible !important;
+        }
+
+        
+        .bg-white.p-6.rounded-xl.shadow {
+            overflow: visible !important;
+        }
+
+        .tab-content {
+            overflow: visible !important;
+        }
+
+    
+        #appointmentsList {
+            overflow: visible !important;
+        }
+
+        #appointmentsList > div {
+            overflow: visible !important;
+        }
+        .action-menu:not(.hidden) {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .action-menu {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
         .action-menu a,
         .action-menu button {
             display: block;
@@ -283,7 +337,7 @@
 
         .action-menu a:hover,
         .action-menu button:hover {
-            background-color: #f3f4f6;
+            background-color: transparent;
         }
 
         .action-menu a:first-child,
@@ -312,7 +366,7 @@
         }
 
         .action-btn:hover {
-            background-color: #f3f4f6;
+            background-color: transparent;
         }
 
         .overflow-x-auto {
@@ -346,6 +400,144 @@
 .appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
+}
+
+body.dark {
+    background-color: #0f172a; 
+    color: #f3f7fb; 
+}
+
+body.dark * {
+    color: #f1f5f9 !important;
+}
+
+body.dark .text-gray-500,
+body.dark .text-gray-400,
+body.dark p,
+body.dark span {
+    color: #94a3b8 !important; 
+}
+
+
+body.dark a,
+body.dark button {
+    color: #fbfbfb !important;
+}
+
+
+body.dark .bg-white,
+body.dark .card,
+body.dark .p-6,
+body.dark .rounded-lg,
+body.dark .rounded-xl,
+body.dark .shadow {
+    background-color: #1e293b !important; 
+    border-color: #334155 !important;
+}
+
+
+body.dark .tab-active {
+    background-color: #1e293b !important;
+    color: white !important;
+}
+body.dark .tab-inactive {
+    color: #cbd5e1 !important;
+}
+body.dark .tab-inactive:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark input,
+body.dark select {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark input::placeholder {
+    color: #94a3b8 !important;
+}
+
+
+body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-innerContainer { background: #0f172a !important; }
+body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-months { background: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-months .flatpickr-prev-month,
+body.dark .flatpickr-months .flatpickr-next-month { fill: #111827 !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .numInputWrapper input { background-color: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .numInputWrapper span { color: #111827 !important; }
+body.dark .flatpickr-current-month,
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months,
+body.dark .flatpickr-current-month .numInputWrapper {
+    color: #111827 !important;
+}
+body.dark .flatpickr-days { background: #0f172a !important; }
+body.dark .flatpickr-day { color: #e2e8f0 !important; }
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #3b82f6 !important;
+    color: white !important;
+}
+body.dark .flatpickr-day:hover {
+    background: #334155 !important;
+}
+body.dark #appointmentsTab h3,
+body.dark #patientsTab h3 {
+    color: #e5e7eb !important;
+}
+body.dark #appointmentsTab p.text-gray-500,
+body.dark #patientsTab p.text-gray-500 {
+    color: #94a3b8 !important;
+}
+body.dark table thead th {
+    background-color: #1e293b !important;
+}
+body.dark table tbody td {
+    background-color: #0f172a !important;
+}
+body.dark table tbody tr:nth-child(even) td {
+    background-color: #162032 !important;
+}
+
+
+body.dark .grid.grid-cols-12.px-4.py-3.text-left.text-sm.font-bold.bg-gray-50.text-gray-800.border-b,
+body.dark #patientsHeader {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark .grid.grid-cols-12.px-4.py-3.text-left.text-sm.font-bold.bg-gray-50.text-gray-800.border-b > div,
+body.dark #patientsHeader > div { color: #e5e7eb !important; }
+
+
+body.dark #appointmentsTab thead tr { background-color: #0f172a !important; }
+body.dark #appointmentsTab thead th { color: #e5e7eb !important; border-color: #334155 !important; }
+
+
+body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b > div { color: #e5e7eb !important; }
+
+
+body.dark #userDropdownMenu {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark #userDropdownMenu a:hover,
+body.dark #userDropdownMenu button:hover {
+    background-color: #334155 !important;
+}
+
+
+body.dark .w-10.h-10 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark .text-gray-400 {
+    color: #cbd5e1 !important;
 }
 
 
@@ -399,6 +591,13 @@
                                 </a>
                             </li>
                             <li>
+    <button id="themeToggle"
+        class="w-full flex items-center gap-2 px-4 py-2 text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
+        🌙 Dark Mode
+    </button>
+</li>
+
+                            <li>
                                 <button onclick="showLogoutModal()"
                                     class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
 
@@ -432,7 +631,7 @@
                         class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
                 </div>
 
-                <div class="relative w-60 mt-5">
+                <div class="relative w-60 mt-6">
                     <div id="datePickerDisplay"
                         class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
@@ -824,7 +1023,7 @@
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4">
                     <div class="font-semibold text-gray-600">Name</div>
                     <div id="modalPatientName" class="text-gray-900"></div>
                     <div class="font-semibold text-gray-600">Age/Gender</div>
@@ -1079,9 +1278,9 @@
                     class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             </div>
         </div>
-        <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+        <!-- <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
             <div class="text-gray-500 font-semibold">medicare@2000</div>
-            <!-- <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3">
             <button id="lightThemeBtn" title="Light Theme"
                 style="background:none;border:none;outline:none;cursor:pointer;padding:0;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"
@@ -1104,7 +1303,7 @@
                     <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
                 </svg>
             </button>
-        </div> -->
+        </div>
         </footer>
         <script>
             function applyTheme(theme) {
@@ -1128,7 +1327,7 @@
             document.getElementById('lightThemeBtn').onclick = function () { setTheme('light'); };
             document.getElementById('darkThemeBtn').onclick = function () { setTheme('dark'); };
 
-            applyTheme(getSavedTheme());
+            applyTheme(getSavedTheme()); -->
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
@@ -1389,7 +1588,7 @@
             </td>
             <td class=\"px-4 py-3 relative\">
               <button class=\"action-btn text-xl focus:outline-none\">...</button>
-              <div class=\"action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20\">
+              <div class=\"action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50\">
                 <a href=\"#\" class=\"view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>View details</a>
                 ${!isCanceled ? `<a href=\"#\" class=\"edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
                 ${!isCanceled ? `<a href=\"#\" class=\"reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
@@ -1982,6 +2181,27 @@
                         menus.forEach((menu) => menu.classList.add("hidden"));
                         const menu = e.target.nextElementSibling;
                         menu.classList.toggle("hidden");
+                        
+                        
+                        if (!menu.classList.contains("hidden")) {
+                            const rect = menu.getBoundingClientRect();
+                            const viewportWidth = window.innerWidth;
+                            const viewportHeight = window.innerHeight;
+                            
+                            
+                            if (rect.right > viewportWidth) {
+                                menu.style.right = "0";
+                                menu.style.left = "auto";
+                            }
+                            
+                        
+                            if (rect.bottom > viewportHeight) {
+                                menu.style.top = "auto";
+                                menu.style.bottom = "100%";
+                                menu.style.marginTop = "0";
+                                menu.style.marginBottom = "4px";
+                            }
+                        }
                     }
 
                     if (e.target.classList.contains("view-details-btn")) {
@@ -2534,75 +2754,34 @@
                         count = todaysAppointmentsCountMap[doctorName];
                     }
 
-
+                
                     const doctorRow = document.createElement('div');
-                    doctorRow.className = 'grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 doctor-row';
+                    doctorRow.className = 'grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200 cursor-pointer';
                     doctorRow.style.cursor = 'pointer';
-
-
                     doctorRow.doctorData = doctor;
-
                     doctorRow.innerHTML = `
   <div class="col-span-3 flex items-center">
-    <div class="w-8 h-8 rounded-full mr-4 flex-shrink-0 overflow-hidden bg-gray-200 doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx
-                        }" style="cursor:pointer;">
+    <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0 overflow-hidden doctor-photo-placeholder" data-doctor-id="${doctor._id}" data-doctor-index="${startIndex + idx}">
       ${doctor.image
-                            ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
-                            : `<img src="/default.jpg" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
-                        }
+                        ? `<img src="${doctor.image.startsWith("/uploads/") ? doctor.image : "/uploads/" + doctor.image}" alt="${doctor.name}" class="w-full h-full object-cover" />`
+                        : `<img src="/default.jpg" alt="No Photo" class="w-full h-full object-cover opacity-50" />`
+                    }
     </div>
- <div>
+    <div>
       <div class="font-semibold text-gray-800 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.name}</div>
       <div class="text-xs text-gray-500 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${infoLine}</div>
     </div>
   </div>
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${doctor.specialty || "General Medicine"}</div>
-  <div class="col-span-3 text-gray-600 ml-16  ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
+  <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${count}</div>
   <div class="col-span-3 text-gray-600 ${doctor.isDeleted ? 'line-through text-gray-300' : ''}">${availabilities[idx]}</div>
-  <div class="col-span-2 relative">
-    <!-- Action button commented out
-    <button class="action-btn text-xl">...</button>
-  ${doctor.isDeleted ? `
-        <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-          <button onclick="openRestoreDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Restore</button>
-        </div>
-      ` : `
-    
-    <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-      <a href="#" class="view-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>View Profile</a>
-      <a href="#" class="edit-doctor-profile-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Edit Profile</a>
-      <a href="#" class="manage-availability-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-doctor='${JSON.stringify(doctor)}'>Manage Availability</a>
-      <button onclick="openDeleteDoctorModal('${doctor._id}')" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</button>
-    </div>
-      `}
-    -->
-  </div>
 `;
-
-
                     doctorRow.addEventListener('click', function (e) {
-
                         if (!e.target.closest(".action-menu") && !e.target.classList.contains("action-btn")) {
                             showDoctorProfileModal(this.doctorData);
                         }
                     });
-
                     doctorsList.appendChild(doctorRow);
-                    // Manage availability button event listeners commented out
-                    /*
-                    document.querySelectorAll('.manage-availability-btn').forEach(button => {
-                        button.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            const doctor = JSON.parse(this.dataset.doctor);
-                            const doctorNameDisplay = document.getElementById('manageDoctorName');
-                            doctorNameDisplay.textContent = ` ${doctor.name} (${doctor.specialty || "General Medicine"})`;
-                            document.getElementById('availabilityModalOverlay').classList.remove('hidden');
-                            document.getElementById('closeAvailabilityModal')?.addEventListener('click', () => {
-                                document.getElementById('availabilityModalOverlay').classList.add('hidden');
-                            });
-                        });
-                    });
-                    */
                 });
 
                 // Setup action menus after rendering - commented out
@@ -3484,7 +3663,7 @@
         </script>
 
         <script>
-            const userName = localStorage.getItem("name");
+            const userName = localStorage.getItem("admin_name");
             document.getElementById("userName").textContent = userName;
         </script>
         <script>
@@ -3526,7 +3705,7 @@
                 if (parts.length === 1) return parts[0][0].toUpperCase();
                 return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
             }
-            const AdminName = localStorage.getItem("name") || "admin";
+            const AdminName = localStorage.getItem("admin_name") || "admin";
             document.getElementById("userName").textContent = userName;
             document.getElementById("userAvatar").textContent = getInitials(userName);
         </script>
@@ -3536,7 +3715,8 @@
                     const token = localStorage.getItem('admin_jwt');
                     const res = await fetch("/api/admin/logout", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json",
+                        },
                         body: JSON.stringify({ token }),
                     });
                     const result = await res.json();
@@ -4004,6 +4184,28 @@
                     showToast("Restore failed: " + err.message, "error")
                 }
             }
+        </script>
+        <script>
+            const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+    if (theme === "dark") {
+        document.body.classList.add("dark");
+        themeToggle.textContent = "☀️ Light Mode";
+    } else {
+        document.body.classList.remove("dark");
+        themeToggle.textContent = "🌙 Dark Mode";
+    }
+    localStorage.setItem("theme", theme);
+}
+
+themeToggle.addEventListener("click", () => {
+    const currentTheme = localStorage.getItem("theme") || "light";
+    applyTheme(currentTheme === "light" ? "dark" : "light");
+});
+
+applyTheme(localStorage.getItem("theme") || "light");
+
         </script>
 </body>
 

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const dotenv = require("dotenv");
+const nodemailer = require('nodemailer');
 dotenv.config();
 const mongoURI = process.env.DATABASE_URL;
 console.log(mongoURI);
@@ -15,6 +16,7 @@ const confirmationRoutes = require("./routes/confirmationsroutes");
 const doctorsRoutes = require("./routes/doctorsroutes");
 const { router: adminRoutes } = require('./routes/adminroutes');
 const { router: superadminRoutes } = require('./routes/superadminroutes');
+
 
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
