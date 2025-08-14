@@ -163,7 +163,14 @@
         if (res.ok && result.token) {
           localStorage.setItem("admin_jwt", result.token);
           localStorage.setItem("role", result.role);
-          localStorage.setItem("name", result.name);
+          
+        
+          if (result.role === 0) {
+            localStorage.setItem("superadmin_name", result.name);
+          } else {
+            localStorage.setItem("admin_name", result.name);
+          }
+          
           showToast("Login successful!", "success");
           setTimeout(() => {
             if (result.role === 0) {
