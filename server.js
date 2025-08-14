@@ -10,7 +10,9 @@ const mongoURI = process.env.DATABASE_URL;
 console.log(mongoURI);
 console.log(typeof (mongoURI));
 const port = process.env.PORT;
+const cron = require('node-cron');
 
+const removeDeletedAdminsFromDb=require("./cron/deletedadmins");
 const confirmationRoutes = require("./routes/confirmationsroutes");
 
 const doctorsRoutes = require("./routes/doctorsroutes");
@@ -61,4 +63,10 @@ mongoose.connect(mongoURI).then(() => {
 }).catch((err) => {
   console.error("MongoDB connection error:", err);
   process.exit(1);
-}); 
+});
+
+
+cron.schedule('0 * * * *', () => {
+  console.log('cron')
+  removeDeletedAdminsFromDb();
+})
