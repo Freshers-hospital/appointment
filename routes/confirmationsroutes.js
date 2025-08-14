@@ -7,8 +7,8 @@ const DateModel = require("../models/date");
 
 router.post("/", async (req, res) => {
     try {
-        const { patientData, doctorData, dateData } = req.body;
-        console.log("Received data:", { patientData, doctorData, dateData });
+        const { patientData, doctorData, dateData, referralData } = req.body;
+        console.log("Received data:", { patientData, doctorData, dateData, referralData });
 
         let doctor = await Doctor.findOne({ name: doctorData.name });
         if (!doctor) {
@@ -43,6 +43,9 @@ router.post("/", async (req, res) => {
             doctorName: doctor.name,
             date: date._id,
             status: "confirmed",
+            referralData: {
+                referredBy: referralData?.referredBy || ""
+            }
         });
 
         await confirmation.save();
@@ -126,6 +129,7 @@ router.get("/", async (req, res) => {
                       }
                     : null,
                 status: confirmation.status || "pending",
+                referralData: confirmation.referralData || { referredBy: "" }
             };
 
             console.log("Formatted confirmation:", formattedConfirmation);
@@ -159,7 +163,7 @@ router.get("/booked-slots", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     try {
-        const { action, date, time, patientData, doctorName } = req.body;
+        const { action, date, time, patientData, doctorName, referralData } = req.body;
 
         const confirmation = await Confirmation.findById(req.params.id).populate("date").populate("doctor");
 
@@ -227,6 +231,13 @@ router.put("/:id", async (req, res) => {
                     await dateDoc.save();
                 }
                 confirmation.date = dateDoc._id;
+            }
+
+            if (referralData) {
+                confirmation.referralData = {
+                    ...confirmation.referralData,
+                    ...referralData
+                };
             }
 
             await confirmation.save();
