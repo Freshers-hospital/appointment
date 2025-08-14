@@ -311,7 +311,6 @@
             overflow: visible !important;
         }
 
-        /* Force action menu to be visible */
         .action-menu:not(.hidden) {
             display: block !important;
             visibility: visible !important;
@@ -339,7 +338,7 @@
 
         .action-menu a:hover,
         .action-menu button:hover {
-            background-color: #f3f4f6;
+            background-color: transparent;
         }
 
         .action-menu a:first-child,
@@ -368,7 +367,7 @@
         }
 
         .action-btn:hover {
-            background-color: #f3f4f6;
+            background-color: transparent;
         }
 
         .overflow-x-auto {
@@ -402,6 +401,144 @@
 .appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
+}
+
+body.dark {
+    background-color: #0f172a; 
+    color: #f3f7fb; 
+}
+
+body.dark * {
+    color: #f1f5f9 !important;
+}
+
+body.dark .text-gray-500,
+body.dark .text-gray-400,
+body.dark p,
+body.dark span {
+    color: #94a3b8 !important; 
+}
+
+
+body.dark a,
+body.dark button {
+    color: #fbfbfb !important;
+}
+
+
+body.dark .bg-white,
+body.dark .card,
+body.dark .p-6,
+body.dark .rounded-lg,
+body.dark .rounded-xl,
+body.dark .shadow {
+    background-color: #1e293b !important; 
+    border-color: #334155 !important;
+}
+
+
+body.dark .tab-active {
+    background-color: #1e293b !important;
+    color: white !important;
+}
+body.dark .tab-inactive {
+    color: #cbd5e1 !important;
+}
+body.dark .tab-inactive:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark input,
+body.dark select {
+    background-color: #000000 !important;
+    border-color: #334155 !important;
+}
+body.dark input::placeholder {
+    color: #94a3b8 !important;
+}
+
+
+body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-innerContainer { background: #0f172a !important; }
+body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-months { background: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-months .flatpickr-prev-month,
+body.dark .flatpickr-months .flatpickr-next-month { fill: #111827 !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .numInputWrapper input { background-color: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .numInputWrapper span { color: #111827 !important; }
+body.dark .flatpickr-current-month,
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months,
+body.dark .flatpickr-current-month .numInputWrapper {
+    color: #111827 !important;
+}
+body.dark .flatpickr-days { background: #0f172a !important; }
+body.dark .flatpickr-day { color: #e2e8f0 !important; }
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #3b82f6 !important;
+    color: white !important;
+}
+body.dark .flatpickr-day:hover {
+    background: #334155 !important;
+}
+body.dark #appointmentsTab h3,
+body.dark #patientsTab h3 {
+    color: #e5e7eb !important;
+}
+body.dark #appointmentsTab p.text-gray-500,
+body.dark #patientsTab p.text-gray-500 {
+    color: #94a3b8 !important;
+}
+body.dark table thead th {
+    background-color: #1e293b !important;
+}
+body.dark table tbody td {
+    background-color: #0f172a !important;
+}
+body.dark table tbody tr:nth-child(even) td {
+    background-color: #162032 !important;
+}
+
+
+body.dark .grid.grid-cols-12.px-4.py-3.text-left.text-sm.font-bold.bg-gray-50.text-gray-800.border-b,
+body.dark #patientsHeader {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark .grid.grid-cols-12.px-4.py-3.text-left.text-sm.font-bold.bg-gray-50.text-gray-800.border-b > div,
+body.dark #patientsHeader > div { color: #e5e7eb !important; }
+
+
+body.dark #appointmentsTab thead tr { background-color: #0f172a !important; }
+body.dark #appointmentsTab thead th { color: #e5e7eb !important; border-color: #334155 !important; }
+
+
+body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b > div { color: #e5e7eb !important; }
+
+
+body.dark #userDropdownMenu {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark #userDropdownMenu a:hover,
+body.dark #userDropdownMenu button:hover {
+    background-color: #334155 !important;
+}
+
+
+body.dark .w-10.h-10 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark .text-gray-400 {
+    color: #cbd5e1 !important;
 }
 
 
@@ -454,6 +591,13 @@
                                     <span>Profile</span>
                                 </a>
                             </li>
+                            <li>
+    <button id="themeToggle"
+        class="w-full flex items-center gap-2 px-4 py-2 text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
+        🌙 Dark Mode
+    </button>
+</li>
+
                             <li>
                                 <button onclick="showLogoutModal()"
                                     class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
@@ -880,7 +1024,7 @@
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4">
                     <div class="font-semibold text-gray-600">Name</div>
                     <div id="modalPatientName" class="text-gray-900"></div>
                     <div class="font-semibold text-gray-600">Age/Gender</div>
@@ -1135,9 +1279,9 @@
                     class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl">&times;</button>
             </div>
         </div>
-        <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+        <!-- <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
             <div class="text-gray-500 font-semibold">medicare@2000</div>
-            <!-- <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3">
             <button id="lightThemeBtn" title="Light Theme"
                 style="background:none;border:none;outline:none;cursor:pointer;padding:0;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"
@@ -1160,7 +1304,7 @@
                     <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
                 </svg>
             </button>
-        </div> -->
+        </div>
         </footer>
         <script>
             function applyTheme(theme) {
@@ -1184,7 +1328,7 @@
             document.getElementById('lightThemeBtn').onclick = function () { setTheme('light'); };
             document.getElementById('darkThemeBtn').onclick = function () { setTheme('dark'); };
 
-            applyTheme(getSavedTheme());
+            applyTheme(getSavedTheme()); -->
         </script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
@@ -3520,7 +3664,7 @@
         </script>
 
         <script>
-            const userName = localStorage.getItem("name");
+            const userName = localStorage.getItem("admin_name");
             document.getElementById("userName").textContent = userName;
         </script>
         <script>
@@ -3562,7 +3706,7 @@
                 if (parts.length === 1) return parts[0][0].toUpperCase();
                 return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
             }
-            const AdminName = localStorage.getItem("name") || "admin";
+            const AdminName = localStorage.getItem("admin_name") || "admin";
             document.getElementById("userName").textContent = userName;
             document.getElementById("userAvatar").textContent = getInitials(userName);
         </script>
@@ -3572,7 +3716,8 @@
                     const token = localStorage.getItem('admin_jwt');
                     const res = await fetch("/api/admin/logout", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json",
+                        },
                         body: JSON.stringify({ token }),
                     });
                     const result = await res.json();
@@ -4040,6 +4185,28 @@
                     showToast("Restore failed: " + err.message, "error")
                 }
             }
+        </script>
+        <script>
+            const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+    if (theme === "dark") {
+        document.body.classList.add("dark");
+        themeToggle.textContent = "☀️ Light Mode";
+    } else {
+        document.body.classList.remove("dark");
+        themeToggle.textContent = "🌙 Dark Mode";
+    }
+    localStorage.setItem("theme", theme);
+}
+
+themeToggle.addEventListener("click", () => {
+    const currentTheme = localStorage.getItem("theme") || "light";
+    applyTheme(currentTheme === "light" ? "dark" : "light");
+});
+
+applyTheme(localStorage.getItem("theme") || "light");
+
         </script>
 </body>
 

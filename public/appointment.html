@@ -204,48 +204,67 @@
         <h2 class="text-2xl font-bold text-gray-800 mb-6" id="pageTitle">Book an Appointment</h2>
     </div>
 
-    <div class="max-w-4xl mx-auto mt-8" id="stepperContainer">
-        <div class="flex items-center justify-between relative">
-            <div class="relative flex justify-between w-full">
-                <div class="flex-1 text-center">
-                    <div class="relative">
-                        <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
-                        <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-                            id="step1">1</div>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient Details</p>
-                </div>
+    <div class="max-w-5xl mx-auto mt-8" id="stepperContainer">
+  <div class="flex items-center justify-between relative">
+    <div class="relative flex justify-between w-full">
 
-                <div class="flex-1 text-center">
-                    <div class="relative">
-                        <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line2Left"></div>
-                        <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
-                        <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-                            id="step2">2</div>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-400" id="step2Text">Select doctor</p>
-                </div>
-
-                <div class="flex-1 text-center">
-                    <div class="relative">
-                        <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line3Left"></div>
-                        <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
-                        <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-                            id="step3">3</div>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-400" id="step3Text">Date & Time</p>
-                </div>
-                <div class="flex-1 text-center">
-                    <div class="relative">
-                        <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4"></div>
-                        <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-                            id="step4">4</div>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-400" id="step4Text">Confirmation</p>
-                </div>
-            </div>
+      
+      <div class="flex-1 text-center">
+        <div class="relative">
+          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
+          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
+               id="step1">1</div>
         </div>
+        <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient Details</p>
+      </div>
+
+      
+      <div class="flex-1 text-center">
+        <div class="relative">
+          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line2Left"></div>
+          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
+          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
+               id="step2">2</div>
+        </div>
+        <p class="mt-2 text-sm text-gray-400" id="step2Text">Select Doctor</p>
+      </div>
+
+      
+      <div class="flex-1 text-center">
+        <div class="relative">
+          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line3Left"></div>
+          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
+          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
+               id="step3">3</div>
+        </div>
+        <p class="mt-2 text-sm text-gray-400" id="step3Text">Date & Time</p>
+      </div>
+
+      
+      <div class="flex-1 text-center">
+        <div class="relative">
+          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4Left"></div>
+          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line4Right"></div>
+          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
+               id="step4">4</div>
+        </div>
+        <p class="mt-2 text-sm text-gray-400" id="step4Text">Referral</p>
+      </div>
+
+      
+      <div class="flex-1 text-center">
+        <div class="relative">
+          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line5"></div>
+          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
+               id="step5">5</div>
+        </div>
+        <p class="mt-2 text-sm text-gray-400" id="step5Text">Confirmation</p>
+      </div>
+
     </div>
+  </div>
+</div>
+
 
     <section id="patientSection" class="section active">
         <div class="form-section">
@@ -441,7 +460,7 @@
                     </button>
                 </div>
 
-                <button id="doctorNextBtn" onclick="goToDateTimeSection()"
+                <button id="doctorNextBtn" onclick="handleDoctorNext()"
                     class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled>
                     Next
@@ -519,13 +538,56 @@
             <div class="flex justify-between mt-8">
                 <button onclick="goBackToDoctor()"
                     class="px-6 py-2 border border-gray-300 rounded-lg text-white bg-gray-600">Back</button>
-                <button id="dateTimeNextBtn" onclick="goToConfirmation()" disabled
+                <button id="dateTimeNextBtn" onclick="goToReferral()" disabled
                     class="px-6 py-2 bg-gray-400 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
                     Next
                 </button>
             </div>
         </div>
     </section>
+
+    <section id="referralSection" class="section">
+        <div class="max-w-4xl mx-auto bg-white p-6 mt-8 rounded shadow">
+            <h2 class="text-xl font-semibold mb-4">Referral Information</h2>
+            <p class="text-gray-600 mb-6">If you were referred by a doctor, please provide their name. Otherwise, you can skip this step.</p>
+
+            <div class="form-group mb-6">
+                <label for="referred-by">Referred By (Doctor Name)</label>
+                <div class="flex gap-2">
+                    <input type="text" id="referred-by" name="referral"
+                        placeholder="Enter doctor's name (optional)"
+                        class="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        oninput="checkReferralForm()">
+                    <button type="button" onclick="clearReferralField()"
+                        class="px-3 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors duration-200">
+                        Clear
+                    </button>
+                </div>
+                <div id="referral-error" class="text-red-500 text-sm mt-1 hidden"></div>
+            </div>
+
+            <div class="flex justify-between">
+                <button onclick="goBackToDateTime()"
+                    class="px-6 py-2 border border-gray-300 rounded-lg text-white bg-gray-600">
+                    Back
+                </button>
+
+                <div class="flex gap-4">
+                    <button type="button" id="skipReferralBtn" onclick="skipReferral()"
+                        class="px-6 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled>
+                        Skip
+                    </button>
+                    <button type="button" id="referralNextBtn" onclick="goToConfirmationFromReferral()"
+                        class="px-6 py-2 bg-gray-400 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled>
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="confirmationSection" class="section">
         <div class="max-w-4xl mx-auto mt-8">
             <div class="bg-white rounded-lg shadow-sm p-6">
@@ -577,10 +639,15 @@
                         <div><span class="text-gray-500">Phone:</span> <span class="text-gray-800 ml-1"
                                 id="confirmPatientContact"></span></div>
                     </div>
+                    <div id="referralInfo" class="border rounded-lg p-4 bg-gray-50 mt-2 hidden">
+                        <p class="text-gray-800 font-semibold text-lg mb-2">Referral Information</p>
+                        <div><span class="text-gray-500">Referred By:</span> <span class="text-gray-800 ml-1"
+                                id="confirmReferral"></span></div>
+                    </div>
                 </div>
 
                 <div class="flex justify-between mt-6">
-                    <button onclick="goBackToDateTime()"
+                    <button onclick="goBackToReferral()"
                         class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">Back</button>
                     <button onclick="confirmBooking()" id="confirmBookingBtn"
                         class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
@@ -590,21 +657,7 @@
             </div>
         </div>
     </section>
-<div id="refreshWarningModal"
-        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-            <h2 class="text-xl font-bold mb-4 text-gray-800 text-center">Are you sure you want to refresh?</h2>
-            <p class="text-gray-600 mb-6 text-center">After refreshing, your details will be removed.</p>
-            <div class="flex justify-end gap-4">
-                <button id="cancelRefreshBtn"
-                    class="px-4 py-2 rounded bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400">Cancel</button>
-                <button id="confirmRefreshBtn"
-                    class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Refresh</button>
-            </div>
-        </div>
-    </div>
-     </div>
-    
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const ageSelect = document.getElementById("age");
@@ -620,6 +673,13 @@
             ageSelect.appendChild(above100);
 
             updateStepper(1);
+
+        
+            const referralInput = document.getElementById("referred-by");
+            if (referralInput) {
+                referralInput.addEventListener("input", checkReferralForm);
+                checkReferralForm(); 
+            }
 
             const inputs = document.querySelectorAll("#patientForm input, #patientForm select");
             inputs.forEach((input) => {
@@ -854,7 +914,7 @@
             localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
             const isEditMode = getQueryParam("edit") === "1";
             if (isEditMode) {
-                goToDateTimeSection();
+                goToReferral();
             } else {
                 document.getElementById("doctorNextBtn").disabled = false;
                 document.getElementById("doctorNextBtn").classList.remove("bg-gray-400");
@@ -882,7 +942,7 @@
         }
 
         function updateStepper(activeStep) {
-            for (let i = 1; i <= 4; i++) {
+            for (let i = 1; i <= 5; i++) {
                 const circle = document.getElementById(`step${i}`);
                 const label = document.getElementById(`step${i}Text`);
 
@@ -914,9 +974,12 @@
             const line2_3_part2 = document.getElementById("line3Left");
 
             const line3_4_part1 = document.getElementById("line3Right");
-            const line3_4_part2 = document.getElementById("line4");
+            const line3_4_part2 = document.getElementById("line4Left");
 
-            [line1_2_part1, line1_2_part2, line2_3_part1, line2_3_part2, line3_4_part1, line3_4_part2].forEach((line) => {
+            const line4_5_part1 = document.getElementById("line4Right");
+            const line4_5_part2 = document.getElementById("line5");
+
+            [line1_2_part1, line1_2_part2, line2_3_part1, line2_3_part2, line3_4_part1, line3_4_part2, line4_5_part1, line4_5_part2].forEach((line) => {
                 if (line) {
                     line.classList.remove("bg-blue-600");
                     line.classList.add("bg-gray-200");
@@ -951,6 +1014,16 @@
                 if (line3_4_part2) {
                     line3_4_part2.classList.remove("bg-gray-200");
                     line3_4_part2.classList.add("bg-blue-600");
+                }
+            }
+            if (activeStep >= 5) {
+                if (line4_5_part1) {
+                    line4_5_part1.classList.remove("bg-gray-200");
+                    line4_5_part1.classList.add("bg-blue-600");
+                }
+                if (line4_5_part2) {
+                    line4_5_part2.classList.remove("bg-gray-200");
+                    line4_5_part2.classList.add("bg-blue-600");
                 }
             }
         }
@@ -1015,17 +1088,14 @@
             updateStepper(2);
         }
 
-        function goToConfirmation() {
-            if (selectedDate && selectedTime) {
-                const appointmentData = {
-                    date: selectedDate,
-                    time: selectedTime,
-                };
-                localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
-                showSection("confirmationSection");
-                updateStepper(4);
-                initializeConfirmation();
-            }
+        function goToReferral() {
+            showSection("referralSection");
+            updateStepper(4);
+            
+        
+            setTimeout(() => {
+                checkReferralForm();
+            }, 100);
         }
 
         function goBackToDateTime() {
@@ -1042,6 +1112,75 @@
                 updateTimeSlots();
             }
         }
+
+        function skipReferral() {
+            const referralInput = document.getElementById("referred-by");
+            const referralValue = referralInput.value.trim();
+            
+            if (referralValue.length > 0) {
+            
+                const referralError = document.getElementById("referral-error");
+                referralError.textContent = "Please use Next button when referral name is entered, or clear the field to skip";
+                referralError.classList.remove("hidden");
+                referralInput.classList.add("border-red-500");
+                return;
+            }
+            
+            localStorage.setItem("referralData", JSON.stringify({ referredBy: "" }));
+            goToConfirmationFromReferral();
+        }
+
+        function goToConfirmationFromReferral() {
+            const referralInput = document.getElementById("referred-by");
+            const referralValue = referralInput.value.trim();
+            
+            
+            const referralData = {
+                referredBy: referralValue
+            };
+            localStorage.setItem("referralData", JSON.stringify(referralData));
+            
+            
+            const referralError = document.getElementById("referral-error");
+            if (referralError) referralError.classList.add("hidden");
+            referralInput.classList.remove("border-red-500");
+            
+            const isEditMode = getQueryParam("edit") === "1";
+            if (isEditMode) {
+            
+                showSection("confirmationSection");
+                updateStepper(5);
+                initializeConfirmation();
+            } else if (selectedDate && selectedTime) {
+                const appointmentData = {
+                    date: selectedDate,
+                    time: selectedTime,
+                };
+                localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+                showSection("confirmationSection");
+                updateStepper(5);
+                initializeConfirmation();
+            }
+        }
+
+        function goBackToReferral() {
+            showSection("referralSection");
+            updateStepper(4);
+        }
+
+        function goToConfirmation() {
+            if (selectedDate && selectedTime) {
+                const appointmentData = {
+                    date: selectedDate,
+                    time: selectedTime,
+                };
+                localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+                showSection("confirmationSection");
+                updateStepper(5);
+                initializeConfirmation();
+            }
+        }
+
         function checkPatientForm() {
             const name = document.getElementById("patient-name").value.trim();
             const age = document.getElementById("age").value;
@@ -1216,7 +1355,7 @@
                 const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
                 let isTodayAllSlotsPast = false;
                 if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                    // FIX: Use correct availability for today
+                    
                     let availabilityToUse = selectedDoctor.availability;
                     if (selectedDoctor.availabilityByDate) {
                         let dateKey = formatDateString(today);
@@ -1224,7 +1363,7 @@
                             const dayAvail = selectedDoctor.availabilityByDate[dateKey];
                             availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
                         } else {
-                            // Try Y-M-D format if needed
+                           
                             const parts = dateKey.split("/");
                             if (parts.length === 3) {
                                 const ymd = `${parts[2]}-${parts[0].padStart(2, "0")}-${parts[1].padStart(2, "0")}`;
@@ -1528,33 +1667,27 @@
             updateStepper(2);
         }
 
-        function goToConfirmation() {
-            if (selectedDate && selectedTime) {
-                const appointmentData = {
-                    date: selectedDate,
-                    time: selectedTime,
-                };
-                localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
-                showSection("confirmationSection");
-                updateStepper(4);
-                initializeConfirmation();
-            }
+        function goToReferral() {
+            showSection("referralSection");
+            updateStepper(4);
+            
+        
+            setTimeout(() => {
+                checkReferralForm();
+            }, 100);
         }
 
         function goBackToDateTime() {
             showSection("dateTimeSection");
             updateStepper(3);
-
             const appointmentData = JSON.parse(localStorage.getItem("appointmentData") || "{}");
             if (appointmentData.date && appointmentData.time) {
                 selectedDate = appointmentData.date;
                 selectedTime = appointmentData.time;
-
                 const [month, day, year] = selectedDate.split("/");
                 currentDate = new Date(year, month - 1, day);
                 renderCalendar(currentDate);
                 updateMonthNavigation();
-
                 updateTimeSlots();
             }
         }
@@ -1580,6 +1713,7 @@
                 const patientData = JSON.parse(localStorage.getItem("patientData"));
                 const doctorData = JSON.parse(localStorage.getItem("selectedDoctor"));
                 const appointmentData = JSON.parse(localStorage.getItem("appointmentData"));
+                const referralData = JSON.parse(localStorage.getItem("referralData") || "{}");
 
                 if (!patientData || !doctorData || !appointmentData) {
                     throw new Error("Missing required appointment information");
@@ -1601,8 +1735,19 @@
                         date: (appointmentData.date || "").trim(),
                         time: (appointmentData.time || "").trim(),
                     },
+                    referralData: {
+                        referredBy: (referralData.referredBy || "").trim(),
+                    },
                 };
                 console.log("Sending confirmationData:", confirmationData);
+
+                
+                if (referralData.referredBy && referralData.referredBy.trim() !== "") {
+                    if (referralData.referredBy.trim().length < 2) {
+                        showSuccessModal("Referral doctor name must be at least 2 characters long.", "Appointment booking failed.", "error");
+                        return;
+                    }
+                }
 
                 for (const key in confirmationData.patientData) {
                     if (
@@ -1642,6 +1787,14 @@
                         return;
                     }
 
+                    
+                    if (referralData.referredBy && referralData.referredBy.trim() !== "") {
+                        if (referralData.referredBy.trim().length < 2) {
+                            showSuccessModal("Referral doctor name must be at least 2 characters long.", "Appointment update failed.", "error");
+                            return;
+                        }
+                    }
+
                     response = await fetch(`/api/confirmations/${editData._id}`, {
                         method: "PUT",
                         headers: {
@@ -1653,6 +1806,7 @@
                             doctorName: confirmationData.doctorData.name,
                             date: confirmationData.dateData.date,
                             time: confirmationData.dateData.time,
+                            referralData: confirmationData.referralData,
                         }),
                     });
                 } else {
@@ -1675,6 +1829,10 @@
                 }
 
                 document.getElementById("step4").innerHTML = "✓";
+                const step5El = document.getElementById("step5");
+                if (step5El) {
+                    step5El.innerHTML = "✓";
+                }
 
                 showSuccessModal(isEditMode ? "Appointment updated successfully!" : "Appointment booked successfully!", "Appointment booked successfully!", "success");
 
@@ -1695,6 +1853,7 @@
             const patientData = JSON.parse(localStorage.getItem("patientData"));
             const doctorData = JSON.parse(localStorage.getItem("selectedDoctor"));
             const appointmentData = JSON.parse(localStorage.getItem("appointmentData"));
+            const referralData = JSON.parse(localStorage.getItem("referralData") || "{}");
 
             document.getElementById("confirmDoctor").textContent = doctorData.name;
             document.getElementById("confirmSpecialty").textContent = doctorData.specialty;
@@ -1715,6 +1874,17 @@
             document.getElementById("confirmPatientGender").textContent = patientData.gender;
             document.getElementById("confirmPatientBlood").textContent = patientData.blood;
             document.getElementById("confirmPatientContact").textContent = patientData.contact;
+
+    
+            const referralInfo = document.getElementById("referralInfo");
+            const confirmReferral = document.getElementById("confirmReferral");
+            
+            if (referralData.referredBy && referralData.referredBy.trim() !== "") {
+                confirmReferral.textContent = referralData.referredBy;
+                referralInfo.classList.remove("hidden");
+            } else {
+                referralInfo.classList.add("hidden");
+            }
         }
 
         const allTimeSlots = [
@@ -1751,6 +1921,7 @@
                 localStorage.removeItem("selectedDoctor");
                 localStorage.removeItem("patientData");
                 localStorage.removeItem("lastBookedPatient");
+                localStorage.removeItem("referralData");
                 if (getQueryParam("edit") === "1") {
                     window.location.href = "admindasboard.html";
                 } else {
@@ -1809,6 +1980,13 @@
                     JSON.stringify({
                         date: editData.dateData?.date,
                         time: editData.dateData?.time,
+                    })
+                );
+
+                localStorage.setItem(
+                    "referralData",
+                    JSON.stringify({
+                        referredBy: editData.referralData?.referredBy || "",
                     })
                 );
             } catch (e) {
@@ -1904,6 +2082,29 @@
                         });
                     }
                 }, 1000);
+
+                
+                if (editData.referralData && editData.referralData.referredBy) {
+                    setTimeout(() => {
+                        const referralInput = document.getElementById("referred-by");
+                        if (referralInput) {
+                            referralInput.value = editData.referralData.referredBy;
+                            checkReferralForm(); 
+                        }
+                    }, 1000);
+                } else {
+                
+                    setTimeout(() => {
+                        checkReferralForm();
+                    }, 1000);
+                }
+
+            
+                setTimeout(() => {
+                    if (isEditMode) {
+                        goToReferral();
+                    }
+                }, 1500);
             }
         });
 
@@ -2115,6 +2316,83 @@
           setTimeout(() => {
             toast.classList.add('hidden');
           }, 2000);
+        }
+
+        function handleDoctorNext() {
+            const isEditMode = getQueryParam("edit") === "1";
+            if (isEditMode) {
+                goToReferral();
+            } else {
+                goToDateTimeSection();
+            }
+        }
+
+        function goToDateTimeSection() {
+            showSection("dateTimeSection");
+            updateStepper(3);
+            initializeDateTime();
+        }
+
+        function checkReferralForm() {
+            const referralInput = document.getElementById("referred-by");
+            const referralNextBtn = document.getElementById("referralNextBtn");
+            const skipReferralBtn = document.getElementById("skipReferralBtn");
+            const referralError = document.getElementById("referral-error");
+            const referralValue = referralInput.value.trim();
+
+            if (referralValue.length > 0) {
+                
+                referralNextBtn.disabled = false;
+                referralNextBtn.classList.remove("bg-gray-400");
+                referralNextBtn.classList.add("bg-blue-600");
+                
+    
+                skipReferralBtn.disabled = true;
+                skipReferralBtn.classList.add("bg-gray-400");
+                skipReferralBtn.classList.remove("bg-gray-500");
+                
+                referralInput.classList.remove("border-red-500");
+                referralInput.classList.add("border-green-500");
+                referralError.classList.add("hidden");
+            } else {
+                
+                referralNextBtn.disabled = true;
+                referralNextBtn.classList.add("bg-gray-400");
+                referralNextBtn.classList.remove("bg-blue-600");
+                
+            
+                skipReferralBtn.disabled = false;
+                skipReferralBtn.classList.remove("bg-gray-400");
+                skipReferralBtn.classList.add("bg-gray-500");
+                
+                referralInput.classList.remove("border-green-500");
+                referralInput.classList.add("border-red-500");
+                referralError.textContent = "Please enter a doctor's name or click Skip";
+                referralError.classList.remove("hidden");
+            }
+        }
+
+        function skipReferral() {
+            const referralInput = document.getElementById("referred-by");
+            const referralValue = referralInput.value.trim();
+            
+            if (referralValue.length > 0) {
+            
+                const referralError = document.getElementById("referral-error");
+                referralError.textContent = "Please use Next button when referral name is entered, or clear the field to skip";
+                referralError.classList.remove("hidden");
+                referralInput.classList.add("border-red-500");
+                return;
+            }
+            
+            localStorage.setItem("referralData", JSON.stringify({ referredBy: "" }));
+            goToConfirmationFromReferral();
+        }
+
+        function clearReferralField() {
+            const referralInput = document.getElementById("referred-by");
+            referralInput.value = "";
+            checkReferralForm();
         }
     </script>
 </body>

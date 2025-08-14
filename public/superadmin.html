@@ -109,6 +109,7 @@
     .flatpickr-current-month {
       justify-content: center !important;
     }
+    
   </style>
 </head>
 
@@ -1174,7 +1175,7 @@
 
 
   <script>
-    const userName = localStorage.getItem("name");
+    const userName = localStorage.getItem("superadmin_name");
     document.getElementById("userName").textContent = userName;
   </script>
   <script>
@@ -1821,7 +1822,7 @@
       if (parts.length === 1) return parts[0][0].toUpperCase();
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
-    const AdminName = localStorage.getItem("name");
+    const AdminName = localStorage.getItem("superadmin_name");
     document.getElementById("userName").textContent = userName;
     document.getElementById("userAvatar").textContent = getInitials(userName);
   </script>
@@ -2038,7 +2039,7 @@
     if (profileLink && modal) {
       profileLink.addEventListener('click', async (e) => {
         e.preventDefault();
-        const localName = localStorage.getItem('name') || '';
+        const localName = localStorage.getItem('superadmin_name') || '';
         nameTop.value = localName;
         setInitials(localName);
 
@@ -2149,7 +2150,7 @@
           if (res.ok) {
             showToast('Profile updated successfully!', 'success');
             resetModal();
-            localStorage.setItem('name', newName);
+            localStorage.setItem('superadmin_name', newName);
             localStorage.setItem('email', newEmail);
             localStorage.setItem('contact', newContact);
             document.getElementById("userName").textContent = newName;
