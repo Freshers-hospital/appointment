@@ -176,7 +176,29 @@
         <h2 class="text-2xl font-semibold px-20">Super Admin Dashboard</h2>
         <p class="text-gray-500 px-20">Manage admins and doctors</p>
       </div>
-    </div>
+            <div class="flex items-center gap-4 px-20">
+                <div class="relative w-60">
+                    <img src="/search.webp" alt="Search"
+                        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
+                    <input type="text" id="searchInput" placeholder="Search"
+                        class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
+                </div>
+
+                <div class="relative w-60 mt-6">
+                    <div id="datePickerDisplay"
+                        class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+                            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+                        </svg>
+                        <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
+                    </div>
+                    <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
+                        autocomplete="off" />
+                </div>
+            </div>
+        </div>
 
 
     <div class="px-20 mt-4">
@@ -196,10 +218,8 @@
           <div id="adminsTab" class="tab-content">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-semibold">Admins List</h3>
-
               <button id="openAdminModal"
                 class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
-
             </div>
 
             <div
@@ -220,24 +240,7 @@
         <div id="doctorsTab" class="tab-content hidden">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
-            <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
-            <div class="flex flex-row items-center space-x-3">
-              <div class="relative w-60 mt-0 h-12">
-                <div id="datePickerDisplay"
-                  class="flex items-center justify-center w-44 h-12 py-0 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none text-base">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-400" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                  </svg>
-                  <span id="datePickerText" class="text-gray-900 font-semibold text-base">2025-06-23</span>
-                </div>
-                <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
-                  autocomplete="off" />
-              </div>
-              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+
-                Add Doctor</button>
-            </div>
+            <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Doctor</button>
           </div>
 
           <div
@@ -587,7 +590,7 @@
     </div>
   </div>
   <div id="availabilityModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-start justify-center pt-16 z-50 hidden">
     <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
       <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
@@ -626,7 +629,7 @@
     </div>
   </div>
   <div id="addDoctorModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-start justify-center pt-16 z-50 hidden">
     <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
 
       <button id="closeAddDoctorModal"
@@ -684,24 +687,24 @@
             placeholder="e.g., 9:00 AM - 5:00 PM" required /> -->
 
           <div class="grid grid-cols-2 gap-4">
-            <!-- Start Time -->
+            
             <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
               <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
               <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-                <!-- JS will fill options -->
+              
               </select>
             </div>
 
-            <!-- End Time -->
+           
             <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
               <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
               <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-                <!-- JS will fill options -->
+             
               </select>
             </div>
           </div>
 
-          <!-- Hidden input to store formatted availability -->
+         
           <input type="hidden" id="doctorAvailability" name="availability" required />
 
 
@@ -776,10 +779,14 @@
 
     function renderAdminsPage() {
       const adminList = document.getElementById("adminList");
-      const totalPages = Math.ceil(allAdmins.length / adminsPerPage);
+      const searchQuery = (document.getElementById("searchInput")?.value || document.getElementById("adminSearchInput")?.value || "").trim().toLowerCase();
+      const filteredAdmins = searchQuery
+        ? allAdmins.filter(a => (a.username || "").toLowerCase().includes(searchQuery))
+        : allAdmins;
+      const totalPages = Math.ceil(filteredAdmins.length / adminsPerPage);
       const startIndex = (currentAdminsPage - 1) * adminsPerPage;
       const endIndex = startIndex + adminsPerPage;
-      const currentAdmins = allAdmins.slice(startIndex, endIndex);
+      const currentAdmins = filteredAdmins.slice(startIndex, endIndex);
       if (!currentAdmins.length) {
         adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
         updateAdminsPagination(totalPages);
@@ -998,10 +1005,14 @@
       const doctorsList = document.getElementById("doctorsList");
       const paginationContainer = document.getElementById("doctorsPagination");
       if (!doctorsList) return;
-      const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+      const doctorSearchQuery = (document.getElementById("searchInput")?.value || document.getElementById("doctorSearchInput")?.value || "").trim().toLowerCase();
+      const filteredDoctors = doctorSearchQuery
+        ? allDoctors.filter(d => (d.name || "").toLowerCase().includes(doctorSearchQuery))
+        : allDoctors;
+      const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
       const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
       const endIndex = startIndex + doctorsPerPage;
-      const currentDoctors = allDoctors.slice(startIndex, endIndex);
+      const currentDoctors = filteredDoctors.slice(startIndex, endIndex);
       doctorsList.innerHTML = "";
       const selectedDate = document.getElementById("datePicker")?.value || new Date().toISOString().split('T')[0];
       const availabilityPromises = currentDoctors.map(async (doctor) => {
@@ -1102,6 +1113,15 @@
     document.addEventListener("DOMContentLoaded", function () {
       const prevButton = document.getElementById("prevDoctorsPage");
       const nextButton = document.getElementById("nextDoctorsPage");
+      const topSearchInput = document.getElementById("searchInput");
+      if (topSearchInput) {
+        topSearchInput.addEventListener("input", () => {
+          currentAdminsPage = 1;
+          currentDoctorsPage = 1;
+          renderAdminsPage();
+          renderDoctorsPage();
+        });
+      }
       if (prevButton) {
         prevButton.addEventListener("click", () => {
           if (currentDoctorsPage > 1) {
@@ -1112,7 +1132,11 @@
       }
       if (nextButton) {
         nextButton.addEventListener("click", () => {
-          const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+          const doctorSearchQuery = (document.getElementById("searchInput")?.value || document.getElementById("doctorSearchInput")?.value || "").trim().toLowerCase();
+          const filteredDoctors = doctorSearchQuery
+            ? allDoctors.filter(d => (d.name || "").toLowerCase().includes(doctorSearchQuery))
+            : allDoctors;
+          const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
           if (currentDoctorsPage < totalPages) {
             currentDoctorsPage++;
             renderDoctorsPage();
@@ -1150,6 +1174,7 @@
           document.getElementById("datePickerText").textContent = displayText;
           document.getElementById("datePicker").value = dateStr;
           fetchAndDisplayDoctors(dateStr);
+         
         },
       });
       document.getElementById("datePickerDisplay").addEventListener("click", function () {
@@ -1161,6 +1186,8 @@
       const today = new Date();
       document.getElementById("datePicker").value = today.toISOString().split("T")[0];
       document.getElementById("datePickerText").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+      
     });
 
     function getSelectedDoctorDate() {
@@ -2387,18 +2414,6 @@
     endTime.addEventListener("change", updateAvailability);
   });
 </script>
-
-
-
-
-
-
-
-
-  
-
-
-
 </body>
 
 </html>
