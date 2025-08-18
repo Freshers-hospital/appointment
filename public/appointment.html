@@ -912,14 +912,9 @@
                 availabilityByDate: availabilityByDate ? JSON.parse(availabilityByDate.replace(/&quot;/g, '"')) : null,
             };
             localStorage.setItem("selectedDoctor", JSON.stringify(doctorData));
-            const isEditMode = getQueryParam("edit") === "1";
-            if (isEditMode) {
-                goToReferral();
-            } else {
-                document.getElementById("doctorNextBtn").disabled = false;
-                document.getElementById("doctorNextBtn").classList.remove("bg-gray-400");
-                document.getElementById("doctorNextBtn").classList.add("bg-blue-600");
-            }
+            document.getElementById("doctorNextBtn").disabled = false;
+            document.getElementById("doctorNextBtn").classList.remove("bg-gray-400");
+            document.getElementById("doctorNextBtn").classList.add("bg-blue-600");
 
             const selectButtons = document.querySelectorAll(".select-btn");
             selectButtons.forEach((button) => {
@@ -2068,7 +2063,12 @@
                 const doctorBackBtn = document.getElementById("doctorBackBtn");
                 const doctorNextBtn = document.getElementById("doctorNextBtn");
                 if (doctorBackBtn) doctorBackBtn.style.display = "none";
-                if (doctorNextBtn) doctorNextBtn.style.display = "none";
+                if (doctorNextBtn) {
+                    doctorNextBtn.style.display = "";
+                    doctorNextBtn.disabled = true;
+                    doctorNextBtn.classList.add("bg-gray-400");
+                    doctorNextBtn.classList.remove("bg-blue-600");
+                }
 
                 setTimeout(() => {
                     const doctorData = editData.doctorData;
@@ -2100,11 +2100,7 @@
                 }
 
             
-                setTimeout(() => {
-                    if (isEditMode) {
-                        goToReferral();
-                    }
-                }, 1500);
+            
             }
         });
 
@@ -2319,12 +2315,7 @@
         }
 
         function handleDoctorNext() {
-            const isEditMode = getQueryParam("edit") === "1";
-            if (isEditMode) {
-                goToReferral();
-            } else {
-                goToDateTimeSection();
-            }
+            goToDateTimeSection();
         }
 
         function goToDateTimeSection() {

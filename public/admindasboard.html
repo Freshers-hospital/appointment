@@ -405,12 +405,14 @@
 
 body.dark {
     background-color: #0f172a; 
-    color: #f3f7fb; 
+    color: #f1f5f9; 
 }
+
 
 body.dark * {
     color: #f1f5f9 !important;
 }
+
 
 body.dark .text-gray-500,
 body.dark .text-gray-400,
@@ -448,9 +450,10 @@ body.dark .tab-inactive:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
+
 body.dark input,
 body.dark select {
-    background-color: #000000 !important;
+    background-color: #1e293b !important;
     border-color: #334155 !important;
 }
 body.dark input::placeholder {
@@ -461,16 +464,18 @@ body.dark input::placeholder {
 body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !important; }
 body.dark .flatpickr-innerContainer { background: #0f172a !important; }
 body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
+
 body.dark .flatpickr-months { background: #ffffff !important; color: #111827 !important; }
 body.dark .flatpickr-months .flatpickr-prev-month,
 body.dark .flatpickr-months .flatpickr-next-month { fill: #111827 !important; color: #111827 !important; }
-body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #ffffff !important; color: #111827 !important; }
+
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #111827 !important; color: #111827 !important; }
 body.dark .flatpickr-current-month .numInputWrapper input { background-color: #ffffff !important; color: #111827 !important; }
 body.dark .flatpickr-current-month .numInputWrapper span { color: #111827 !important; }
 body.dark .flatpickr-current-month,
 body.dark .flatpickr-current-month .flatpickr-monthDropdown-months,
 body.dark .flatpickr-current-month .numInputWrapper {
-    color: #111827 !important;
+    color: #ffffff !important;
 }
 body.dark .flatpickr-days { background: #0f172a !important; }
 body.dark .flatpickr-day { color: #e2e8f0 !important; }
@@ -482,6 +487,8 @@ body.dark .flatpickr-day.today {
 body.dark .flatpickr-day:hover {
     background: #334155 !important;
 }
+
+
 body.dark #appointmentsTab h3,
 body.dark #patientsTab h3 {
     color: #e5e7eb !important;
@@ -490,6 +497,8 @@ body.dark #appointmentsTab p.text-gray-500,
 body.dark #patientsTab p.text-gray-500 {
     color: #94a3b8 !important;
 }
+
+
 body.dark table thead th {
     background-color: #1e293b !important;
 }
@@ -532,7 +541,7 @@ body.dark #userDropdownMenu button:hover {
     background-color: #334155 !important;
 }
 
-
+    
 body.dark .w-10.h-10 {
     background-color: #1e293b !important;
     border-color: #334155 !important;
@@ -1576,9 +1585,9 @@ body.dark.accent-teal .tab-active {
                     class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl text-center font-bold mb-4 text-red-600">Cancel Appointment</h2>
                 <div class="mb-6 text-gray-700">Are you sure you want to cancel this appointment?</div>
-                <div class="flex justify-between gap-2">
+                <div class="flex justify-center gap-4">
                     <button id="cancelCancelBtn"
-                        class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">No</button>
+                        class="px-4 py-2  rounded border border-gray-300 bg-white text-black font-semibold">No</button>
                     <button id="confirmCancelBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold">Yes,
                         Cancel</button>
                 </div>
