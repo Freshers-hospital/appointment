@@ -310,6 +310,7 @@
         #appointmentsList > div {
             overflow: visible !important;
         }
+
         .action-menu:not(.hidden) {
             display: block !important;
             visibility: visible !important;
@@ -540,7 +541,539 @@ body.dark .text-gray-400 {
     color: #cbd5e1 !important;
 }
 
+body.dark .text-gray-400 {
+    color: #cbd5e1 !important;
+}
 
+/* Enhanced dark mode styles for better visibility */
+body.dark nav {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark nav h1 {
+    color: #3b82f6 !important;
+}
+
+body.dark nav svg {
+    color: #3b82f6 !important;
+}
+
+/* Button styles */
+body.dark button.bg-black {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark button.bg-black:hover {
+    background-color: #2563eb !important;
+}
+
+body.dark button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark button.bg-blue-600:hover {
+    background-color: #2563eb !important;
+}
+
+body.dark button.bg-red-600 {
+    background-color: #dc2626 !important;
+    color: white !important;
+}
+
+body.dark button.bg-red-600:hover {
+    background-color: #b91c1c !important;
+}
+
+/* Table row hover effects */
+body.dark table tbody tr:hover td {
+    background-color: #1e293b !important;
+}
+
+/* Status badges */
+body.dark .bg-green-200 {
+    background-color: #065f46 !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark .bg-yellow-200 {
+    background-color: #92400e !important;
+    color: #fcd34d !important;
+}
+
+body.dark .bg-red-200 {
+    background-color: #991b1b !important;
+    color: #fca5a5 !important;
+}
+
+/* Doctor row styles */
+body.dark .doctor-row {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark .doctor-row:hover {
+    background-color: #334155 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Patient card styles */
+body.dark .grid.grid-cols-12.gap-4.items-center.bg-white.p-3.rounded-lg.shadow-sm.border.border-gray-100 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark .grid.grid-cols-12.gap-4.items-center.bg-white.p-3.rounded-lg.shadow-sm.border.border-gray-100:hover {
+    background-color: #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Search and date picker styles */
+body.dark #searchInput {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark #datePickerDisplay {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Pagination styles */
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:hover {
+    background-color: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:disabled {
+    background-color: #475569 !important;
+    border-color: #475569 !important;
+    color: #64748b !important;
+}
+
+/* Modal styles */
+body.dark .modal,
+body.dark #viewDetailsModal,
+body.dark #appointmentDetailsModal,
+body.dark #rescheduleModal,
+body.dark #cancelModal,
+body.dark #addDoctorModal,
+body.dark #patientDetailsModal,
+body.dark #successModal,
+body.dark #viewDoctorProfileModal,
+body.dark #editDoctorProfileModal,
+body.dark #availabilityModal {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark .modal h2,
+body.dark .modal h3 {
+    color: #f1f5f9 !important;
+}
+
+/* Action menu styles */
+body.dark .action-menu {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark .action-menu a,
+body.dark .action-menu button {
+    color: #f1f5f9 !important;
+}
+
+body.dark .action-menu a:hover,
+body.dark .action-menu button:hover {
+    background-color: #334155 !important;
+}
+
+/* Text color overrides for better visibility */
+body.dark .text-gray-900 {
+    color: #f1f5f9 !important;
+}
+
+body.dark .text-gray-800 {
+    color: #e2e8f0 !important;
+}
+
+body.dark .text-gray-700 {
+    color: #cbd5e1 !important;
+}
+
+body.dark .text-gray-600 {
+    color: #94a3b8 !important;
+}
+
+/* Background color overrides */
+body.dark .bg-gray-50 {
+    background-color: #0f172a !important;
+}
+
+body.dark .bg-gray-100 {
+    background-color: #1e293b !important;
+}
+
+body.dark .bg-gray-200 {
+    background-color: #334155 !important;
+}
+
+/* Border color overrides */
+body.dark .border-gray-200 {
+    border-color: #334155 !important;
+}
+
+body.dark .border-gray-300 {
+    border-color: #475569 !important;
+}
+
+/* Shadow overrides for better visibility */
+body.dark .shadow,
+body.dark .shadow-sm,
+body.dark .shadow-md,
+body.dark .shadow-lg {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Loading spinner */
+body.dark .animate-spin {
+    border-color: #334155 !important;
+    border-top-color: #3b82f6 !important;
+}
+
+/* Toast styles */
+body.dark #toast {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+/* Input focus states */
+body.dark input:focus,
+body.dark select:focus,
+body.dark textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Avatar styles */
+body.dark .w-8.h-8.rounded-full.bg-gray-200 {
+    background-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* User name and dropdown toggle */
+body.dark #userName,
+body.dark #userDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #userDropdownToggle svg {
+    color: #f1f5f9 !important;
+}
+
+/* Themes dropdown styles */
+body.dark #themesSubDropdown {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark #themesSubDropdown ul {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesSubDropdown button {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesSubDropdown button:hover {
+    background-color: #334155 !important;
+}
+
+body.dark #themesDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesDropdownToggle:hover {
+    background-color: #334155 !important;
+}
+
+/* Themes dropdown arrow rotation */
+.themes-dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* Ensure sub-dropdown appears correctly */
+#themesSubDropdown {
+    min-width: 120px;
+}
+
+#themesSubDropdown button {
+    text-align: left;
+    width: 100%;
+}
+
+/* Accents dropdown styles */
+body.dark #accentsSubDropdown {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark #accentsSubDropdown ul {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsSubDropdown button {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsSubDropdown button:hover {
+    background-color: #334155 !important;
+}
+
+body.dark #accentsDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsDropdownToggle:hover {
+    background-color: #334155 !important;
+}
+
+/* Accents dropdown arrow rotation */
+.accents-dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* Ensure accents sub-dropdown appears correctly */
+#accentsSubDropdown {
+    min-width: 160px;
+}
+
+#accentsSubDropdown button {
+    text-align: left;
+    width: 100%;
+}
+
+/* Accent color system - Blue (default) */
+.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue button.bg-black,
+.accent-blue button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue button.bg-black:hover,
+.accent-blue button.bg-blue-600:hover {
+    background-color: #2563eb !important;
+}
+
+.accent-blue nav h1,
+.accent-blue nav svg {
+    color: #3b82f6 !important;
+}
+
+.accent-blue input:focus,
+.accent-blue select:focus,
+.accent-blue textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Accent color system - Green */
+.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green button.bg-black,
+.accent-green button.bg-blue-600 {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green button.bg-black:hover,
+.accent-green button.bg-blue-600:hover {
+    background-color: #059669 !important;
+}
+
+.accent-green nav h1,
+.accent-green nav svg {
+    color: #10b981 !important;
+}
+
+.accent-green input:focus,
+.accent-green select:focus,
+.accent-green textarea:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+/* Accent color system - Purple */
+.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple button.bg-black,
+.accent-purple button.bg-blue-600 {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple button.bg-black:hover,
+.accent-purple button.bg-blue-600:hover {
+    background-color: #7c3aed !important;
+}
+
+.accent-purple nav h1,
+.accent-purple nav svg {
+    color: #8b5cf6 !important;
+}
+
+.accent-purple input:focus,
+.accent-purple select:focus,
+.accent-purple textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+
+/* Accent color system - Orange */
+.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange button.bg-black,
+.accent-orange button.bg-blue-600 {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange button.bg-black:hover,
+.accent-orange button.bg-blue-600:hover {
+    background-color: #d97706 !important;
+}
+
+.accent-orange nav h1,
+.accent-orange nav svg {
+    color: #f59e0b !important;
+}
+
+.accent-orange input:focus,
+.accent-orange select:focus,
+.accent-orange textarea:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+
+/* Accent color system - Pink */
+.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink button.bg-black,
+.accent-pink button.bg-blue-600 {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink button.bg-black:hover,
+.accent-pink button.bg-blue-600:hover {
+    background-color: #db2777 !important;
+}
+
+.accent-pink nav h1,
+.accent-pink nav svg {
+    color: #ec4899 !important;
+}
+
+.accent-pink input:focus,
+.accent-pink select:focus,
+.accent-pink textarea:focus {
+    border-color: #ec4899 !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+
+/* Accent color system - Teal */
+.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal button.bg-black,
+.accent-teal button.bg-blue-600 {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal button.bg-black:hover,
+.accent-teal button.bg-blue-600:hover {
+    background-color: #0d9488 !important;
+}
+
+.accent-teal nav h1,
+.accent-teal nav svg {
+    color: #14b8a6 !important;
+}
+
+.accent-teal input:focus,
+.accent-teal select:focus,
+.accent-teal textarea:focus {
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+/* Dark mode accent overrides */
+body.dark.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+body.dark.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+body.dark.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+body.dark.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+body.dark.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+/* Active accent indicator */
+.accent-color-preview.active {
+    border-color: #1f2937 !important;
+    border-width: 3px !important;
+}
     </style>
 </head>
 
@@ -590,13 +1123,115 @@ body.dark .text-gray-400 {
                                     <span>Profile</span>
                                 </a>
                             </li>
-                            <li>
-    <button id="themeToggle"
-        class="w-full flex items-center gap-2 px-4 py-2 text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
-        🌙 Dark Mode
-    </button>
-</li>
-
+                            <li class="relative">
+                                <button id="themesDropdownToggle"
+                                    class="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                    <div class="flex items-center gap-2">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" 
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Themes</span>
+                                    </div>
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="themes-dropdown-arrow transition-transform duration-200">
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div id="themesSubDropdown" 
+                                    class="absolute left-0 top-full mt-1 w-32 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                                    <ul class="py-1 text-sm text-gray-700">
+                                        <li>
+                                            <button id="lightThemeBtn"
+                                                class="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                                                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" 
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span>Light</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="darkThemeBtn"
+                                                class="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" 
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span>Dark</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="relative">
+                                <button id="accentsDropdownToggle"
+                                    class="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                    <div class="flex items-center gap-2">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" 
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Accents</span>
+                                    </div>
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="accents-dropdown-arrow transition-transform duration-200">
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div id="accentsSubDropdown" 
+                                    class="absolute left-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                                    <ul class="py-2 text-sm text-gray-700">
+                                        <li>
+                                            <button id="blueAccentBtn" data-color="blue"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-blue-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Blue</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="greenAccentBtn" data-color="green"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-green-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Green</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="purpleAccentBtn" data-color="purple"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-purple-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Purple</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="orangeAccentBtn" data-color="orange"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-orange-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Orange</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="pinkAccentBtn" data-color="pink"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-pink-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Pink</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="tealAccentBtn" data-color="teal"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-teal-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Teal</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li>
                                 <button onclick="showLogoutModal()"
                                     class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
@@ -4207,6 +4842,116 @@ themeToggle.addEventListener("click", () => {
 applyTheme(localStorage.getItem("theme") || "light");
 
         </script>
-</body>
+        <script>
+            // Themes dropdown functionality
+            const themesDropdownToggle = document.getElementById("themesDropdownToggle");
+            const themesSubDropdown = document.getElementById("themesSubDropdown");
+            const themesDropdownArrow = document.querySelector(".themes-dropdown-arrow");
+            const lightThemeBtn = document.getElementById("lightThemeBtn");
+            const darkThemeBtn = document.getElementById("darkThemeBtn");
 
+            function applyTheme(theme) {
+                if (theme === "dark") {
+                    document.body.classList.add("dark");
+                } else {
+                    document.body.classList.remove("dark");
+                }
+                localStorage.setItem("theme", theme);
+            }
+
+            // Toggle themes sub-dropdown
+            themesDropdownToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                themesSubDropdown.classList.toggle("hidden");
+                themesDropdownArrow.classList.toggle("rotate-180");
+            });
+
+            // Light theme button
+            lightThemeBtn.addEventListener("click", () => {
+                applyTheme("light");
+                themesSubDropdown.classList.add("hidden");
+                themesDropdownArrow.classList.remove("rotate-180");
+            });
+
+            // Dark theme button
+            darkThemeBtn.addEventListener("click", () => {
+                applyTheme("dark");
+                themesSubDropdown.classList.add("hidden");
+                themesDropdownArrow.classList.remove("rotate-180");
+            });
+
+            // Close sub-dropdown when clicking outside
+            document.addEventListener("click", (e) => {
+                if (!themesDropdownToggle.contains(e.target) && !themesSubDropdown.contains(e.target)) {
+                    themesSubDropdown.classList.add("hidden");
+                    themesDropdownArrow.classList.remove("rotate-180");
+                }
+            });
+
+            // Apply saved theme on page load
+            applyTheme(localStorage.getItem("theme") || "light");
+        </script>
+        <script>
+            // Accents dropdown functionality
+            const accentsDropdownToggle = document.getElementById("accentsDropdownToggle");
+            const accentsSubDropdown = document.getElementById("accentsSubDropdown");
+            const accentsDropdownArrow = document.querySelector(".accents-dropdown-arrow");
+            const accentButtons = document.querySelectorAll('[id$="AccentBtn"]');
+
+            function applyAccentColor(color) {
+                // Remove all existing accent classes
+                document.body.classList.remove('accent-blue', 'accent-green', 'accent-purple', 'accent-orange', 'accent-pink', 'accent-teal');
+                
+                // Add the selected accent class
+                if (color !== 'blue') {
+                    document.body.classList.add(`accent-${color}`);
+                }
+                
+                // Update active indicator
+                document.querySelectorAll('.accent-color-preview').forEach(preview => {
+                    preview.classList.remove('active');
+                });
+                
+                const activeButton = document.getElementById(`${color}AccentBtn`);
+                if (activeButton) {
+                    const preview = activeButton.querySelector('.accent-color-preview');
+                    if (preview) {
+                        preview.classList.add('active');
+                    }
+                }
+                
+                // Save accent preference
+                localStorage.setItem("accent", color);
+            }
+
+            // Toggle accents sub-dropdown
+            accentsDropdownToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                accentsSubDropdown.classList.toggle("hidden");
+                accentsDropdownArrow.classList.toggle("rotate-180");
+            });
+
+            // Handle accent color selection
+            accentButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const color = button.getAttribute('data-color');
+                    applyAccentColor(color);
+                    accentsSubDropdown.classList.add("hidden");
+                    accentsDropdownArrow.classList.remove("rotate-180");
+                });
+            });
+
+            // Close sub-dropdown when clicking outside
+            document.addEventListener("click", (e) => {
+                if (!accentsDropdownToggle.contains(e.target) && !accentsSubDropdown.contains(e.target)) {
+                    accentsSubDropdown.classList.add("hidden");
+                    accentsDropdownArrow.classList.remove("rotate-180");
+                }
+            });
+
+            // Apply saved accent on page load
+            const savedAccent = localStorage.getItem("accent") || "blue";
+            applyAccentColor(savedAccent);
+        </script>
+</body>
 </html>
