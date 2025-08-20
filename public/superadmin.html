@@ -378,10 +378,10 @@ body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:disabled {
 
 
 body.dark .modal,
-body.dark #viewDetailsModal,
+/* body.dark #viewDetailsModal,
 body.dark #appointmentDetailsModal,
 body.dark #rescheduleModal,
-body.dark #cancelModal,
+body.dark #cancelModal, */
 body.dark #addDoctorModal,
 body.dark #patientDetailsModal,
 body.dark #successModal,
@@ -780,41 +780,6 @@ body.dark #accentsDropdownToggle:hover {
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
 }
 
-
-body.dark.accent-green .tab-active {
-    background-color: #10b981 !important;
-    color: white !important;
-}
-
-body.dark.accent-brown .tab-active {
-    background-color: #542c2c !important;
-    color: white !important;
-}
-body.dark.accent-purple .tab-active {
-    background-color: #8b5cf6 !important;
-    color: white !important;
-}
-
-body.dark.accent-orange .tab-active {
-    background-color: #f59e0b !important;
-    color: white !important;
-}
-
-body.dark.accent-pink .tab-active {
-    background-color: #ec4899 !important;
-    color: white !important;
-}
-
-body.dark.accent-teal .tab-active {
-    background-color: #14b8a6 !important;
-    color: white !important;
-}
-
-
-.accent-color-preview.active {
-    border-color: #1f2937 !important;
-    border-width: 3px !important;
-}
 body.dark.accent-green .tab-active {
     background-color: #10b981 !important;
     color: white !important;
@@ -828,9 +793,11 @@ body.dark.accent-green button.bg-black:hover,
 body.dark.accent-green button.bg-blue-600:hover {
     background-color: #059669 !important;
 }
-body.dark.accent-green nav h1,
+body.dark.accent-green nav h1 ,
 body.dark.accent-green nav svg {
     color: #10b981 !important;
+     fill: #10b981 !important;
+    stroke: #b5cbc4 !important;
 }
 body.dark.accent-green input:focus,
 body.dark.accent-green select:focus,
@@ -838,6 +805,8 @@ body.dark.accent-green textarea:focus {
     border-color: #10b981 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
 }
+
+
 body.dark.accent-brown .tab-active {
     background-color: #b55656 !important;
     color: white !important;
@@ -854,6 +823,8 @@ body.dark.accent-brown button.bg-blue-600:hover {
 body.dark.accent-brown nav h1,
 body.dark.accent-brown nav svg {
     color: #b55656 !important;
+     fill: #b55656 !important;
+    stroke: #dfc1c1 !important;
 }
 body.dark.accent-brown input:focus,
 body.dark.accent-brown select:focus,
@@ -877,6 +848,8 @@ body.dark.accent-purple button.bg-blue-600:hover {
 body.dark.accent-purple nav h1,
 body.dark.accent-purple nav svg {
     color: #8b5cf6 !important;
+     fill: #8b5cf6 !important;
+    stroke: #b9b3c7 !important;
 }
 body.dark.accent-purple input:focus,
 body.dark.accent-purple select:focus,
@@ -900,6 +873,8 @@ body.dark.accent-orange button.bg-blue-600:hover {
 body.dark.accent-orange nav h1,
 body.dark.accent-orange nav svg {
     color: #f59e0b !important;
+     fill: #f59e0b !important;
+    stroke: #b1a084 !important;
 }
 body.dark.accent-orange input:focus,
 body.dark.accent-orange select:focus,
@@ -924,11 +899,14 @@ body.dark.accent-pink nav h1,
 body.dark.accent-pink nav svg {                
 .accent-purple nav svg {
     color: #8b5cf6 !important;
+    
 }
 .accent-purple nav svg {
     color: #8b5cf6 !important;
 }
     color: #ec4899 !important;
+     fill: #db2777!important;
+    stroke: #c89eb1 !important;
 }
 body.dark.accent-pink input:focus,
 body.dark.accent-pink select:focus,
@@ -952,6 +930,8 @@ body.dark.accent-teal button.bg-blue-600:hover {
 body.dark.accent-teal nav h1,
 body.dark.accent-teal nav svg {
     color: #14b8a6 !important;
+     fill: #14b8a6 !important;
+    stroke: #93bcb8 !important;
 }
 body.dark.accent-teal input:focus,
 body.dark.accent-teal select:focus,
@@ -963,6 +943,7 @@ body.dark #userDropdownToggle {
     color: white !important;
     fill: white !important;
 }
+
 
 body.accent-purple:not(.dark) {
   background-color: #f5f3ff !important;
@@ -3467,7 +3448,7 @@ body.dark {
 
             function applyAccentColor(color) {
               
-                document.body.classList.remove('accent-blue', 'accent-green', 'accent-purple', 'accent-orange', 'accent-pink', 'accent-teal');
+               document.body.classList.remove('accent-blue', 'accent-green','accent-brown', 'accent-purple', 'accent-orange', 'accent-pink', 'accent-teal');
                 
                 if (color !== 'blue') {
                     document.body.classList.add(`accent-${color}`);
