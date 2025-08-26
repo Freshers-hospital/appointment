@@ -1303,7 +1303,15 @@ body.dark {
   </div>
 
 
-  <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <!-- <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path class="text-red-600" d="M12 9v4M12 17h.01"/>
+          <path class="text-red-600" d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <h2 class="text-xl font-semibold mb-4">Confirm Delete</h2>
       <p class="mb-4 text-gray-600">Are you sure you want to delete this admin?</p>
@@ -1314,7 +1322,7 @@ body.dark {
 
       </div>
     </div>
-  </div>
+  </div> -->
 
 
   <div id="viewModal"
@@ -1372,16 +1380,31 @@ body.dark {
       </div>
     </div>
   </div>
-  <div id="deleteAdminModal"
-    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmDeleteAdmin()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
-      </div>
+<div id="deleteAdminModal"
+     class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
+    </div>
+    <p class="mb-6 text-gray-700 text-lg font-medium">
+      Are you sure you want to delete?
+    </p>
+    <div class="flex justify-center gap-4">
+      <button onclick="closeModals()" 
+              class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+      <button onclick="confirmDeleteAdmin()" 
+              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
     </div>
   </div>
+</div>
+
   <div id="restoreAdminModal"
     class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -1394,15 +1417,31 @@ body.dark {
   </div>
   <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md z-40"></div>
 
-  <div id="deleteDoctorModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmDeleteDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
-      </div>
+  <div id="deleteDoctorModal" 
+     class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
+    </div>
+    <p class="mb-6 text-gray-700 text-lg font-medium">
+      Are you sure you want to delete this doctor?
+    </p>
+    <div class="flex justify-center gap-4">
+      <button onclick="closeModals()" 
+              class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+      <button onclick="confirmDeleteDoctor()" 
+              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
     </div>
   </div>
+</div>
+
   <div id="restoreDoctorModal"
     class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -1618,21 +1657,21 @@ body.dark {
 
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <label for="doctorFirstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+          <label for="doctorFirstName" class="block text-sm font-medium text-gray-700 mb-1">First Name <span class="text-red-500">*</span></label>
           <input type="text" id="doctorFirstName" name="firstName"
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required />
         </div>
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <label for="doctorLastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+          <label for="doctorLastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name<span class="text-red-500">*</span></label>
           <input type="text" id="doctorLastName" name="lastName"
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required />
         </div>
 
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-          <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
+          <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization<span class="text-red-500">*</span></label>
           <select id="addDoctorSpecialization" name="specialty"
             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
 
@@ -1641,14 +1680,14 @@ body.dark {
         </div>
 
         <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-          <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
+          <label class="text-sm font-medium text-gray-600 mb-1 block">Experience<span class="text-red-500">*</span></label>
           <input type="text" id="doctorExperience" name="experience"
             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required/>
         </div>
 
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
-          <label for="doctorQualification" class="block text-sm font-medium text-gray-700 mb-1">Qualification</label>
+          <label for="doctorQualification" class="block text-sm font-medium text-gray-700 mb-1">Qualification<span class="text-red-500">*</span></label>
           <input type="text" id="doctorQualification" name="qualification"
             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="e.g., MBBS, MD, PhD" required />
@@ -1656,7 +1695,7 @@ body.dark {
 
 
         <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
-          <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1" required >Availability </label>
+          <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1" required >Availability<span class="text-red-500">*</span></label>
 
           <!--           
           <input type="text" id="doctorAvailability" name="availability"
@@ -1666,7 +1705,7 @@ body.dark {
           <div class="grid grid-cols-2 gap-4">
             
             <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+              <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time<span class="text-red-500">*</span></label>
               <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
               
               </select>
@@ -1674,7 +1713,7 @@ body.dark {
 
            
             <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+              <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time<span class="text-red-500">*</span></label>
               <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
              
               </select>
@@ -2844,27 +2883,41 @@ body.dark {
       }
     });
   </script>
-  <script>
+ <script>
     async function logout() {
-      try {
-        const token = localStorage.getItem('admin_jwt');
-        const res = await fetch("/api/superadmin/logout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token }),
-        });
-        const result = await res.json();
-        if (res.ok) {
-          localStorage.clear();
-          window.location.href = "login.html";
-        } else {
-          showToast(result.error, "error");
+        try {
+            const token = localStorage.getItem('admin_jwt');
+
+            const res = await fetch("/api/superadmin/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await res.json();
+            if (res.ok) {
+                
+                const savedTheme = localStorage.getItem("theme");
+                const savedAccent = localStorage.getItem("accent");
+
+              
+                localStorage.clear();
+
+          
+                if (savedTheme) localStorage.setItem("theme", savedTheme);
+                if (savedAccent) localStorage.setItem("accent", savedAccent);
+
+                window.location.href = "login.html";
+            } else {
+                showToast(result.error, "error");
+            }
+        } catch (err) {
+            showToast("Error: " + err.message, "error");
         }
-      } catch (err) {
-        showToast("Error: " + err.message, "error");
-      }
     };
-  </script>
+</script>
+
+
   <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-[9999] space-y-3">
   </div>
   <script>
@@ -3200,20 +3253,34 @@ body.dark {
         <h2 class="text-xl font-semibold">Admin Registration</h2>
       </div>
       <form id="adminRegForm" autocomplete="off" novalidate>
-        <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg"
-          required />
-        <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-        <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
-          class="w-full px-4 py-2 mb-3 border rounded-lg"
-          oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
-          required />
-        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg"
-          required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password"
-          class="w-full px-4 py-2 mb-4 border rounded-lg" required />
-        <button type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
-      </form>
+  <label class="block mb-1">Username <span class="text-red-500">*</span></label>
+  <input type="text" name="username" placeholder="Username"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+
+  <label class="block mb-1">Email <span class="text-red-500">*</span></label>
+  <input type="email" name="email" placeholder="Email"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+
+  <label class="block mb-1">Contact <span class="text-red-500">*</span></label>
+  <input type="tel" name="contact" placeholder="Contact"
+    pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+    required />
+
+  <label class="block mb-1">Password <span class="text-red-500">*</span></label>
+  <input type="password" name="password" placeholder="Password"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+
+  <label class="block mb-1">Confirm Password <span class="text-red-500">*</span></label>
+  <input type="password" name="confirmPassword" placeholder="Confirm Password"
+    class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+</form>
+
     </div>
   </div>
   <script>
@@ -3392,54 +3459,53 @@ body.dark {
   });
 </script>
 <script>
-            
-            const themesDropdownToggle = document.getElementById("themesDropdownToggle");
-            const themesSubDropdown = document.getElementById("themesSubDropdown");
-            const themesDropdownArrow = document.querySelector(".themes-dropdown-arrow");
-            const lightThemeBtn = document.getElementById("lightThemeBtn");
-            const darkThemeBtn = document.getElementById("darkThemeBtn");
+    const themesDropdownToggle = document.getElementById("themesDropdownToggle");
+    const themesSubDropdown = document.getElementById("themesSubDropdown");
+    const themesDropdownArrow = document.querySelector(".themes-dropdown-arrow");
+    const lightThemeBtn = document.getElementById("lightThemeBtn");
+    const darkThemeBtn = document.getElementById("darkThemeBtn");
 
-            function applyTheme(theme) {
-                if (theme === "dark") {
-                    document.body.classList.add("dark");
-                } else {
-                    document.body.classList.remove("dark");
-                }
-                localStorage.setItem("theme", theme);
-            }
+    function applyTheme(theme) {
+        if (theme === "dark") {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+        localStorage.setItem("theme", theme);
+    }
 
+    themesDropdownToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        themesSubDropdown.classList.toggle("hidden");
+        themesDropdownArrow.classList.toggle("rotate-180");
+    });
 
-            themesDropdownToggle.addEventListener("click", (e) => {
-                e.stopPropagation();
-                themesSubDropdown.classList.toggle("hidden");
-                themesDropdownArrow.classList.toggle("rotate-180");
-            });
+    lightThemeBtn.addEventListener("click", () => {
+        applyTheme("light");
+        themesSubDropdown.classList.add("hidden");
+        themesDropdownArrow.classList.remove("rotate-180");
+    });
 
-            
-            lightThemeBtn.addEventListener("click", () => {
-                applyTheme("light");
-                themesSubDropdown.classList.add("hidden");
-                themesDropdownArrow.classList.remove("rotate-180");
-            });
+    darkThemeBtn.addEventListener("click", () => {
+        applyTheme("dark");
+        themesSubDropdown.classList.add("hidden");
+        themesDropdownArrow.classList.remove("rotate-180");
+    });
 
-            
-            darkThemeBtn.addEventListener("click", () => {
-                applyTheme("dark");
-                themesSubDropdown.classList.add("hidden");
-                themesDropdownArrow.classList.remove("rotate-180");
-            });
+    document.addEventListener("click", (e) => {
+        if (!themesDropdownToggle.contains(e.target) && !themesSubDropdown.contains(e.target)) {
+            themesSubDropdown.classList.add("hidden");
+            themesDropdownArrow.classList.remove("rotate-180");
+        }
+    });
 
-           
-            document.addEventListener("click", (e) => {
-                if (!themesDropdownToggle.contains(e.target) && !themesSubDropdown.contains(e.target)) {
-                    themesSubDropdown.classList.add("hidden");
-                    themesDropdownArrow.classList.remove("rotate-180");
-                }
-            });
+    // ✅ Apply theme on page load
+    window.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        applyTheme(savedTheme);
+    });
+</script>
 
-          
-            applyTheme(localStorage.getItem("theme") || "light");
-        </script>
         <script>
            
             const accentsDropdownToggle = document.getElementById("accentsDropdownToggle");

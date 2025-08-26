@@ -179,7 +179,6 @@
             </div>
         </div>
     </div>
-
     <div id="toast" class="fixed top-6 right-6 z-50 hidden px-6 py-3 rounded-lg font-semibold text-white bg-green-600 shadow-lg transition-all"></div>
 
     <div class="p-3 flex justify-between items-center bg-white shadow">
@@ -281,10 +280,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="age">Age<span class="text-red-500">*</span></label>
-                        <select id="age" name="age"
-                            class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required>
+  <label for="age">Age<span class="text-red-500">*</span></label>
+  <select id="age" name="age" 
+    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required>
                             <option value="">Select Age</option>
                             <option value="0.25">below 1 year</option>
                             <option value="1">1 year</option>
@@ -662,18 +661,20 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const ageSelect = document.getElementById("age");
-            for (let i = 1; i <= 100; i++) {
-                const option = document.createElement("option");
-                option.value = i;
-                option.textContent = i + " years";
-                ageSelect.appendChild(option);
-            }
-            const above100 = document.createElement("option");
-            above100.value = "101";
-            above100.textContent = "Above 100 years";
-            ageSelect.appendChild(above100);
+    const ageSelect = document.getElementById("age");
 
+    // special case
+    const below1 = document.createElement("option");
+    below1.value = "0.25";
+    below1.textContent = "Below 1 year";
+    ageSelect.appendChild(below1);
+
+    for (let i = 1; i <= 100; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = (i === 100 ? "100+ years" : i + " years");
+      ageSelect.appendChild(option);
+    }
             updateStepper(1);
 
         
@@ -1305,102 +1306,72 @@
             return true;
         }
 
-        function renderCalendar(date) {
-            const monthLabel = document.getElementById("monthLabel");
-            const daysContainer = document.getElementById("daysContainer");
-            const dayNames = document.getElementById("dayNames");
+       function renderCalendar(date) {
+  const monthLabel = document.getElementById("monthLabel");
+  const daysContainer = document.getElementById("daysContainer");
+  const dayNames = document.getElementById("dayNames");
 
-            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            dayNames.innerHTML = days.map((d) => `<div class="text-center font-medium">${d}</div>`).join("");
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  dayNames.innerHTML = days.map((d) => `<div class="text-center font-medium">${d}</div>`).join("");
 
-            daysContainer.innerHTML = "";
+  daysContainer.innerHTML = "";
 
-            const year = date.getFullYear();
-            const month = date.getMonth();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const monthName = date.toLocaleString("default", { month: "long" });
+  monthLabel.textContent = `${monthName} ${year}`;
 
-            const monthName = date.toLocaleString("default", { month: "long" });
-            monthLabel.textContent = `${monthName} ${year}`;
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+  for (let i = 0; i < firstDay; i++) {
+    const emptyDay = document.createElement("div");
+    emptyDay.className = "h-10";
+    daysContainer.appendChild(emptyDay);
+  }
 
-            for (let i = 0; i < firstDay; i++) {
-                const emptyDay = document.createElement("div");
-                emptyDay.className = "h-10";
-                daysContainer.appendChild(emptyDay);
-            }
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+  // ✅ Calculate this week's range
+  const startOfWeek = new Date(today);
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-            const lastAvailableMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
+  for (let day = 1; day <= daysInMonth; day++) {
+    const thisDate = new Date(year, month, day);
+    thisDate.setHours(0, 0, 0, 0);
+    const dateString = formatDateString(thisDate);
 
-            const isAvailableMonth = (thisDate) => {
-                return thisDate >= today && thisDate <= lastAvailableMonth;
-            };
+    const dayDiv = document.createElement("div");
+    dayDiv.textContent = day;
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayDiv = document.createElement("div");
-                dayDiv.textContent = day;
+    let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
 
-                const thisDate = new Date(year, month, day);
-                thisDate.setHours(0, 0, 0, 0);
-                const dateString = formatDateString(thisDate);
-                const isPast = thisDate < today;
-                const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
-                const isWithinBookingWindow = isAvailableMonth(thisDate);
-                const isFutureMonth = !isWithinBookingWindow && thisDate > lastAvailableMonth;
-                let isTodayAllSlotsPast = false;
-                if (selectedDoctor && thisDate.getTime() === today.getTime()) {
-                    
-                    let availabilityToUse = selectedDoctor.availability;
-                    if (selectedDoctor.availabilityByDate) {
-                        let dateKey = formatDateString(today);
-                        if (selectedDoctor.availabilityByDate[dateKey]) {
-                            const dayAvail = selectedDoctor.availabilityByDate[dateKey];
-                            availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
-                        } else {
-                           
-                            const parts = dateKey.split("/");
-                            if (parts.length === 3) {
-                                const ymd = `${parts[2]}-${parts[0].padStart(2, "0")}-${parts[1].padStart(2, "0")}`;
-                                if (selectedDoctor.availabilityByDate[ymd]) {
-                                    const dayAvail = selectedDoctor.availabilityByDate[ymd];
-                                    availabilityToUse = `${dayAvail.start} - ${dayAvail.end}`;
-                                }
-                            }
-                        }
-                    }
-                    const slots = generateTimeSlots(availabilityToUse);
-                    isTodayAllSlotsPast = slots.length > 0 && slots.every((slot) => isTimeSlotPast(slot));
-                }
+    const isPast = thisDate < today;
+    const isInThisWeek = thisDate >= startOfWeek && thisDate <= endOfWeek;
+    const isUnavailable = selectedDoctor && doctorUnavailableDates[selectedDoctor.name]?.includes(dateString);
 
-                let className = "calendar-day h-10 flex items-center justify-center rounded-full font-medium ";
+    if (isPast) {
+      className += "text-gray-400 cursor-not-allowed opacity-40";
+    } else if (isUnavailable) {
+      className += "bg-red-100 text-gray-600 cursor-not-allowed";
+    } else if (isInThisWeek) {
+      className += "bg-green-100 text-gray-800 cursor-pointer hover:bg-green-200";
+      dayDiv.addEventListener("click", () => selectDate(dateString, dayDiv));
+    } else {
+      className += "text-gray-400 cursor-not-allowed opacity-50";
+    }
 
-                if (isPast || isUnavailable || !isWithinBookingWindow || isTodayAllSlotsPast) {
-                    if (isFutureMonth) {
-                        className += "bg-gray-50 text-gray-400 cursor-not-allowed";
-                    } else if (isUnavailable) {
-                        className += "bg-red-100 text-gray-600 cursor-not-allowed";
-                    } else if (isPast || isTodayAllSlotsPast) {
-                        className += "text-gray-350 cursor-not-allowed opacity-40";
-                    } else {
-                        className += "text-gray-400 cursor-not-allowed";
-                    }
-                } else {
-                    className += "bg-green-100 text-gray-800 cursor-pointer hover:bg-green-200";
-                    dayDiv.addEventListener("click", () => selectDate(dateString, dayDiv));
-                }
+    if (selectedDate === dateString) {
+      className += " selected bg-green-500 text-white hover:bg-green-600";
+    }
 
-                if (selectedDate === dateString) {
-                    className += " selected bg-green-500 text-white hover:bg-green-600";
-                }
-
-                dayDiv.className = className;
-                dayDiv.setAttribute("data-date", dateString);
-                daysContainer.appendChild(dayDiv);
-            }
-        }
+    dayDiv.className = className;
+    dayDiv.setAttribute("data-date", dateString);
+    daysContainer.appendChild(dayDiv);
+  }
+}
 
         const bookedSlotsCache = new Map();
 
@@ -2327,66 +2298,65 @@
         }
 
         function checkReferralForm() {
-            const referralInput = document.getElementById("referred-by");
-            const referralNextBtn = document.getElementById("referralNextBtn");
-            const skipReferralBtn = document.getElementById("skipReferralBtn");
-            const referralError = document.getElementById("referral-error");
-            const referralValue = referralInput.value.trim();
+    const referralInput = document.getElementById("referred-by");
+    const referralNextBtn = document.getElementById("referralNextBtn");
+    const skipReferralBtn = document.getElementById("skipReferralBtn");
+    const referralError = document.getElementById("referral-error");
+    let referralValue = referralInput.value.trim();
+    if (referralValue.length > 0 && !referralValue.toLowerCase().startsWith("dr.")) {
+        referralValue = "Dr. " + referralValue.replace(/^Dr\.\s*/i, "");
+        referralInput.value = referralValue;
+    }
 
-            if (referralValue.length > 0) {
-                
-                referralNextBtn.disabled = false;
-                referralNextBtn.classList.remove("bg-gray-400");
-                referralNextBtn.classList.add("bg-blue-600");
-                
-    
-                skipReferralBtn.disabled = true;
-                skipReferralBtn.classList.add("bg-gray-400");
-                skipReferralBtn.classList.remove("bg-gray-500");
-                
-                referralInput.classList.remove("border-red-500");
-                referralInput.classList.add("border-green-500");
-                referralError.classList.add("hidden");
-            } else {
-                
-                referralNextBtn.disabled = true;
-                referralNextBtn.classList.add("bg-gray-400");
-                referralNextBtn.classList.remove("bg-blue-600");
-                
-            
-                skipReferralBtn.disabled = false;
-                skipReferralBtn.classList.remove("bg-gray-400");
-                skipReferralBtn.classList.add("bg-gray-500");
-                
-                referralInput.classList.remove("border-green-500");
-                referralInput.classList.add("border-red-500");
-                // referralError.textContent = "Please enter a doctor's name or click Skip";
-                referralError.classList.remove("hidden");
-            }
-        }
+    if (referralValue.length > 0) {
+        referralNextBtn.disabled = false;
+        referralNextBtn.classList.remove("bg-gray-400");
+        referralNextBtn.classList.add("bg-blue-600");
 
-        function skipReferral() {
-            const referralInput = document.getElementById("referred-by");
-            const referralValue = referralInput.value.trim();
-            
-            if (referralValue.length > 0) {
-            
-                const referralError = document.getElementById("referral-error");
-                referralError.textContent = "Please use Next button when referral name is entered, or clear the field to skip";
-                referralError.classList.remove("hidden");
-                referralInput.classList.add("border-red-500");
-                return;
-            }
-            
-            localStorage.setItem("referralData", JSON.stringify({ referredBy: "" }));
-            goToConfirmationFromReferral();
-        }
+        skipReferralBtn.disabled = true;
+        skipReferralBtn.classList.add("bg-gray-400");
+        skipReferralBtn.classList.remove("bg-gray-500");
 
-        function clearReferralField() {
-            const referralInput = document.getElementById("referred-by");
-            referralInput.value = "";
-            checkReferralForm();
-        }
+        referralInput.classList.remove("border-red-500");
+        referralInput.classList.add("border-green-500");
+        referralError.classList.add("hidden");
+    } else {
+        referralNextBtn.disabled = true;
+        referralNextBtn.classList.add("bg-gray-400");
+        referralNextBtn.classList.remove("bg-blue-600");
+
+        skipReferralBtn.disabled = false;
+        skipReferralBtn.classList.remove("bg-gray-400");
+        skipReferralBtn.classList.add("bg-gray-500");
+
+        referralInput.classList.remove("border-green-500");
+        referralInput.classList.add("border-red-500");
+        referralError.classList.remove("hidden");
+    }
+}
+
+function skipReferral() {
+    const referralInput = document.getElementById("referred-by");
+    const referralValue = referralInput.value.trim();
+
+    if (referralValue.length > 0) {
+        const referralError = document.getElementById("referral-error");
+        referralError.textContent = "Please use Next button when referral name is entered, or clear the field to skip";
+        referralError.classList.remove("hidden");
+        referralInput.classList.add("border-red-500");
+        return;
+    }
+
+    localStorage.setItem("referralData", JSON.stringify({ referredBy: "" }));
+    goToConfirmationFromReferral();
+}
+
+function clearReferralField() {
+    const referralInput = document.getElementById("referred-by");
+    referralInput.value = "";
+    checkReferralForm();
+}
+
     </script>
 </body>
 
