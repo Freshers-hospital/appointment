@@ -26,7 +26,8 @@
     </button>
   </div>
   <div class="flex-grow flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md -mt-12">
+  <div class="form-container bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto">
+
       <div class="flex flex-col items-center">
         <div class="bg-blue-500 rounded-full p-3 mb-4">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +38,7 @@
         <h2 class="text-xl font-semibold mb-4">Admin Registration</h2>
       </div>
       <form id="adminRegForm" autocomplete="off" novalidate>
-        <input type="text" name="username" placeholder="Username"
+        <input type="text" name="username" placeholder="Username *"
           class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           required />
         <input type="email" name="email" placeholder="Email"
@@ -112,6 +113,66 @@
     .animate-slide-in {
       animation: slide-in 0.3s ease-out;
     }
+  
+ 
+@media (max-width: 640px) {
+  
+  .navbar {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  .navbar h1 {
+    margin-left: 0 !important;
+    font-size: 18px;
+  }
+  .navbar svg {
+    margin-left: 0 !important;
+  }
+
+ 
+   .form-container {
+    width: 95% !important;    
+    max-width: 22rem !important; 
+    margin: 20px auto !important;
+    padding: 16px;
+  }
+  .form-container input,
+  .form-container button {
+    font-size: 14px;
+    padding: 10px;
+  }
+  footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+    @media (min-width: 641px) and (max-width: 1024px) {
+      h1 {
+        font-size: 20px;
+        margin-left: 16px;
+      }
+      .form-container {
+        width: 75%;
+        padding: 20px;
+      }
+      footer {
+        justify-content: center;
+      }
+    }
+    @media (min-width: 1025px) {
+      h1 {
+        font-size: 24px;
+      }
+      .form-container {
+        width: 100%;
+        max-width: 480px;
+      }
+    }
+
   </style>
   <script>
     document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
