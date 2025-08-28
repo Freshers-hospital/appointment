@@ -622,10 +622,6 @@ body.dark #accentsDropdownToggle:hover {
     background-color: #059669 !important;
 }
 
-.accent-green nav h1,
-.accent-green nav svg {
-    color: #10b981 !important;
-}
 
 .accent-green input:focus,
 .accent-green select:focus,
@@ -651,10 +647,7 @@ body.dark #accentsDropdownToggle:hover {
     background-color: #b55656 !important;
 }
 
-.accent-brown nav h1,
-.accent-brown nav svg {
-    color: #b55656 !important;
-}
+
 
 .accent-brown input:focus,
 .accent-brown select:focus,
@@ -681,10 +674,7 @@ body.dark #accentsDropdownToggle:hover {
     background-color: #7c3aed !important;
 }
 
-.accent-purple nav h1,
-.accent-purple nav svg { 
-    color: #8b5cf6 !important;
-}
+
 
 .accent-purple input:focus,
 .accent-purple select:focus,
@@ -711,10 +701,6 @@ body.dark #accentsDropdownToggle:hover {
     background-color: #d97706 !important;
 }
 
-.accent-orange nav h1,
-.accent-orange nav svg {
-    color: #f59e0b !important;
-}
 
 .accent-orange input:focus,
 .accent-orange select:focus,
@@ -740,10 +726,6 @@ body.dark #accentsDropdownToggle:hover {
     background-color: #db2777 !important;
 }
 
-.accent-pink nav h1,
-.accent-pink nav svg {
-    color: #ec4899 !important;
-}
 
 .accent-pink input:focus,
 .accent-pink select:focus,
@@ -768,10 +750,7 @@ body.dark #accentsDropdownToggle:hover {
     background-color: #0d9488 !important;
 }
 
-.accent-teal nav h1,
-.accent-teal nav svg {
-    color: #14b8a6 !important;
-}
+
 
 .accent-teal input:focus,
 .accent-teal select:focus,
@@ -793,12 +772,7 @@ body.dark.accent-green button.bg-black:hover,
 body.dark.accent-green button.bg-blue-600:hover {
     background-color: #059669 !important;
 }
-body.dark.accent-green nav h1 ,
-body.dark.accent-green nav svg {
-    color: #10b981 !important;
-     fill: #10b981 !important;
-    stroke: #b5cbc4 !important;
-}
+
 body.dark.accent-green input:focus,
 body.dark.accent-green select:focus,
 body.dark.accent-green textarea:focus {
@@ -820,12 +794,7 @@ body.dark.accent-brown button.bg-black:hover,
 body.dark.accent-brown button.bg-blue-600:hover {
     background-color: #9c4444 !important;
 }
-body.dark.accent-brown nav h1,
-body.dark.accent-brown nav svg {
-    color: #b55656 !important;
-     fill: #b55656 !important;
-    stroke: #dfc1c1 !important;
-}
+
 body.dark.accent-brown input:focus,
 body.dark.accent-brown select:focus,
 body.dark.accent-brown textarea:focus {
@@ -845,12 +814,7 @@ body.dark.accent-purple button.bg-black:hover,
 body.dark.accent-purple button.bg-blue-600:hover {
     background-color: #7c3aed !important;
 }
-body.dark.accent-purple nav h1,
-body.dark.accent-purple nav svg {
-    color: #8b5cf6 !important;
-     fill: #8b5cf6 !important;
-    stroke: #b9b3c7 !important;
-}
+
 body.dark.accent-purple input:focus,
 body.dark.accent-purple select:focus,
 body.dark.accent-purple textarea:focus {
@@ -870,12 +834,7 @@ body.dark.accent-orange button.bg-black:hover,
 body.dark.accent-orange button.bg-blue-600:hover {
     background-color: #d97706 !important;
 }
-body.dark.accent-orange nav h1,
-body.dark.accent-orange nav svg {
-    color: #f59e0b !important;
-     fill: #f59e0b !important;
-    stroke: #b1a084 !important;
-}
+
 body.dark.accent-orange input:focus,
 body.dark.accent-orange select:focus,
 body.dark.accent-orange textarea:focus {
@@ -895,19 +854,9 @@ body.dark.accent-pink button.bg-black:hover,
 body.dark.accent-pink button.bg-blue-600:hover {
     background-color: #db2777 !important;
 }
-body.dark.accent-pink nav h1,
-body.dark.accent-pink nav svg {                
-.accent-purple nav svg {
-    color: #8b5cf6 !important;
-    
-}
-.accent-purple nav svg {
-    color: #8b5cf6 !important;
-}
-    color: #ec4899 !important;
-     fill: #db2777!important;
-    stroke: #c89eb1 !important;
-}
+
+
+
 body.dark.accent-pink input:focus,
 body.dark.accent-pink select:focus,
 body.dark.accent-pink textarea:focus {
@@ -927,12 +876,7 @@ body.dark.accent-teal button.bg-black:hover,
 body.dark.accent-teal button.bg-blue-600:hover {
     background-color: #0d9488 !important;
 }
-body.dark.accent-teal nav h1,
-body.dark.accent-teal nav svg {
-    color: #14b8a6 !important;
-     fill: #14b8a6 !important;
-    stroke: #93bcb8 !important;
-}
+
 body.dark.accent-teal input:focus,
 body.dark.accent-teal select:focus,
 body.dark.accent-teal textarea:focus {
@@ -970,7 +914,9 @@ body.dark {
   background-color: #111827 !important;
 }
 
-
+.required {
+    color: #dc2626 !important; 
+  }
   </style>
 </head>
 
@@ -3252,34 +3198,44 @@ body.dark {
         </div>
         <h2 class="text-xl font-semibold">Admin Registration</h2>
       </div>
-      <form id="adminRegForm" autocomplete="off" novalidate>
-  <label class="block mb-1">Username <span class="text-red-500">*</span></label>
+ <form id="adminRegForm" autocomplete="off" novalidate>
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Username <span class="required">*</span>
+  </label>
   <input type="text" name="username" placeholder="Username"
     class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
     required />
 
-  <label class="block mb-1">Email <span class="text-red-500">*</span></label>
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Email <span class="required">*</span>
+  </label>
   <input type="email" name="email" placeholder="Email"
     class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
     required />
 
-  <label class="block mb-1">Contact <span class="text-red-500">*</span></label>
-  <input type="tel" name="contact" placeholder="Contact"
-    pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Contact <span class="required">*</span>
+  </label>
+  <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
     class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
     oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
     required />
 
-  <label class="block mb-1">Password <span class="text-red-500">*</span></label>
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Password <span class="required">*</span>
+  </label>
   <input type="password" name="password" placeholder="Password"
     class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
     required />
 
-  <label class="block mb-1">Confirm Password <span class="text-red-500">*</span></label>
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Confirm Password <span class="required">*</span>
+  </label>
   <input type="password" name="confirmPassword" placeholder="Confirm Password"
     class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
     required />
 </form>
+
 
     </div>
   </div>
@@ -3499,7 +3455,6 @@ body.dark {
         }
     });
 
-    // ✅ Apply theme on page load
     window.addEventListener("DOMContentLoaded", () => {
         const savedTheme = localStorage.getItem("theme") || "light";
         applyTheme(savedTheme);
