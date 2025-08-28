@@ -2265,19 +2265,13 @@ body.dark {
     }
     async function confirmDeleteDoctor() {
       if (!selectedDoctorId) return;
-      const token = localStorage.getItem("admin_jwt");
-      if (!token) {
-        showToast("You are not authorized. Please log in again.", "error");
-        return;
-      }
       try {
+        const headers = {};
+        const token = localStorage.getItem("admin_jwt");
+        if (token) headers["Authorization"] = `Bearer ${token}`;
         const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
+          method: "DELETE",
+          headers
         });
 
         if (!res.ok) {

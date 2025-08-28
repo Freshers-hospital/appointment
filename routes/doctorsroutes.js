@@ -107,4 +107,32 @@ router.put("/:doctorId", upload.single("photo"), async (req, res) => {
     }
 })
 
+
+router.delete("/:doctorId", async (req, res) => {
+    try {
+        const { doctorId } = req.params;
+
+        const doctor = await Doctor.findById(doctorId);
+        if (!doctor) {
+            return res.status(404).json({ error: "Doctor not found" });
+        }
+
+    
+        const confirmations = await Confirmation.find({ doctor: doctorId });
+        const dateIds = confirmations.map((c) => c.date).filter(Boolean);
+
+        await Confirmation.deleteMany({ doctor: doctorId });
+        if (dateIds.length > 0) {
+            await DateModel.deleteMany({ _id: { $in: dateIds } });
+        }
+
+        await Doctor.findByIdAndDelete(doctorId);
+
+        return res.json({ message: "Doctor deleted permanently" });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Failed to delete doctor" });
+    }
+});
+
 module.exports = router;
