@@ -3711,13 +3711,13 @@ body.dark {
                 const doctorsList = document.getElementById("doctorsList");
                 const paginationContainer = document.getElementById("doctorsPagination");
                 if (!doctorsList) return;
-                // Build filtered list based on selected field and search term
+            
                 const term = (searchInput.value || '').trim().toLowerCase();
                 const selectedField = getSelectedField();
 
-                // Compute today's appointment counts first if needed for filtering
+            
                 const filteredBase = allDoctors.filter((doc) => {
-                    if (!term) return true; // no search => keep
+                    if (!term) return true; 
                     const includes = (v) => String(v == null ? '' : v).toLowerCase().includes(term);
                     if (selectedField === 'all') {
                         const todayCount = todaysAppointmentsCountMap[doc.name] || 0;
@@ -3805,8 +3805,8 @@ body.dark {
                     doctorsList.appendChild(doctorRow);
                 });
 
-                // Setup action menus after rendering - commented out
-                // setupActionMenus();
+        
+            
                 updateDoctorsPagination(totalPages);
             }
 
