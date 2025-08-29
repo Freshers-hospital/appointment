@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const SECRET_KEY = crypto.createHash('sha256').update('YourVerySecureSecretKey').digest(); // 32-byte key
+const SECRET_KEY = crypto.createHash('sha256').update('YourVerySecureSecretKey').digest(); 
 const IV_LENGTH = 16;
 
 function encrypt(text) {
@@ -8,7 +8,7 @@ function encrypt(text) {
   const cipher = crypto.createCipheriv('aes-256-cbc', SECRET_KEY, iv);
   let encrypted = cipher.update(text, 'utf8');
   encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return iv.toString('hex') + ':' + encrypted.toString('hex'); // Store IV + Encrypted
+  return iv.toString('hex') + ':' + encrypted.toString('hex'); 
 }
 
 function decrypt(encryptedText) {

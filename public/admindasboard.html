@@ -2212,7 +2212,9 @@ body.dark {
                         { value: 'doctor', label: 'Doctor' },
                         { value: 'time', label: 'Time' },
                         { value: 'status', label: 'Status' },
+
                         { value: 'Reffered by', label: 'Reffered By' },
+
                     ];
                 } else if (activeTab === 'doctorsTab') {
                     options = [
@@ -2364,7 +2366,7 @@ body.dark {
                         const appointmentDate = app.dateData.date.trim();
                         const matchesDate = appointmentDate === formattedDate;
 
-                       
+
                         let matchesField = true;
                         if (term) {
                             if (selectedField === 'all') {
@@ -2738,7 +2740,6 @@ body.dark {
                         const blood = patientData.details.blood || "";
                         const contact = patientData.details.contact || "";
 
-                    
                         const todayCalc = new Date();
                         todayCalc.setHours(0,0,0,0);
                         const sortedDates = patientData.appointments.map(a => new Date(a.date)).sort((a,b)=>a-b);
@@ -2781,7 +2782,10 @@ body.dark {
                         const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
 
                         if (matchesSearch && hasAppointmentOnDate) {
+;
+
                             finalPatientList.push({ ...patientData, upcomingDateText, lastVisitText,referredBy: patientData.referredBy });
+
                         }
                     }
 
