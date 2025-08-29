@@ -10,14 +10,21 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <style>
-        .flatpickr-calendar {
-            border-radius: 16px !important;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
-            border: none !important;
-            width: 320px !important;
-            background: #fff !important;
-            font-family: "Segoe UI", Arial, sans-serif;
-        }
+   .flatpickr-calendar {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  width: 320px !important;
+  background: #fff !important;
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  z-index: 9999 !important;
+  left: auto !important;
+  right: 0 !important;
+
+  top: 100% !important;
+  margin-top: 4px !important;
+}
 
         .flatpickr-months {
             background: #fff !important;
@@ -886,12 +893,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-blue button.bg-blue-600:hover {
     background-color: #2563eb !important;
 }
-
-.accent-blue nav h1,
-.accent-blue nav svg {
-    color: #3b82f6 !important;
-}
-
 .accent-blue input:focus,
 .accent-blue select:focus,
 .accent-blue textarea:focus {
@@ -899,6 +900,10 @@ body.dark #accentsDropdownToggle:hover {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
+.accent-blue nav h1,
+.accent-blue nav svg {
+    color: #3b82f6 !important;
+}
 
 .accent-green .tab-active {
     background-color: #10b981 !important;
@@ -914,11 +919,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-green button.bg-black:hover,
 .accent-green button.bg-blue-600:hover {
     background-color: #059669 !important;
-}
-
-.accent-green nav h1,
-.accent-green nav svg {
-    color: #10b981 !important;
 }
 
 .accent-green input:focus,
@@ -944,12 +944,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-brown button.bg-blue-600:hover {
     background-color: #b55656 !important;
 }
-
-.accent-brown nav h1,
-.accent-brown nav svg {
-    color: #b55656 !important;
-}
-
 .accent-brown input:focus,
 .accent-brown select:focus,
 .accent-brown textarea:focus {
@@ -974,12 +968,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-purple button.bg-blue-600:hover {
     background-color: #7c3aed !important;
 }
-
-.accent-purple nav h1,
-.accent-purple nav svg { 
-    color: #8b5cf6 !important;
-}
-
 .accent-purple input:focus,
 .accent-purple select:focus,
 .accent-purple textarea:focus {
@@ -1004,12 +992,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-orange button.bg-blue-600:hover {
     background-color: #d97706 !important;
 }
-
-.accent-orange nav h1,
-.accent-orange nav svg {
-    color: #f59e0b !important;
-}
-
 .accent-orange input:focus,
 .accent-orange select:focus,
 .accent-orange textarea:focus {
@@ -1033,12 +1015,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-pink button.bg-blue-600:hover {
     background-color: #db2777 !important;
 }
-
-.accent-pink nav h1,
-.accent-pink nav svg {
-    color: #ec4899 !important;
-}
-
 .accent-pink input:focus,
 .accent-pink select:focus,
 .accent-pink textarea:focus {
@@ -1061,12 +1037,6 @@ body.dark #accentsDropdownToggle:hover {
 .accent-teal button.bg-blue-600:hover {
     background-color: #0d9488 !important;
 }
-
-.accent-teal nav h1,
-.accent-teal nav svg {
-    color: #14b8a6 !important;
-}
-
 .accent-teal input:focus,
 .accent-teal select:focus,
 .accent-teal textarea:focus {
@@ -1074,6 +1044,10 @@ body.dark #accentsDropdownToggle:hover {
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
 }
 
+body.dark.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
 
 body.dark.accent-green .tab-active {
     background-color: #10b981 !important;
@@ -1109,6 +1083,33 @@ body.dark.accent-teal .tab-active {
     border-color: #1f2937 !important;
     border-width: 3px !important;
 }
+body.dark.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+body.dark.accent-blue button.bg-black,
+body.dark.accent-blue button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+body.dark.accent-blue button.bg-black:hover,
+body.dark.accent-blue button.bg-blue-600:hover {
+    background-color: #3b82f6 !important;
+}
+body.dark.accent-blue nav svg,
+body.dark.accent-blue nav svg * {
+    fill: #3b82f6 !important;
+    stroke: #3b82f6 !important;
+    color: #3b82f6 !important;
+}
+
+body.dark.accent-blue input:focus,
+body.dark.accent-blue select:focus,
+body.dark.accent-blue textarea:focus {
+    border-color: #1045b9 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
 body.dark.accent-green .tab-active {
     background-color: #10b981 !important;
     color: white !important;
@@ -1122,12 +1123,7 @@ body.dark.accent-green button.bg-black:hover,
 body.dark.accent-green button.bg-blue-600:hover {
     background-color: #059669 !important;
 }
-body.dark.accent-green nav h1 ,
-body.dark.accent-green nav svg {
-    color: #10b981 !important;
-     fill: #10b981 !important;
-    stroke: #b5cbc4 !important;
-}
+
 body.dark.accent-green input:focus,
 body.dark.accent-green select:focus,
 body.dark.accent-green textarea:focus {
@@ -1149,12 +1145,7 @@ body.dark.accent-brown button.bg-black:hover,
 body.dark.accent-brown button.bg-blue-600:hover {
     background-color: #9c4444 !important;
 }
-body.dark.accent-brown nav h1,
-body.dark.accent-brown nav svg {
-    color: #b55656 !important;
-     fill: #b55656 !important;
-    stroke: #dfc1c1 !important;
-}
+
 body.dark.accent-brown input:focus,
 body.dark.accent-brown select:focus,
 body.dark.accent-brown textarea:focus {
@@ -1174,12 +1165,7 @@ body.dark.accent-purple button.bg-black:hover,
 body.dark.accent-purple button.bg-blue-600:hover {
     background-color: #7c3aed !important;
 }
-body.dark.accent-purple nav h1,
-body.dark.accent-purple nav svg {
-    color: #8b5cf6 !important;
-     fill: #8b5cf6 !important;
-    stroke: #b9b3c7 !important;
-}
+
 body.dark.accent-purple input:focus,
 body.dark.accent-purple select:focus,
 body.dark.accent-purple textarea:focus {
@@ -1199,12 +1185,7 @@ body.dark.accent-orange button.bg-black:hover,
 body.dark.accent-orange button.bg-blue-600:hover {
     background-color: #d97706 !important;
 }
-body.dark.accent-orange nav h1,
-body.dark.accent-orange nav svg {
-    color: #f59e0b !important;
-     fill: #f59e0b !important;
-    stroke: #b1a084 !important;
-}
+
 body.dark.accent-orange input:focus,
 body.dark.accent-orange select:focus,
 body.dark.accent-orange textarea:focus {
@@ -1224,19 +1205,10 @@ body.dark.accent-pink button.bg-black:hover,
 body.dark.accent-pink button.bg-blue-600:hover {
     background-color: #db2777 !important;
 }
-body.dark.accent-pink nav h1,
-body.dark.accent-pink nav svg {                
-.accent-purple nav svg {
-    color: #8b5cf6 !important;
+
+
     
-}
-.accent-purple nav svg {
-    color: #8b5cf6 !important;
-}
-    color: #ec4899 !important;
-     fill: #db2777!important;
-    stroke: #c89eb1 !important;
-}
+
 body.dark.accent-pink input:focus,
 body.dark.accent-pink select:focus,
 body.dark.accent-pink textarea:focus {
@@ -1255,12 +1227,6 @@ body.dark.accent-teal button.bg-blue-600 {
 body.dark.accent-teal button.bg-black:hover,
 body.dark.accent-teal button.bg-blue-600:hover {
     background-color: #0d9488 !important;
-}
-body.dark.accent-teal nav h1,
-body.dark.accent-teal nav svg {
-    color: #14b8a6 !important;
-     fill: #14b8a6 !important;
-    stroke: #93bcb8 !important;
 }
 body.dark.accent-teal input:focus,
 body.dark.accent-teal select:focus,
@@ -1300,6 +1266,7 @@ body.dark {
 
 
     </style>
+  
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -1482,36 +1449,14 @@ body.dark {
                 </div>
             </div>
     </nav>
-
-    <div class="p-8">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+  <div class="p-8">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
             <div>
                 <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
                 <div id="addAdmin" class="text-lg text-blue-500"></div>
                 <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
             </div>
-            <div class="flex items-center gap-4 px-20">
-                <div class="relative w-60">
-                    <img src="/search.webp" alt="Search"
-                        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
-                    <input type="text" id="searchInput" placeholder="Search"
-                        class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
-                </div>
-
-                <div class="relative w-60 mt-6">
-                    <div id="datePickerDisplay"
-                        class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                        </svg>
-                        <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
-                    </div>
-                    <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
-                        autocomplete="off" />
-                </div>
-            </div>
+            
         </div>
 
         <div class="px-20 mt-4">
@@ -1524,6 +1469,44 @@ body.dark {
                     data-tab="patientsTab">Patients</button>
             </div>
         </div>
+        
+    <div class="px-20">
+  <div class="flex items-center gap-4 mb-4 justify-between">
+
+    <!-- LEFT: Search Box -->
+    <div class="relative w-[1000px] h-12 flex items-center">
+      <img src="/search.webp" alt="Search"
+        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
+      <input type="text" id="searchInput" placeholder="Search"
+        class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="relative w-[400px] h-12">
+        <select id="filterDropdown"
+          class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
+      
+        </select>
+      </div>
+      <div class="relative w-[300px] h-12 flex items-center">
+        <div id="datePickerDisplay"
+          class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+          </svg>
+          <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
+        </div>
+        <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly autocomplete="off" />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+       
         <div class="px-20">
             <div class="bg-white p-6 rounded-xl shadow">
                 <div id="appointmentsTab" class="tab-content">
@@ -2203,6 +2186,68 @@ body.dark {
             const appointmentsList = document.getElementById("appointmentsList");
             const addBtn = document.getElementById("addBtn");
             const searchInput = document.getElementById("searchInput");
+            const filterDropdown = document.getElementById("filterDropdown");
+
+            function getActiveTabId() {
+                const active = document.querySelector('.tab.tab-active');
+                return active ? active.getAttribute('data-tab') : 'appointmentsTab';
+            }
+
+            function updateFilterDropdownOptions() {
+                if (!filterDropdown) return;
+                const activeTab = getActiveTabId();
+                let options = [];
+                if (activeTab === 'appointmentsTab') {
+                    options = [
+                        { value: 'all', label: 'All Fields' },
+                        { value: 'patient', label: 'Patient' },
+                        { value: 'doctor', label: 'Doctor' },
+                        { value: 'time', label: 'Time' },
+                        { value: 'status', label: 'Status' },
+                    ];
+                } else if (activeTab === 'doctorsTab') {
+                    options = [
+                        { value: 'all', label: 'All Fields' },
+                        { value: 'name', label: 'Name' },
+                        { value: 'specialty', label: 'Specialization' },
+                        { value: 'experience', label: 'Experience' },
+                        { value: 'availability', label: 'Availability' },
+                        { value: 'todays', label: "Today's Appointments" },
+                    ];
+                } else if (activeTab === 'patientsTab') {
+                    options = [
+                        { value: 'all', label: 'All Fields' },
+                        { value: 'patient', label: 'Patient' },
+                        { value: 'age', label: 'Age' },
+                        { value: 'gender', label: 'Gender' },
+                        { value: 'blood', label: 'Blood' },
+                        { value: 'contact', label: 'Contact' },
+                        { value: 'upcoming', label: 'Upcoming Date' },
+                        { value: 'lastvisit', label: 'Last Visit' },
+                    ];
+                }
+                filterDropdown.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+            }
+
+            function getSelectedField() {
+                return (filterDropdown && filterDropdown.value) ? filterDropdown.value : 'all';
+            }
+
+            if (filterDropdown) {
+                filterDropdown.addEventListener('change', () => {
+                    const date = datePicker.value;
+                    const searchTerm = searchInput.value.trim();
+                    const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
+                    const activeTab = getActiveTabId();
+                    if (activeTab === 'appointmentsTab') {
+                        renderAppointmentsList(date, searchTerm, status);
+                    } else if (activeTab === 'doctorsTab') {
+                        fetchAndDisplayDoctors(date);
+                    } else if (activeTab === 'patientsTab') {
+                        fetchAndDisplayPatients(date, searchTerm);
+                    }
+                });
+            }
 
             flatpickr("#datePicker", {
                 dateFormat: "Y-m-d",
@@ -2293,6 +2338,14 @@ body.dark {
                         console.log("First appointment details:", JSON.stringify(data[0], null, 2));
                     }
 
+                    const selectedField = getSelectedField();
+                    const term = (searchDoctorName || "").toLowerCase();
+                    const valueIncludes = (val) => {
+                        if (!term) return true;
+                        if (!val) return false;
+                        return String(val).toLowerCase().includes(term);
+                    };
+
                     const filteredAppointments = data.filter((app) => {
                         if (!app.dateData?.date) {
                             console.log("Appointment missing date data:", app);
@@ -2302,14 +2355,28 @@ body.dark {
                         const appointmentDate = app.dateData.date.trim();
                         const matchesDate = appointmentDate === formattedDate;
 
-                        const appointmentDoctorName = app.doctorData?.name || app.doctorName || "";
-                        const matchesDoctor = !searchDoctorName || (appointmentDoctorName && appointmentDoctorName.toLowerCase().includes(searchDoctorName.toLowerCase()));
-
-                        if (searchDoctorName && appointmentDoctorName) {
-                            console.log(`Checking doctor: "${appointmentDoctorName}" against search: "${searchDoctorName}" - matches: ${matchesDoctor}`);
+                        // Field-based search
+                        let matchesField = true;
+                        if (term) {
+                            if (selectedField === 'all') {
+                                matchesField = (
+                                    valueIncludes(app.patientData?.name) ||
+                                    valueIncludes(app.doctorData?.name || app.doctorName) ||
+                                    valueIncludes(app.dateData?.time) ||
+                                    valueIncludes(app.status)
+                                );
+                            } else if (selectedField === 'patient') {
+                                matchesField = valueIncludes(app.patientData?.name);
+                            } else if (selectedField === 'doctor') {
+                                matchesField = valueIncludes(app.doctorData?.name || app.doctorName);
+                            } else if (selectedField === 'time') {
+                                matchesField = valueIncludes(app.dateData?.time);
+                            } else if (selectedField === 'status') {
+                                matchesField = valueIncludes(app.status);
+                            }
                         }
 
-                        return matchesDate && matchesDoctor;
+                        return matchesDate && matchesField;
                     });
 
                     console.log("Filtered appointments count:", filteredAppointments.length);
@@ -2531,12 +2598,15 @@ body.dark {
                     currentAppointmentsPage = 1;
                     currentPatientsPage = 1;
 
-                    const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
+                    const activeTab = getActiveTabId();
 
                     if (activeTab === "appointmentsTab") {
                         renderAppointmentsList(currentDate, searchTerm, status);
                     } else if (activeTab === "patientsTab") {
                         fetchAndDisplayPatients(currentDate, searchTerm);
+                    } else if (activeTab === "doctorsTab") {
+                        currentDoctorsPage = 1;
+                        fetchAndDisplayDoctors(currentDate);
                     }
                 }, 300);
             });
@@ -2546,12 +2616,15 @@ body.dark {
                     searchInput.value = "";
                     const currentDate = datePicker.value;
                     const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
-                    const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
+                    const activeTab = getActiveTabId();
 
                     if (activeTab === "appointmentsTab") {
                         renderAppointmentsList(currentDate, "", status);
                     } else if (activeTab === "patientsTab") {
                         fetchAndDisplayPatients(currentDate, "");
+                    } else if (activeTab === "doctorsTab") {
+                        currentDoctorsPage = 1;
+                        fetchAndDisplayDoctors(currentDate);
                     }
                 }
             });
@@ -2592,10 +2665,13 @@ body.dark {
                     const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
 
                     if (targetId === "appointmentsTab") {
+                        updateFilterDropdownOptions();
                         renderAppointmentsList(date, searchTerm, status);
                     } else if (targetId === "patientsTab") {
+                        updateFilterDropdownOptions();
                         fetchAndDisplayPatients(date, searchTerm);
                     } else if (targetId === "doctorsTab") {
+                        updateFilterDropdownOptions();
                         fetchAndDisplayDoctors(date);
                     }
                 });
@@ -2642,12 +2718,55 @@ body.dark {
                     const finalPatientList = [];
                     for (const [patientKey, patientData] of patientsMap.entries()) {
                         const patientName = patientData.details.name || "";
-                        const matchesSearch = !searchTerm || patientName.toLowerCase().includes(searchTerm.toLowerCase());
+                        const age = patientData.details.age || "";
+                        const gender = patientData.details.gender || "";
+                        const blood = patientData.details.blood || "";
+                        const contact = patientData.details.contact || "";
+
+                        // compute upcoming and last visit like renderer does
+                        const todayCalc = new Date();
+                        todayCalc.setHours(0,0,0,0);
+                        const sortedDates = patientData.appointments.map(a => new Date(a.date)).sort((a,b)=>a-b);
+                        const future = sortedDates.filter(d => d >= todayCalc);
+                        const past = sortedDates.filter(d => d < todayCalc);
+                        const upcomingDateText = future.length > 0 ? future[0].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
+                        const lastVisitText = past.length > 0 ? past[past.length-1].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
+
+                        const selectedField = getSelectedField();
+                        const term = (searchTerm || "").toLowerCase();
+                        const includes = (v) => {
+                            if (!term) return true;
+                            if (!v) return false;
+                            return String(v).toLowerCase().includes(term);
+                        };
+
+                        let matchesSearch = true;
+                        if (term) {
+                            if (selectedField === 'all') {
+                                matchesSearch = (
+                                    includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText)
+                                );
+                            } else if (selectedField === 'patient') {
+                                matchesSearch = includes(patientName);
+                            } else if (selectedField === 'age') {
+                                matchesSearch = includes(age);
+                            } else if (selectedField === 'gender') {
+                                matchesSearch = includes(gender);
+                            } else if (selectedField === 'blood') {
+                                matchesSearch = includes(blood);
+                            } else if (selectedField === 'contact') {
+                                matchesSearch = includes(contact);
+                            } else if (selectedField === 'upcoming') {
+                                matchesSearch = includes(upcomingDateText);
+                            } else if (selectedField === 'lastvisit') {
+                                matchesSearch = includes(lastVisitText);
+                            }
+                        }
 
                         const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
 
                         if (matchesSearch && hasAppointmentOnDate) {
-                            finalPatientList.push(patientData);
+                            finalPatientList.push({ ...patientData, upcomingDateText, lastVisitText });
                         }
                     }
 
@@ -3585,10 +3704,38 @@ body.dark {
                 const doctorsList = document.getElementById("doctorsList");
                 const paginationContainer = document.getElementById("doctorsPagination");
                 if (!doctorsList) return;
-                const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+                // Build filtered list based on selected field and search term
+                const term = (searchInput.value || '').trim().toLowerCase();
+                const selectedField = getSelectedField();
+
+                // Compute today's appointment counts first if needed for filtering
+                const filteredBase = allDoctors.filter((doc) => {
+                    if (!term) return true; // no search => keep
+                    const includes = (v) => String(v == null ? '' : v).toLowerCase().includes(term);
+                    if (selectedField === 'all') {
+                        const todayCount = todaysAppointmentsCountMap[doc.name] || 0;
+                        return (
+                            includes(doc.name) || includes(doc.specialty) || includes(doc.experience) || includes(doc.availability) || includes(todayCount)
+                        );
+                    } else if (selectedField === 'name') {
+                        return includes(doc.name);
+                    } else if (selectedField === 'specialty') {
+                        return includes(doc.specialty);
+                    } else if (selectedField === 'experience') {
+                        return includes(doc.experience);
+                    } else if (selectedField === 'availability') {
+                        return includes(doc.availability);
+                    } else if (selectedField === 'todays') {
+                        const todayCount = todaysAppointmentsCountMap[doc.name] || 0;
+                        return includes(todayCount);
+                    }
+                    return true;
+                });
+
+                const totalPages = Math.ceil(filteredBase.length / doctorsPerPage);
                 const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
                 const endIndex = startIndex + doctorsPerPage;
-                const currentDoctors = allDoctors.slice(startIndex, endIndex);
+                const currentDoctors = filteredBase.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
                 const selectedDate = document.getElementById("datePicker").value;
 
@@ -4518,6 +4665,7 @@ body.dark {
                 const date = datePicker.value;
                 const searchTerm = searchInput.value.trim();
                 const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+                updateFilterDropdownOptions();
                 if (activeTab === 'appointmentsTab') {
                     renderAppointmentsList(date, searchTerm, status);
                 } else if (activeTab === 'patientsTab') {
@@ -4575,29 +4723,40 @@ body.dark {
             const AdminName = localStorage.getItem("admin_name") || "admin";
             document.getElementById("userName").textContent = userName;
             document.getElementById("userAvatar").textContent = getInitials(userName);
+            
         </script>
-        <script>
-            async function logout() {
-                try {
-                    const token = localStorage.getItem('admin_jwt');
-                    const res = await fetch("/api/admin/logout", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ token }),
-                    });
-                    const result = await res.json();
-                    if (res.ok) {
-                        localStorage.clear();
-                        window.location.href = "login.html";
-                    } else {
-                        showToast(result.error, 'error');
-                    }
-                } catch (err) {
-                    showToast("Error: " + err.message, 'error');
-                }
-            };
-        </script>
+   <script>
+    async function logout() {
+        try {
+            const token = localStorage.getItem('admin_jwt');                               
+            const res = await fetch("/api/admin/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await res.json();
+            if (res.ok) {
+               
+                const savedTheme = localStorage.getItem("theme");
+                const savedAccent = localStorage.getItem("accent");
+
+                localStorage.clear();
+
+                
+                if (savedTheme) localStorage.setItem("theme", savedTheme);
+                if (savedAccent) localStorage.setItem("accent", savedAccent);
+
+                window.location.href = "login.html";
+            } else {
+                showToast(result.error, 'error');
+            }
+        } catch (err) {
+            showToast("Error: " + err.message, 'error');
+        }
+    };
+</script>
+
 
         <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"></div>
 
@@ -4916,6 +5075,7 @@ body.dark {
                     }
                 };
             }
+            
         </script>
 
         <div id="toast"
@@ -4944,6 +5104,7 @@ body.dark {
             ];
 
             function populateSpecialtyDropdown(selectId) {
+
                 const select = document.getElementById(selectId);
                 if (!select) return;
 
