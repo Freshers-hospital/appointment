@@ -1583,12 +1583,14 @@ body.dark {
                             <div id="patientsHeader"
                                 class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
                                 style="display: none">
-                                <div class="col-span-3">Patient</div>
-                                <div class="col-span-2">Age/Gender</div>
-                                <div class="col-span-1">Blood</div>
-                                <div class="col-span-2">Contact</div>
-                                <div class="col-span-2">Appointment Date</div>
-                                <div class="col-span-2">Last Visit</div>
+                                <div class="col-span-2">Patient</div>
+<div class="col-span-2">Age/Gender</div>
+<div class="col-span-1">Blood</div>
+<div class="col-span-1">Contact</div>
+<div class="col-span-1">Appointment Date</div>
+<div class="col-span-1">Last Visit</div>
+<div class="col-span-1">Referred By</div>
+
                             </div>
 
                             <div id="patientsList" class="space-y-2 mt-2"></div>
@@ -1693,8 +1695,14 @@ body.dark {
                                     <span class="text-gray-500">Specialty:</span>
                                     <span id="viewDetailsDoctorSpecialty" class="font-medium text-gray-900"></span>
                                 </div>
+                                <div class="flex items-baseline gap-2">
+    <span class="text-gray-500">Referred By:</span>
+    <span id="viewDetailsReferredBy" class="font-medium text-gray-900"></span>
+</div>
+
                             </div>
                         </div>
+                        
 
                         <div class="border rounded-lg p-4 bg-white">
                             <h3 class="text-gray-800 font-semibold text-lg mb-3">Appointment Information</h3>
@@ -2204,6 +2212,9 @@ body.dark {
                         { value: 'doctor', label: 'Doctor' },
                         { value: 'time', label: 'Time' },
                         { value: 'status', label: 'Status' },
+
+                        { value: 'Reffered by', label: 'Reffered By' },
+
                     ];
                 } else if (activeTab === 'doctorsTab') {
                     options = [
@@ -2355,7 +2366,7 @@ body.dark {
                         const appointmentDate = app.dateData.date.trim();
                         const matchesDate = appointmentDate === formattedDate;
 
-                        // Field-based search
+
                         let matchesField = true;
                         if (term) {
                             if (selectedField === 'all') {
@@ -2394,187 +2405,192 @@ body.dark {
             const patientsPerPage = 5;
             let allPatientsData = [];
 
-            async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
-                console.log("renderAppointmentsList called with statusFilter:", statusFilter);
-                try {
-                    appointmentsList.innerHTML = `
-        <div class=\"flex justify-center items-center p-4\">
-          <div class=\"animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500\"></div>
-          <span class=\"ml-2 text-gray-600\">Loading appointments...</span>
+          async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
+    console.log("renderAppointmentsList called with statusFilter:", statusFilter);
+    try {
+        appointmentsList.innerHTML = `
+        <div class="flex justify-center items-center p-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span class="ml-2 text-gray-600">Loading appointments...</span>
         </div>
       `;
 
-                    const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
-                    let filteredAppointments = appointments;
+        const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
+        let filteredAppointments = appointments;
 
-                    const uniqueStatuses = [...new Set(appointments.map((app) => app.status))];
-                    console.log("All unique status values in appointments:", uniqueStatuses);
-                    console.log("Status filter selected:", statusFilter);
+        const uniqueStatuses = [...new Set(appointments.map((app) => app.status))];
+        console.log("All unique status values in appointments:", uniqueStatuses);
+        console.log("Status filter selected:", statusFilter);
 
-                    if (statusFilter !== "all") {
-                        filteredAppointments = appointments.filter((app) => {
-                            const appointmentStatus = app.status || "confirmed";
+        if (statusFilter !== "all") {
+            filteredAppointments = appointments.filter((app) => {
+                const appointmentStatus = app.status || "confirmed";
 
-                            let matches = false;
-                            if (statusFilter.toLowerCase() === "cancelled") {
-                                matches = appointmentStatus.toLowerCase() === "cancelled" || appointmentStatus.toLowerCase() === "canceled";
-                            } else {
-                                matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
-                            }
+                let matches = false;
+                if (statusFilter.toLowerCase() === "cancelled") {
+                    matches = appointmentStatus.toLowerCase() === "cancelled" || appointmentStatus.toLowerCase() === "canceled";
+                } else {
+                    matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
+                }
 
-                            console.log(`Appointment status: "${appointmentStatus}" vs filter: "${statusFilter}" - matches: ${matches}`);
-                            return matches;
-                        });
-                        console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
-                    }
-                    allAppointmentsData = filteredAppointments;
-                    const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
-                    if (currentAppointmentsPage > totalPages && totalPages > 0) {
-                        currentAppointmentsPage = totalPages;
-                    } else if (totalPages === 0) {
-                        currentAppointmentsPage = 1;
-                    }
+                console.log(`Appointment status: "${appointmentStatus}" vs filter: "${statusFilter}" - matches: ${matches}`);
+                return matches;
+            });
+            console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
+        }
+        allAppointmentsData = filteredAppointments;
+        const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
+        if (currentAppointmentsPage > totalPages && totalPages > 0) {
+            currentAppointmentsPage = totalPages;
+        } else if (totalPages === 0) {
+            currentAppointmentsPage = 1;
+        }
 
-                    if (!filteredAppointments || filteredAppointments.length === 0) {
-                        const formattedDate = new Date(date).toLocaleDateString("en-US", {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        });
-                        appointmentsList.innerHTML = `
-          <div class=\"p-4 text-center text-gray-500\">
-            <div class=\"mb-4\">
-              <svg class=\"w-12 h-12 mx-auto text-gray-400\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
-                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z\" />
+        if (!filteredAppointments || filteredAppointments.length === 0) {
+            const formattedDate = new Date(date).toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+            appointmentsList.innerHTML = `
+          <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">
+              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <p class=\"text-lg font-medium mb-2\">No appointments found</p>
-            <p class=\"text-sm\">${formattedDate}</p>
-            ${filterDoctor ? `<p class=\"text-sm mt-1\">for Dr. ${filterDoctor}</p>` : ""}
+            <p class="text-lg font-medium mb-2">No appointments found</p>
+            <p class="text-sm">${formattedDate}</p>
+            ${filterDoctor ? `<p class="text-sm mt-1">for Dr. ${filterDoctor}</p>` : ""}
           </div>
         `;
-                        return;
-                    }
+            return;
+        }
 
-                    filteredAppointments = filteredAppointments.slice().sort((a, b) => {
-                        const parseTime = (t) => {
-                            if (!t) return 0;
+        filteredAppointments = filteredAppointments.slice().sort((a, b) => {
+            const parseTime = (t) => {
+                if (!t) return 0;
 
-                            const [time, modifier] = t.split(" ");
-                            let [hours, minutes] = time.split(":").map(Number);
-                            if (modifier && modifier.toUpperCase() === "PM" && hours !== 12) hours += 12;
-                            if (modifier && modifier.toUpperCase() === "AM" && hours === 12) hours = 0;
-                            return hours * 60 + minutes;
-                        };
-                        return parseTime(a.dateData?.time) - parseTime(b.dateData?.time);
-                    });
+                const [time, modifier] = t.split(" ");
+                let [hours, minutes] = time.split(":").map(Number);
+                if (modifier && modifier.toUpperCase() === "PM" && hours !== 12) hours += 12;
+                if (modifier && modifier.toUpperCase() === "AM" && hours === 12) hours = 0;
+                return hours * 60 + minutes;
+            };
+            return parseTime(a.dateData?.time) - parseTime(b.dateData?.time);
+        });
 
-                    const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
-                    const endIndex = startIndex + appointmentsPerPage;
-                    const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
+        const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
+        const endIndex = startIndex + appointmentsPerPage;
+        const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
-                    let tableHTML = `
-        <div class=\"overflow-x-auto\">
-          <table class=\"min-w-full bg-white rounded-lg shadow-sm\">
+        let tableHTML = `
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg shadow-sm">
             <thead>
-              <tr class=\"bg-gray-50 text-gray-700 text-left\">
-                <th class=\"px-4 py-3\">Patient</th>
-                <th class=\"px-4 py-3\">Doctor</th>
-                <th class=\"px-4 py-3\">Time</th>
-                <th class=\"px-4 py-3\">Status</th>
-                <th class=\"px-4 py-3\">Actions</th>
+              <tr class="bg-gray-50 text-gray-700 text-left">
+                <th class="px-4 py-3">Patient</th>
+                <th class="px-4 py-3">Doctor</th>
+                <th class="px-4 py-3">Time</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Referred By</th> 
+                <th class="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
     `;
 
-                    tableHTML += currentPageAppointments
-                        .map((app, idx) => {
-                            const doctorName = app.doctorData?.name || "";
-                            const isCanceled = app.status === "canceled" || app.status === "cancelled";
-                            const isRescheduled = app.status === "rescheduled";
+        tableHTML += currentPageAppointments
+            .map((app, idx) => {
+                const doctorName = app.doctorData?.name || "";
+                const isCanceled = app.status === "canceled" || app.status === "cancelled";
+                const isRescheduled = app.status === "rescheduled";
 
-                            let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">Confirmed</span>`;
-                            if (isRescheduled) {
-                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">Rescheduled</span>`;
-                            } else if (isCanceled) {
-                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700\">Cancelled</span>`;
-                            }
-                            return `
-          <tr class=\"border-b hover:bg-gray-50 transition-colors\">
-            <td class=\"px-4 py-3\">
-              <div class=\"font-semibold text-gray-900\">${app.patientData?.name || "N/A"}</div>
-              <div class=\"text-xs text-gray-500\">${app.patientData?.contact || ""}</div>
+                let statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700">Confirmed</span>`;
+                if (isRescheduled) {
+                    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800">Rescheduled</span>`;
+                } else if (isCanceled) {
+                    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
+                }
+                return `
+          <tr class="border-b hover:bg-gray-50 transition-colors">
+            <td class="px-4 py-3">
+              <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
+              <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
             </td>
-            <td class=\"px-4 py-3\">
-              <div class=\"font-semibold text-blue-700\">${doctorName}</div>
-              <div class=\"text-xs text-gray-500\">${app.doctorData?.specialty || ""}</div>
+            <td class="px-4 py-3">
+              <div class="font-semibold text-blue-700">${doctorName}</div>
+              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
             </td>
-            <td class=\"px-4 py-3\">
-              <div class=\"flex items-center gap-1\">
-                <svg class=\"w-4 h-4 text-gray-400\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\" /></svg>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-1">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>${app.dateData?.time || "N/A"}</span>
               </div>
             </td>
-            <td class=\"px-4 py-3\">
+            <td class="px-4 py-3">
               ${statusLabel}
             </td>
-            <td class=\"px-4 py-3 relative\">
-              <button class=\"action-btn text-xl focus:outline-none\">...</button>
-              <div class=\"action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50\">
-                <a href=\"#\" class=\"view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>View details</a>
-                ${!isCanceled ? `<a href=\"#\" class=\"edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
-                ${!isCanceled ? `<a href=\"#\" class=\"reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
-                ${!isCanceled ? `<a href=\"#\" class=\"cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600\" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
+            <td class="px-4 py-3">
+              <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
+
+            </td>
+            <td class="px-4 py-3 relative">
+              <button class="action-btn text-xl focus:outline-none">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
+                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
+                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
+                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
+                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
               </div>
             </td>
           </tr>
         `;
-                        })
-                        .join("");
+            })
+            .join("");
 
-                    tableHTML += `</tbody></table></div>`;
+        tableHTML += `</tbody></table></div>`;
 
-                    if (totalPages > 1) {
-                        tableHTML += `
-          <div class=\"flex justify-between items-center mt-6 px-4\">
-            <div class=\"text-sm text-gray-600\">
+        if (totalPages > 1) {
+            tableHTML += `
+          <div class="flex justify-between items-center mt-6 px-4">
+            <div class="text-sm text-gray-600">
               Showing ${startIndex + 1} to ${Math.min(endIndex, filteredAppointments.length)} of ${filteredAppointments.length} appointments
             </div>
-            <div class=\"flex items-center space-x-2\">
-              <button onclick=\"changeAppointmentsPage(${currentAppointmentsPage - 1})\" 
-                class=\"px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200\"
+            <div class="flex items-center space-x-2">
+              <button onclick="changeAppointmentsPage(${currentAppointmentsPage - 1})" 
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
                 ${currentAppointmentsPage === 1 ? "disabled" : ""}>
                 Previous
               </button>
-              <span class=\"text-sm text-gray-600\">
+              <span class="text-sm text-gray-600">
                 Page ${currentAppointmentsPage} of ${totalPages}
               </span>
-              <button onclick=\"changeAppointmentsPage(${currentAppointmentsPage + 1})\" 
-                class=\"px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200\"
+              <button onclick="changeAppointmentsPage(${currentAppointmentsPage + 1})" 
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
                 ${currentAppointmentsPage === totalPages ? "disabled" : ""}>
                 Next
               </button>
             </div>
           </div>
         `;
-                    }
+        }
 
-                    appointmentsList.innerHTML = tableHTML;
-                } catch (error) {
-                    console.error("Error in renderAppointmentsList:", error);
-                    appointmentsList.innerHTML = `
-        <div class=\"p-4 text-center text-red-500\">
-          <p class=\"font-semibold\">Error loading appointments</p>
-          <p class=\"text-sm mt-2\">${error.message || "Please try again later"}</p>
-          <button onclick=\"renderAppointmentsList('${date}', '${filterDoctor}', '${statusFilter}')\" class=\"mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600\">
+        appointmentsList.innerHTML = tableHTML;
+    } catch (error) {
+        console.error("Error in renderAppointmentsList:", error);
+        appointmentsList.innerHTML = `
+        <div class="p-4 text-center text-red-500">
+          <p class="font-semibold">Error loading appointments</p>
+          <p class="text-sm mt-2">${error.message || "Please try again later"}</p>
+          <button onclick="renderAppointmentsList('${date}', '${filterDoctor}', '${statusFilter}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Retry
           </button>
         </div>
       `;
-                }
-            }
+    }
+}
 
             function changeAppointmentsPage(newPage) {
                 const totalPages = Math.ceil(allAppointmentsData.length / appointmentsPerPage);
@@ -2705,6 +2721,7 @@ body.dark {
                             patientsMap.set(patientKey, {
                                 details: app.patientData,
                                 appointments: [],
+                                 referredBy: app.referralData?.referredBy || "" 
                             });
                         }
                         if (app.dateData && app.dateData.date) {
@@ -2723,7 +2740,6 @@ body.dark {
                         const blood = patientData.details.blood || "";
                         const contact = patientData.details.contact || "";
 
-                        // compute upcoming and last visit like renderer does
                         const todayCalc = new Date();
                         todayCalc.setHours(0,0,0,0);
                         const sortedDates = patientData.appointments.map(a => new Date(a.date)).sort((a,b)=>a-b);
@@ -2766,7 +2782,10 @@ body.dark {
                         const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
 
                         if (matchesSearch && hasAppointmentOnDate) {
-                            finalPatientList.push({ ...patientData, upcomingDateText, lastVisitText });
+;
+
+                            finalPatientList.push({ ...patientData, upcomingDateText, lastVisitText,referredBy: patientData.referredBy });
+
                         }
                     }
 
@@ -2873,21 +2892,23 @@ body.dark {
                         blood: patient.details.blood || "N/A",
                         contact: patient.details.contact || "N/A",
                         upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
-                        lastVisit: lastVisit.replace(/<[^>]+>/g, "")
+                        lastVisit: lastVisit.replace(/<[^>]+>/g, ""),
+                        referredBy: patient.referredBy || "N/A" 
                     })}'
   >
-    <div class="col-span-3 flex items-center">
+    <div class="col-span-6 flex items-center">
       <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
       <div>
         <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">${patient.details.name || "N/A"}</div>
         <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}</div>
       </div>
     </div>
-    <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
+    <div class="col-span-1 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
     <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${upcomingDate}</div>
-    <div class="col-span-2 text-gray-600">${lastVisit}</div>
+    <div class="col-span-1 text-gray-600">${patient.details.contact || "N/A"}</div>
+    <div class="col-span-1 text-gray-600">${upcomingDate}</div>
+    <div class="col-span-1 text-gray-600">${lastVisit}</div>
+      <div class="col-span-1 text-gray-600">${patient.referredBy || "N/A"}</div>
   </div>
 `;
 
@@ -3044,6 +3065,8 @@ body.dark {
 
                 document.getElementById("viewDetailsDoctorName").textContent = doctorName;
                 document.getElementById("viewDetailsDoctorSpecialty").textContent = app.doctorData?.specialty || "N/A";
+                document.getElementById("viewDetailsReferredBy").textContent = app.referralData?.referredBy || "-";
+
 
                 document.getElementById("viewDetailsDate").textContent = app.dateData?.date || "N/A";
                 document.getElementById("viewDetailsTime").textContent = app.dateData?.time || "N/A";
@@ -3846,9 +3869,9 @@ body.dark {
                 dateFormat: "Y-m-d",
             });
 
-            function renderPatientsListFromData(patients) {
-                if (!patients || patients.length === 0) {
-                    patientsList.innerHTML = `
+       function renderPatientsListFromData(patients) {
+    if (!patients || patients.length === 0) {
+        patientsList.innerHTML = `
         <div class="p-4 text-center text-gray-500">
           <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -3857,9 +3880,10 @@ body.dark {
           <p class="text-sm">No patients found with appointments on ${formattedDate}</p>
         </div>
       `;
-                    return;
-                }
-                let tableHTML = `
+        return;
+    }
+
+    let tableHTML = `
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white rounded-lg shadow-sm">
           <thead>
@@ -3870,16 +3894,34 @@ body.dark {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
+              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
             </tr>
           </thead>
           <tbody>
-         
+    `;
+
+    tableHTML += patients.map(patient => `
+      <tr class="border-b hover:bg-gray-50 transition-colors">
+        <td class="px-4 py-3 font-semibold text-gray-900">${patient.details.name || "-"}</td>
+        <td class="px-4 py-3">${patient.details.age || "-"} / ${patient.details.gender || "-"}</td>
+        <td class="px-4 py-3">${patient.details.blood || "-"}</td>
+        <td class="px-4 py-3">${patient.details.contact || "-"}</td>
+        <td class="px-4 py-3">${patient.upcomingDateText || "-"}</td>
+        <td class="px-4 py-3">${patient.lastVisitText || "-"}</td>
+        <td class="px-4 py-3">${patient.referredBy || "-"}</td> <!-- ✅ Value -->
+      </tr>
+    `).join("");
+
+    tableHTML += `
           </tbody>
         </table>
       </div>
     `;
-                patientsList.innerHTML = tableHTML;
-            }
+
+    patientsList.innerHTML = tableHTML;
+}
+
+
             testPatientsPagination();
             if (document.getElementById("appointmentStatusFilter")) {
                 document.getElementById("appointmentStatusFilter").addEventListener("change", function () {
