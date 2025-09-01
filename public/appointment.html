@@ -187,7 +187,7 @@
     margin-bottom: 10px;
   }
 
-  /* Calendar */
+ 
   #dateTimeSection .grid {
     grid-template-columns: 1fr;
   }
@@ -333,117 +333,14 @@
                             title="Enter name using only letters and spaces" maxlength="50" />
                     </div>
 
-                    <div class="form-group">
+                   <div class="form-group">
   <label for="age">Age<span class="text-red-500">*</span></label>
   <select id="age" name="age" 
-    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
     required>
-                            <option value="">Select Age</option>
-                            <option value="0.25">below 1 year</option>
-                            <option value="1">1 year</option>
-                            <option value="2">2 years</option>
-                            <option value="3">3 years</option>
-                            <option value="4">4 years</option>
-                            <option value="5">5 years</option>
-                            <option value="6">6 years</option>
-                            <option value="7">7 years</option>
-                            <option value="8">8 years</option>
-                            <option value="9">9 years</option>
-                            <option value="10">10 years</option>
-                            <option value="1">11 year</option>
-                            <option value="2">12 years</option>
-                            <option value="3">13 years</option>
-                            <option value="4">14 years</option>
-                            <option value="5">15 years</option>
-                            <option value="6">16 years</option>
-                            <option value="7">17 years</option>
-                            <option value="8">18 years</option>
-                            <option value="9">19 years</option>
-                            <option value="10">20 years</option>
-                            <option value="1">21 year</option>
-                            <option value="2">22 years</option>
-                            <option value="3">23 years</option>
-                            <option value="4">24 years</option>
-                            <option value="5">25 years</option>
-                            <option value="6">26 years</option>
-                            <option value="7">27 years</option>
-                            <option value="8">28 years</option>
-                            <option value="9">29 years</option>
-                            <option value="10">30 years</option>
-                            <option value="1">31 year</option>
-                            <option value="2">32 years</option>
-                            <option value="3">33 years</option>
-                            <option value="4">34 years</option>
-                            <option value="5">35 years</option>
-                            <option value="6">36 years</option>
-                            <option value="7">37 years</option>
-                            <option value="8">38 years</option>
-                            <option value="9">39 years</option>
-                            <option value="10">40 years</option>
-                            <option value="1">41 year</option>
-                            <option value="2">42 years</option>
-                            <option value="3">43 years</option>
-                            <option value="4">44 years</option>
-                            <option value="5">45 years</option>
-                            <option value="6">46 years</option>
-                            <option value="7">47 years</option>
-                            <option value="8">48 years</option>
-                            <option value="9">49 years</option>
-                            <option value="10">50 years</option>
-                            <option value="1">51 year</option>
-                            <option value="2">52 years</option>
-                            <option value="3">53 years</option>
-                            <option value="4">54 years</option>
-                            <option value="5">55 years</option>
-                            <option value="6">56 years</option>
-                            <option value="7">57 years</option>
-                            <option value="8">58 years</option>
-                            <option value="9">59 years</option>
-                            <option value="10">60 years</option>
-                            <option value="1">61 year</option>
-                            <option value="2">62 years</option>
-                            <option value="3">63 years</option>
-                            <option value="4">64 years</option>
-                            <option value="5">65 years</option>
-                            <option value="6">66 years</option>
-                            <option value="7">67 years</option>
-                            <option value="8">68 years</option>
-                            <option value="9">69 years</option>
-                            <option value="10">70 years</option>
-                            <option value="1">71 year</option>
-                            <option value="2">72 years</option>
-                            <option value="3">73 years</option>
-                            <option value="4">74 years</option>
-                            <option value="5">75 years</option>
-                            <option value="6">76 years</option>
-                            <option value="7">77 years</option>
-                            <option value="8">78 years</option>
-                            <option value="9">79 years</option>
-                            <option value="10">80 years</option>
-                            <option value="1">81 year</option>
-                            <option value="2">82 years</option>
-                            <option value="3">83 years</option>
-                            <option value="4">84 years</option>
-                            <option value="5">85 years</option>
-                            <option value="6">86 years</option>
-                            <option value="7">87 years</option>
-                            <option value="8">88 years</option>
-                            <option value="9">89 years</option>
-                            <option value="10">90 years</option>
-                            <option value="1">91 year</option>
-                            <option value="2">92 years</option>
-                            <option value="3">93 years</option>
-                            <option value="4">94 years</option>
-                            <option value="5">95 years</option>
-                            <option value="6">96 years</option>
-                            <option value="7">97 years</option>
-                            <option value="8">98 years</option>
-                            <option value="9">99 years</option>
-                            <option value="10"> Above 100 years</option>
-                            
-
-                        </select>
-                    </div>
+      <option value="">Select Age</option>
+  </select>
+</div>
 
                     <div class="form-group">
                         <label for="patient-gender">Gender<span class="text-red-500">*</span></label>
@@ -718,19 +615,24 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
     const ageSelect = document.getElementById("age");
-
-    // special case
-    const below1 = document.createElement("option");
-    below1.value = "0.25";
-    below1.textContent = "Below 1 year";
-    ageSelect.appendChild(below1);
-
-    for (let i = 1; i <= 100; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = (i === 100 ? "100+ years" : i + " years");
-      ageSelect.appendChild(option);
+    if (ageSelect) {
+        ageSelect.innerHTML = `<option value="">Select Age</option>`;
+        const below1 = document.createElement("option");
+        below1.value = "0.25";
+        below1.textContent = "Below 1 year";
+        ageSelect.appendChild(below1);
+        for (let i = 1; i <= 100; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.textContent = (i === 1 ? `${i} year` : `${i} years`);
+            ageSelect.appendChild(option);
+        }
+        const above100 = document.createElement("option");
+        above100.value = "100+";
+        above100.textContent = "Above 100 years";
+        ageSelect.appendChild(above100);
     }
+
             updateStepper(1);
 
         
@@ -2414,6 +2316,8 @@ function clearReferralField() {
 }
 
     </script>
+
+
 </body>
 
 </html>

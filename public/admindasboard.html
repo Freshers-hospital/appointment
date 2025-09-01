@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <style>
-   .flatpickr-calendar {
+.flatpickr-calendar {
   border-radius: 16px !important;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
   border: none !important;
@@ -23,7 +23,7 @@
   right: 0 !important;
 
   top: 100% !important;
-  margin-top: 4px !important;
+  margin-top: 24px !important; 
 }
 
         .flatpickr-months {
@@ -472,7 +472,32 @@ body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !
 body.dark .flatpickr-innerContainer { background: #0f172a !important; }
 body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
 
-body.dark .flatpickr-months { background: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-months {
+  background: #1e293b !important; 
+  color: #f1f5f9 !important;      
+}
+
+body.dark .flatpickr-months .flatpickr-prev-month,
+body.dark .flatpickr-months .flatpickr-next-month {
+  fill: #f1f5f9 !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark .flatpickr-current-month .numInputWrapper input {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155; 
+}
+
+body.dark .flatpickr-current-month .numInputWrapper span {
+  color: #f1f5f9 !important;
+}
+
 body.dark .flatpickr-months .flatpickr-prev-month,
 body.dark .flatpickr-months .flatpickr-next-month { fill: #111827 !important; color: #111827 !important; }
 
@@ -1205,10 +1230,6 @@ body.dark.accent-pink button.bg-black:hover,
 body.dark.accent-pink button.bg-blue-600:hover {
     background-color: #db2777 !important;
 }
-
-
-    
-
 body.dark.accent-pink input:focus,
 body.dark.accent-pink select:focus,
 body.dark.accent-pink textarea:focus {
@@ -1263,6 +1284,7 @@ body.accent-teal:not(.dark) {
 body.dark {
   background-color: #111827 !important;
 }
+
 
 
     </style>
@@ -1473,7 +1495,7 @@ body.dark {
     <div class="px-20">
   <div class="flex items-center gap-4 mb-4 justify-between">
 
-    <!-- LEFT: Search Box -->
+   
     <div class="relative w-[1000px] h-12 flex items-center">
       <img src="/search.webp" alt="Search"
         class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
@@ -1580,18 +1602,17 @@ body.dark {
                                 </div>
                             </div>
 
-                            <div id="patientsHeader"
-                                class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
-                                style="display: none">
-                                <div class="col-span-2">Patient</div>
-<div class="col-span-2">Age/Gender</div>
-<div class="col-span-1">Blood</div>
-<div class="col-span-1">Contact</div>
-<div class="col-span-1">Appointment Date</div>
-<div class="col-span-1">Last Visit</div>
-<div class="col-span-1">Referred By</div>
-
-                            </div>
+        <div id="patientsHeader"
+  class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
+  style="display: none">
+  <div class="col-span-3">Patient</div>
+  <div class="col-span-2">Age/Gender</div>
+  <div class="col-span-1">Blood</div>
+  <div class="col-span-2">Contact</div>
+  <div class="col-span-2">Appointment Date</div>
+  <div class="col-span-1">Last Visit</div>
+  <div class="col-span-1">Referred By</div>
+</div>
 
                             <div id="patientsList" class="space-y-2 mt-2"></div>
                     </div>
@@ -1877,32 +1898,43 @@ body.dark {
             </div>
         </div>
 
-        <div id="patientDetailsModalOverlay"
-            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
-                <div class="grid grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4">
-                    <div class="font-semibold text-gray-600">Name</div>
-                    <div id="modalPatientName" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Age/Gender</div>
-                    <div id="modalPatientAgeGender" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Blood</div>
-                    <div id="modalPatientBlood" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Contact</div>
-                    <div id="modalPatientContact" class="text-gray-900"></div>
+       <div id="patientDetailsModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
+        <div class="grid grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4">
+            <div class="font-semibold text-gray-600">Name</div>
+            <div id="modalPatientName" class="text-gray-900"></div>
 
-                    <div class="font-semibold text-gray-600">Appointment Date</div>
-                    <div id="modalPatientUpcoming" class="text-gray-900"></div>
+            <div class="font-semibold text-gray-600">Age/Gender</div>
+            <div id="modalPatientAgeGender" class="text-gray-900"></div>
 
-                    <div class="font-semibold text-gray-600">Last Visit</div>
-                    <div id="modalPatientLastVisit" class="text-gray-900"></div>
-                </div>
-                <div class="flex justify-end mt-6">
-                    <button id="closePatientDetailsBtn"
-                        class="px-4 py-2 rounded bg-blue-600 text-white  font-bold hover:bg-blue-700 transition-colors duration-200">Close</button>
-                </div>
-            </div>
+            <div class="font-semibold text-gray-600">Blood</div>
+            <div id="modalPatientBlood" class="text-gray-900"></div>
+
+            <div class="font-semibold text-gray-600">Contact</div>
+            <div id="modalPatientContact" class="text-gray-900"></div>
+
+            <div class="font-semibold text-gray-600">Appointment Date</div>
+            <div id="modalPatientUpcoming" class="text-gray-900"></div>
+
+            <div class="font-semibold text-gray-600">Last Visit</div>
+            <div id="modalPatientLastVisit" class="text-gray-900"></div>
+
+            
+            <div class="font-semibold text-gray-600">Referred By</div>
+            <div id="modalPatientReferredBy" class="text-gray-900"></div>
         </div>
+
+        <div class="flex justify-end mt-6">
+            <button id="closePatientDetailsBtn"
+                class="px-4 py-2 rounded bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors duration-200">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
 
         <div id="viewDoctorProfileModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -2212,8 +2244,7 @@ body.dark {
                         { value: 'doctor', label: 'Doctor' },
                         { value: 'time', label: 'Time' },
                         { value: 'status', label: 'Status' },
-
-                        { value: 'Reffered by', label: 'Reffered By' },
+                        { value: 'referredby', label: 'Referred By' },
 
                     ];
                 } else if (activeTab === 'doctorsTab') {
@@ -2235,6 +2266,7 @@ body.dark {
                         { value: 'contact', label: 'Contact' },
                         { value: 'upcoming', label: 'Upcoming Date' },
                         { value: 'lastvisit', label: 'Last Visit' },
+                        { value: 'referredby', label: 'Referred By' },
                     ];
                 }
                 filterDropdown.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
@@ -2374,7 +2406,8 @@ body.dark {
                                     valueIncludes(app.patientData?.name) ||
                                     valueIncludes(app.doctorData?.name || app.doctorName) ||
                                     valueIncludes(app.dateData?.time) ||
-                                    valueIncludes(app.status)
+                                    valueIncludes(app.status) ||
+                                    valueIncludes(app.referralData?.referredBy)
                                 );
                             } else if (selectedField === 'patient') {
                                 matchesField = valueIncludes(app.patientData?.name);
@@ -2385,7 +2418,10 @@ body.dark {
                             } else if (selectedField === 'status') {
                                 matchesField = valueIncludes(app.status);
                             }
+                            else if (selectedField === 'referredby') {
+                                matchesField = valueIncludes(app.referralData?.referredBy);
                         }
+                    }
 
                         return matchesDate && matchesField;
                     });
@@ -2760,7 +2796,7 @@ body.dark {
                         if (term) {
                             if (selectedField === 'all') {
                                 matchesSearch = (
-                                    includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText)
+                                    includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText) || includes(patientData.referredBy)
                                 );
                             } else if (selectedField === 'patient') {
                                 matchesSearch = includes(patientName);
@@ -2776,6 +2812,9 @@ body.dark {
                                 matchesSearch = includes(upcomingDateText);
                             } else if (selectedField === 'lastvisit') {
                                 matchesSearch = includes(lastVisitText);
+                            }
+                             else if (selectedField === 'referredby') {
+                                matchesSearch = includes(patientData.referredBy);
                             }
                         }
 
@@ -2896,20 +2935,24 @@ body.dark {
                         referredBy: patient.referredBy || "N/A" 
                     })}'
   >
-    <div class="col-span-6 flex items-center">
-      <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-      <div>
-        <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">${patient.details.name || "N/A"}</div>
-        <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}</div>
+  <div class="col-span-3 flex items-center">
+    <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
+    <div>
+      <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">
+        ${patient.details.name || "N/A"}
+      </div>
+      <div class="text-xs text-gray-500">
+        PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}
       </div>
     </div>
-    <div class="col-span-1 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
-    <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
-    <div class="col-span-1 text-gray-600">${patient.details.contact || "N/A"}</div>
-    <div class="col-span-1 text-gray-600">${upcomingDate}</div>
-    <div class="col-span-1 text-gray-600">${lastVisit}</div>
-      <div class="col-span-1 text-gray-600">${patient.referredBy || "N/A"}</div>
   </div>
+  <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
+  <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
+  <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
+  <div class="col-span-2 text-gray-600">${upcomingDate}</div>
+  <div class="col-span-1 text-gray-600">${lastVisit}</div>
+  <div class="col-span-1 text-gray-600">${patient.referredBy || "N/A"}</div>
+</div>
 `;
 
                 });
@@ -3652,6 +3695,7 @@ body.dark {
                 document.getElementById("modalPatientContact").textContent = contact;
                 document.getElementById("modalPatientUpcoming").textContent = patient.upcomingDate || "N/A";
                 document.getElementById("modalPatientLastVisit").textContent = patient.lastVisit || "N/A";
+                document.getElementById("modalPatientReferredBy").textContent = patient.referredBy || "N/A";
                 document.getElementById("patientDetailsModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
             }
@@ -4824,17 +4868,36 @@ body.dark {
                 </div>
             </div>
         </div>
-        <div id="blurredBg" class="fixed inset-0 bg-white/30 backdrop-blur-sm hidden z-40"></div>
-        <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-                <h2 class="text-xl font-semibold mb-4">Logout</h2>
-                <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
-                </div>
-            </div>
-        </div>
+       <div id="blurredBg" class="fixed inset-0 bg-white/30 backdrop-blur-sm hidden z-40"></div>
+<div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-200/20">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="h-6 w-6 text-red-600 dark:text-red-500"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
+    </div>
+    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Logout</h2>
+    <p class="mb-6 text-gray-600 dark:text-gray-300">Are you sure you want to logout?</p>
+    <div class="flex justify-center gap-4">
+      <button onclick="closeModals()" 
+        class="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 
+               dark:bg-gray-200 dark:text-gray-900 dark:hover:bg-gray-300">
+        Cancel
+      </button>
+      <button onclick="logout()" 
+        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
         <div id="adminProfileModal"
             class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
