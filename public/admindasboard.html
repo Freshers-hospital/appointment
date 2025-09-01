@@ -1583,12 +1583,14 @@ body.dark {
                             <div id="patientsHeader"
                                 class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
                                 style="display: none">
-                                <div class="col-span-3">Patient</div>
-                                <div class="col-span-2">Age/Gender</div>
-                                <div class="col-span-1">Blood</div>
-                                <div class="col-span-2">Contact</div>
-                                <div class="col-span-2">Appointment Date</div>
-                                <div class="col-span-2">Last Visit</div>
+                                <div class="col-span-2">Patient</div>
+<div class="col-span-2">Age/Gender</div>
+<div class="col-span-1">Blood</div>
+<div class="col-span-1">Contact</div>
+<div class="col-span-1">Appointment Date</div>
+<div class="col-span-1">Last Visit</div>
+<div class="col-span-1">Referred By</div>
+
                             </div>
 
                             <div id="patientsList" class="space-y-2 mt-2"></div>
@@ -1693,6 +1695,11 @@ body.dark {
                                     <span class="text-gray-500">Specialty:</span>
                                     <span id="viewDetailsDoctorSpecialty" class="font-medium text-gray-900"></span>
                                 </div>
+                                <div class="flex items-baseline gap-2">
+    <span class="text-gray-500">Referred By:</span>
+    <span id="viewDetailsReferredBy" class="font-medium text-gray-900"></span>
+</div>
+
                             </div>
                         </div>
                         
@@ -2205,6 +2212,9 @@ body.dark {
                         { value: 'doctor', label: 'Doctor' },
                         { value: 'time', label: 'Time' },
                         { value: 'status', label: 'Status' },
+
+                        { value: 'Reffered by', label: 'Reffered By' },
+
                     ];
                 } else if (activeTab === 'doctorsTab') {
                     options = [
@@ -2356,7 +2366,7 @@ body.dark {
                         const appointmentDate = app.dateData.date.trim();
                         const matchesDate = appointmentDate === formattedDate;
 
-                       
+
                         let matchesField = true;
                         if (term) {
                             if (selectedField === 'all') {
@@ -2484,7 +2494,7 @@ body.dark {
                 <th class="px-4 py-3">Doctor</th>
                 <th class="px-4 py-3">Time</th>
                 <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Referred By</th> <!-- ✅ new column -->
+                <th class="px-4 py-3">Referred By</th> 
                 <th class="px-4 py-3">Actions</th>
               </tr>
             </thead>
@@ -2730,7 +2740,6 @@ body.dark {
                         const blood = patientData.details.blood || "";
                         const contact = patientData.details.contact || "";
 
-                    
                         const todayCalc = new Date();
                         todayCalc.setHours(0,0,0,0);
                         const sortedDates = patientData.appointments.map(a => new Date(a.date)).sort((a,b)=>a-b);
@@ -2773,7 +2782,10 @@ body.dark {
                         const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
 
                         if (matchesSearch && hasAppointmentOnDate) {
+;
+
                             finalPatientList.push({ ...patientData, upcomingDateText, lastVisitText,referredBy: patientData.referredBy });
+
                         }
                     }
 
@@ -2880,21 +2892,23 @@ body.dark {
                         blood: patient.details.blood || "N/A",
                         contact: patient.details.contact || "N/A",
                         upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
-                        lastVisit: lastVisit.replace(/<[^>]+>/g, "")
+                        lastVisit: lastVisit.replace(/<[^>]+>/g, ""),
+                        referredBy: patient.referredBy || "N/A" 
                     })}'
   >
-    <div class="col-span-3 flex items-center">
+    <div class="col-span-6 flex items-center">
       <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
       <div>
         <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">${patient.details.name || "N/A"}</div>
         <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}</div>
       </div>
     </div>
-    <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
+    <div class="col-span-1 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
     <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${upcomingDate}</div>
-    <div class="col-span-2 text-gray-600">${lastVisit}</div>
+    <div class="col-span-1 text-gray-600">${patient.details.contact || "N/A"}</div>
+    <div class="col-span-1 text-gray-600">${upcomingDate}</div>
+    <div class="col-span-1 text-gray-600">${lastVisit}</div>
+      <div class="col-span-1 text-gray-600">${patient.referredBy || "N/A"}</div>
   </div>
 `;
 
@@ -3051,6 +3065,8 @@ body.dark {
 
                 document.getElementById("viewDetailsDoctorName").textContent = doctorName;
                 document.getElementById("viewDetailsDoctorSpecialty").textContent = app.doctorData?.specialty || "N/A";
+                document.getElementById("viewDetailsReferredBy").textContent = app.referralData?.referredBy || "-";
+
 
                 document.getElementById("viewDetailsDate").textContent = app.dateData?.date || "N/A";
                 document.getElementById("viewDetailsTime").textContent = app.dateData?.time || "N/A";
@@ -3853,7 +3869,7 @@ body.dark {
                 dateFormat: "Y-m-d",
             });
 
-        function renderPatientsListFromData(patients) {
+       function renderPatientsListFromData(patients) {
     if (!patients || patients.length === 0) {
         patientsList.innerHTML = `
         <div class="p-4 text-center text-gray-500">
@@ -3878,7 +3894,7 @@ body.dark {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
-              <th class="px-4 py-3">Referred By</th> <!-- ✅ new column -->
+              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
             </tr>
           </thead>
           <tbody>
@@ -3892,7 +3908,7 @@ body.dark {
         <td class="px-4 py-3">${patient.details.contact || "-"}</td>
         <td class="px-4 py-3">${patient.upcomingDateText || "-"}</td>
         <td class="px-4 py-3">${patient.lastVisitText || "-"}</td>
-        <td class="px-4 py-3">${patient.referredBy || "-"}</td> <!-- ✅ show referred by -->
+        <td class="px-4 py-3">${patient.referredBy || "-"}</td> <!-- ✅ Value -->
       </tr>
     `).join("");
 
@@ -3904,6 +3920,7 @@ body.dark {
 
     patientsList.innerHTML = tableHTML;
 }
+
 
             testPatientsPagination();
             if (document.getElementById("appointmentStatusFilter")) {
