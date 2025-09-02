@@ -124,9 +124,44 @@
 }
 
 
-body.dark * {
+/* body.dark * {
+    color: #f1f5f9 !important;
+}  */
+
+
+
+
+body.dark :where(h1,h2,h3,h4,h5,h6,p,div,span,li,th,td,label,a,button,strong,em,small) {
     color: #f1f5f9 !important;
 }
+
+body.dark svg, 
+body.dark svg * {
+    color: initial !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark #logoutModal svg {
+    color: #ef4444 !important;  
+    stroke: #ef4444 !important;
+  
+}
+
+body.dark #deleteAdminModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+    
+}
+
+
+body.dark #deleteDoctorModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+
+}
+
+
+
 
 
 body.dark .text-gray-500,

@@ -309,14 +309,14 @@
             overflow: visible !important;
         }
 
-    
+     
         #appointmentsList {
             overflow: visible !important;
-        }
+        } 
 
         #appointmentsList > div {
             overflow: visible !important;
-        }
+        }  
 
         .action-menu:not(.hidden) {
             display: block !important;
@@ -403,12 +403,12 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
+} 
 
-.appointments-list .action-menu::-webkit-scrollbar{
+ .appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
-}
+} 
 
 body.dark {
     background-color: #0f172a; 
@@ -419,6 +419,20 @@ body.dark {
 body.dark * {
     color: #f1f5f9 !important;
 }
+
+
+/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
+body.dark #logoutModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+    fill: #ef4444 !important;
+}
+
+
+
+
+
+
 
 
 body.dark .text-gray-500,
@@ -1563,6 +1577,8 @@ body.dark {
                                 Appointment</button></a>
                     </div>
                     <div id="appointmentsList" ></div>
+
+                    
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
