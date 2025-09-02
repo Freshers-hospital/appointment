@@ -27,6 +27,95 @@
     .animate-slide-in {
       animation: slide-in 0.4s ease-out;
     }
+  
+@media (max-width: 640px) {
+  body {
+    background-color: #f0f9ff; 
+  }
+
+
+  .w-full.bg-white.shadow.py-3 {
+    padding-left: 12px !important;
+    justify-content: center !important;
+  }
+  .w-full.bg-white.shadow.py-3 h1 {
+    font-size: 16px !important;
+  }
+
+  .max-w-md {
+    width: 95% !important;
+    margin: 0 auto !important;
+    padding: 16px !important;
+  }
+
+ 
+  input {
+    font-size: 14px !important;
+    padding: 8px !important;
+  }
+
+ 
+  button {
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+
+  footer {
+    font-size: 12px !important;
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  .w-full.bg-white.shadow.py-3 {
+    padding-left: 24px !important;
+  }
+  .w-full.bg-white.shadow.py-3 h1 {
+    font-size: 18px !important;
+  }
+  .max-w-md {
+    width: 80% !important;
+    padding: 24px !important;
+  }
+  input {
+    font-size: 15px !important;
+    padding: 10px !important;
+  }
+  button {
+    font-size: 15px !important;
+    padding: 12px !important;
+  }
+
+  footer {
+    font-size: 13px !important;
+  }
+}
+@media (min-width: 1025px) {
+  .w-full.bg-white.shadow.py-3 {
+    padding-left: 128px !important;
+  }
+  .w-full.bg-white.shadow.py-3 h1 {
+    font-size: 20px !important;
+  }
+  .max-w-md {
+    width: 400px !important;
+    padding: 32px !important;
+  }
+  input {
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
+  button {
+    font-size: 16px !important;
+    padding: 14px !important;
+  }
+
+  footer {
+    font-size: 14px !important;
+  }
+}
+
   </style>
 </head>
 
@@ -92,7 +181,10 @@
     </div>
   </div>
 
-  <!-- Toasts -->
+  <!-- <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+    <div class="text-gray-500 font-semibold">medicare@2000</div>
+  </footer> -->
+
   <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-50 space-y-3"></div>
 
   <script>

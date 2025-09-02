@@ -14,6 +14,7 @@ const cron = require('node-cron');
 
 const removeDeletedAdminsFromDb=require("./cron/deletedadmins");
 const confirmationRoutes = require("./routes/confirmationsroutes");
+const removeDeletedDoctors = require("./cron/deleteddoctor");
 
 const doctorsRoutes = require("./routes/doctorsroutes");
 const { router: adminRoutes } = require('./routes/adminroutes');
@@ -68,5 +69,10 @@ mongoose.connect(mongoURI).then(() => {
 
 cron.schedule('0 * * * *', () => {
   console.log('cron')
-  removeDeletedAdminsFromDb();
+  removeDeletedAdminsFromDb();  
+})
+
+cron.schedule('* * * * *', () => {
+  console.log('cron')
+  removeDeletedDoctors();
 })

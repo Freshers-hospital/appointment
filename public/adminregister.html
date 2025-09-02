@@ -40,19 +40,24 @@
         <input type="text" name="username" placeholder="Username"
           class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           required />
+        <p id="username" class="text-red-600 text-sm mb-2 hidden">Username is mandatory</p>
         <input type="email" name="email" placeholder="Email"
           class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           required />
+        <p id="email" class="text-red-600 text-sm mb-2 hidden">Valid email is mandatory</p>
         <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
           class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
           required />
+        <p id="contact" class="text-red-600 text-sm mb-2 hidden">Contact number is mandatory (10 digits, starts with 6-9)</p>
         <input type="password" name="password" placeholder="Password"
           class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           required />
+        <p id="password" class="text-red-600 text-sm mb-2 hidden">Password is mandatory (min 6 characters)</p>
         <input type="password" name="confirmPassword" placeholder="Confirm Password"
           class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           required />
+        <p id="confirmPassword" class="text-red-600 text-sm mb-4 hidden">Confirm Password must match</p>
         <button type="submit"
           class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
       </form>
@@ -114,6 +119,72 @@
     }
   </style>
   <script>
+    
+    function getFormAndInput(fieldName) {
+      const form = document.getElementById('adminRegForm');
+      return { form, input: form && form.elements[fieldName] };
+    }
+
+    function setInputErrorStyle(fieldName, enable) {
+      const { input } = getFormAndInput(fieldName);
+      if (!input) return;
+      if (enable) {
+        input.classList.add('border-red-500', 'focus:ring-red-400');
+        input.classList.remove('focus:ring-blue-400');
+      } else {
+        input.classList.remove('border-red-500', 'focus:ring-red-400');
+        input.classList.add('focus:ring-blue-400');
+      }
+    }
+
+    function setFieldError(fieldName, message) {
+      const errorEl = document.getElementById(`err-${fieldName}`);
+      if (!errorEl) return;
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+      setInputErrorStyle(fieldName, true);
+    }
+
+    function clearFieldError(fieldName) {
+      const errorEl = document.getElementById(`err-${fieldName}`);
+      if (!errorEl) return;
+      errorEl.classList.add('hidden');
+      setInputErrorStyle(fieldName, false);
+    }
+
+    function clearAllErrors() {
+      ['username','email','contact','password','confirmPassword'].forEach(clearFieldError);
+    }
+
+    const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
+
+    
+    (function attachLiveValidation(){
+      const form = document.getElementById('adminRegForm');
+      const username = form.username;
+      const email = form.email;
+      const contact = form.contact;
+      const password = form.password;
+      const confirmPassword = form.confirmPassword;
+
+      username.addEventListener('input', () => {
+        if (username.value.trim()) clearFieldError('username');
+      });
+      email.addEventListener('input', () => {
+        if (emailPattern.test(email.value.trim())) clearFieldError('email');
+      });
+      contact.addEventListener('input', () => {
+        const v = contact.value.trim();
+        if (/^[6-9][0-9]{9}$/.test(v)) clearFieldError('contact');
+      });
+      password.addEventListener('input', () => {
+        if (password.value.length >= 6) clearFieldError('password');
+      });
+      confirmPassword.addEventListener('input', () => {
+        if (confirmPassword.value && confirmPassword.value === password.value) clearFieldError('confirmPassword');
+      });
+    })();
+
     document.getElementById("adminRegForm").addEventListener("submit", async function (e) {
       e.preventDefault();
       var form = e.target;
@@ -123,22 +194,38 @@
       var password = form.password.value;
       var confirmPassword = form.confirmPassword.value;
 
-      if (!username || !email || !password || !confirmPassword || !contact) {
-        showToast("Please fill in all fields.", "warning");
-        return;
+      clearAllErrors();
+      let hasError = false;
+
+      if (!username) {
+        setFieldError('username', 'Username is mandatory');
+        hasError = true;
       }
-      const emailPattern = /^(?=.*[A-Za-z])[A-Za-z\d._%+-]+@[A-Za-z\d.-]+\.[A-Za-z]{2,}$/;
-      if (!emailPattern.test(email)) {
-        showToast("Enter a valid email with at least one letter and one number.", "warning");
-        return;
+      if (!email || !emailPattern.test(email)) {
+        setFieldError('email', 'Valid email is mandatory');
+        hasError = true;
+      }
+      if (!/^[6-9][0-9]{9}$/.test(contact)) {
+        setFieldError('contact', 'Contact number is mandatory (10 digits, starts with 6-9)');
+        hasError = true;
+      }
+      if (password.length < 6) {
+        setFieldError('password', 'Password is mandatory (min 6 characters)');
+        hasError = true;
+      }
+      if (!confirmPassword || password !== confirmPassword) {
+        setFieldError('confirmPassword', 'Confirm Password must match');
+        hasError = true;
       }
 
-      if (password.length < 6) {
-        showToast("Password must be at least 6 characters.", "warning");
-        return;
-      }
-      if (password !== confirmPassword) {
-        showToast("Passwords do not match.", "error");
+      if (hasError) {
+        
+        const order = ['username','email','contact','password','confirmPassword'];
+        const firstInvalid = order.find(name => !document.getElementById(`err-${name}`).classList.contains('hidden'));
+        if (firstInvalid) {
+          const { input } = getFormAndInput(firstInvalid);
+          if (input) input.focus();
+        }
         return;
       }
 

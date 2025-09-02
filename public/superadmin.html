@@ -9,14 +9,23 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
-    .flatpickr-calendar {
-      border-radius: 16px !important;
-      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
-      border: none !important;
-      width: 320px !important;
-      background: #fff !important;
-      font-family: "Segoe UI", Arial, sans-serif;
-    }
+  .flatpickr-calendar {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  width: 320px !important;
+  background: #fff !important;
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  z-index: 9999 !important;
+  left: auto !important;
+  right: 0 !important;
+
+  top: 100% !important;
+  margin-top: 24px !important; 
+}
+
+
 
     .flatpickr-months {
       background: #fff !important;
@@ -109,7 +118,855 @@
     .flatpickr-current-month {
       justify-content: center !important;
     }
+    body.dark {
+    background-color: #0f172a; 
+    color: #f1f5f9; 
+}
+
+
+body.dark * {
+    color: #f1f5f9 !important;
+}
+
+
+body.dark .text-gray-500,
+body.dark .text-gray-400,
+body.dark p,
+body.dark span {
+    color: #94a3b8 !important; 
+}
+
+
+body.dark a,
+body.dark button {
+    color: #fbfbfb !important;
+}
+
+
+body.dark .bg-white,
+body.dark .card,
+body.dark .p-6,
+body.dark .rounded-lg,
+body.dark .rounded-xl,
+body.dark .shadow {
+    background-color: #1e293b !important; 
+    border-color: #334155 !important;
+}
+
+
+body.dark .tab-active {
+    background-color: #1e293b !important;
+    color: white !important;
+}
+body.dark .tab-inactive {
+    color: #cbd5e1 !important;
+}
+body.dark .tab-inactive:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+
+body.dark input,
+body.dark select {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark input::placeholder {
+    color: #94a3b8 !important;
+}
+
+
+body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-innerContainer { background: #0f172a !important; }
+body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
+
+body.dark .flatpickr-months { background: #ffffff00 !important; color: #111827 !important; }
+body.dark .flatpickr-months .flatpickr-prev-month,
+body.dark .flatpickr-months .flatpickr-next-month { fill: #111827 !important; color: #111827 !important; }
+
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #111827 !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .numInputWrapper input { background-color: #ffffff !important; color: #111827 !important; }
+body.dark .flatpickr-current-month .numInputWrapper span { color: #111827 !important; }
+body.dark .flatpickr-current-month,
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months,
+body.dark .flatpickr-current-month .numInputWrapper {
+    color: #ffffff !important;
+}
+body.dark .flatpickr-days { background: #0f172a !important; }
+body.dark .flatpickr-day { color: #e2e8f0 !important; }
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #3b82f6 !important;
+    color: white !important;
+}
+body.dark .flatpickr-day:hover {
+    background: #334155 !important;
+}
+
+
+body.dark #appointmentsTab h3,
+body.dark #patientsTab h3 {
+    color: #e5e7eb !important;
+}
+body.dark #appointmentsTab p.text-gray-500,
+body.dark #patientsTab p.text-gray-500 {
+    color: #94a3b8 !important;
+}
+
+
+body.dark table thead th {
+    background-color: #1e293b !important;
+}
+body.dark table tbody td {
+    background-color: #0f172a !important;
+}
+body.dark table tbody tr:nth-child(even) td {
+    background-color: #162032 !important;
+}
+
+
+body.dark .grid.grid-cols-12.px-4.py-3.text-left.text-sm.font-bold.bg-gray-50.text-gray-800.border-b,
+body.dark #patientsHeader {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark .grid.grid-cols-12.px-4.py-3.text-left.text-sm.font-bold.bg-gray-50.text-gray-800.border-b > div,
+body.dark #patientsHeader > div { color: #e5e7eb !important; }
+
+
+body.dark #appointmentsTab thead tr { background-color: #0f172a !important; }
+body.dark #appointmentsTab thead th { color: #e5e7eb !important; border-color: #334155 !important; }
+
+
+body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b > div { color: #e5e7eb !important; }
+
+
+body.dark #userDropdownMenu {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark #userDropdownMenu a:hover,
+body.dark #userDropdownMenu button:hover {
+    background-color: #334155 !important;
+}
+
     
+body.dark .w-10.h-10 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark .text-gray-400 {
+    color: #cbd5e1 !important;
+}
+
+body.dark .text-gray-400 {
+    color: #cbd5e1 !important;
+}
+
+body.dark nav {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark nav h1 {
+    color: #3b82f6 !important;
+}
+
+body.dark nav svg {
+    color: #3b82f6 !important;
+}
+
+body.dark button.bg-black {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark button.bg-black:hover {
+    background-color: #2563eb !important;
+}
+
+body.dark button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark button.bg-blue-600:hover {
+    background-color: #2563eb !important;
+}
+
+body.dark button.bg-red-600 {
+    background-color: #dc2626 !important;
+    color: white !important;
+}
+
+body.dark button.bg-red-600:hover {
+    background-color: #b91c1c !important;
+}
+
+
+body.dark table tbody tr:hover td {
+    background-color: #1e293b !important;
+}
+
+
+body.dark .bg-green-200 {
+    background-color: #065f46 !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark .bg-yellow-200 {
+    background-color: #92400e !important;
+    color: #fcd34d !important;
+}
+
+body.dark .bg-red-200 {
+    background-color: #991b1b !important;
+    color: #fca5a5 !important;
+}
+
+body.dark .doctor-row {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark .doctor-row:hover {
+    background-color: #334155 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark .grid.grid-cols-12.gap-4.items-center.bg-white.p-3.rounded-lg.shadow-sm.border.border-gray-100 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark .grid.grid-cols-12.gap-4.items-center.bg-white.p-3.rounded-lg.shadow-sm.border.border-gray-100:hover {
+    background-color: #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+body.dark #searchInput {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark #datePickerDisplay {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:hover {
+    background-color: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:disabled {
+    background-color: #475569 !important;
+    border-color: #475569 !important;
+    color: #64748b !important;
+}
+
+
+body.dark .modal,
+/* body.dark #viewDetailsModal,
+body.dark #appointmentDetailsModal,
+body.dark #rescheduleModal,
+body.dark #cancelModal, */
+body.dark #addDoctorModal,
+body.dark #patientDetailsModal,
+body.dark #successModal,
+body.dark #viewDoctorProfileModal,
+body.dark #editDoctorProfileModal,
+body.dark #availabilityModal {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark .modal h2,
+body.dark .modal h3 {
+    color: #f1f5f9 !important;
+}
+
+body.dark .action-menu {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark .action-menu a,
+body.dark .action-menu button {
+    color: #f1f5f9 !important;
+}
+
+body.dark .action-menu a:hover,
+body.dark .action-menu button:hover {
+    background-color: #334155 !important;
+}
+
+
+body.dark .text-gray-900 {
+    color: #f1f5f9 !important;
+}
+
+body.dark .text-gray-800 {
+    color: #e2e8f0 !important;
+}
+
+body.dark .text-gray-700 {
+    color: #cbd5e1 !important;
+}
+
+body.dark .text-gray-600 {
+    color: #94a3b8 !important;
+}
+
+body.dark .bg-gray-50 {
+    background-color: #0f172a !important;
+}
+
+body.dark .bg-gray-100 {
+    background-color: #1e293b !important;
+}
+
+body.dark .bg-gray-200 {
+    background-color: #334155 !important;
+}
+
+
+body.dark .border-gray-200 {
+    border-color: #334155 !important;
+}
+
+body.dark .border-gray-300 {
+    border-color: #475569 !important;
+}
+
+body.dark .shadow,
+body.dark .shadow-sm,
+body.dark .shadow-md,
+body.dark .shadow-lg {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+body.dark .animate-spin {
+    border-color: #334155 !important;
+    border-top-color: #3b82f6 !important;
+}
+
+body.dark #toast {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+
+body.dark input:focus,
+body.dark select:focus,
+body.dark textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+
+body.dark .w-8.h-8.rounded-full.bg-gray-200 {
+    background-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+
+body.dark #userName,
+body.dark #userDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #userDropdownToggle svg {
+    color: #f1f5f9 !important;
+}
+
+
+body.dark #themesSubDropdown {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark #themesSubDropdown ul {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesSubDropdown button {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesSubDropdown button:hover {
+    background-color: #334155 !important;
+}
+
+body.dark #themesDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesDropdownToggle:hover {
+    background-color: #334155 !important;
+}
+
+
+.themes-dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+
+
+#themesSubDropdown {
+    min-width: 120px;
+}
+
+#themesSubDropdown button {
+    text-align: left;
+    width: 100%;
+}
+
+
+body.dark #accentsSubDropdown {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark #accentsSubDropdown ul {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsSubDropdown button {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsSubDropdown button:hover {
+    background-color: #334155 !important;
+}
+
+body.dark #accentsDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsDropdownToggle:hover {
+    background-color: #334155 !important;
+}
+
+
+.accents-dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+
+
+#accentsSubDropdown {
+    min-width: 160px;
+}
+
+#accentsSubDropdown button {
+    text-align: left;
+    width: 100%;
+}
+
+
+.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue button.bg-black,
+.accent-blue button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue button.bg-black:hover,
+.accent-blue button.bg-blue-600:hover {
+    background-color: #2563eb !important;
+}
+
+.accent-blue nav h1,
+.accent-blue nav svg {
+    color: #3b82f6 !important;
+}
+
+.accent-blue input:focus,
+.accent-blue select:focus,
+.accent-blue textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+
+.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green button.bg-black,
+.accent-green button.bg-blue-600 {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green button.bg-black:hover,
+.accent-green button.bg-blue-600:hover {
+    background-color: #059669 !important;
+}
+
+
+.accent-green input:focus,
+.accent-green select:focus,
+.accent-green textarea:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+
+.accent-brown .tab-active {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+.accent-brown button.bg-black,
+.accent-brown button.bg-blue-600 {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+.accent-brown button.bg-black:hover,
+.accent-brown button.bg-blue-600:hover {
+    background-color: #b55656 !important;
+}
+
+
+
+.accent-brown input:focus,
+.accent-brown select:focus,
+.accent-brown textarea:focus {
+    border-color: #b55656 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+
+
+.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple button.bg-black,
+.accent-purple button.bg-blue-600 {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple button.bg-black:hover,
+.accent-purple button.bg-blue-600:hover {
+    background-color: #7c3aed !important;
+}
+
+
+
+.accent-purple input:focus,
+.accent-purple select:focus,
+.accent-purple textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+
+
+
+.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange button.bg-black,
+.accent-orange button.bg-blue-600 {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange button.bg-black:hover,
+.accent-orange button.bg-blue-600:hover {
+    background-color: #d97706 !important;
+}
+
+
+.accent-orange input:focus,
+.accent-orange select:focus,
+.accent-orange textarea:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+
+
+.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink button.bg-black,
+.accent-pink button.bg-blue-600 {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink button.bg-black:hover,
+.accent-pink button.bg-blue-600:hover {
+    background-color: #db2777 !important;
+}
+
+
+.accent-pink input:focus,
+.accent-pink select:focus,
+.accent-pink textarea:focus {
+    border-color: #ec4899 !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+
+.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal button.bg-black,
+.accent-teal button.bg-blue-600 {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal button.bg-black:hover,
+.accent-teal button.bg-blue-600:hover {
+    background-color: #0d9488 !important;
+}
+
+
+
+.accent-teal input:focus,
+.accent-teal select:focus,
+.accent-teal textarea:focus {
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+body.dark.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+body.dark.accent-green button.bg-black,
+body.dark.accent-green button.bg-blue-600 {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+body.dark.accent-green button.bg-black:hover,
+body.dark.accent-green button.bg-blue-600:hover {
+    background-color: #059669 !important;
+}
+
+body.dark.accent-green input:focus,
+body.dark.accent-green select:focus,
+body.dark.accent-green textarea:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+
+body.dark.accent-brown .tab-active {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+body.dark.accent-brown button.bg-black,
+body.dark.accent-brown button.bg-blue-600 {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+body.dark.accent-brown button.bg-black:hover,
+body.dark.accent-brown button.bg-blue-600:hover {
+    background-color: #9c4444 !important;
+}
+
+body.dark.accent-brown input:focus,
+body.dark.accent-brown select:focus,
+body.dark.accent-brown textarea:focus {
+    border-color: #b55656 !important;
+    box-shadow: 0 0 0 3px rgba(181, 86, 86, 0.1) !important;
+}
+body.dark.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+body.dark.accent-purple button.bg-black,
+body.dark.accent-purple button.bg-blue-600 {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+body.dark.accent-purple button.bg-black:hover,
+body.dark.accent-purple button.bg-blue-600:hover {
+    background-color: #7c3aed !important;
+}
+
+body.dark.accent-purple input:focus,
+body.dark.accent-purple select:focus,
+body.dark.accent-purple textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+body.dark.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+body.dark.accent-orange button.bg-black,
+body.dark.accent-orange button.bg-blue-600 {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+body.dark.accent-orange button.bg-black:hover,
+body.dark.accent-orange button.bg-blue-600:hover {
+    background-color: #d97706 !important;
+}
+
+body.dark.accent-orange input:focus,
+body.dark.accent-orange select:focus,
+body.dark.accent-orange textarea:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+body.dark.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+body.dark.accent-pink button.bg-black,
+body.dark.accent-pink button.bg-blue-600 {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+body.dark.accent-pink button.bg-black:hover,
+body.dark.accent-pink button.bg-blue-600:hover {
+    background-color: #db2777 !important;
+}
+
+
+
+body.dark.accent-pink input:focus,
+body.dark.accent-pink select:focus,
+body.dark.accent-pink textarea:focus {
+    border-color: #ec4899 !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+body.dark.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+body.dark.accent-teal button.bg-black,
+body.dark.accent-teal button.bg-blue-600 {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+body.dark.accent-teal button.bg-black:hover,
+body.dark.accent-teal button.bg-blue-600:hover {
+    background-color: #0d9488 !important;
+}
+
+body.dark.accent-teal input:focus,
+body.dark.accent-teal select:focus,
+body.dark.accent-teal textarea:focus {
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+body.dark #userDropdownToggle {
+    color: white !important;
+    fill: white !important;
+}
+
+
+body.accent-purple:not(.dark) {
+  background-color: #f5f3ff !important;
+}
+
+body.accent-green:not(.dark) {
+  background-color: #f0fdf4 !important;
+}
+
+body.accent-orange:not(.dark) {
+  background-color: #fff7ed !important;
+}
+
+body.accent-pink:not(.dark) {
+  background-color: #fdf2f8 !important;
+}
+body.accent-brown:not(.dark) {
+  background-color: #ede0e1 !important;
+}
+body.accent-teal:not(.dark) {
+  background-color: #f0fdfa !important;
+}
+body.dark {
+  background-color: #111827 !important;
+}
+
+.required {
+    color: #dc2626 !important; 
+  }
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;   
+  font-size: 0.75rem;       
+  font-weight: 500;          
+  border-radius: 0.25rem;   
+}
+.badge-active {
+  background-color: #dcfce7; 
+  color: #166534;           
+}
+.badge-inactive {
+  background-color: #fee2e2; 
+  color: #991b1b;          
+}
+.badge-deleted {
+  background-color: #fee2e2; 
+  color: #991b1b;          
+}
+.dark .badge-active {
+  background-color: #22c55e !important; 
+  color: #fff !important;
+}
+.dark .badge-inactive {
+  background-color: #ef4444 !important;
+  color: #fff !important;
+}
+.dark .badge-deleted {
+  background-color: #dc2626 !important; 
+  color: #fff !important;
+}
+/* Light mode */
+.required {
+  color: #ef4444 !important; /* tailwind red-500 */
+}
+
+/* Dark mode (body or html ki .dark class unte) */
+.dark .required {
+  color: #f87171 !important; /* tailwind red-400 */
+}
+
   </style>
 </head>
 
@@ -150,6 +1007,122 @@
                   <span>Profile</span>
                 </a>
               </li>
+              <li class="relative">
+                                <button id="themesDropdownToggle"
+                                    class="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                    <div class="flex items-center gap-2">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" 
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Themes</span>
+                                    </div>
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="themes-dropdown-arrow transition-transform duration-200">
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div id="themesSubDropdown" 
+                                    class="absolute left-0 top-full mt-1 w-32 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                                    <ul class="py-1 text-sm text-gray-700">
+                                        <li>
+                                            <button id="lightThemeBtn"
+                                                class="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                                                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" 
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span>Light</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="darkThemeBtn"
+                                                class="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" 
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span>Dark</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="relative">
+                                <button id="accentsDropdownToggle"
+                                    class="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                    <div class="flex items-center gap-2">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" 
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Accents</span>
+                                    </div>
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="accents-dropdown-arrow transition-transform duration-200">
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div id="accentsSubDropdown" 
+                                    class="absolute left-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                                    <ul class="py-2 text-sm text-gray-700">
+                                        <li>
+                                            <button id="blueAccentBtn" data-color="blue"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-blue-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Blue</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="greenAccentBtn" data-color="green"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-green-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Green</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="greenAccentBtn" data-color="brown"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-blue-200 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Brown</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="purpleAccentBtn" data-color="purple"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-purple-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Purple</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="orangeAccentBtn" data-color="orange"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-orange-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Orange</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="pinkAccentBtn" data-color="pink"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-pink-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Pink</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="tealAccentBtn" data-color="teal"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-teal-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Teal</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
               <li>
                 <button onclick="showLogoutModal()"
                   class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
@@ -176,91 +1149,119 @@
         <h2 class="text-2xl font-semibold px-20">Super Admin Dashboard</h2>
         <p class="text-gray-500 px-20">Manage admins and doctors</p>
       </div>
-    </div>
+            <!-- <div class="flex items-center gap-4 px-20">
+                <div class="relative w-60">
+                    <img src="/search.webp" alt="Search"
+                        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
+                    <input type="text" id="searchInput" placeholder="Search"
+                        class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
+                </div> -->
 
-
-    <div class="px-20 mt-4">
-      <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-6">
-        <button
-          class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active bg-white shadow rounded"
-          data-tab="adminsTab">Admins</button>
-        <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive"
-          data-tab="doctorsTab">Doctors</button>
-      </div>
-    </div>
-
-    <div class="px-20">
-      <div class="bg-white p-6 rounded-xl shadow">
-        <div class="space-y-10">
-
-          <div id="adminsTab" class="tab-content">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-xl font-semibold">Admins List</h3>
-
-              <button id="openAdminModal"
-                class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
-
-            </div>
-
-            <div
-              class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-              <div class="col-span-2">Admin Name</div>
-              <div class="col-span-3">Email</div>
-              <div class="col-span-2">Contact</div>
-              <div class="col-span-2">Status</div>
-              <div class="col-span-2">Password</div>
-              <div class="col-span-1 text-right">Actions</div>
-            </div>
-
-
-            <div id="adminList" class="space-y-2 mt-2">
-            </div>
-          </div>
-        </div>
-        <div id="doctorsTab" class="tab-content hidden">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
-            <!-- <p class="text-gray-500 mt-0">Manage doctor profiles and schedules</p> -->
-            <div class="flex flex-row items-center space-x-3">
-              <div class="relative w-60 mt-0 h-12">
-                <div id="datePickerDisplay"
-                  class="flex items-center justify-center w-44 h-12 py-0 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none text-base">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-400" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                    <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                  </svg>
-                  <span id="datePickerText" class="text-gray-900 font-semibold text-base">2025-06-23</span>
+                <!-- <div class="relative w-60 mt-6">
+                    <div id="datePickerDisplay"
+                        class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+                            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+                        </svg>
+                        <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
+                    </div>
+                    <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
+                        autocomplete="off" />
                 </div>
-                <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
-                  autocomplete="off" />
-              </div>
-              <button id="addDoctorBtn" class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+
-                Add Doctor</button>
-            </div>
-          </div>
-
-          <div
-            class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-            <div class="col-span-3">Doctor</div>
-            <div class="col-span-2">Specialization</div>
-            <div class="col-span-2">Today's Appointments</div>
-            <div class="col-span-3">Availability</div>
-            <div class="col-span-2">Actions</div>
-          </div>
-          <div id="doctorsList" class="space-y-2 mt-2"></div>
-          <div id="doctorsPagination" class="flex justify-center items-center space-x-2 mt-4 hidden">
-            <button id="prevDoctorsPage"
-              class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
-            <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
-            <button id="nextDoctorsPage"
-              class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
-          </div>
+            </div> -->
         </div>
+
+
+   <div class="px-20 mt-4">
+
+
+  <div class="bg-gray-200 p-1 rounded-lg flex items-center mb-4">
+    <button
+      class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-active bg-white shadow rounded"
+      data-tab="adminsTab">Admins</button>
+    <button class="tab flex-1 text-center py-1.5 font-semibold transition-colors duration-200 tab-inactive"
+      data-tab="doctorsTab">Doctors</button>
+  </div>
+
+<div class="flex justify-end items-center gap-4 mb-6">
+ 
+  <div class="relative w-80 flex items-center">
+    <img src="/search.webp" alt="Search"
+      class="absolute left-2 w-5 h-5 pointer-events-none" />
+    <input type="text" id="searchInput" placeholder="Search"
+      class="pl-8 h-12 w-full rounded bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
+  </div>
+
+
+  <div class="relative w-80 flex items-center">
+    <div id="datePickerDisplay"
+      class="flex items-center justify-center w-full h-12 px-3 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor">
+        <rect x="3" y="4" width="20" height="20" rx="2" fill="#e5e7eb" />
+        <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+      </svg>
+      <span id="datePickerText" class="text-gray-900 font-semibold">September 1, 2025</span>
+    </div>
+    <input type="text" id="datePicker" class="hidden" readonly autocomplete="off" />
+  </div>
+</div>
+
+
+  
+  <div class="bg-white p-6 rounded-xl shadow space-y-6">
+
+    
+    <div id="adminsTab" class="tab-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-semibold mb-1">Admins List</h3>
+        <button id="openAdminModal"
+          class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Admin</button>
+      </div>
+
+      <div
+        class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+        <div class="col-span-2">Admin Name</div>
+        <div class="col-span-3">Email</div>
+        <div class="col-span-2">Contact</div>
+        <div class="col-span-2">Status</div>
+        <div class="col-span-2">Password</div>
+        <div class="col-span-1 text-right">Actions</div>
+      </div>
+      <div id="adminList" class="space-y-2 mt-4"></div>
+    </div>
+
+
+    <div id="doctorsTab" class="tab-content hidden">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-semibold mb-1">Doctors List</h3>
+        <button id="addDoctorBtn"
+          class="bg-black text-white px-6 h-12 flex items-center rounded font-semibold">+ Add Doctor</button>
+      </div>
+
+      <div
+        class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+        <div class="col-span-3">Doctor</div>
+        <div class="col-span-2">Specialization</div>
+        <div class="col-span-2">Today's Appointments</div>
+        <div class="col-span-3">Availability</div>
+        <div class="col-span-2">Actions</div>
+      </div>
+      <div id="doctorsList" class="space-y-2 mt-4"></div>
+      <div id="doctorsPagination"
+        class="flex justify-center items-center space-x-2 mt-4 hidden">
+        <button id="prevDoctorsPage"
+          class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Previous</button>
+        <span id="doctorsPageInfo" class="text-sm text-gray-600"></span>
+        <button id="nextDoctorsPage"
+          class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200">Next</button>
       </div>
     </div>
+
   </div>
-  </div>
+</div>
 
   <div id="editModal"
     class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50 hidden">
@@ -323,7 +1324,15 @@
   </div>
 
 
-  <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <!-- <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path class="text-red-600" d="M12 9v4M12 17h.01"/>
+          <path class="text-red-600" d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
       <h2 class="text-xl font-semibold mb-4">Confirm Delete</h2>
       <p class="mb-4 text-gray-600">Are you sure you want to delete this admin?</p>
@@ -334,7 +1343,7 @@
 
       </div>
     </div>
-  </div>
+  </div> -->
 
 
   <div id="viewModal"
@@ -382,26 +1391,57 @@
   </div>
 
   <div id="blurredBg" class="fixed inset-0 bg-white/30 bg-opacity-30 backdrop-blur-md hidden z-40"></div>
-  <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <h2 class="text-xl font-semibold mb-4">Logout</h2>
-      <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
-      </div>
+<div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="h-6 w-6 text-red-600 dark:text-red-400 dark:drop-shadow-[0_0_4px_#f87171]"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z" />
+        </svg>
+      </span>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-4 dark:text-gray-200">Logout</h2>
+    <p class="mb-4 text-gray-600 dark:text-gray-300">Are you sure you want to logout?</p>
+
+   <button onclick="closeModals()" 
+              class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+
+      <button onclick="logout()" 
+              class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+        Logout
+      </button>
     </div>
   </div>
-  <div id="deleteAdminModal"
-    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmDeleteAdmin()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
-      </div>
+</div>
+
+<div id="deleteAdminModal"
+     class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center hidden z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600 "
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
+    </div>
+    <p class="mb-6 text-gray-700 text-lg font-medium">
+      Are you sure you want to delete?
+    </p>
+    <div class="flex justify-center gap-4">
+      <button onclick="closeModals()" 
+              class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+      <button onclick="confirmDeleteAdmin()" 
+              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
     </div>
   </div>
+</div>
+
   <div id="restoreAdminModal"
     class="fixed inset-0 bg-black bg-opacity-50  backdrop-blur-md flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -414,15 +1454,31 @@
   </div>
   <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md z-40"></div>
 
-  <div id="deleteDoctorModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-      <p class="mb-8 text-gray-600">Are you sure you want to delete?</p>
-      <div class="flex justify-center gap-4">
-        <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button onclick="confirmDeleteDoctor()" class="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
-      </div>
+  <div id="deleteDoctorModal" 
+     class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
+    </div>
+    <p class="mb-6 text-gray-700 text-lg font-medium">
+      Are you sure you want to delete this doctor?
+    </p>
+    <div class="flex justify-center gap-4">
+      <button onclick="closeModals()" 
+              class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+      <button onclick="confirmDeleteDoctor()" 
+              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
     </div>
   </div>
+</div>
+
   <div id="restoreDoctorModal"
     class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -587,7 +1643,7 @@
     </div>
   </div>
   <div id="availabilityModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-center justify-center z-50 hidden">
+    class="fixed inset-0 bg-black bg-opacity-40  backdrop-blur-md flex items-start justify-center pt-16 z-50 hidden">
     <div id="availabilityModal" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative">
       <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Manage Availability</h2>
       <p id="manageDoctorName" class="text-lg font-semibold text-gray-800 mb-4 text-center"></p>
@@ -626,82 +1682,84 @@
     </div>
   </div>
   <div id="addDoctorModalOverlay"
-    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50 hidden">
-    <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
+  class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-start justify-center pt-16 z-50 hidden">
+  <div id="addDoctorModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl relative">
 
-      <button id="closeAddDoctorModal"
-        class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold">&times;</button>
+    <button id="closeAddDoctorModal"
+      class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold">&times;</button>
 
-      <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Add Doctor</h2>
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Add Doctor</h2>
 
-      <form id="addDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <form id="addDoctorForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+        <label for="doctorFirstName" class="block text-sm font-medium text-gray-700 mb-1">
+          First Name <span class="required">*</span>
+        </label>
+        <input type="text" id="doctorFirstName" name="firstName"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required />
+      </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <label for="doctorFirstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-          <input type="text" id="doctorFirstName" name="firstName"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required />
-        </div>
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+        <label for="doctorLastName" class="block text-sm font-medium text-gray-700 mb-1">
+          Last Name <span class="required">*</span>
+        </label>
+        <input type="text" id="doctorLastName" name="lastName"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required />
+      </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-          <label for="doctorLastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-          <input type="text" id="doctorLastName" name="lastName"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required />
-        </div>
+      <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+        <label class="text-sm font-medium text-gray-600 mb-1 block">
+          Specialization <span class="required">*</span>
+        </label>
+        <select id="addDoctorSpecialization" name="specialty"
+          class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+        </select>
+      </div>
 
-        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-          <label class="text-sm font-medium text-gray-600 mb-1 block">Specialization</label>
-          <select id="addDoctorSpecialization" name="specialty"
-            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required>
+      <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
+        <label class="text-sm font-medium text-gray-600 mb-1 block">
+          Experience <span class="required">*</span>
+        </label>
+        <input type="text" id="doctorExperience" name="experience"
+          class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" required />
+      </div>
 
-          </select>
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
+        <label for="doctorQualification" class="block text-sm font-medium text-gray-700 mb-1">
+          Qualification <span class="required">*</span>
+        </label>
+        <input type="text" id="doctorQualification" name="qualification"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="e.g., MBBS, MD, PhD" required />
+      </div>
 
-        </div>
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
+        <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1">
+          Availability <span class="required">*</span>
+        </label>
 
-        <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
-          <label class="text-sm font-medium text-gray-600 mb-1 block">Experience</label>
-          <input type="text" id="doctorExperience" name="experience"
-            class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
-          <label for="doctorQualification" class="block text-sm font-medium text-gray-700 mb-1">Qualification</label>
-          <input type="text" id="doctorQualification" name="qualification"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., MBBS, MD, PhD" required />
-        </div>
-
-
-        <div class="bg-gray-50 p-4 rounded-lg shadow-sm sm:col-span-2">
-          <label for="doctorAvailability" class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
-
-          <!--           
-          <input type="text" id="doctorAvailability" name="availability"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., 9:00 AM - 5:00 PM" required /> -->
-
-          <div class="grid grid-cols-2 gap-4">
-            <!-- Start Time -->
-            <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
-              <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-                <!-- JS will fill options -->
-              </select>
-            </div>
-
-            <!-- End Time -->
-            <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
-              <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-                <!-- JS will fill options -->
-              </select>
-            </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <label for="startTime" class="block text-sm font-medium text-gray-700 mb-1">
+              Start Time <span class="required">*</span>
+            </label>
+            <select id="startTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+            </select>
           </div>
 
-          <!-- Hidden input to store formatted availability -->
+          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <label for="endTime" class="block text-sm font-medium text-gray-700 mb-1">
+              End Time <span class="required">*</span>
+            </label>
+            <select id="endTime" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+            </select>
+          </div>
+        </div>
+
+         
           <input type="hidden" id="doctorAvailability" name="availability" required />
 
 
@@ -720,7 +1778,9 @@
       </form>
     </div>
   </div>
-  
+  <!-- <footer class="w-full bg-white shadow py-4 mt-8 fixed bottom-0 left-0 z-30 flex items-center justify-center">
+    <div class="text-gray-500 font-semibold">medicare@2000</div>
+  </footer> -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     const tabs = document.querySelectorAll('.tab');
@@ -774,10 +1834,14 @@
 
     function renderAdminsPage() {
       const adminList = document.getElementById("adminList");
-      const totalPages = Math.ceil(allAdmins.length / adminsPerPage);
+      const searchQuery = (document.getElementById("searchInput")?.value || document.getElementById("adminSearchInput")?.value || "").trim().toLowerCase();
+      const filteredAdmins = searchQuery
+        ? allAdmins.filter(a => (a.username || "").toLowerCase().includes(searchQuery))
+        : allAdmins;
+      const totalPages = Math.ceil(filteredAdmins.length / adminsPerPage);
       const startIndex = (currentAdminsPage - 1) * adminsPerPage;
       const endIndex = startIndex + adminsPerPage;
-      const currentAdmins = allAdmins.slice(startIndex, endIndex);
+      const currentAdmins = filteredAdmins.slice(startIndex, endIndex);
       if (!currentAdmins.length) {
         adminList.innerHTML = `<div class="text-gray-500 text-center py-4">No admins found.</div>`;
         updateAdminsPagination(totalPages);
@@ -797,15 +1861,24 @@
     <div class="col-span-2 text-gray-700 ${admin.isDeleted ? 'line-through text-gray-300' : ''}">
       ${admin.contact || '-'}
     </div>
-    
-    <div class="col-span-2">
-      <span class="inline-block px-2 py-1 text-xs font-medium rounded 
-        ${admin.status?.toLowerCase() === 'active'
-          ? 'text-green-800 bg-green-100'
-          : 'text-red-800 bg-red-100'}">
-        ${admin.status?.toLowerCase() === 'active' ? 'Active' : admin.status?.toLowerCase() === 'inactive' ? 'Inactive' : 'Deleted'}
-      </span>
-    </div>
+<div class="col-span-2">
+  <span class="badge
+    ${admin.status?.toLowerCase() === 'active'
+      ? 'badge-active'
+      : admin.status?.toLowerCase() === 'inactive'
+      ? 'badge-inactive'
+      : 'badge-deleted'}">
+    ${admin.status?.toLowerCase() === 'active'
+      ? 'Active'
+      : admin.status?.toLowerCase() === 'inactive'
+      ? 'Inactive'
+      : 'Deleted'}
+  </span>
+</div>
+
+
+
+
     
 <div class="col-span-2">
   <div class="relative w-36">
@@ -996,10 +2069,14 @@
       const doctorsList = document.getElementById("doctorsList");
       const paginationContainer = document.getElementById("doctorsPagination");
       if (!doctorsList) return;
-      const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+      const doctorSearchQuery = (document.getElementById("searchInput")?.value || document.getElementById("doctorSearchInput")?.value || "").trim().toLowerCase();
+      const filteredDoctors = doctorSearchQuery
+        ? allDoctors.filter(d => (d.name || "").toLowerCase().includes(doctorSearchQuery))
+        : allDoctors;
+      const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
       const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
       const endIndex = startIndex + doctorsPerPage;
-      const currentDoctors = allDoctors.slice(startIndex, endIndex);
+      const currentDoctors = filteredDoctors.slice(startIndex, endIndex);
       doctorsList.innerHTML = "";
       const selectedDate = document.getElementById("datePicker")?.value || new Date().toISOString().split('T')[0];
       const availabilityPromises = currentDoctors.map(async (doctor) => {
@@ -1100,6 +2177,15 @@
     document.addEventListener("DOMContentLoaded", function () {
       const prevButton = document.getElementById("prevDoctorsPage");
       const nextButton = document.getElementById("nextDoctorsPage");
+      const topSearchInput = document.getElementById("searchInput");
+      if (topSearchInput) {
+        topSearchInput.addEventListener("input", () => {
+          currentAdminsPage = 1;
+          currentDoctorsPage = 1;
+          renderAdminsPage();
+          renderDoctorsPage();
+        });
+      }
       if (prevButton) {
         prevButton.addEventListener("click", () => {
           if (currentDoctorsPage > 1) {
@@ -1110,7 +2196,11 @@
       }
       if (nextButton) {
         nextButton.addEventListener("click", () => {
-          const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+          const doctorSearchQuery = (document.getElementById("searchInput")?.value || document.getElementById("doctorSearchInput")?.value || "").trim().toLowerCase();
+          const filteredDoctors = doctorSearchQuery
+            ? allDoctors.filter(d => (d.name || "").toLowerCase().includes(doctorSearchQuery))
+            : allDoctors;
+          const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
           if (currentDoctorsPage < totalPages) {
             currentDoctorsPage++;
             renderDoctorsPage();
@@ -1148,6 +2238,7 @@
           document.getElementById("datePickerText").textContent = displayText;
           document.getElementById("datePicker").value = dateStr;
           fetchAndDisplayDoctors(dateStr);
+         
         },
       });
       document.getElementById("datePickerDisplay").addEventListener("click", function () {
@@ -1159,6 +2250,8 @@
       const today = new Date();
       document.getElementById("datePicker").value = today.toISOString().split("T")[0];
       document.getElementById("datePickerText").textContent = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+      
     });
 
     function getSelectedDoctorDate() {
@@ -1259,19 +2352,13 @@
     }
     async function confirmDeleteDoctor() {
       if (!selectedDoctorId) return;
-      const token = localStorage.getItem("admin_jwt");
-      if (!token) {
-        showToast("You are not authorized. Please log in again.", "error");
-        return;
-      }
       try {
+        const headers = {};
+        const token = localStorage.getItem("admin_jwt");
+        if (token) headers["Authorization"] = `Bearer ${token}`;
         const res = await fetch(`/api/doctors/${selectedDoctorId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ doctorId: selectedDoctorId, isDeleted: true }),
+          method: "DELETE",
+          headers
         });
 
         if (!res.ok) {
@@ -1564,8 +2651,7 @@
         document.body.classList.remove("blurred-bg");
         currentDoctorId = null;
         document.getElementById("availabilityForm").reset();
-        -
-          populateStartTimeDropdown();
+        populateStartTimeDropdown();
         populateEndTimeDropdown("");
       }
 
@@ -1839,27 +2925,41 @@
       }
     });
   </script>
-  <script>
+ <script>
     async function logout() {
-      try {
-        const token = localStorage.getItem('admin_jwt');
-        const res = await fetch("/api/superadmin/logout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token }),
-        });
-        const result = await res.json();
-        if (res.ok) {
-          localStorage.clear();
-          window.location.href = "login.html";
-        } else {
-          showToast(result.error, "error");
+        try {
+            const token = localStorage.getItem('admin_jwt');
+
+            const res = await fetch("/api/superadmin/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await res.json();
+            if (res.ok) {
+                
+                const savedTheme = localStorage.getItem("theme");
+                const savedAccent = localStorage.getItem("accent");
+
+              
+                localStorage.clear();
+
+          
+                if (savedTheme) localStorage.setItem("theme", savedTheme);
+                if (savedAccent) localStorage.setItem("accent", savedAccent);
+
+                window.location.href = "login.html";
+            } else {
+                showToast(result.error, "error");
+            }
+        } catch (err) {
+            showToast("Error: " + err.message, "error");
         }
-      } catch (err) {
-        showToast("Error: " + err.message, "error");
-      }
     };
-  </script>
+</script>
+
+
   <div id="toast-container" class="fixed bottom-4 right-0 transform -translate-x-1/2 z-[9999] space-y-3">
   </div>
   <script>
@@ -2194,23 +3294,49 @@
         </div>
         <h2 class="text-xl font-semibold">Admin Registration</h2>
       </div>
-      <form id="adminRegForm" autocomplete="off" novalidate>
-        <input type="text" name="username" placeholder="Username" class="w-full px-4 py-2 mb-3 border rounded-lg"
-          required />
-        <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-3 border rounded-lg" required />
-        <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
-          class="w-full px-4 py-2 mb-3 border rounded-lg"
-          oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
-          required />
-        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 mb-3 border rounded-lg"
-          required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password"
-          class="w-full px-4 py-2 mb-4 border rounded-lg" required />
-        <button type="submit"
+ <form id="adminRegForm" autocomplete="off" novalidate>
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Username <span class="required">*</span>
+  </label>
+  <input type="text" name="username" placeholder="Username"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Email <span class="required">*</span>
+  </label>
+  <input type="email" name="email" placeholder="Email"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Contact <span class="required">*</span>
+  </label>
+  <input type="tel" name="contact" placeholder="Contact" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?![6-9]).*/, ''); if(this.value.length > 10) this.value = this.value.slice(0,10);"
+    required />
+
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Password <span class="required">*</span>
+  </label>
+  <input type="password" name="password" placeholder="Password"
+    class="w-full px-4 py-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+
+  <label class="block mb-1 text-gray-700 dark:text-gray-200">
+    Confirm Password <span class="required">*</span>
+  </label>
+  <input type="password" name="confirmPassword" placeholder="Confirm Password"
+    class="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required />
+     <button type="submit"
           class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">REGISTER</button>
-      </form>
+</form>
+
+     
     </div>
-  </div>
+</div>
   <script>
     document.getElementById("openAdminModal").addEventListener("click", () => {
       document.getElementById("adminModalOverlay").classList.remove("hidden");
@@ -2273,7 +3399,7 @@
       }
     });
   </script>
-  <!-- Doctor Detail Modal -->
+
   <div id="doctorDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg w-[400px] shadow-xl relative">
       <button onclick="closeDoctorModal()"
@@ -2300,17 +3426,15 @@
     }
 
   </script>
-
-
 <script>
-  function populateTimeOptions(selectElement, minTime = null) {
+  function populateTimeOptions(selectElement, minTime = null, selectedValue = null) {
     selectElement.innerHTML = "";
 
     const defaultOption = document.createElement("option");
     defaultOption.text = "Select Time";
     defaultOption.value = "";
     defaultOption.disabled = true;
-    defaultOption.selected = true;
+    defaultOption.selected = !selectedValue; 
     selectElement.appendChild(defaultOption);
 
     const start = new Date();
@@ -2331,6 +3455,10 @@
         const option = document.createElement("option");
         option.value = timeStr;
         option.text = timeStr;
+        if (selectedValue === timeStr) {
+          option.selected = true;
+        }
+
         selectElement.appendChild(option);
       }
 
@@ -2339,7 +3467,7 @@
   }
 
   function convertToMinutes(timeStr) {
-    const [time, modifier] = timeStr.split(" ");
+   const [time, modifier] = timeStr.split(" ");
     let [hours, minutes] = time.split(":").map(Number);
     if (modifier === "PM" && hours !== 12) hours += 12;
     if (modifier === "AM" && hours === 12) hours = 0;
@@ -2358,8 +3486,7 @@
         availabilityInput.value = "";
       }
     }
-
-    resetTimeDropdowns();
+ resetTimeDropdowns();
 
     const openModalBtn = document.getElementById("addDoctorBtn");
     if (openModalBtn) {
@@ -2371,7 +3498,7 @@
       const end = endTime.value;
 
       if (start) {
-        populateTimeOptions(endTime, start); 
+        populateTimeOptions(endTime, start, end);
       }
 
       if (start && end) {
@@ -2385,13 +3512,102 @@
     endTime.addEventListener("change", updateAvailability);
   });
 </script>
+<script>
+    const themesDropdownToggle = document.getElementById("themesDropdownToggle");
+    const themesSubDropdown = document.getElementById("themesSubDropdown");
+    const themesDropdownArrow = document.querySelector(".themes-dropdown-arrow");
+    const lightThemeBtn = document.getElementById("lightThemeBtn");
+    const darkThemeBtn = document.getElementById("darkThemeBtn");
 
+    function applyTheme(theme) {
+        if (theme === "dark") {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+        localStorage.setItem("theme", theme);
+    }
 
+    themesDropdownToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        themesSubDropdown.classList.toggle("hidden");
+        themesDropdownArrow.classList.toggle("rotate-180");
+    });
 
-  
+    lightThemeBtn.addEventListener("click", () => {
+        applyTheme("light");
+        themesSubDropdown.classList.add("hidden");
+        themesDropdownArrow.classList.remove("rotate-180");
+    });
 
+    darkThemeBtn.addEventListener("click", () => {
+        applyTheme("dark");
+        themesSubDropdown.classList.add("hidden");
+        themesDropdownArrow.classList.remove("rotate-180");
+    });
 
+    document.addEventListener("click", (e) => {
+        if (!themesDropdownToggle.contains(e.target) && !themesSubDropdown.contains(e.target)) {
+            themesSubDropdown.classList.add("hidden");
+            themesDropdownArrow.classList.remove("rotate-180");
+        }
+    });
 
+    window.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        applyTheme(savedTheme);
+    });
+</script>
+
+        <script>
+           
+            const accentsDropdownToggle = document.getElementById("accentsDropdownToggle");
+            const accentsSubDropdown = document.getElementById("accentsSubDropdown");
+            const accentsDropdownArrow = document.querySelector(".accents-dropdown-arrow");
+            const accentButtons = document.querySelectorAll('[id$="AccentBtn"]');
+
+            function applyAccentColor(color) {
+              
+               document.body.classList.remove('accent-blue', 'accent-green','accent-brown', 'accent-purple', 'accent-orange', 'accent-pink', 'accent-teal');
+                
+                if (color !== 'blue') {
+                    document.body.classList.add(`accent-${color}`);
+                }
+                document.querySelectorAll('.accent-color-preview').forEach(preview => {
+                    preview.classList.remove('active');
+                });
+                
+                const activeButton = document.getElementById(`${color}AccentBtn`);
+                if (activeButton) {
+                    const preview = activeButton.querySelector('.accent-color-preview');
+                    if (preview) {
+                        preview.classList.add('active');
+                    }
+                }
+                localStorage.setItem("accent", color);
+            }
+            accentsDropdownToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                accentsSubDropdown.classList.toggle("hidden");
+                accentsDropdownArrow.classList.toggle("rotate-180");
+            });
+            accentButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const color = button.getAttribute('data-color');
+                    applyAccentColor(color);
+                    accentsSubDropdown.classList.add("hidden");
+                    accentsDropdownArrow.classList.remove("rotate-180");
+                });
+            });
+            document.addEventListener("click", (e) => {
+                if (!accentsDropdownToggle.contains(e.target) && !accentsSubDropdown.contains(e.target)) {
+                    accentsSubDropdown.classList.add("hidden");
+                    accentsDropdownArrow.classList.remove("rotate-180");
+                }
+            });
+            const savedAccent = localStorage.getItem("accent") || "blue";
+            applyAccentColor(savedAccent);
+        </script>
 </body>
 
 </html>

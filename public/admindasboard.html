@@ -10,14 +10,21 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <style>
-        .flatpickr-calendar {
-            border-radius: 16px !important;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
-            border: none !important;
-            width: 320px !important;
-            background: #fff !important;
-            font-family: "Segoe UI", Arial, sans-serif;
-        }
+.flatpickr-calendar {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  width: 320px !important;
+  background: #fff !important;
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  z-index: 9999 !important;
+  left: auto !important;
+  right: 0 !important;
+
+  top: 100% !important;
+  margin-top: 24px !important; 
+}
 
         .flatpickr-months {
             background: #fff !important;
@@ -405,12 +412,14 @@
 
 body.dark {
     background-color: #0f172a; 
-    color: #f3f7fb; 
+    color: #f1f5f9; 
 }
+
 
 body.dark * {
     color: #f1f5f9 !important;
 }
+
 
 body.dark .text-gray-500,
 body.dark .text-gray-400,
@@ -448,9 +457,10 @@ body.dark .tab-inactive:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
+
 body.dark input,
 body.dark select {
-    background-color: #000000 !important;
+    background-color: #1e293b !important;
     border-color: #334155 !important;
 }
 body.dark input::placeholder {
@@ -461,16 +471,43 @@ body.dark input::placeholder {
 body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !important; }
 body.dark .flatpickr-innerContainer { background: #0f172a !important; }
 body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
-body.dark .flatpickr-months { background: #ffffff !important; color: #111827 !important; }
+
+body.dark .flatpickr-months {
+  background: #1e293b !important; 
+  color: #f1f5f9 !important;      
+}
+
+body.dark .flatpickr-months .flatpickr-prev-month,
+body.dark .flatpickr-months .flatpickr-next-month {
+  fill: #f1f5f9 !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark .flatpickr-current-month .numInputWrapper input {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155; 
+}
+
+body.dark .flatpickr-current-month .numInputWrapper span {
+  color: #f1f5f9 !important;
+}
+
 body.dark .flatpickr-months .flatpickr-prev-month,
 body.dark .flatpickr-months .flatpickr-next-month { fill: #111827 !important; color: #111827 !important; }
-body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #ffffff !important; color: #111827 !important; }
+
+body.dark .flatpickr-current-month .flatpickr-monthDropdown-months { background-color: #111827 !important; color: #111827 !important; }
 body.dark .flatpickr-current-month .numInputWrapper input { background-color: #ffffff !important; color: #111827 !important; }
 body.dark .flatpickr-current-month .numInputWrapper span { color: #111827 !important; }
 body.dark .flatpickr-current-month,
 body.dark .flatpickr-current-month .flatpickr-monthDropdown-months,
 body.dark .flatpickr-current-month .numInputWrapper {
-    color: #111827 !important;
+    color: #ffffff !important;
 }
 body.dark .flatpickr-days { background: #0f172a !important; }
 body.dark .flatpickr-day { color: #e2e8f0 !important; }
@@ -482,6 +519,8 @@ body.dark .flatpickr-day.today {
 body.dark .flatpickr-day:hover {
     background: #334155 !important;
 }
+
+
 body.dark #appointmentsTab h3,
 body.dark #patientsTab h3 {
     color: #e5e7eb !important;
@@ -490,6 +529,8 @@ body.dark #appointmentsTab p.text-gray-500,
 body.dark #patientsTab p.text-gray-500 {
     color: #94a3b8 !important;
 }
+
+
 body.dark table thead th {
     background-color: #1e293b !important;
 }
@@ -532,7 +573,7 @@ body.dark #userDropdownMenu button:hover {
     background-color: #334155 !important;
 }
 
-
+    
 body.dark .w-10.h-10 {
     background-color: #1e293b !important;
     border-color: #334155 !important;
@@ -541,8 +582,713 @@ body.dark .text-gray-400 {
     color: #cbd5e1 !important;
 }
 
+body.dark .text-gray-400 {
+    color: #cbd5e1 !important;
+}
+
+body.dark nav {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark nav h1 {
+    color: #3b82f6 !important;
+}
+
+body.dark nav svg {
+    color: #3b82f6 !important;
+}
+
+body.dark button.bg-black {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark button.bg-black:hover {
+    background-color: #2563eb !important;
+}
+
+body.dark button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark button.bg-blue-600:hover {
+    background-color: #2563eb !important;
+}
+
+body.dark button.bg-red-600 {
+    background-color: #dc2626 !important;
+    color: white !important;
+}
+
+body.dark button.bg-red-600:hover {
+    background-color: #b91c1c !important;
+}
+
+
+body.dark table tbody tr:hover td {
+    background-color: #1e293b !important;
+}
+
+
+body.dark .bg-green-200 {
+    background-color: #065f46 !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark .bg-yellow-200 {
+    background-color: #92400e !important;
+    color: #fcd34d !important;
+}
+
+body.dark .bg-red-200 {
+    background-color: #991b1b !important;
+    color: #fca5a5 !important;
+}
+
+body.dark .doctor-row {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark .doctor-row:hover {
+    background-color: #334155 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark .grid.grid-cols-12.gap-4.items-center.bg-white.p-3.rounded-lg.shadow-sm.border.border-gray-100 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark .grid.grid-cols-12.gap-4.items-center.bg-white.p-3.rounded-lg.shadow-sm.border.border-gray-100:hover {
+    background-color: #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+body.dark #searchInput {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark #datePickerDisplay {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:hover {
+    background-color: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark .px-3.py-1.text-sm.border.border-gray-300.rounded:disabled {
+    background-color: #475569 !important;
+    border-color: #475569 !important;
+    color: #64748b !important;
+}
+
+
+body.dark .modal,
+body.dark #viewDetailsModal,
+body.dark #appointmentDetailsModal,
+body.dark #rescheduleModal,
+body.dark #cancelModal,
+body.dark #addDoctorModal,
+body.dark #patientDetailsModal,
+body.dark #successModal,
+body.dark #viewDoctorProfileModal,
+body.dark #editDoctorProfileModal,
+body.dark #availabilityModal {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark .modal h2,
+body.dark .modal h3 {
+    color: #f1f5f9 !important;
+}
+
+body.dark .action-menu {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark .action-menu a,
+body.dark .action-menu button {
+    color: #f1f5f9 !important;
+}
+
+body.dark .action-menu a:hover,
+body.dark .action-menu button:hover {
+    background-color: #334155 !important;
+}
+
+
+body.dark .text-gray-900 {
+    color: #f1f5f9 !important;
+}
+
+body.dark .text-gray-800 {
+    color: #e2e8f0 !important;
+}
+
+body.dark .text-gray-700 {
+    color: #cbd5e1 !important;
+}
+
+body.dark .text-gray-600 {
+    color: #94a3b8 !important;
+}
+
+body.dark .bg-gray-50 {
+    background-color: #0f172a !important;
+}
+
+body.dark .bg-gray-100 {
+    background-color: #1e293b !important;
+}
+
+body.dark .bg-gray-200 {
+    background-color: #334155 !important;
+}
+
+
+body.dark .border-gray-200 {
+    border-color: #334155 !important;
+}
+
+body.dark .border-gray-300 {
+    border-color: #475569 !important;
+}
+
+body.dark .shadow,
+body.dark .shadow-sm,
+body.dark .shadow-md,
+body.dark .shadow-lg {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+body.dark .animate-spin {
+    border-color: #334155 !important;
+    border-top-color: #3b82f6 !important;
+}
+
+body.dark #toast {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+
+body.dark input:focus,
+body.dark select:focus,
+body.dark textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+
+body.dark .w-8.h-8.rounded-full.bg-gray-200 {
+    background-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+
+body.dark #userName,
+body.dark #userDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #userDropdownToggle svg {
+    color: #f1f5f9 !important;
+}
+
+
+body.dark #themesSubDropdown {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark #themesSubDropdown ul {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesSubDropdown button {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesSubDropdown button:hover {
+    background-color: #334155 !important;
+}
+
+body.dark #themesDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #themesDropdownToggle:hover {
+    background-color: #334155 !important;
+}
+
+
+.themes-dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+
+
+#themesSubDropdown {
+    min-width: 120px;
+}
+
+#themesSubDropdown button {
+    text-align: left;
+    width: 100%;
+}
+
+
+body.dark #accentsSubDropdown {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark #accentsSubDropdown ul {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsSubDropdown button {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsSubDropdown button:hover {
+    background-color: #334155 !important;
+}
+
+body.dark #accentsDropdownToggle {
+    color: #f1f5f9 !important;
+}
+
+body.dark #accentsDropdownToggle:hover {
+    background-color: #334155 !important;
+}
+
+
+.accents-dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+
+
+#accentsSubDropdown {
+    min-width: 160px;
+}
+
+#accentsSubDropdown button {
+    text-align: left;
+    width: 100%;
+}
+
+
+.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue button.bg-black,
+.accent-blue button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue button.bg-black:hover,
+.accent-blue button.bg-blue-600:hover {
+    background-color: #2563eb !important;
+}
+.accent-blue input:focus,
+.accent-blue select:focus,
+.accent-blue textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.accent-blue nav h1,
+.accent-blue nav svg {
+    color: #3b82f6 !important;
+}
+
+.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green button.bg-black,
+.accent-green button.bg-blue-600 {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green button.bg-black:hover,
+.accent-green button.bg-blue-600:hover {
+    background-color: #059669 !important;
+}
+
+.accent-green input:focus,
+.accent-green select:focus,
+.accent-green textarea:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+
+.accent-brown .tab-active {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+.accent-brown button.bg-black,
+.accent-brown button.bg-blue-600 {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+.accent-brown button.bg-black:hover,
+.accent-brown button.bg-blue-600:hover {
+    background-color: #b55656 !important;
+}
+.accent-brown input:focus,
+.accent-brown select:focus,
+.accent-brown textarea:focus {
+    border-color: #b55656 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+
+
+.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple button.bg-black,
+.accent-purple button.bg-blue-600 {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple button.bg-black:hover,
+.accent-purple button.bg-blue-600:hover {
+    background-color: #7c3aed !important;
+}
+.accent-purple input:focus,
+.accent-purple select:focus,
+.accent-purple textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+
+
+
+.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange button.bg-black,
+.accent-orange button.bg-blue-600 {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange button.bg-black:hover,
+.accent-orange button.bg-blue-600:hover {
+    background-color: #d97706 !important;
+}
+.accent-orange input:focus,
+.accent-orange select:focus,
+.accent-orange textarea:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+
+
+.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink button.bg-black,
+.accent-pink button.bg-blue-600 {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink button.bg-black:hover,
+.accent-pink button.bg-blue-600:hover {
+    background-color: #db2777 !important;
+}
+.accent-pink input:focus,
+.accent-pink select:focus,
+.accent-pink textarea:focus {
+    border-color: #ec4899 !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+
+.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal button.bg-black,
+.accent-teal button.bg-blue-600 {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal button.bg-black:hover,
+.accent-teal button.bg-blue-600:hover {
+    background-color: #0d9488 !important;
+}
+.accent-teal input:focus,
+.accent-teal select:focus,
+.accent-teal textarea:focus {
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+body.dark.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+body.dark.accent-brown .tab-active {
+    background-color: #542c2c !important;
+    color: white !important;
+}
+body.dark.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+body.dark.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+body.dark.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+body.dark.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+
+.accent-color-preview.active {
+    border-color: #1f2937 !important;
+    border-width: 3px !important;
+}
+body.dark.accent-blue .tab-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+body.dark.accent-blue button.bg-black,
+body.dark.accent-blue button.bg-blue-600 {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+body.dark.accent-blue button.bg-black:hover,
+body.dark.accent-blue button.bg-blue-600:hover {
+    background-color: #3b82f6 !important;
+}
+body.dark.accent-blue nav svg,
+body.dark.accent-blue nav svg * {
+    fill: #3b82f6 !important;
+    stroke: #3b82f6 !important;
+    color: #3b82f6 !important;
+}
+
+body.dark.accent-blue input:focus,
+body.dark.accent-blue select:focus,
+body.dark.accent-blue textarea:focus {
+    border-color: #1045b9 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+body.dark.accent-green .tab-active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+body.dark.accent-green button.bg-black,
+body.dark.accent-green button.bg-blue-600 {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+body.dark.accent-green button.bg-black:hover,
+body.dark.accent-green button.bg-blue-600:hover {
+    background-color: #059669 !important;
+}
+
+body.dark.accent-green input:focus,
+body.dark.accent-green select:focus,
+body.dark.accent-green textarea:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+
+body.dark.accent-brown .tab-active {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+body.dark.accent-brown button.bg-black,
+body.dark.accent-brown button.bg-blue-600 {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+body.dark.accent-brown button.bg-black:hover,
+body.dark.accent-brown button.bg-blue-600:hover {
+    background-color: #9c4444 !important;
+}
+
+body.dark.accent-brown input:focus,
+body.dark.accent-brown select:focus,
+body.dark.accent-brown textarea:focus {
+    border-color: #b55656 !important;
+    box-shadow: 0 0 0 3px rgba(181, 86, 86, 0.1) !important;
+}
+body.dark.accent-purple .tab-active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+body.dark.accent-purple button.bg-black,
+body.dark.accent-purple button.bg-blue-600 {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+body.dark.accent-purple button.bg-black:hover,
+body.dark.accent-purple button.bg-blue-600:hover {
+    background-color: #7c3aed !important;
+}
+
+body.dark.accent-purple input:focus,
+body.dark.accent-purple select:focus,
+body.dark.accent-purple textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+body.dark.accent-orange .tab-active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+body.dark.accent-orange button.bg-black,
+body.dark.accent-orange button.bg-blue-600 {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+body.dark.accent-orange button.bg-black:hover,
+body.dark.accent-orange button.bg-blue-600:hover {
+    background-color: #d97706 !important;
+}
+
+body.dark.accent-orange input:focus,
+body.dark.accent-orange select:focus,
+body.dark.accent-orange textarea:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+body.dark.accent-pink .tab-active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+body.dark.accent-pink button.bg-black,
+body.dark.accent-pink button.bg-blue-600 {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+body.dark.accent-pink button.bg-black:hover,
+body.dark.accent-pink button.bg-blue-600:hover {
+    background-color: #db2777 !important;
+}
+body.dark.accent-pink input:focus,
+body.dark.accent-pink select:focus,
+body.dark.accent-pink textarea:focus {
+    border-color: #ec4899 !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+body.dark.accent-teal .tab-active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+body.dark.accent-teal button.bg-black,
+body.dark.accent-teal button.bg-blue-600 {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+body.dark.accent-teal button.bg-black:hover,
+body.dark.accent-teal button.bg-blue-600:hover {
+    background-color: #0d9488 !important;
+}
+body.dark.accent-teal input:focus,
+body.dark.accent-teal select:focus,
+body.dark.accent-teal textarea:focus {
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+body.dark #userDropdownToggle {
+    color: white !important;
+    fill: white !important;
+}
+
+body.accent-purple:not(.dark) {
+  background-color: #f5f3ff !important;
+}
+
+body.accent-green:not(.dark) {
+  background-color: #f0fdf4 !important;
+}
+
+body.accent-orange:not(.dark) {
+  background-color: #fff7ed !important;
+}
+
+body.accent-pink:not(.dark) {
+  background-color: #fdf2f8 !important;
+}
+body.accent-brown:not(.dark) {
+  background-color: #ede0e1 !important;
+}
+body.accent-teal:not(.dark) {
+  background-color: #f0fdfa !important;
+}
+body.dark {
+  background-color: #111827 !important;
+}
+
+
 
     </style>
+  
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -552,10 +1298,10 @@ body.dark .text-gray-400 {
         }
     </script>
 
-    <nav class="bg-white shadow py-3 px-[110px]">
+   <nav class="bg-white shadow py-3 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[110px]">
         <div class="flex justify-between items-center w-full">
             <div class="flex items-center">
-                <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-blue-600 dark:text-blue-50 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
@@ -591,13 +1337,122 @@ body.dark .text-gray-400 {
                                     <span>Profile</span>
                                 </a>
                             </li>
-                            <li>
-    <button id="themeToggle"
-        class="w-full flex items-center gap-2 px-4 py-2 text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
-        🌙 Dark Mode
-    </button>
-</li>
-
+                            <li class="relative">
+                                <button id="themesDropdownToggle"
+                                    class="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                    <div class="flex items-center gap-2">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" 
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Themes</span>
+                                    </div>
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="themes-dropdown-arrow transition-transform duration-200">
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div id="themesSubDropdown" 
+                                    class="absolute left-0 top-full mt-1 w-32 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                                    <ul class="py-1 text-sm text-gray-700">
+                                        <li>
+                                            <button id="lightThemeBtn"
+                                                class="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                                                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" 
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span>Light</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="darkThemeBtn"
+                                                class="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" 
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span>Dark</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="relative">
+                                <button id="accentsDropdownToggle"
+                                    class="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                    <div class="flex items-center gap-2">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" 
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Accents</span>
+                                    </div>
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="accents-dropdown-arrow transition-transform duration-200">
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div id="accentsSubDropdown" 
+                                    class="absolute left-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded shadow-md hidden z-50">
+                                    <ul class="py-2 text-sm text-gray-700">
+                                        <li>
+                                            <button id="blueAccentBtn" data-color="blue"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-blue-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Blue</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="greenAccentBtn" data-color="green"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-green-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Green</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="greenAccentBtn" data-color="brown"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-blue-200 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Brown</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="purpleAccentBtn" data-color="purple"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-purple-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Purple</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="orangeAccentBtn" data-color="orange"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-orange-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Orange</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="pinkAccentBtn" data-color="pink"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-pink-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Pink</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button id="tealAccentBtn" data-color="teal"
+                                                class="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                                <div class="w-4 h-4 rounded-full bg-teal-500 border-2 border-gray-300 accent-color-preview"></div>
+                                                <span>Teal</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li>
                                 <button onclick="showLogoutModal()"
                                     class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors duration-150">
@@ -616,36 +1471,14 @@ body.dark .text-gray-400 {
                 </div>
             </div>
     </nav>
-
-    <div class="p-8">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+  <div class="p-8">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
             <div>
                 <h2 class="text-2xl font-semibold px-20">Admin Dashboard</h2>
                 <div id="addAdmin" class="text-lg text-blue-500"></div>
                 <p class="text-gray-500 px-20">Manage appointments, doctors, and patients</p>
             </div>
-            <div class="flex items-center gap-4 px-20">
-                <div class="relative w-60">
-                    <img src="/search.webp" alt="Search"
-                        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
-                    <input type="text" id="searchInput" placeholder="Search"
-                        class="pl-8 py-[20px] h-12 rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
-                </div>
-
-                <div class="relative w-60 mt-6">
-                    <div id="datePickerDisplay"
-                        class="flex items-center justify-center w-full py-[20px] h-12 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
-                            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
-                        </svg>
-                        <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
-                    </div>
-                    <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly
-                        autocomplete="off" />
-                </div>
-            </div>
+            
         </div>
 
         <div class="px-20 mt-4">
@@ -658,6 +1491,44 @@ body.dark .text-gray-400 {
                     data-tab="patientsTab">Patients</button>
             </div>
         </div>
+        
+    <div class="px-20">
+  <div class="flex items-center gap-4 mb-4 justify-between">
+
+   
+    <div class="relative w-[1000px] h-12 flex items-center">
+      <img src="/search.webp" alt="Search"
+        class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
+      <input type="text" id="searchInput" placeholder="Search"
+        class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="relative w-[400px] h-12">
+        <select id="filterDropdown"
+          class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
+      
+        </select>
+      </div>
+      <div class="relative w-[300px] h-12 flex items-center">
+        <div id="datePickerDisplay"
+          class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="18" rx="2" fill="#e5e7eb" />
+            <path stroke="#9ca3af" stroke-width="2" d="M8 2v4M16 2v4M3 10h18" />
+          </svg>
+          <span id="datePickerText" class="text-gray-900 font-semibold">2025-06-23</span>
+        </div>
+        <input type="text" id="datePicker" style="position: absolute; left: -9999px" readonly autocomplete="off" />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+       
         <div class="px-20">
             <div class="bg-white p-6 rounded-xl shadow">
                 <div id="appointmentsTab" class="tab-content">
@@ -731,16 +1602,17 @@ body.dark .text-gray-400 {
                                 </div>
                             </div>
 
-                            <div id="patientsHeader"
-                                class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
-                                style="display: none">
-                                <div class="col-span-3">Patient</div>
-                                <div class="col-span-2">Age/Gender</div>
-                                <div class="col-span-1">Blood</div>
-                                <div class="col-span-2">Contact</div>
-                                <div class="col-span-2">Appointment Date</div>
-                                <div class="col-span-2">Last Visit</div>
-                            </div>
+        <div id="patientsHeader"
+  class="grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b"
+  style="display: none">
+  <div class="col-span-3">Patient</div>
+  <div class="col-span-2">Age/Gender</div>
+  <div class="col-span-1">Blood</div>
+  <div class="col-span-2">Contact</div>
+  <div class="col-span-2">Appointment Date</div>
+  <div class="col-span-1">Last Visit</div>
+  <div class="col-span-1">Referred By</div>
+</div>
 
                             <div id="patientsList" class="space-y-2 mt-2"></div>
                     </div>
@@ -844,8 +1716,14 @@ body.dark .text-gray-400 {
                                     <span class="text-gray-500">Specialty:</span>
                                     <span id="viewDetailsDoctorSpecialty" class="font-medium text-gray-900"></span>
                                 </div>
+                                <div class="flex items-baseline gap-2">
+    <span class="text-gray-500">Referred By:</span>
+    <span id="viewDetailsReferredBy" class="font-medium text-gray-900"></span>
+</div>
+
                             </div>
                         </div>
+                        
 
                         <div class="border rounded-lg p-4 bg-white">
                             <h3 class="text-gray-800 font-semibold text-lg mb-3">Appointment Information</h3>
@@ -942,9 +1820,9 @@ body.dark .text-gray-400 {
                     class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-2xl">&times;</button>
                 <h2 class="text-xl text-center font-bold mb-4 text-red-600">Cancel Appointment</h2>
                 <div class="mb-6 text-gray-700">Are you sure you want to cancel this appointment?</div>
-                <div class="flex justify-between gap-2">
+                <div class="flex justify-center gap-4">
                     <button id="cancelCancelBtn"
-                        class="px-4 py-2 rounded border border-gray-300 bg-white text-black font-semibold">No</button>
+                        class="px-4 py-2  rounded border border-gray-300 bg-white text-black font-semibold">No</button>
                     <button id="confirmCancelBtn" class="px-4 py-2 rounded bg-red-600 text-white font-semibold">Yes,
                         Cancel</button>
                 </div>
@@ -1020,32 +1898,43 @@ body.dark .text-gray-400 {
             </div>
         </div>
 
-        <div id="patientDetailsModalOverlay"
-            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
-                <div class="grid grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4">
-                    <div class="font-semibold text-gray-600">Name</div>
-                    <div id="modalPatientName" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Age/Gender</div>
-                    <div id="modalPatientAgeGender" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Blood</div>
-                    <div id="modalPatientBlood" class="text-gray-900"></div>
-                    <div class="font-semibold text-gray-600">Contact</div>
-                    <div id="modalPatientContact" class="text-gray-900"></div>
+       <div id="patientDetailsModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div id="patientDetailsModal" class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Patient Details</h2>
+        <div class="grid grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4">
+            <div class="font-semibold text-gray-600">Name</div>
+            <div id="modalPatientName" class="text-gray-900"></div>
 
-                    <div class="font-semibold text-gray-600">Appointment Date</div>
-                    <div id="modalPatientUpcoming" class="text-gray-900"></div>
+            <div class="font-semibold text-gray-600">Age/Gender</div>
+            <div id="modalPatientAgeGender" class="text-gray-900"></div>
 
-                    <div class="font-semibold text-gray-600">Last Visit</div>
-                    <div id="modalPatientLastVisit" class="text-gray-900"></div>
-                </div>
-                <div class="flex justify-end mt-6">
-                    <button id="closePatientDetailsBtn"
-                        class="px-4 py-2 rounded bg-blue-600 text-white  font-bold hover:bg-blue-700 transition-colors duration-200">Close</button>
-                </div>
-            </div>
+            <div class="font-semibold text-gray-600">Blood</div>
+            <div id="modalPatientBlood" class="text-gray-900"></div>
+
+            <div class="font-semibold text-gray-600">Contact</div>
+            <div id="modalPatientContact" class="text-gray-900"></div>
+
+            <div class="font-semibold text-gray-600">Appointment Date</div>
+            <div id="modalPatientUpcoming" class="text-gray-900"></div>
+
+            <div class="font-semibold text-gray-600">Last Visit</div>
+            <div id="modalPatientLastVisit" class="text-gray-900"></div>
+
+            
+            <div class="font-semibold text-gray-600">Referred By</div>
+            <div id="modalPatientReferredBy" class="text-gray-900"></div>
         </div>
+
+        <div class="flex justify-end mt-6">
+            <button id="closePatientDetailsBtn"
+                class="px-4 py-2 rounded bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors duration-200">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
 
         <div id="viewDoctorProfileModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -1337,6 +2226,71 @@ body.dark .text-gray-400 {
             const appointmentsList = document.getElementById("appointmentsList");
             const addBtn = document.getElementById("addBtn");
             const searchInput = document.getElementById("searchInput");
+            const filterDropdown = document.getElementById("filterDropdown");
+
+            function getActiveTabId() {
+                const active = document.querySelector('.tab.tab-active');
+                return active ? active.getAttribute('data-tab') : 'appointmentsTab';
+            }
+
+            function updateFilterDropdownOptions() {
+                if (!filterDropdown) return;
+                const activeTab = getActiveTabId();
+                let options = [];
+                if (activeTab === 'appointmentsTab') {
+                    options = [
+                        { value: 'all', label: 'All Fields' },
+                        { value: 'patient', label: 'Patient' },
+                        { value: 'doctor', label: 'Doctor' },
+                        { value: 'time', label: 'Time' },
+                        { value: 'status', label: 'Status' },
+                        { value: 'referredby', label: 'Referred By' },
+
+                    ];
+                } else if (activeTab === 'doctorsTab') {
+                    options = [
+                        { value: 'all', label: 'All Fields' },
+                        { value: 'name', label: 'Name' },
+                        { value: 'specialty', label: 'Specialization' },
+                        { value: 'experience', label: 'Experience' },
+                        { value: 'availability', label: 'Availability' },
+                        { value: 'todays', label: "Today's Appointments" },
+                    ];
+                } else if (activeTab === 'patientsTab') {
+                    options = [
+                        { value: 'all', label: 'All Fields' },
+                        { value: 'patient', label: 'Patient' },
+                        { value: 'age', label: 'Age' },
+                        { value: 'gender', label: 'Gender' },
+                        { value: 'blood', label: 'Blood' },
+                        { value: 'contact', label: 'Contact' },
+                        { value: 'upcoming', label: 'Upcoming Date' },
+                        { value: 'lastvisit', label: 'Last Visit' },
+                        { value: 'referredby', label: 'Referred By' },
+                    ];
+                }
+                filterDropdown.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+            }
+
+            function getSelectedField() {
+                return (filterDropdown && filterDropdown.value) ? filterDropdown.value : 'all';
+            }
+
+            if (filterDropdown) {
+                filterDropdown.addEventListener('change', () => {
+                    const date = datePicker.value;
+                    const searchTerm = searchInput.value.trim();
+                    const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
+                    const activeTab = getActiveTabId();
+                    if (activeTab === 'appointmentsTab') {
+                        renderAppointmentsList(date, searchTerm, status);
+                    } else if (activeTab === 'doctorsTab') {
+                        fetchAndDisplayDoctors(date);
+                    } else if (activeTab === 'patientsTab') {
+                        fetchAndDisplayPatients(date, searchTerm);
+                    }
+                });
+            }
 
             flatpickr("#datePicker", {
                 dateFormat: "Y-m-d",
@@ -1427,6 +2381,14 @@ body.dark .text-gray-400 {
                         console.log("First appointment details:", JSON.stringify(data[0], null, 2));
                     }
 
+                    const selectedField = getSelectedField();
+                    const term = (searchDoctorName || "").toLowerCase();
+                    const valueIncludes = (val) => {
+                        if (!term) return true;
+                        if (!val) return false;
+                        return String(val).toLowerCase().includes(term);
+                    };
+
                     const filteredAppointments = data.filter((app) => {
                         if (!app.dateData?.date) {
                             console.log("Appointment missing date data:", app);
@@ -1436,14 +2398,32 @@ body.dark .text-gray-400 {
                         const appointmentDate = app.dateData.date.trim();
                         const matchesDate = appointmentDate === formattedDate;
 
-                        const appointmentDoctorName = app.doctorData?.name || app.doctorName || "";
-                        const matchesDoctor = !searchDoctorName || (appointmentDoctorName && appointmentDoctorName.toLowerCase().includes(searchDoctorName.toLowerCase()));
 
-                        if (searchDoctorName && appointmentDoctorName) {
-                            console.log(`Checking doctor: "${appointmentDoctorName}" against search: "${searchDoctorName}" - matches: ${matchesDoctor}`);
+                        let matchesField = true;
+                        if (term) {
+                            if (selectedField === 'all') {
+                                matchesField = (
+                                    valueIncludes(app.patientData?.name) ||
+                                    valueIncludes(app.doctorData?.name || app.doctorName) ||
+                                    valueIncludes(app.dateData?.time) ||
+                                    valueIncludes(app.status) ||
+                                    valueIncludes(app.referralData?.referredBy)
+                                );
+                            } else if (selectedField === 'patient') {
+                                matchesField = valueIncludes(app.patientData?.name);
+                            } else if (selectedField === 'doctor') {
+                                matchesField = valueIncludes(app.doctorData?.name || app.doctorName);
+                            } else if (selectedField === 'time') {
+                                matchesField = valueIncludes(app.dateData?.time);
+                            } else if (selectedField === 'status') {
+                                matchesField = valueIncludes(app.status);
+                            }
+                            else if (selectedField === 'referredby') {
+                                matchesField = valueIncludes(app.referralData?.referredBy);
                         }
+                    }
 
-                        return matchesDate && matchesDoctor;
+                        return matchesDate && matchesField;
                     });
 
                     console.log("Filtered appointments count:", filteredAppointments.length);
@@ -1461,187 +2441,192 @@ body.dark .text-gray-400 {
             const patientsPerPage = 5;
             let allPatientsData = [];
 
-            async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
-                console.log("renderAppointmentsList called with statusFilter:", statusFilter);
-                try {
-                    appointmentsList.innerHTML = `
-        <div class=\"flex justify-center items-center p-4\">
-          <div class=\"animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500\"></div>
-          <span class=\"ml-2 text-gray-600\">Loading appointments...</span>
+          async function renderAppointmentsList(date, filterDoctor = "", statusFilter = "all", specialty = "") {
+    console.log("renderAppointmentsList called with statusFilter:", statusFilter);
+    try {
+        appointmentsList.innerHTML = `
+        <div class="flex justify-center items-center p-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span class="ml-2 text-gray-600">Loading appointments...</span>
         </div>
       `;
 
-                    const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
-                    let filteredAppointments = appointments;
+        const appointments = await fetchAppointments(date, filterDoctor, statusFilter, specialty);
+        let filteredAppointments = appointments;
 
-                    const uniqueStatuses = [...new Set(appointments.map((app) => app.status))];
-                    console.log("All unique status values in appointments:", uniqueStatuses);
-                    console.log("Status filter selected:", statusFilter);
+        const uniqueStatuses = [...new Set(appointments.map((app) => app.status))];
+        console.log("All unique status values in appointments:", uniqueStatuses);
+        console.log("Status filter selected:", statusFilter);
 
-                    if (statusFilter !== "all") {
-                        filteredAppointments = appointments.filter((app) => {
-                            const appointmentStatus = app.status || "confirmed";
+        if (statusFilter !== "all") {
+            filteredAppointments = appointments.filter((app) => {
+                const appointmentStatus = app.status || "confirmed";
 
-                            let matches = false;
-                            if (statusFilter.toLowerCase() === "cancelled") {
-                                matches = appointmentStatus.toLowerCase() === "cancelled" || appointmentStatus.toLowerCase() === "canceled";
-                            } else {
-                                matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
-                            }
+                let matches = false;
+                if (statusFilter.toLowerCase() === "cancelled") {
+                    matches = appointmentStatus.toLowerCase() === "cancelled" || appointmentStatus.toLowerCase() === "canceled";
+                } else {
+                    matches = appointmentStatus.toLowerCase() === statusFilter.toLowerCase();
+                }
 
-                            console.log(`Appointment status: "${appointmentStatus}" vs filter: "${statusFilter}" - matches: ${matches}`);
-                            return matches;
-                        });
-                        console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
-                    }
-                    allAppointmentsData = filteredAppointments;
-                    const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
-                    if (currentAppointmentsPage > totalPages && totalPages > 0) {
-                        currentAppointmentsPage = totalPages;
-                    } else if (totalPages === 0) {
-                        currentAppointmentsPage = 1;
-                    }
+                console.log(`Appointment status: "${appointmentStatus}" vs filter: "${statusFilter}" - matches: ${matches}`);
+                return matches;
+            });
+            console.log(`Filtered appointments for status "${statusFilter}":`, filteredAppointments.length);
+        }
+        allAppointmentsData = filteredAppointments;
+        const totalPages = Math.ceil(filteredAppointments.length / appointmentsPerPage);
+        if (currentAppointmentsPage > totalPages && totalPages > 0) {
+            currentAppointmentsPage = totalPages;
+        } else if (totalPages === 0) {
+            currentAppointmentsPage = 1;
+        }
 
-                    if (!filteredAppointments || filteredAppointments.length === 0) {
-                        const formattedDate = new Date(date).toLocaleDateString("en-US", {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        });
-                        appointmentsList.innerHTML = `
-          <div class=\"p-4 text-center text-gray-500\">
-            <div class=\"mb-4\">
-              <svg class=\"w-12 h-12 mx-auto text-gray-400\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
-                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z\" />
+        if (!filteredAppointments || filteredAppointments.length === 0) {
+            const formattedDate = new Date(date).toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+            appointmentsList.innerHTML = `
+          <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">
+              <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <p class=\"text-lg font-medium mb-2\">No appointments found</p>
-            <p class=\"text-sm\">${formattedDate}</p>
-            ${filterDoctor ? `<p class=\"text-sm mt-1\">for Dr. ${filterDoctor}</p>` : ""}
+            <p class="text-lg font-medium mb-2">No appointments found</p>
+            <p class="text-sm">${formattedDate}</p>
+            ${filterDoctor ? `<p class="text-sm mt-1">for Dr. ${filterDoctor}</p>` : ""}
           </div>
         `;
-                        return;
-                    }
+            return;
+        }
 
-                    filteredAppointments = filteredAppointments.slice().sort((a, b) => {
-                        const parseTime = (t) => {
-                            if (!t) return 0;
+        filteredAppointments = filteredAppointments.slice().sort((a, b) => {
+            const parseTime = (t) => {
+                if (!t) return 0;
 
-                            const [time, modifier] = t.split(" ");
-                            let [hours, minutes] = time.split(":").map(Number);
-                            if (modifier && modifier.toUpperCase() === "PM" && hours !== 12) hours += 12;
-                            if (modifier && modifier.toUpperCase() === "AM" && hours === 12) hours = 0;
-                            return hours * 60 + minutes;
-                        };
-                        return parseTime(a.dateData?.time) - parseTime(b.dateData?.time);
-                    });
+                const [time, modifier] = t.split(" ");
+                let [hours, minutes] = time.split(":").map(Number);
+                if (modifier && modifier.toUpperCase() === "PM" && hours !== 12) hours += 12;
+                if (modifier && modifier.toUpperCase() === "AM" && hours === 12) hours = 0;
+                return hours * 60 + minutes;
+            };
+            return parseTime(a.dateData?.time) - parseTime(b.dateData?.time);
+        });
 
-                    const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
-                    const endIndex = startIndex + appointmentsPerPage;
-                    const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
+        const startIndex = (currentAppointmentsPage - 1) * appointmentsPerPage;
+        const endIndex = startIndex + appointmentsPerPage;
+        const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
-                    let tableHTML = `
-        <div class=\"overflow-x-auto\">
-          <table class=\"min-w-full bg-white rounded-lg shadow-sm\">
+        let tableHTML = `
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg shadow-sm">
             <thead>
-              <tr class=\"bg-gray-50 text-gray-700 text-left\">
-                <th class=\"px-4 py-3\">Patient</th>
-                <th class=\"px-4 py-3\">Doctor</th>
-                <th class=\"px-4 py-3\">Time</th>
-                <th class=\"px-4 py-3\">Status</th>
-                <th class=\"px-4 py-3\">Actions</th>
+              <tr class="bg-gray-50 text-gray-700 text-left">
+                <th class="px-4 py-3">Patient</th>
+                <th class="px-4 py-3">Doctor</th>
+                <th class="px-4 py-3">Time</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Referred By</th> 
+                <th class="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
     `;
 
-                    tableHTML += currentPageAppointments
-                        .map((app, idx) => {
-                            const doctorName = app.doctorData?.name || "";
-                            const isCanceled = app.status === "canceled" || app.status === "cancelled";
-                            const isRescheduled = app.status === "rescheduled";
+        tableHTML += currentPageAppointments
+            .map((app, idx) => {
+                const doctorName = app.doctorData?.name || "";
+                const isCanceled = app.status === "canceled" || app.status === "cancelled";
+                const isRescheduled = app.status === "rescheduled";
 
-                            let statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700\">Confirmed</span>`;
-                            if (isRescheduled) {
-                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800\">Rescheduled</span>`;
-                            } else if (isCanceled) {
-                                statusLabel = `<span class=\"inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700\">Cancelled</span>`;
-                            }
-                            return `
-          <tr class=\"border-b hover:bg-gray-50 transition-colors\">
-            <td class=\"px-4 py-3\">
-              <div class=\"font-semibold text-gray-900\">${app.patientData?.name || "N/A"}</div>
-              <div class=\"text-xs text-gray-500\">${app.patientData?.contact || ""}</div>
+                let statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700">Confirmed</span>`;
+                if (isRescheduled) {
+                    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800">Rescheduled</span>`;
+                } else if (isCanceled) {
+                    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
+                }
+                return `
+          <tr class="border-b hover:bg-gray-50 transition-colors">
+            <td class="px-4 py-3">
+              <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
+              <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
             </td>
-            <td class=\"px-4 py-3\">
-              <div class=\"font-semibold text-blue-700\">${doctorName}</div>
-              <div class=\"text-xs text-gray-500\">${app.doctorData?.specialty || ""}</div>
+            <td class="px-4 py-3">
+              <div class="font-semibold text-blue-700">${doctorName}</div>
+              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
             </td>
-            <td class=\"px-4 py-3\">
-              <div class=\"flex items-center gap-1\">
-                <svg class=\"w-4 h-4 text-gray-400\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\" /></svg>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-1">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>${app.dateData?.time || "N/A"}</span>
               </div>
             </td>
-            <td class=\"px-4 py-3\">
+            <td class="px-4 py-3">
               ${statusLabel}
             </td>
-            <td class=\"px-4 py-3 relative\">
-              <button class=\"action-btn text-xl focus:outline-none\">...</button>
-              <div class=\"action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50\">
-                <a href=\"#\" class=\"view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>View details</a>
-                ${!isCanceled ? `<a href=\"#\" class=\"edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
-                ${!isCanceled ? `<a href=\"#\" class=\"reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700\" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
-                ${!isCanceled ? `<a href=\"#\" class=\"cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600\" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
+            <td class="px-4 py-3">
+              <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
+
+            </td>
+            <td class="px-4 py-3 relative">
+              <button class="action-btn text-xl focus:outline-none">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
+                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
+                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
+                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
+                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
               </div>
             </td>
           </tr>
         `;
-                        })
-                        .join("");
+            })
+            .join("");
 
-                    tableHTML += `</tbody></table></div>`;
+        tableHTML += `</tbody></table></div>`;
 
-                    if (totalPages > 1) {
-                        tableHTML += `
-          <div class=\"flex justify-between items-center mt-6 px-4\">
-            <div class=\"text-sm text-gray-600\">
+        if (totalPages > 1) {
+            tableHTML += `
+          <div class="flex justify-between items-center mt-6 px-4">
+            <div class="text-sm text-gray-600">
               Showing ${startIndex + 1} to ${Math.min(endIndex, filteredAppointments.length)} of ${filteredAppointments.length} appointments
             </div>
-            <div class=\"flex items-center space-x-2\">
-              <button onclick=\"changeAppointmentsPage(${currentAppointmentsPage - 1})\" 
-                class=\"px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200\"
+            <div class="flex items-center space-x-2">
+              <button onclick="changeAppointmentsPage(${currentAppointmentsPage - 1})" 
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
                 ${currentAppointmentsPage === 1 ? "disabled" : ""}>
                 Previous
               </button>
-              <span class=\"text-sm text-gray-600\">
+              <span class="text-sm text-gray-600">
                 Page ${currentAppointmentsPage} of ${totalPages}
               </span>
-              <button onclick=\"changeAppointmentsPage(${currentAppointmentsPage + 1})\" 
-                class=\"px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200\"
+              <button onclick="changeAppointmentsPage(${currentAppointmentsPage + 1})" 
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-blue-500 hover:text-white hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-100 disabled:hover:text-gray-600 disabled:hover:border-gray-300 transition-colors duration-200"
                 ${currentAppointmentsPage === totalPages ? "disabled" : ""}>
                 Next
               </button>
             </div>
           </div>
         `;
-                    }
+        }
 
-                    appointmentsList.innerHTML = tableHTML;
-                } catch (error) {
-                    console.error("Error in renderAppointmentsList:", error);
-                    appointmentsList.innerHTML = `
-        <div class=\"p-4 text-center text-red-500\">
-          <p class=\"font-semibold\">Error loading appointments</p>
-          <p class=\"text-sm mt-2\">${error.message || "Please try again later"}</p>
-          <button onclick=\"renderAppointmentsList('${date}', '${filterDoctor}', '${statusFilter}')\" class=\"mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600\">
+        appointmentsList.innerHTML = tableHTML;
+    } catch (error) {
+        console.error("Error in renderAppointmentsList:", error);
+        appointmentsList.innerHTML = `
+        <div class="p-4 text-center text-red-500">
+          <p class="font-semibold">Error loading appointments</p>
+          <p class="text-sm mt-2">${error.message || "Please try again later"}</p>
+          <button onclick="renderAppointmentsList('${date}', '${filterDoctor}', '${statusFilter}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Retry
           </button>
         </div>
       `;
-                }
-            }
+    }
+}
 
             function changeAppointmentsPage(newPage) {
                 const totalPages = Math.ceil(allAppointmentsData.length / appointmentsPerPage);
@@ -1665,12 +2650,15 @@ body.dark .text-gray-400 {
                     currentAppointmentsPage = 1;
                     currentPatientsPage = 1;
 
-                    const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
+                    const activeTab = getActiveTabId();
 
                     if (activeTab === "appointmentsTab") {
                         renderAppointmentsList(currentDate, searchTerm, status);
                     } else if (activeTab === "patientsTab") {
                         fetchAndDisplayPatients(currentDate, searchTerm);
+                    } else if (activeTab === "doctorsTab") {
+                        currentDoctorsPage = 1;
+                        fetchAndDisplayDoctors(currentDate);
                     }
                 }, 300);
             });
@@ -1680,12 +2668,15 @@ body.dark .text-gray-400 {
                     searchInput.value = "";
                     const currentDate = datePicker.value;
                     const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
-                    const activeTab = document.querySelector(".tab.tab-active").getAttribute("data-tab");
+                    const activeTab = getActiveTabId();
 
                     if (activeTab === "appointmentsTab") {
                         renderAppointmentsList(currentDate, "", status);
                     } else if (activeTab === "patientsTab") {
                         fetchAndDisplayPatients(currentDate, "");
+                    } else if (activeTab === "doctorsTab") {
+                        currentDoctorsPage = 1;
+                        fetchAndDisplayDoctors(currentDate);
                     }
                 }
             });
@@ -1726,10 +2717,13 @@ body.dark .text-gray-400 {
                     const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
 
                     if (targetId === "appointmentsTab") {
+                        updateFilterDropdownOptions();
                         renderAppointmentsList(date, searchTerm, status);
                     } else if (targetId === "patientsTab") {
+                        updateFilterDropdownOptions();
                         fetchAndDisplayPatients(date, searchTerm);
                     } else if (targetId === "doctorsTab") {
+                        updateFilterDropdownOptions();
                         fetchAndDisplayDoctors(date);
                     }
                 });
@@ -1763,6 +2757,7 @@ body.dark .text-gray-400 {
                             patientsMap.set(patientKey, {
                                 details: app.patientData,
                                 appointments: [],
+                                 referredBy: app.referralData?.referredBy || "" 
                             });
                         }
                         if (app.dateData && app.dateData.date) {
@@ -1776,12 +2771,60 @@ body.dark .text-gray-400 {
                     const finalPatientList = [];
                     for (const [patientKey, patientData] of patientsMap.entries()) {
                         const patientName = patientData.details.name || "";
-                        const matchesSearch = !searchTerm || patientName.toLowerCase().includes(searchTerm.toLowerCase());
+                        const age = patientData.details.age || "";
+                        const gender = patientData.details.gender || "";
+                        const blood = patientData.details.blood || "";
+                        const contact = patientData.details.contact || "";
+
+                        const todayCalc = new Date();
+                        todayCalc.setHours(0,0,0,0);
+                        const sortedDates = patientData.appointments.map(a => new Date(a.date)).sort((a,b)=>a-b);
+                        const future = sortedDates.filter(d => d >= todayCalc);
+                        const past = sortedDates.filter(d => d < todayCalc);
+                        const upcomingDateText = future.length > 0 ? future[0].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
+                        const lastVisitText = past.length > 0 ? past[past.length-1].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
+
+                        const selectedField = getSelectedField();
+                        const term = (searchTerm || "").toLowerCase();
+                        const includes = (v) => {
+                            if (!term) return true;
+                            if (!v) return false;
+                            return String(v).toLowerCase().includes(term);
+                        };
+
+                        let matchesSearch = true;
+                        if (term) {
+                            if (selectedField === 'all') {
+                                matchesSearch = (
+                                    includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText) || includes(patientData.referredBy)
+                                );
+                            } else if (selectedField === 'patient') {
+                                matchesSearch = includes(patientName);
+                            } else if (selectedField === 'age') {
+                                matchesSearch = includes(age);
+                            } else if (selectedField === 'gender') {
+                                matchesSearch = includes(gender);
+                            } else if (selectedField === 'blood') {
+                                matchesSearch = includes(blood);
+                            } else if (selectedField === 'contact') {
+                                matchesSearch = includes(contact);
+                            } else if (selectedField === 'upcoming') {
+                                matchesSearch = includes(upcomingDateText);
+                            } else if (selectedField === 'lastvisit') {
+                                matchesSearch = includes(lastVisitText);
+                            }
+                             else if (selectedField === 'referredby') {
+                                matchesSearch = includes(patientData.referredBy);
+                            }
+                        }
 
                         const hasAppointmentOnDate = formattedSelectedDate ? patientData.appointments.some((a) => a.date === formattedSelectedDate) : true;
 
                         if (matchesSearch && hasAppointmentOnDate) {
-                            finalPatientList.push(patientData);
+;
+
+                            finalPatientList.push({ ...patientData, upcomingDateText, lastVisitText,referredBy: patientData.referredBy });
+
                         }
                     }
 
@@ -1888,22 +2931,28 @@ body.dark .text-gray-400 {
                         blood: patient.details.blood || "N/A",
                         contact: patient.details.contact || "N/A",
                         upcomingDate: upcomingDate.replace(/<[^>]+>/g, ""),
-                        lastVisit: lastVisit.replace(/<[^>]+>/g, "")
+                        lastVisit: lastVisit.replace(/<[^>]+>/g, ""),
+                        referredBy: patient.referredBy || "N/A" 
                     })}'
   >
-    <div class="col-span-3 flex items-center">
-      <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-      <div>
-        <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">${patient.details.name || "N/A"}</div>
-        <div class="text-xs text-gray-500">PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}</div>
+  <div class="col-span-3 flex items-center">
+    <div class="w-8 h-8 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
+    <div>
+      <div class="font-semibold ${allCancelled ? "text-red-600" : "text-gray-800"}">
+        ${patient.details.name || "N/A"}
+      </div>
+      <div class="text-xs text-gray-500">
+        PAT-${patient.details.contact ? String(patient.details.contact).slice(-4) : "0000"}
       </div>
     </div>
-    <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
-    <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
-    <div class="col-span-2 text-gray-600">${upcomingDate}</div>
-    <div class="col-span-2 text-gray-600">${lastVisit}</div>
   </div>
+  <div class="col-span-2 text-gray-600">${patient.details.age || "N/A"} / ${patient.details.gender ? patient.details.gender.charAt(0) : "N/A"}</div>
+  <div class="col-span-1 text-gray-600">${patient.details.blood || "N/A"}</div>
+  <div class="col-span-2 text-gray-600">${patient.details.contact || "N/A"}</div>
+  <div class="col-span-2 text-gray-600">${upcomingDate}</div>
+  <div class="col-span-1 text-gray-600">${lastVisit}</div>
+  <div class="col-span-1 text-gray-600">${patient.referredBy || "N/A"}</div>
+</div>
 `;
 
                 });
@@ -2059,6 +3108,8 @@ body.dark .text-gray-400 {
 
                 document.getElementById("viewDetailsDoctorName").textContent = doctorName;
                 document.getElementById("viewDetailsDoctorSpecialty").textContent = app.doctorData?.specialty || "N/A";
+                document.getElementById("viewDetailsReferredBy").textContent = app.referralData?.referredBy || "-";
+
 
                 document.getElementById("viewDetailsDate").textContent = app.dateData?.date || "N/A";
                 document.getElementById("viewDetailsTime").textContent = app.dateData?.time || "N/A";
@@ -2644,6 +3695,7 @@ body.dark .text-gray-400 {
                 document.getElementById("modalPatientContact").textContent = contact;
                 document.getElementById("modalPatientUpcoming").textContent = patient.upcomingDate || "N/A";
                 document.getElementById("modalPatientLastVisit").textContent = patient.lastVisit || "N/A";
+                document.getElementById("modalPatientReferredBy").textContent = patient.referredBy || "N/A";
                 document.getElementById("patientDetailsModalOverlay").classList.remove("hidden");
                 document.body.classList.add("blurred-bg");
             }
@@ -2719,10 +3771,38 @@ body.dark .text-gray-400 {
                 const doctorsList = document.getElementById("doctorsList");
                 const paginationContainer = document.getElementById("doctorsPagination");
                 if (!doctorsList) return;
-                const totalPages = Math.ceil(allDoctors.length / doctorsPerPage);
+                // Build filtered list based on selected field and search term
+                const term = (searchInput.value || '').trim().toLowerCase();
+                const selectedField = getSelectedField();
+
+                // Compute today's appointment counts first if needed for filtering
+                const filteredBase = allDoctors.filter((doc) => {
+                    if (!term) return true; // no search => keep
+                    const includes = (v) => String(v == null ? '' : v).toLowerCase().includes(term);
+                    if (selectedField === 'all') {
+                        const todayCount = todaysAppointmentsCountMap[doc.name] || 0;
+                        return (
+                            includes(doc.name) || includes(doc.specialty) || includes(doc.experience) || includes(doc.availability) || includes(todayCount)
+                        );
+                    } else if (selectedField === 'name') {
+                        return includes(doc.name);
+                    } else if (selectedField === 'specialty') {
+                        return includes(doc.specialty);
+                    } else if (selectedField === 'experience') {
+                        return includes(doc.experience);
+                    } else if (selectedField === 'availability') {
+                        return includes(doc.availability);
+                    } else if (selectedField === 'todays') {
+                        const todayCount = todaysAppointmentsCountMap[doc.name] || 0;
+                        return includes(todayCount);
+                    }
+                    return true;
+                });
+
+                const totalPages = Math.ceil(filteredBase.length / doctorsPerPage);
                 const startIndex = (currentDoctorsPage - 1) * doctorsPerPage;
                 const endIndex = startIndex + doctorsPerPage;
-                const currentDoctors = allDoctors.slice(startIndex, endIndex);
+                const currentDoctors = filteredBase.slice(startIndex, endIndex);
                 doctorsList.innerHTML = "";
                 const selectedDate = document.getElementById("datePicker").value;
 
@@ -2833,9 +3913,9 @@ body.dark .text-gray-400 {
                 dateFormat: "Y-m-d",
             });
 
-            function renderPatientsListFromData(patients) {
-                if (!patients || patients.length === 0) {
-                    patientsList.innerHTML = `
+       function renderPatientsListFromData(patients) {
+    if (!patients || patients.length === 0) {
+        patientsList.innerHTML = `
         <div class="p-4 text-center text-gray-500">
           <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -2844,9 +3924,10 @@ body.dark .text-gray-400 {
           <p class="text-sm">No patients found with appointments on ${formattedDate}</p>
         </div>
       `;
-                    return;
-                }
-                let tableHTML = `
+        return;
+    }
+
+    let tableHTML = `
       <div class="overflow-x-auto">
         <table class="min-w-full bg-white rounded-lg shadow-sm">
           <thead>
@@ -2857,16 +3938,34 @@ body.dark .text-gray-400 {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
+              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
             </tr>
           </thead>
           <tbody>
-         
+    `;
+
+    tableHTML += patients.map(patient => `
+      <tr class="border-b hover:bg-gray-50 transition-colors">
+        <td class="px-4 py-3 font-semibold text-gray-900">${patient.details.name || "-"}</td>
+        <td class="px-4 py-3">${patient.details.age || "-"} / ${patient.details.gender || "-"}</td>
+        <td class="px-4 py-3">${patient.details.blood || "-"}</td>
+        <td class="px-4 py-3">${patient.details.contact || "-"}</td>
+        <td class="px-4 py-3">${patient.upcomingDateText || "-"}</td>
+        <td class="px-4 py-3">${patient.lastVisitText || "-"}</td>
+        <td class="px-4 py-3">${patient.referredBy || "-"}</td> <!-- ✅ Value -->
+      </tr>
+    `).join("");
+
+    tableHTML += `
           </tbody>
         </table>
       </div>
     `;
-                patientsList.innerHTML = tableHTML;
-            }
+
+    patientsList.innerHTML = tableHTML;
+}
+
+
             testPatientsPagination();
             if (document.getElementById("appointmentStatusFilter")) {
                 document.getElementById("appointmentStatusFilter").addEventListener("change", function () {
@@ -3652,6 +4751,7 @@ body.dark .text-gray-400 {
                 const date = datePicker.value;
                 const searchTerm = searchInput.value.trim();
                 const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+                updateFilterDropdownOptions();
                 if (activeTab === 'appointmentsTab') {
                     renderAppointmentsList(date, searchTerm, status);
                 } else if (activeTab === 'patientsTab') {
@@ -3670,7 +4770,7 @@ body.dark .text-gray-400 {
         <script>
             const dropdownToggle = document.getElementById("userDropdownToggle");
             const dropdownMenu = document.getElementById("userDropdownMenu");
-
+           
             dropdownToggle.addEventListener("click", () => {
                 dropdownMenu.classList.toggle("hidden");
             });
@@ -3709,29 +4809,40 @@ body.dark .text-gray-400 {
             const AdminName = localStorage.getItem("admin_name") || "admin";
             document.getElementById("userName").textContent = userName;
             document.getElementById("userAvatar").textContent = getInitials(userName);
+            
         </script>
-        <script>
-            async function logout() {
-                try {
-                    const token = localStorage.getItem('admin_jwt');
-                    const res = await fetch("/api/admin/logout", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ token }),
-                    });
-                    const result = await res.json();
-                    if (res.ok) {
-                        localStorage.clear();
-                        window.location.href = "login.html";
-                    } else {
-                        showToast(result.error, 'error');
-                    }
-                } catch (err) {
-                    showToast("Error: " + err.message, 'error');
-                }
-            };
-        </script>
+   <script>
+    async function logout() {
+        try {
+            const token = localStorage.getItem('admin_jwt');                               
+            const res = await fetch("/api/admin/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await res.json();
+            if (res.ok) {
+               
+                const savedTheme = localStorage.getItem("theme");
+                const savedAccent = localStorage.getItem("accent");
+
+                localStorage.clear();
+
+                
+                if (savedTheme) localStorage.setItem("theme", savedTheme);
+                if (savedAccent) localStorage.setItem("accent", savedAccent);
+
+                window.location.href = "login.html";
+            } else {
+                showToast(result.error, 'error');
+            }
+        } catch (err) {
+            showToast("Error: " + err.message, 'error');
+        }
+    };
+</script>
+
 
         <div id="blurredBg" class="hidden fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"></div>
 
@@ -3757,17 +4868,36 @@ body.dark .text-gray-400 {
                 </div>
             </div>
         </div>
-        <div id="blurredBg" class="fixed inset-0 bg-white/30 backdrop-blur-sm hidden z-40"></div>
-        <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm text-center">
-                <h2 class="text-xl font-semibold mb-4">Logout</h2>
-                <p class="mb-4 text-gray-600">Are you sure you want to logout?</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="closeModals()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                    <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Logout</button>
-                </div>
-            </div>
-        </div>
+       <div id="blurredBg" class="fixed inset-0 bg-white/30 backdrop-blur-sm hidden z-40"></div>
+<div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+  <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-lg w-full max-w-sm text-center">
+    <div class="flex justify-center mb-4">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-200/20">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="h-6 w-6 text-red-600 dark:text-red-500"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        </svg>
+      </span>
+    </div>
+    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Logout</h2>
+    <p class="mb-6 text-gray-600 dark:text-gray-300">Are you sure you want to logout?</p>
+    <div class="flex justify-center gap-4">
+      <button onclick="closeModals()" 
+        class="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 
+               dark:bg-gray-200 dark:text-gray-900 dark:hover:bg-gray-300">
+        Cancel
+      </button>
+      <button onclick="logout()" 
+        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
         <div id="adminProfileModal"
             class="fixed inset-0 bg-gray-100 bg-opacity-90 backdrop-blur-md flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative">
@@ -4050,6 +5180,7 @@ body.dark .text-gray-400 {
                     }
                 };
             }
+            
         </script>
 
         <div id="toast"
@@ -4078,6 +5209,7 @@ body.dark .text-gray-400 {
             ];
 
             function populateSpecialtyDropdown(selectId) {
+
                 const select = document.getElementById(selectId);
                 if (!select) return;
 
@@ -4208,6 +5340,104 @@ themeToggle.addEventListener("click", () => {
 applyTheme(localStorage.getItem("theme") || "light");
 
         </script>
-</body>
+        <script>
+            
+            const themesDropdownToggle = document.getElementById("themesDropdownToggle");
+            const themesSubDropdown = document.getElementById("themesSubDropdown");
+            const themesDropdownArrow = document.querySelector(".themes-dropdown-arrow");
+            const lightThemeBtn = document.getElementById("lightThemeBtn");
+            const darkThemeBtn = document.getElementById("darkThemeBtn");
 
+            function applyTheme(theme) {
+                if (theme === "dark") {
+                    document.body.classList.add("dark");
+                } else {
+                    document.body.classList.remove("dark");
+                }
+                localStorage.setItem("theme", theme);
+            }
+
+
+            themesDropdownToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                themesSubDropdown.classList.toggle("hidden");
+                themesDropdownArrow.classList.toggle("rotate-180");
+            });
+
+            
+            lightThemeBtn.addEventListener("click", () => {
+                applyTheme("light");
+                themesSubDropdown.classList.add("hidden");
+                themesDropdownArrow.classList.remove("rotate-180");
+            });
+
+            
+            darkThemeBtn.addEventListener("click", () => {
+                applyTheme("dark");
+                themesSubDropdown.classList.add("hidden");
+                themesDropdownArrow.classList.remove("rotate-180");
+            });
+
+           
+            document.addEventListener("click", (e) => {
+                if (!themesDropdownToggle.contains(e.target) && !themesSubDropdown.contains(e.target)) {
+                    themesSubDropdown.classList.add("hidden");
+                    themesDropdownArrow.classList.remove("rotate-180");
+                }
+            });
+
+          
+            applyTheme(localStorage.getItem("theme") || "light");
+        </script>
+        <script>
+           
+            const accentsDropdownToggle = document.getElementById("accentsDropdownToggle");
+            const accentsSubDropdown = document.getElementById("accentsSubDropdown");
+            const accentsDropdownArrow = document.querySelector(".accents-dropdown-arrow");
+            const accentButtons = document.querySelectorAll('[id$="AccentBtn"]');
+
+            function applyAccentColor(color) {
+              
+                document.body.classList.remove('accent-blue', 'accent-green','accent-brown', 'accent-purple', 'accent-orange', 'accent-pink', 'accent-teal');
+                
+                if (color !== 'blue') {
+                    document.body.classList.add(`accent-${color}`);
+                }
+                document.querySelectorAll('.accent-color-preview').forEach(preview => {
+                    preview.classList.remove('active');
+                });
+                
+                const activeButton = document.getElementById(`${color}AccentBtn`);
+                if (activeButton) {
+                    const preview = activeButton.querySelector('.accent-color-preview');
+                    if (preview) {
+                        preview.classList.add('active');
+                    }
+                }
+                localStorage.setItem("accent", color);
+            }
+            accentsDropdownToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                accentsSubDropdown.classList.toggle("hidden");
+                accentsDropdownArrow.classList.toggle("rotate-180");
+            });
+            accentButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const color = button.getAttribute('data-color');
+                    applyAccentColor(color);
+                    accentsSubDropdown.classList.add("hidden");
+                    accentsDropdownArrow.classList.remove("rotate-180");
+                });
+            });
+            document.addEventListener("click", (e) => {
+                if (!accentsDropdownToggle.contains(e.target) && !accentsSubDropdown.contains(e.target)) {
+                    accentsSubDropdown.classList.add("hidden");
+                    accentsDropdownArrow.classList.remove("rotate-180");
+                }
+            });
+            const savedAccent = localStorage.getItem("accent") || "blue";
+            applyAccentColor(savedAccent);
+        </script>
+        
+</body>
 </html>
