@@ -309,14 +309,14 @@
             overflow: visible !important;
         }
 
-     
+    
         #appointmentsList {
             overflow: visible !important;
-        } 
+        }
 
         #appointmentsList > div {
             overflow: visible !important;
-        }  
+        }
 
         .action-menu:not(.hidden) {
             display: block !important;
@@ -403,12 +403,12 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-} 
+}
 
- .appointments-list .action-menu::-webkit-scrollbar{
+.appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
-} 
+}
 
 body.dark {
     background-color: #0f172a; 
@@ -419,15 +419,6 @@ body.dark {
 body.dark * {
     color: #f1f5f9 !important;
 }
-
-
-/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
-body.dark #logoutModal svg {
-    color: #ef4444 !important;
-    stroke: #ef4444 !important;
-   
-}
-
 
 
 body.dark .text-gray-500,
@@ -572,6 +563,14 @@ body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b {
 }
 body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b > div { color: #e5e7eb !important; }
 
+/* Appointments grid header (match doctors/patients) */
+body.dark #appointmentsHeader {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #appointmentsHeader > div { color: #e5e7eb !important; }
+
 
 body.dark #userDropdownMenu {
     background-color: #1e293b !important;
@@ -637,7 +636,19 @@ body.dark button.bg-red-600:hover {
 
 
 body.dark table tbody tr:hover td {
-    background-color: #1e293b !important;
+    background-color: #334155 !important;
+}
+
+/* Ensure Appointments tab headings and hover match Doctors/Patients in dark mode */
+body.dark #appointmentsTab thead tr {
+    background-color: #0f172a !important;
+}
+body.dark #appointmentsTab thead th {
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #appointmentsTab tbody tr:hover td {
+    background-color: #334155 !important;
 }
 
 
@@ -1130,12 +1141,12 @@ body.dark.accent-blue button.bg-black:hover,
 body.dark.accent-blue button.bg-blue-600:hover {
     background-color: #3b82f6 !important;
 }
-
-.dark .svg-accent-blue {
-  color: #3b82f6 !important;
-  stroke: #3b82f6 !important;
+body.dark.accent-blue nav svg,
+body.dark.accent-blue nav svg * {
+    fill: #3b82f6 !important;
+    stroke: #3b82f6 !important;
+    color: #3b82f6 !important;
 }
-
 
 body.dark.accent-blue input:focus,
 body.dark.accent-blue select:focus,
@@ -1163,25 +1174,6 @@ body.dark.accent-green select:focus,
 body.dark.accent-green textarea:focus {
     border-color: #10b981 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
-}
-/* General select text color */
-.accent-green select, 
-.accent-green option {
-  color: #10b981 !important;
-}
-
-/* When hovering on the select itself */
-.accent-green select:hover {
-  border-color: #10b981 !important;
-  color: #10b981 !important;
-}
-
-/* Dropdown options styling */
-.accent-green select option:checked,
-.accent-green select option:hover,
-.accent-green select option:focus {
-  background-color: #10b981 !important;
-  color: white !important;
 }
 
 
@@ -1320,16 +1312,16 @@ body.dark {
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <script>
+    <!-- <script>
         if (!localStorage.getItem("admin_jwt")) {
             window.location.href = "login.html";
         }
-    </script>
+    </script> -->
 
    <nav class="bg-white shadow py-3 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[110px]">
         <div class="flex justify-between items-center w-full">
             <div class="flex items-center">
-                <svg class="w-6 h-6 text-blue-600 svg-accent-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-blue-600 dark:text-blue-50 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
@@ -1524,20 +1516,20 @@ body.dark {
   <div class="flex items-center gap-4 mb-4 justify-between">
 
    
-    <div class="relative w-[1200px] h-12 flex items-center">
+    <div class="relative w-[1000px] h-12 flex items-center">
       <img src="/search.webp" alt="Search"
         class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
       <input type="text" id="searchInput" placeholder="Search"
         class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
     </div>
     <div class="flex items-center gap-4">
-      <div class="relative w-[500px] h-12">
+      <div class="relative w-[400px] h-12">
         <select id="filterDropdown"
           class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
       
         </select>
       </div>
-      <div class="relative w-[400px] h-12 flex items-center">
+      <div class="relative w-[300px] h-12 flex items-center">
         <div id="datePickerDisplay"
           class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
@@ -1590,9 +1582,16 @@ body.dark {
                                 class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
                                 Appointment</button></a>
                     </div>
+                    <div id="appointmentsHeader"
+                        class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+                        <div class="col-span-3">Patient</div>
+                        <div class="col-span-3">Doctor</div>
+                        <div class="col-span-2">Time</div>
+                        <div class="col-span-2">Status</div>
+                        <div class="col-span-1">Referred By</div>
+                        <div class="col-span-1">Actions</div>
+                    </div>
                     <div id="appointmentsList" ></div>
-
-                    
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
@@ -2512,6 +2511,11 @@ body.dark {
             currentAppointmentsPage = 1;
         }
 
+        const appointmentsHeader = document.getElementById("appointmentsHeader");
+        if (appointmentsHeader) {
+            appointmentsHeader.style.display = filteredAppointments && filteredAppointments.length > 0 ? "grid" : "none";
+        }
+
         if (!filteredAppointments || filteredAppointments.length === 0) {
             const formattedDate = new Date(date).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -2551,21 +2555,7 @@ body.dark {
         const endIndex = startIndex + appointmentsPerPage;
         const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
-        let tableHTML = `
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow-sm">
-            <thead>
-              <tr class="bg-gray-50 text-gray-700 text-left">
-                <th class="px-4 py-3">Patient</th>
-                <th class="px-4 py-3">Doctor</th>
-                <th class="px-4 py-3">Time</th>
-                <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Referred By</th> 
-                <th class="px-4 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-    `;
+        let tableHTML = ``;
 
         tableHTML += currentPageAppointments
             .map((app, idx) => {
@@ -2580,43 +2570,40 @@ body.dark {
                     statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
                 }
                 return `
-          <tr class="border-b hover:bg-gray-50 transition-colors">
-            <td class="px-4 py-3">
-              <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
-              <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="font-semibold text-blue-700">${doctorName}</div>
-              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-1">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>${app.dateData?.time || "N/A"}</span>
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              ${statusLabel}
-            </td>
-            <td class="px-4 py-3">
-              <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
-
-            </td>
-            <td class="px-4 py-3 relative">
-              <button class="action-btn text-xl focus:outline-none">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
-                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
-                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
-                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
-                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
-              </div>
-            </td>
-          </tr>
-        `;
+  <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+    <div class="col-span-3">
+      <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
+      <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
+    </div>
+    <div class="col-span-3">
+      <div class="font-semibold text-blue-700">${doctorName}</div>
+      <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
+    </div>
+    <div class="col-span-2">
+      <div class="flex items-center gap-1">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>${app.dateData?.time || "N/A"}</span>
+      </div>
+    </div>
+    <div class="col-span-2">
+      ${statusLabel}
+    </div>
+    <div class="col-span-1">
+      <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
+    </div>
+    <div class="col-span-1 relative">
+      <button class="action-btn text-xl focus:outline-none">...</button>
+      <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
+        <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
+        ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
+        ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
+        ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
+      </div>
+    </div>
+  </div>
+                `;
             })
             .join("");
-
-        tableHTML += `</tbody></table></div>`;
 
         if (totalPages > 1) {
             tableHTML += `
@@ -3968,7 +3955,7 @@ body.dark {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
-              <th class="px-4 py-3">Referred By</th>
+              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
             </tr>
           </thead>
           <tbody>
@@ -4863,7 +4850,7 @@ body.dark {
                 if (savedTheme) localStorage.setItem("theme", savedTheme);
                 if (savedAccent) localStorage.setItem("accent", savedAccent);
 
-                window.location.href = "login.html";
+                // window.location.href = "login.html";
             } else {
                 showToast(result.error, 'error');
             }
@@ -4902,11 +4889,13 @@ body.dark {
 <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
   <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-lg w-full max-w-sm text-center">
     <div class="flex justify-center mb-4">
-     <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-200/20">
         <svg xmlns="http://www.w3.org/2000/svg" 
-             class="h-6 w-6 text-red-600 dark:text-red-400 dark:drop-shadow-[0_0_4px_#f87171]"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z" />
+             class="h-6 w-6 text-red-600 dark:text-red-500"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
         </svg>
       </span>
     </div>
