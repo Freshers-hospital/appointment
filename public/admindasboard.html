@@ -1572,6 +1572,7 @@ body.dark.accent-pink button.bg-black:hover,
 body.dark.accent-pink button.bg-blue-600:hover {
     background-color: #db2777 !important;
 }
+
 body.dark.accent-pink input:focus,
 body.dark.accent-pink select:focus,
 body.dark.accent-pink textarea:focus {
@@ -2791,8 +2792,7 @@ body.dark {
                         { value: 'contact', label: 'Contact' },
                         { value: 'upcoming', label: 'Upcoming Date' },
                         { value: 'lastvisit', label: 'Last Visit' },
-                        { value: 'referredby', label: 'Referred By' },
-                        { value: 'referredby', label: 'Referred By' },
+                        { value: 'referredby', label: 'Referred By' }
                     ];
                 }
                 filterDropdown.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
@@ -2934,8 +2934,7 @@ body.dark {
                                     valueIncludes(app.dateData?.time) ||
                                     valueIncludes(app.status) ||
                                     valueIncludes(app.referralData?.referredBy)
-                                    valueIncludes(app.status) ||
-                                    valueIncludes(app.referralData?.referredBy)
+
                                 );
                             } else if (selectedField === 'patient') {
                                 matchesField = valueIncludes(app.patientData?.name);
@@ -3324,7 +3323,7 @@ body.dark {
                             if (selectedField === 'all') {
                                 matchesSearch = (
                                     includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText) || includes(patientData.referredBy)
-                                    includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText) || includes(patientData.referredBy)
+
                                 );
                             } else if (selectedField === 'patient') {
                                 matchesSearch = includes(patientName);
