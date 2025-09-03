@@ -227,7 +227,7 @@ body.dark {
   color: #dee4ef;
 }
 
-/* Fix full white root background leaking through in dark mode on all sections */
+
 body.dark .bg-white, body.dark .shadow, body.dark .shadow-md, body.dark .shadow-lg {
   background: #23243a !important;
   color: #eaeaff !important;
@@ -250,7 +250,7 @@ body.dark .form-section .text-gray-500 {
   color: #b3bed7 !important;
 }
 
-/* Details container boxes in confirmation step */
+
 body.dark .bg-gray-50 {
   background: #2c2d44 !important;
   color: #e5e7eb !important;
@@ -259,7 +259,7 @@ body.dark .border-gray-300 {
   border-color: #383a53 !important;
 }
 
-/* Inputs */
+
 body.dark input, body.dark select, body.dark textarea {
   background: #23243a;
   color: #fff;
@@ -273,7 +273,7 @@ body.dark ::placeholder {
   color: #a1aacd;
 }
 
-/* 2. Accent color for h2 headings only */
+
 body.accent-pink .form-section h2 { color: #160a56 !important; }
 body.accent-pink .form-section h2 { color: #db2777 !important; }
 body.accent-orange .form-section h2 { color: #ea580c !important; }
@@ -282,7 +282,7 @@ body.accent-teal .form-section h2   { color: #06b6d4 !important; }
 body.accent-green .form-section h2  { color: #16a34a !important; }
 body.accent-brown .form-section h2  { color: #a16207 !important; }
 
-/* 3. Button accent and dark mode */
+
 .form-section button:not(:disabled),
 button.accent-btn:not(:disabled),
 #confirmBookingBtn:not(:disabled),
@@ -326,7 +326,7 @@ body.accent-brown .form-section button, body.accent-brown #confirmBookingBtn, bo
 }
 body.accent-brown .form-section button:hover { background: #713f12 !important; }
 
-/* 4. Stepper circles/borders/ticks get accent color, but NOT label under circle */
+
 #stepperContainer .border-blue-600,
 #stepperContainer .text-blue-600 {
   border-color: #2563eb !important;
@@ -356,7 +356,7 @@ body.accent-brown #stepperContainer .border-blue-600,
 body.accent-brown #stepperContainer .text-blue-600 {
   border-color: #a16207 !important; color: #a16207 !important;
 }
-/* Only add background color to ticks (when step is complete, that is, tick mark present in circle) */
+
 #stepperContainer .text-blue-600:empty,
 #stepperContainer .text-blue-600:not(:empty) {
   background: transparent !important;
@@ -364,12 +364,11 @@ body.accent-brown #stepperContainer .text-blue-600 {
 #stepperContainer .text-blue-600::after {
   content: none !important;
 }
-/* Remove accent from labels under the step circles (they should stay gray) */
 #stepperContainer p.text-blue-600, #stepperContainer p.text-gray-400 {
   color: #6b7280 !important;
 }
 
-/* Ensure step circle background for active or done is only border+tick, not solid */
+
 #stepperContainer .bg-blue-600 {
   background: #fff !important;
 }
@@ -377,7 +376,7 @@ body.dark #stepperContainer .bg-blue-600 {
   background: #23243a !important;
 }
 
-/* 5. Confirmation Step Details Font in Dark mode: always white */
+
 body.dark #confirmationSection .bg-white, body.dark #confirmationSection .bg-gray-50,
 body.dark #confirmationSection .text-gray-800, 
 body.dark #confirmationSection .text-gray-500, 
@@ -389,8 +388,7 @@ body.dark #confirmationSection span {
   color: #fff !important;
 }
 
-/* 6. Misc fixes */
-body.dark select:disabled, body.dark input:disabled {
+/* 6. Misc fixes */body.dark select:disabled, body.dark input:disabled {
   color: #b2bacf !important;
   background: #23243a !important;
   opacity:0.7;
@@ -399,23 +397,23 @@ body.dark select:disabled, body.dark input:disabled {
   filter: none !important;
   outline: none !important;
 }
-/* General line for stepper (unfilled: white even in dark mode) */
+
 #stepperContainer .stepper-line {
-  background: #fff !important; /* always white for unfilled */
+  background: #fff !important; 
   transition: background 0.3s;
 }
 
-/* Dark mode line still white for unfilled */
+
 body.dark #stepperContainer .stepper-line {
   background: #fff !important;
 }
 
-/* Accent color for filled step lines */
+
 #stepperContainer .stepper-line.filled {
-  background: #ea580c !important; /* orange for example; replace with your accent */
+  background: #ea580c !important; 
 }
 
-/* Accent override for other themes */
+
 body.accent-pink #stepperContainer .stepper-line.filled { background: #475db2 !important; }
 body.accent-pink #stepperContainer .stepper-line.filled { background: #db2777 !important; }
 body.accent-purple #stepperContainer .stepper-line.filled { background: #8b5cf6 !important; }
@@ -423,15 +421,11 @@ body.accent-teal   #stepperContainer .stepper-line.filled { background: #06b6d4 
 body.accent-green  #stepperContainer .stepper-line.filled { background: #16a34a !important; }
 body.accent-brown  #stepperContainer .stepper-line.filled { background: #a16207 !important; }
 
-/* Example: Step circles remain accent when active or complete */
+
 #stepperContainer .stepper-circle.active,
 #stepperContainer .stepper-circle.completed {
   border-color: #ea580c !important;
   color: #ea580c !important;
-}
-#age {
-  max-height: 200px; /* adjust this to approx 10 options height */
-  overflow-y: auto;
 }
 
     </style>
@@ -852,14 +846,14 @@ body.accent-brown  #stepperContainer .stepper-line.filled { background: #a16207 
     <script>
    document.getElementById("age").addEventListener("change", function() {
   if (this.value === "show_more") {
-    // Remove all options, repopulate with full list
+    
     this.innerHTML = `<option value="">Select Age</option>
       <option value="0.25">Below 1 year</option>`;
     for (let i = 1; i <= 100; i++) {
       this.innerHTML += `<option value="${i}">${i} year${i > 1 ? "s" : ""}</option>`;
     }
     this.innerHTML += `<option value="100+">Above 100 years</option>`;
-    this.size = 1; // Reset to dropdown mode
+    this.size = 1; 
     this.focus();
   }
 
