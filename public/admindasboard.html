@@ -309,14 +309,14 @@
             overflow: visible !important;
         }
 
-    
+     
         #appointmentsList {
             overflow: visible !important;
-        }
+        } 
 
         #appointmentsList > div {
             overflow: visible !important;
-        }
+        }  
 
         .action-menu:not(.hidden) {
             display: block !important;
@@ -403,12 +403,12 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
+} 
 
-.appointments-list .action-menu::-webkit-scrollbar{
+ .appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
-}
+} 
 
 body.dark {
     background-color: #0f172a; 
@@ -419,6 +419,15 @@ body.dark {
 body.dark * {
     color: #f1f5f9 !important;
 }
+
+
+/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
+body.dark #logoutModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+   
+}
+
 
 
 body.dark .text-gray-500,
@@ -1121,12 +1130,12 @@ body.dark.accent-blue button.bg-black:hover,
 body.dark.accent-blue button.bg-blue-600:hover {
     background-color: #3b82f6 !important;
 }
-body.dark.accent-blue nav svg,
-body.dark.accent-blue nav svg * {
-    fill: #3b82f6 !important;
-    stroke: #3b82f6 !important;
-    color: #3b82f6 !important;
+
+.dark .svg-accent-blue {
+  color: #3b82f6 !important;
+  stroke: #3b82f6 !important;
 }
+
 
 body.dark.accent-blue input:focus,
 body.dark.accent-blue select:focus,
@@ -1154,6 +1163,25 @@ body.dark.accent-green select:focus,
 body.dark.accent-green textarea:focus {
     border-color: #10b981 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+/* General select text color */
+.accent-green select, 
+.accent-green option {
+  color: #10b981 !important;
+}
+
+/* When hovering on the select itself */
+.accent-green select:hover {
+  border-color: #10b981 !important;
+  color: #10b981 !important;
+}
+
+/* Dropdown options styling */
+.accent-green select option:checked,
+.accent-green select option:hover,
+.accent-green select option:focus {
+  background-color: #10b981 !important;
+  color: white !important;
 }
 
 
@@ -1301,7 +1329,7 @@ body.dark {
    <nav class="bg-white shadow py-3 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[110px]">
         <div class="flex justify-between items-center w-full">
             <div class="flex items-center">
-                <svg class="w-6 h-6 text-blue-600 dark:text-blue-50 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-blue-600 svg-accent-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
@@ -1496,20 +1524,20 @@ body.dark {
   <div class="flex items-center gap-4 mb-4 justify-between">
 
    
-    <div class="relative w-[1000px] h-12 flex items-center">
+    <div class="relative w-[1200px] h-12 flex items-center">
       <img src="/search.webp" alt="Search"
         class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
       <input type="text" id="searchInput" placeholder="Search"
         class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
     </div>
     <div class="flex items-center gap-4">
-      <div class="relative w-[400px] h-12">
+      <div class="relative w-[500px] h-12">
         <select id="filterDropdown"
           class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
       
         </select>
       </div>
-      <div class="relative w-[300px] h-12 flex items-center">
+      <div class="relative w-[400px] h-12 flex items-center">
         <div id="datePickerDisplay"
           class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
@@ -1563,6 +1591,8 @@ body.dark {
                                 Appointment</button></a>
                     </div>
                     <div id="appointmentsList" ></div>
+
+                    
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
@@ -3938,7 +3968,7 @@ body.dark {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
-              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
+              <th class="px-4 py-3">Referred By</th>
             </tr>
           </thead>
           <tbody>
@@ -4872,13 +4902,11 @@ body.dark {
 <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
   <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-lg w-full max-w-sm text-center">
     <div class="flex justify-center mb-4">
-      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-200/20">
+     <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
         <svg xmlns="http://www.w3.org/2000/svg" 
-             class="h-6 w-6 text-red-600 dark:text-red-500"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 9v4M12 17h.01"/>
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+             class="h-6 w-6 text-red-600 dark:text-red-400 dark:drop-shadow-[0_0_4px_#f87171]"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z" />
         </svg>
       </span>
     </div>
