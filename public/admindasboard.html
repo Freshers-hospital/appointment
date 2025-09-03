@@ -309,14 +309,14 @@
             overflow: visible !important;
         }
 
-    
+     
         #appointmentsList {
             overflow: visible !important;
-        }
+        } 
 
         #appointmentsList > div {
             overflow: visible !important;
-        }
+        }  
 
         .action-menu:not(.hidden) {
             display: block !important;
@@ -403,12 +403,12 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
+} 
 
-.appointments-list .action-menu::-webkit-scrollbar{
+ .appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
-}
+} 
 
 body.dark {
     background-color: #0f172a; 
@@ -419,6 +419,15 @@ body.dark {
 body.dark * {
     color: #f1f5f9 !important;
 }
+
+
+/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
+body.dark #logoutModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+   
+}
+
 
 
 body.dark .text-gray-500,
@@ -1155,6 +1164,25 @@ body.dark.accent-green textarea:focus {
     border-color: #10b981 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
 }
+/* General select text color */
+.accent-green select, 
+.accent-green option {
+  color: #10b981 !important;
+}
+
+/* When hovering on the select itself */
+.accent-green select:hover {
+  border-color: #10b981 !important;
+  color: #10b981 !important;
+}
+
+/* Dropdown options styling */
+.accent-green select option:checked,
+.accent-green select option:hover,
+.accent-green select option:focus {
+  background-color: #10b981 !important;
+  color: white !important;
+}
 
 
 body.dark.accent-brown .tab-active {
@@ -1496,20 +1524,20 @@ body.dark {
   <div class="flex items-center gap-4 mb-4 justify-between">
 
    
-    <div class="relative w-[1000px] h-12 flex items-center">
+    <div class="relative w-[1200px] h-12 flex items-center">
       <img src="/search.webp" alt="Search"
         class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
       <input type="text" id="searchInput" placeholder="Search"
         class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
     </div>
     <div class="flex items-center gap-4">
-      <div class="relative w-[400px] h-12">
+      <div class="relative w-[500px] h-12">
         <select id="filterDropdown"
           class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
       
         </select>
       </div>
-      <div class="relative w-[300px] h-12 flex items-center">
+      <div class="relative w-[400px] h-12 flex items-center">
         <div id="datePickerDisplay"
           class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
@@ -1563,6 +1591,8 @@ body.dark {
                                 Appointment</button></a>
                     </div>
                     <div id="appointmentsList" ></div>
+
+                    
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
