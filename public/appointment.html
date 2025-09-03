@@ -226,10 +226,10 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-4" id="alertMessage">Appointment booked successfully!
                 </h3>
 
-                <button onclick="hideAlert()"
+              <a href="admindasboard.html" button onclick="hideAlert()"
                     class="w-full inline-flex justify-center px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm transition-colors duration-200">
                     OK
-                </button>
+                </button></a>
             </div>
         </div>
     </div>
@@ -525,13 +525,12 @@
                     class="px-6 py-2 border border-gray-300 rounded-lg text-white bg-gray-600">
                     Back
                 </button>
+<div class="flex gap-4">
+                <button type="button" id="skipReferralBtn" onclick="skipReferral()"
+    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50">
+    Skip
+</button>
 
-                <div class="flex gap-4">
-                    <button type="button" id="skipReferralBtn" onclick="skipReferral()"
-                        class="px-6 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled>
-                        Skip
-                    </button>
                     <button type="button" id="referralNextBtn" onclick="goToConfirmationFromReferral()"
                         class="px-6 py-2 bg-gray-400 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled>
@@ -1567,6 +1566,7 @@
 
             renderCalendar(currentDate);
             updateMonthNavigation();
+            
 
             if (selectedDate) {
                 setTimeout(() => {
@@ -1585,6 +1585,7 @@
                     document.getElementById("timeSlots").style.display = "block";
                     updateTimeSlots();
                 }, 100);
+                
             }
         }
 
@@ -1761,7 +1762,7 @@
                 }
 
                 showSuccessModal(isEditMode ? "Appointment updated successfully!" : "Appointment booked successfully!", "Appointment booked successfully!", "success");
-
+                
                 if (isEditMode) {
                     localStorage.removeItem("editAppointment");
                 }
@@ -2266,33 +2267,32 @@
         referralInput.value = referralValue;
     }
 
-    if (referralValue.length > 0) {
-        referralNextBtn.disabled = false;
-        referralNextBtn.classList.remove("bg-gray-400");
-        referralNextBtn.classList.add("bg-blue-600");
+ if (referralValue.length > 0) {
+    referralNextBtn.disabled = false;
+    referralNextBtn.classList.remove("bg-gray-400");
+    referralNextBtn.classList.add("bg-blue-600");
 
-        skipReferralBtn.disabled = true;
-        skipReferralBtn.classList.add("bg-gray-400");
-        skipReferralBtn.classList.remove("bg-gray-500");
+    skipReferralBtn.disabled = true;
+    skipReferralBtn.classList.add("bg-gray-400");
+    skipReferralBtn.classList.remove("bg-blue-600");
 
-        referralInput.classList.remove("border-red-500");
-        referralInput.classList.add("border-green-500");
-        referralError.classList.add("hidden");
-    } else {
-        referralNextBtn.disabled = true;
-        referralNextBtn.classList.add("bg-gray-400");
-        referralNextBtn.classList.remove("bg-blue-600");
+    referralInput.classList.remove("border-red-500");
+    referralInput.classList.add("border-green-500");
+    referralError.classList.add("hidden");
+} else {
+    referralNextBtn.disabled = true;
+    referralNextBtn.classList.add("bg-gray-400");
+    referralNextBtn.classList.remove("bg-blue-600");
 
-        skipReferralBtn.disabled = false;
-        skipReferralBtn.classList.remove("bg-gray-400");
-        skipReferralBtn.classList.add("bg-gray-500");
+    skipReferralBtn.disabled = false;
+    skipReferralBtn.classList.remove("bg-gray-400");
+    skipReferralBtn.classList.add("bg-blue-600");
 
-        referralInput.classList.remove("border-green-500");
-        referralInput.classList.add("border-red-500");
-        referralError.classList.remove("hidden");
-    }
+    referralInput.classList.remove("border-green-500");
+    referralInput.classList.add("border-red-500");
+    referralError.classList.remove("hidden");
 }
-
+        }
 function skipReferral() {
     const referralInput = document.getElementById("referred-by");
     const referralValue = referralInput.value.trim();
