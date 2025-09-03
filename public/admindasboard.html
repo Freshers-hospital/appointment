@@ -309,14 +309,14 @@
             overflow: visible !important;
         }
 
-    
+     
         #appointmentsList {
             overflow: visible !important;
-        }
+        } 
 
         #appointmentsList > div {
             overflow: visible !important;
-        }
+        }  
 
         .action-menu:not(.hidden) {
             display: block !important;
@@ -403,12 +403,12 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
+} 
 
-.appointments-list .action-menu::-webkit-scrollbar{
+ .appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
-}
+} 
 
 body.dark {
     background-color: #0f172a; 
@@ -419,6 +419,15 @@ body.dark {
 body.dark * {
     color: #f1f5f9 !important;
 }
+
+
+/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
+body.dark #logoutModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+   
+}
+
 
 
 body.dark .text-gray-500,
@@ -563,14 +572,6 @@ body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b {
 }
 body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b > div { color: #e5e7eb !important; }
 
-/* Appointments grid header (match doctors/patients) */
-body.dark #appointmentsHeader {
-    background-color: #0f172a !important;
-    color: #e5e7eb !important;
-    border-color: #334155 !important;
-}
-body.dark #appointmentsHeader > div { color: #e5e7eb !important; }
-
 
 body.dark #userDropdownMenu {
     background-color: #1e293b !important;
@@ -636,19 +637,7 @@ body.dark button.bg-red-600:hover {
 
 
 body.dark table tbody tr:hover td {
-    background-color: #334155 !important;
-}
-
-/* Ensure Appointments tab headings and hover match Doctors/Patients in dark mode */
-body.dark #appointmentsTab thead tr {
-    background-color: #0f172a !important;
-}
-body.dark #appointmentsTab thead th {
-    color: #e5e7eb !important;
-    border-color: #334155 !important;
-}
-body.dark #appointmentsTab tbody tr:hover td {
-    background-color: #334155 !important;
+    background-color: #1e293b !important;
 }
 
 
@@ -950,6 +939,44 @@ body.dark #accentsDropdownToggle:hover {
     color: #3b82f6 !important;
 }
 
+/* Dropdown hover colors for accent-blue */
+.accent-blue select option:hover,
+.accent-blue select option:focus,
+.accent-blue select option:active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue .action-menu a:hover,
+.accent-blue .action-menu button:hover,
+.accent-blue #userDropdownMenu a:hover,
+.accent-blue #userDropdownMenu button:hover,
+.accent-blue #themesSubDropdown button:hover,
+.accent-blue #accentsSubDropdown button:hover,
+.accent-blue a.hover\:bg-gray-100:hover,
+.accent-blue button.hover\:bg-gray-100:hover {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-blue */
+.accent-blue [class*="hover:bg-gray-100"]:hover {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-blue */
+.accent-blue select option:checked,
+.accent-blue select option[selected] {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.accent-blue select:focus option:checked {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
 .accent-green .tab-active {
     background-color: #10b981 !important;
     color: white !important;
@@ -973,6 +1000,44 @@ body.dark #accentsDropdownToggle:hover {
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
 }
 
+/* Dropdown hover colors for accent-green */
+.accent-green select option:hover,
+.accent-green select option:focus,
+.accent-green select option:active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green .action-menu a:hover,
+.accent-green .action-menu button:hover,
+.accent-green #userDropdownMenu a:hover,
+.accent-green #userDropdownMenu button:hover,
+.accent-green #themesSubDropdown button:hover,
+.accent-green #accentsSubDropdown button:hover,
+.accent-green a.hover\:bg-gray-100:hover,
+.accent-green button.hover\:bg-gray-100:hover {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-green */
+.accent-green [class*="hover:bg-gray-100"]:hover {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-green */
+.accent-green select option:checked,
+.accent-green select option[selected] {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.accent-green select:focus option:checked {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
 
 .accent-brown .tab-active {
     background-color: #b55656 !important;
@@ -994,6 +1059,44 @@ body.dark #accentsDropdownToggle:hover {
 .accent-brown textarea:focus {
     border-color: #b55656 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+/* Dropdown hover colors for accent-brown */
+.accent-brown select option:hover,
+.accent-brown select option:focus,
+.accent-brown select option:active {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+.accent-brown .action-menu a:hover,
+.accent-brown .action-menu button:hover,
+.accent-brown #userDropdownMenu a:hover,
+.accent-brown #userDropdownMenu button:hover,
+.accent-brown #themesSubDropdown button:hover,
+.accent-brown #accentsSubDropdown button:hover,
+.accent-brown a.hover\:bg-gray-100:hover,
+.accent-brown button.hover\:bg-gray-100:hover {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-brown */
+.accent-brown [class*="hover:bg-gray-100"]:hover {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-brown */
+.accent-brown select option:checked,
+.accent-brown select option[selected] {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+.accent-brown select:focus option:checked {
+    background-color: #b55656 !important;
+    color: white !important;
 }
 
 
@@ -1020,6 +1123,44 @@ body.dark #accentsDropdownToggle:hover {
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
 }
 
+/* Dropdown hover colors for accent-purple */
+.accent-purple select option:hover,
+.accent-purple select option:focus,
+.accent-purple select option:active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple .action-menu a:hover,
+.accent-purple .action-menu button:hover,
+.accent-purple #userDropdownMenu a:hover,
+.accent-purple #userDropdownMenu button:hover,
+.accent-purple #themesSubDropdown button:hover,
+.accent-purple #accentsSubDropdown button:hover,
+.accent-purple a.hover\:bg-gray-100:hover,
+.accent-purple button.hover\:bg-gray-100:hover {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-purple */
+.accent-purple [class*="hover:bg-gray-100"]:hover {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-purple */
+.accent-purple select option:checked,
+.accent-purple select option[selected] {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+.accent-purple select:focus option:checked {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
 
 
 .accent-orange .tab-active {
@@ -1042,6 +1183,44 @@ body.dark #accentsDropdownToggle:hover {
 .accent-orange textarea:focus {
     border-color: #f59e0b !important;
     box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+
+/* Dropdown hover colors for accent-orange */
+.accent-orange select option:hover,
+.accent-orange select option:focus,
+.accent-orange select option:active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange .action-menu a:hover,
+.accent-orange .action-menu button:hover,
+.accent-orange #userDropdownMenu a:hover,
+.accent-orange #userDropdownMenu button:hover,
+.accent-orange #themesSubDropdown button:hover,
+.accent-orange #accentsSubDropdown button:hover,
+.accent-orange a.hover\:bg-gray-100:hover,
+.accent-orange button.hover\:bg-gray-100:hover {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-orange */
+.accent-orange [class*="hover:bg-gray-100"]:hover {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-orange */
+.accent-orange select option:checked,
+.accent-orange select option[selected] {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.accent-orange select:focus option:checked {
+    background-color: #f59e0b !important;
+    color: white !important;
 }
 
 
@@ -1067,6 +1246,44 @@ body.dark #accentsDropdownToggle:hover {
     box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
 }
 
+/* Dropdown hover colors for accent-pink */
+.accent-pink select option:hover,
+.accent-pink select option:focus,
+.accent-pink select option:active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink .action-menu a:hover,
+.accent-pink .action-menu button:hover,
+.accent-pink #userDropdownMenu a:hover,
+.accent-pink #userDropdownMenu button:hover,
+.accent-pink #themesSubDropdown button:hover,
+.accent-pink #accentsSubDropdown button:hover,
+.accent-pink a.hover\:bg-gray-100:hover,
+.accent-pink button.hover\:bg-gray-100:hover {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-pink */
+.accent-pink [class*="hover:bg-gray-100"]:hover {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-pink */
+.accent-pink select option:checked,
+.accent-pink select option[selected] {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+.accent-pink select:focus option:checked {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
 .accent-teal .tab-active {
     background-color: #14b8a6 !important;
     color: white !important;
@@ -1087,6 +1304,44 @@ body.dark #accentsDropdownToggle:hover {
 .accent-teal textarea:focus {
     border-color: #14b8a6 !important;
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+/* Dropdown hover colors for accent-teal */
+.accent-teal select option:hover,
+.accent-teal select option:focus,
+.accent-teal select option:active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal .action-menu a:hover,
+.accent-teal .action-menu button:hover,
+.accent-teal #userDropdownMenu a:hover,
+.accent-teal #userDropdownMenu button:hover,
+.accent-teal #themesSubDropdown button:hover,
+.accent-teal #accentsSubDropdown button:hover,
+.accent-teal a.hover\:bg-gray-100:hover,
+.accent-teal button.hover\:bg-gray-100:hover {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for accent-teal */
+.accent-teal [class*="hover:bg-gray-100"]:hover {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for accent-teal */
+.accent-teal select option:checked,
+.accent-teal select option[selected] {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+.accent-teal select:focus option:checked {
+    background-color: #14b8a6 !important;
+    color: white !important;
 }
 
 body.dark.accent-blue .tab-active {
@@ -1141,18 +1396,56 @@ body.dark.accent-blue button.bg-black:hover,
 body.dark.accent-blue button.bg-blue-600:hover {
     background-color: #3b82f6 !important;
 }
-body.dark.accent-blue nav svg,
-body.dark.accent-blue nav svg * {
-    fill: #3b82f6 !important;
-    stroke: #3b82f6 !important;
-    color: #3b82f6 !important;
+
+.dark .svg-accent-blue {
+  color: #3b82f6 !important;
+  stroke: #3b82f6 !important;
 }
+
 
 body.dark.accent-blue input:focus,
 body.dark.accent-blue select:focus,
 body.dark.accent-blue textarea:focus {
     border-color: #1045b9 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+/* Dark mode dropdown hover colors for accent-blue */
+body.dark.accent-blue select option:hover,
+body.dark.accent-blue select option:focus,
+body.dark.accent-blue select option:active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark.accent-blue .action-menu a:hover,
+body.dark.accent-blue .action-menu button:hover,
+body.dark.accent-blue #userDropdownMenu a:hover,
+body.dark.accent-blue #userDropdownMenu button:hover,
+body.dark.accent-blue #themesSubDropdown button:hover,
+body.dark.accent-blue #accentsSubDropdown button:hover,
+body.dark.accent-blue a.hover\:bg-gray-100:hover,
+body.dark.accent-blue button.hover\:bg-gray-100:hover {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-blue */
+body.dark.accent-blue [class*="hover:bg-gray-100"]:hover {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-blue */
+body.dark.accent-blue select option:checked,
+body.dark.accent-blue select option[selected] {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+body.dark.accent-blue select:focus option:checked {
+    background-color: #3b82f6 !important;
+    color: white !important;
 }
 
 body.dark.accent-green .tab-active {
@@ -1174,6 +1467,63 @@ body.dark.accent-green select:focus,
 body.dark.accent-green textarea:focus {
     border-color: #10b981 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+/* General select text color */
+.accent-green select, 
+.accent-green option {
+  color: #10b981 !important;
+}
+
+/* When hovering on the select itself */
+.accent-green select:hover {
+  border-color: #10b981 !important;
+  color: #10b981 !important;
+}
+
+/* Dropdown options styling */
+.accent-green select option:checked,
+.accent-green select option:hover,
+.accent-green select option:focus {
+  background-color: #10b981 !important;
+  color: white !important;
+}
+
+/* Dark mode dropdown hover colors for accent-green */
+body.dark.accent-green select option:hover,
+body.dark.accent-green select option:focus,
+body.dark.accent-green select option:active {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+body.dark.accent-green .action-menu a:hover,
+body.dark.accent-green .action-menu button:hover,
+body.dark.accent-green #userDropdownMenu a:hover,
+body.dark.accent-green #userDropdownMenu button:hover,
+body.dark.accent-green #themesSubDropdown button:hover,
+body.dark.accent-green #accentsSubDropdown button:hover,
+body.dark.accent-green a.hover\:bg-gray-100:hover,
+body.dark.accent-green button.hover\:bg-gray-100:hover {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-green */
+body.dark.accent-green [class*="hover:bg-gray-100"]:hover {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-green */
+body.dark.accent-green select option:checked,
+body.dark.accent-green select option[selected] {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+body.dark.accent-green select:focus option:checked {
+    background-color: #10b981 !important;
+    color: white !important;
 }
 
 
@@ -1250,6 +1600,7 @@ body.dark.accent-pink button.bg-black:hover,
 body.dark.accent-pink button.bg-blue-600:hover {
     background-color: #db2777 !important;
 }
+
 body.dark.accent-pink input:focus,
 body.dark.accent-pink select:focus,
 body.dark.accent-pink textarea:focus {
@@ -1274,6 +1625,188 @@ body.dark.accent-teal select:focus,
 body.dark.accent-teal textarea:focus {
     border-color: #14b8a6 !important;
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+/* Dark mode dropdown hover colors for accent-teal */
+body.dark.accent-teal select option:hover,
+body.dark.accent-teal select option:focus,
+body.dark.accent-teal select option:active {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+body.dark.accent-teal .action-menu a:hover,
+body.dark.accent-teal .action-menu button:hover,
+body.dark.accent-teal #userDropdownMenu a:hover,
+body.dark.accent-teal #userDropdownMenu button:hover,
+body.dark.accent-teal #themesSubDropdown button:hover,
+body.dark.accent-teal #accentsSubDropdown button:hover,
+body.dark.accent-teal a.hover\:bg-gray-100:hover,
+body.dark.accent-teal button.hover\:bg-gray-100:hover {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-teal */
+body.dark.accent-teal [class*="hover:bg-gray-100"]:hover {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-brown */
+body.dark.accent-brown [class*="hover:bg-gray-100"]:hover {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-purple */
+body.dark.accent-purple [class*="hover:bg-gray-100"]:hover {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-orange */
+body.dark.accent-orange [class*="hover:bg-gray-100"]:hover {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Override all hover:bg-gray-100 classes for dark mode accent-pink */
+body.dark.accent-pink [class*="hover:bg-gray-100"]:hover {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-pink */
+body.dark.accent-pink select option:checked,
+body.dark.accent-pink select option[selected] {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+body.dark.accent-pink select:focus option:checked {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-brown */
+body.dark.accent-brown select option:checked,
+body.dark.accent-brown select option[selected] {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+body.dark.accent-brown select:focus option:checked {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-purple */
+body.dark.accent-purple select option:checked,
+body.dark.accent-purple select option[selected] {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+body.dark.accent-purple select:focus option:checked {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-orange */
+body.dark.accent-orange select option:checked,
+body.dark.accent-orange select option[selected] {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+body.dark.accent-orange select:focus option:checked {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Selected dropdown options for dark mode accent-teal */
+body.dark.accent-teal select option:checked,
+body.dark.accent-teal select option[selected] {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+body.dark.accent-teal select:focus option:checked {
+    background-color: #14b8a6 !important;
+    color: white !important;
+}
+
+/* Dark mode dropdown hover colors for accent-brown */
+body.dark.accent-brown select option:hover,
+body.dark.accent-brown select option:focus,
+body.dark.accent-brown select option:active {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+body.dark.accent-brown .action-menu a:hover,
+body.dark.accent-brown .action-menu button:hover,
+body.dark.accent-brown #userDropdownMenu a:hover,
+body.dark.accent-brown #userDropdownMenu button:hover,
+body.dark.accent-brown #themesSubDropdown button:hover,
+body.dark.accent-brown #accentsSubDropdown button:hover {
+    background-color: #b55656 !important;
+    color: white !important;
+}
+
+/* Dark mode dropdown hover colors for accent-purple */
+body.dark.accent-purple select option:hover,
+body.dark.accent-purple select option:focus,
+body.dark.accent-purple select option:active {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+body.dark.accent-purple .action-menu a:hover,
+body.dark.accent-purple .action-menu button:hover,
+body.dark.accent-purple #userDropdownMenu a:hover,
+body.dark.accent-purple #userDropdownMenu button:hover,
+body.dark.accent-purple #themesSubDropdown button:hover,
+body.dark.accent-purple #accentsSubDropdown button:hover {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+}
+
+/* Dark mode dropdown hover colors for accent-orange */
+body.dark.accent-orange select option:hover,
+body.dark.accent-orange select option:focus,
+body.dark.accent-orange select option:active {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+body.dark.accent-orange .action-menu a:hover,
+body.dark.accent-orange .action-menu button:hover,
+body.dark.accent-orange #userDropdownMenu a:hover,
+body.dark.accent-orange #userDropdownMenu button:hover,
+body.dark.accent-orange #themesSubDropdown button:hover,
+body.dark.accent-orange #accentsSubDropdown button:hover {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Dark mode dropdown hover colors for accent-pink */
+body.dark.accent-pink select option:hover,
+body.dark.accent-pink select option:focus,
+body.dark.accent-pink select option:active {
+    background-color: #ec4899 !important;
+    color: white !important;
+}
+
+body.dark.accent-pink .action-menu a:hover,
+body.dark.accent-pink .action-menu button:hover,
+body.dark.accent-pink #userDropdownMenu a:hover,
+body.dark.accent-pink #userDropdownMenu button:hover,
+body.dark.accent-pink #themesSubDropdown button:hover,
+body.dark.accent-pink #accentsSubDropdown button:hover {
+    background-color: #ec4899 !important;
+    color: white !important;
 }
 body.dark #userDropdownToggle {
     color: white !important;
@@ -1312,16 +1845,16 @@ body.dark {
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <!-- <script>
+    <script>
         if (!localStorage.getItem("admin_jwt")) {
             window.location.href = "login.html";
         }
-    </script> -->
+    </script>
 
    <nav class="bg-white shadow py-3 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[110px]">
         <div class="flex justify-between items-center w-full">
             <div class="flex items-center">
-                <svg class="w-6 h-6 text-blue-600 dark:text-blue-50 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-blue-600 svg-accent-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
@@ -1516,20 +2049,20 @@ body.dark {
   <div class="flex items-center gap-4 mb-4 justify-between">
 
    
-    <div class="relative w-[1000px] h-12 flex items-center">
+    <div class="relative w-[1200px] h-12 flex items-center">
       <img src="/search.webp" alt="Search"
         class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
       <input type="text" id="searchInput" placeholder="Search"
         class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
     </div>
     <div class="flex items-center gap-4">
-      <div class="relative w-[400px] h-12">
+      <div class="relative w-[500px] h-12">
         <select id="filterDropdown"
           class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
       
         </select>
       </div>
-      <div class="relative w-[300px] h-12 flex items-center">
+      <div class="relative w-[400px] h-12 flex items-center">
         <div id="datePickerDisplay"
           class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
@@ -1582,16 +2115,9 @@ body.dark {
                                 class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
                                 Appointment</button></a>
                     </div>
-                    <div id="appointmentsHeader"
-                        class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
-                        <div class="col-span-3">Patient</div>
-                        <div class="col-span-3">Doctor</div>
-                        <div class="col-span-2">Time</div>
-                        <div class="col-span-2">Status</div>
-                        <div class="col-span-1">Referred By</div>
-                        <div class="col-span-1">Actions</div>
-                    </div>
                     <div id="appointmentsList" ></div>
+
+                    
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
@@ -2273,6 +2799,7 @@ body.dark {
                         { value: 'doctor', label: 'Doctor' },
                         { value: 'time', label: 'Time' },
                         { value: 'status', label: 'Status' },
+
                         { value: 'referredby', label: 'Referred By' },
 
                     ];
@@ -2295,7 +2822,7 @@ body.dark {
                         { value: 'contact', label: 'Contact' },
                         { value: 'upcoming', label: 'Upcoming Date' },
                         { value: 'lastvisit', label: 'Last Visit' },
-                        { value: 'referredby', label: 'Referred By' },
+                        { value: 'referredby', label: 'Referred By' }
                     ];
                 }
                 filterDropdown.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
@@ -2437,6 +2964,7 @@ body.dark {
                                     valueIncludes(app.dateData?.time) ||
                                     valueIncludes(app.status) ||
                                     valueIncludes(app.referralData?.referredBy)
+
                                 );
                             } else if (selectedField === 'patient') {
                                 matchesField = valueIncludes(app.patientData?.name);
@@ -2446,11 +2974,10 @@ body.dark {
                                 matchesField = valueIncludes(app.dateData?.time);
                             } else if (selectedField === 'status') {
                                 matchesField = valueIncludes(app.status);
-                            }
-                            else if (selectedField === 'referredby') {
+                            } else if (selectedField === 'referredby') {
                                 matchesField = valueIncludes(app.referralData?.referredBy);
+                            }
                         }
-                    }
 
                         return matchesDate && matchesField;
                     });
@@ -2511,11 +3038,6 @@ body.dark {
             currentAppointmentsPage = 1;
         }
 
-        const appointmentsHeader = document.getElementById("appointmentsHeader");
-        if (appointmentsHeader) {
-            appointmentsHeader.style.display = filteredAppointments && filteredAppointments.length > 0 ? "grid" : "none";
-        }
-
         if (!filteredAppointments || filteredAppointments.length === 0) {
             const formattedDate = new Date(date).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -2555,7 +3077,21 @@ body.dark {
         const endIndex = startIndex + appointmentsPerPage;
         const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
-        let tableHTML = ``;
+        let tableHTML = `
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg shadow-sm">
+            <thead>
+              <tr class="bg-gray-50 text-gray-700 text-left">
+                <th class="px-4 py-3">Patient</th>
+                <th class="px-4 py-3">Doctor</th>
+                <th class="px-4 py-3">Time</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Referred By</th> 
+                <th class="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
 
         tableHTML += currentPageAppointments
             .map((app, idx) => {
@@ -2570,40 +3106,43 @@ body.dark {
                     statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
                 }
                 return `
-  <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-    <div class="col-span-3">
-      <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
-      <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
-    </div>
-    <div class="col-span-3">
-      <div class="font-semibold text-blue-700">${doctorName}</div>
-      <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
-    </div>
-    <div class="col-span-2">
-      <div class="flex items-center gap-1">
-        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>${app.dateData?.time || "N/A"}</span>
-      </div>
-    </div>
-    <div class="col-span-2">
-      ${statusLabel}
-    </div>
-    <div class="col-span-1">
-      <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
-    </div>
-    <div class="col-span-1 relative">
-      <button class="action-btn text-xl focus:outline-none">...</button>
-      <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
-        <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
-        ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
-        ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
-        ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
-      </div>
-    </div>
-  </div>
-                `;
+          <tr class="border-b hover:bg-gray-50 transition-colors">
+            <td class="px-4 py-3">
+              <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
+              <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="font-semibold text-blue-700">${doctorName}</div>
+              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-1">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>${app.dateData?.time || "N/A"}</span>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              ${statusLabel}
+            </td>
+            <td class="px-4 py-3">
+              <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
+
+            </td>
+            <td class="px-4 py-3 relative">
+              <button class="action-btn text-xl focus:outline-none">...</button>
+              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
+                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
+                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
+                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
+                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
+              </div>
+            </td>
+          </tr>
+        `;
             })
             .join("");
+
+        tableHTML += `</tbody></table></div>`;
 
         if (totalPages > 1) {
             tableHTML += `
@@ -2814,6 +3353,7 @@ body.dark {
                             if (selectedField === 'all') {
                                 matchesSearch = (
                                     includes(patientName) || includes(age) || includes(gender) || includes(blood) || includes(contact) || includes(upcomingDateText) || includes(lastVisitText) || includes(patientData.referredBy)
+
                                 );
                             } else if (selectedField === 'patient') {
                                 matchesSearch = includes(patientName);
@@ -2829,8 +3369,7 @@ body.dark {
                                 matchesSearch = includes(upcomingDateText);
                             } else if (selectedField === 'lastvisit') {
                                 matchesSearch = includes(lastVisitText);
-                            }
-                             else if (selectedField === 'referredby') {
+                            } else if (selectedField === 'referredby') {
                                 matchesSearch = includes(patientData.referredBy);
                             }
                         }
@@ -3788,13 +4327,13 @@ body.dark {
                 const doctorsList = document.getElementById("doctorsList");
                 const paginationContainer = document.getElementById("doctorsPagination");
                 if (!doctorsList) return;
-                // Build filtered list based on selected field and search term
+            
                 const term = (searchInput.value || '').trim().toLowerCase();
                 const selectedField = getSelectedField();
 
-                // Compute today's appointment counts first if needed for filtering
+            
                 const filteredBase = allDoctors.filter((doc) => {
-                    if (!term) return true; // no search => keep
+                    if (!term) return true; 
                     const includes = (v) => String(v == null ? '' : v).toLowerCase().includes(term);
                     if (selectedField === 'all') {
                         const todayCount = todaysAppointmentsCountMap[doc.name] || 0;
@@ -3882,8 +4421,8 @@ body.dark {
                     doctorsList.appendChild(doctorRow);
                 });
 
-                // Setup action menus after rendering - commented out
-                // setupActionMenus();
+        
+            
                 updateDoctorsPagination(totalPages);
             }
 
@@ -3955,7 +4494,7 @@ body.dark {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
-              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
+              <th class="px-4 py-3">Referred By</th>
             </tr>
           </thead>
           <tbody>
@@ -3983,7 +4522,7 @@ body.dark {
 }
 
 
-            testPatientsPagination();
+    
             if (document.getElementById("appointmentStatusFilter")) {
                 document.getElementById("appointmentStatusFilter").addEventListener("change", function () {
                     const status = this.value;
@@ -4850,7 +5389,7 @@ body.dark {
                 if (savedTheme) localStorage.setItem("theme", savedTheme);
                 if (savedAccent) localStorage.setItem("accent", savedAccent);
 
-                // window.location.href = "login.html";
+                window.location.href = "login.html";
             } else {
                 showToast(result.error, 'error');
             }
@@ -4889,13 +5428,11 @@ body.dark {
 <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
   <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-lg w-full max-w-sm text-center">
     <div class="flex justify-center mb-4">
-      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-200/20">
+     <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
         <svg xmlns="http://www.w3.org/2000/svg" 
-             class="h-6 w-6 text-red-600 dark:text-red-500"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 9v4M12 17h.01"/>
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+             class="h-6 w-6 text-red-600 dark:text-red-400 dark:drop-shadow-[0_0_4px_#f87171]"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z" />
         </svg>
       </span>
     </div>
