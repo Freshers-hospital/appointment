@@ -421,7 +421,6 @@ body.dark * {
 }
 
 
-/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
 body.dark #logoutModal svg {
     color: #ef4444 !important;
     stroke: #ef4444 !important;
@@ -1295,52 +1294,94 @@ body.dark {
 
 
 
-
-
-
-
-
-/* Accent colors for dropdown (select) */
 body.dark.accent-blue select,
 body.dark.accent-blue option:checked {
     border-color: #3b82f6 !important;
-    color: #3b82f6 !important;
+
 }
 
 body.dark.accent-green select,
 body.dark.accent-green option:checked {
     border-color: #10b981 !important;
-    color: #10b981 !important;
+  
 }
 
 body.dark.accent-brown select,
 body.dark.accent-brown option:checked {
     border-color: #b55656 !important;
-    color: #b55656 !important;
+   
 }
 
 body.dark.accent-purple select,
 body.dark.accent-purple option:checked {
     border-color: #8b5cf6 !important;
-    color: #8b5cf6 !important;
+    
 }
 
 body.dark.accent-orange select,
 body.dark.accent-orange option:checked {
     border-color: #f59e0b !important;
-    color: #f59e0b !important;
+ 
 }
 
 body.dark.accent-pink select,
 body.dark.accent-pink option:checked {
     border-color: #ec4899 !important;
-    color: #ec4899 !important;
+ 
 }
 
-body.dark.accent-teal select,
+body.dark.accent-teal select, 
 body.dark.accent-teal option:checked {
     border-color: #14b8a6 !important;
-    color: #14b8a6 !important;
+   
+}
+
+
+
+
+
+
+
+body.dark .flatpickr-day {
+    color: #f8fafc !important;   
+    font-weight: 700 !important; 
+    background: transparent !important;
+}
+
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #22c55e !important; 
+    color: #ffffff !important;      
+    font-weight: 800 !important;
+}
+
+
+body.dark .flatpickr-day:hover {
+    background: #334155 !important; 
+    color: #ffffff !important;
+}
+
+body.dark .time-slot {
+    background-color: #1e293b !important;  
+    color: #f8fafc !important;            
+    font-weight: 600 !important;
+    border: 1px solid #334155 !important;  
+}
+
+
+
+body.dark .time-slot:hover {
+    background-color: #22c55e !important;  
+    color: #ffffff !important;
+    border-color: #22c55e !important;
+    border-width: 1px !important; 
+}
+
+
+
+body.dark .time-slot:disabled {
+    background-color: #334155 !important;
+    color: #64748b !important;
 }
 
 
@@ -1350,42 +1391,39 @@ body.dark.accent-teal option:checked {
 
 
 
-/* === Accent Color for Dropdown Options in Dark Theme === */
 
-/* Blue */
-body.dark.accent-blue select option {
-    color: #3b82f6 !important;
+
+body.dark #rescheduleModal .calendar-day {
+  color: #000000 !important;   
+  font-weight: 600 !important;  
+  font-size: 15px !important;  
 }
 
-/* Green */
-body.dark.accent-green select option {
-    color: #10b981 !important;
+
+body.dark #rescheduleModal .calendar-day.selected {
+  background-color: #22c55e !important;  
+  color: #000000 !important;             
+  font-weight: 700 !important;          
 }
 
-/* Brown */
-body.dark.accent-brown select option {
-    color: #b55656 !important;
+
+body.dark #rescheduleModal .calendar-day:disabled {
+  color: #6b7280 !important;   
+  font-weight: 500 !important;
 }
 
-/* Purple */
-body.dark.accent-purple select option {
-    color: #8b5cf6 !important;
+
+
+
+/* Selected time slot */
+body.dark .time-slot.selected {
+    background-color: #22c55e !important;  /* Green when selected */
+    color: #ffffff !important;
+    border-color: #22c55e !important;
+    font-weight: 600 !important;
 }
 
-/* Orange */
-body.dark.accent-orange select option {
-    color: #f59e0b !important;
-}
 
-/* Pink */
-body.dark.accent-pink select option {
-    color: #ec4899 !important;
-}
-
-/* Teal */
-body.dark.accent-teal select option {
-    color: #14b8a6 !important;
-}
 
 
     </style>
@@ -5542,5 +5580,23 @@ applyTheme(localStorage.getItem("theme") || "light");
             applyAccentColor(savedAccent);
         </script>
         
+
+<!-- ఇతర script tags ఉంటే వాటి తర్వాత -->
+<script>
+  document.querySelectorAll('.time-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      // ఇప్పటికే select అయినదాన్ని తొలగించు
+      document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+      // కొత్తగా click అయిన slot select అవుతుంది
+      slot.classList.add('selected');
+    });
+  });
+</script>
+</body>
+</html>
+
+
+
+
 </body>
 </html>
