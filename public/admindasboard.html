@@ -309,14 +309,14 @@
             overflow: visible !important;
         }
 
-     
+    
         #appointmentsList {
             overflow: visible !important;
-        } 
+        }
 
         #appointmentsList > div {
             overflow: visible !important;
-        }  
+        }
 
         .action-menu:not(.hidden) {
             display: block !important;
@@ -403,12 +403,12 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-} 
+}
 
- .appointments-list .action-menu::-webkit-scrollbar{
+.appointments-list .action-menu::-webkit-scrollbar{
 
   display: none;
-} 
+}
 
 body.dark {
     background-color: #0f172a; 
@@ -570,6 +570,14 @@ body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b {
 }
 body.dark #doctorsTab .bg-gray-50.text-gray-800.border-b > div { color: #e5e7eb !important; }
 
+/* Appointments grid header (match doctors/patients) */
+body.dark #appointmentsHeader {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #appointmentsHeader > div { color: #e5e7eb !important; }
+
 
 body.dark #userDropdownMenu {
     background-color: #1e293b !important;
@@ -635,7 +643,19 @@ body.dark button.bg-red-600:hover {
 
 
 body.dark table tbody tr:hover td {
-    background-color: #1e293b !important;
+    background-color: #334155 !important;
+}
+
+/* Ensure Appointments tab headings and hover match Doctors/Patients in dark mode */
+body.dark #appointmentsTab thead tr {
+    background-color: #0f172a !important;
+}
+body.dark #appointmentsTab thead th {
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+body.dark #appointmentsTab tbody tr:hover td {
+    background-color: #334155 !important;
 }
 
 
@@ -1415,6 +1435,142 @@ body.dark #rescheduleModal .calendar-day:disabled {
 
 
 
+
+body.dark .time-slot.selected {
+    background-color: #22c55e !important;  
+    color: #ffffff !important;
+    border-color: #22c55e !important;
+    font-weight: 600 !important;
+}
+
+ body.dark #logoutModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+
+ }  
+
+
+body.dark.accent-blue select,
+body.dark.accent-blue option:checked {
+    border-color: #3b82f6 !important;
+
+}
+
+body.dark.accent-green select,
+body.dark.accent-green option:checked {
+    border-color: #10b981 !important;
+  
+}
+
+body.dark.accent-brown select,
+body.dark.accent-brown option:checked {
+    border-color: #b55656 !important;
+   
+}
+
+body.dark.accent-purple select,
+body.dark.accent-purple option:checked {
+    border-color: #8b5cf6 !important;
+    
+}
+
+body.dark.accent-orange select,
+body.dark.accent-orange option:checked {
+    border-color: #f59e0b !important;
+ 
+}
+
+body.dark.accent-pink select,
+body.dark.accent-pink option:checked {
+    border-color: #ec4899 !important;
+ 
+}
+
+body.dark.accent-teal select, 
+body.dark.accent-teal option:checked {
+    border-color: #14b8a6 !important;
+   
+}
+
+
+
+
+
+
+
+body.dark .flatpickr-day {
+    color: #f8fafc !important;   
+    font-weight: 700 !important; 
+    background: transparent !important;
+}
+
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #22c55e !important; 
+    color: #ffffff !important;      
+    font-weight: 800 !important;
+}
+
+
+body.dark .flatpickr-day:hover {
+    background: #334155 !important; 
+    color: #ffffff !important;
+}
+
+body.dark .time-slot {
+    background-color: #1e293b !important;  
+    color: #f8fafc !important;            
+    font-weight: 600 !important;
+    border: 1px solid #334155 !important;  
+}
+
+
+
+body.dark .time-slot:hover {
+    background-color: #22c55e !important;  
+    color: #ffffff !important;
+    border-color: #22c55e !important;
+    border-width: 1px !important; 
+}
+
+
+
+body.dark .time-slot:disabled {
+    background-color: #334155 !important;
+    color: #64748b !important;
+}
+
+
+
+
+
+
+
+
+
+
+body.dark #rescheduleModal .calendar-day {
+  color: #000000 !important;   
+  font-weight: 600 !important;  
+  font-size: 15px !important;  
+}
+
+
+body.dark #rescheduleModal .calendar-day.selected {
+  background-color: #22c55e !important;  
+  color: #000000 !important;             
+  font-weight: 700 !important;          
+}
+
+
+body.dark #rescheduleModal .calendar-day:disabled {
+  color: #6b7280 !important;   
+  font-weight: 500 !important;
+}
+
+
+
+
 /* Selected time slot */
 body.dark .time-slot.selected {
     background-color: #22c55e !important;  /* Green when selected */
@@ -1423,6 +1579,11 @@ body.dark .time-slot.selected {
     font-weight: 600 !important;
 }
 
+ body.dark #logoutModal svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+
+ }  
 
 
     </style>
@@ -1700,9 +1861,18 @@ body.dark .time-slot.selected {
                                 class="bg-black text-white px-4 py-1 rounded font-semibold">+ Add
                                 Appointment</button></a>
                     </div>
-                    <div id="appointmentsList" ></div>
+                    <div id="appointmentsHeader"
+                        class="hidden md:grid grid-cols-12 gap-4 px-4 py-3 text-left text-sm font-bold bg-gray-50 text-gray-800 border-b">
+                        <div class="col-span-3">Patient</div>
+                        <div class="col-span-3">Doctor</div>
+                        <div class="col-span-2">Time</div>
+                        <div class="col-span-2">Status</div>
+                        <div class="col-span-1">Referred By</div>
+                        <div class="col-span-1">Actions</div>
+                    </div>
+                    <!-- <div id="appointmentsList" ></div> -->
+                     <div id="appointmentsList" class="appointments-list space-y-2 mt-2"></div>
 
-                    
                 </div>
 
                 <div id="doctorsTab" class="tab-content hidden">
@@ -2635,6 +2805,11 @@ body.dark .time-slot.selected {
             currentAppointmentsPage = 1;
         }
 
+        const appointmentsHeader = document.getElementById("appointmentsHeader");
+        if (appointmentsHeader) {
+            appointmentsHeader.style.display = filteredAppointments && filteredAppointments.length > 0 ? "grid" : "none";
+        }
+
         if (!filteredAppointments || filteredAppointments.length === 0) {
             const formattedDate = new Date(date).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -2674,21 +2849,7 @@ body.dark .time-slot.selected {
         const endIndex = startIndex + appointmentsPerPage;
         const currentPageAppointments = filteredAppointments.slice(startIndex, endIndex);
 
-        let tableHTML = `
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow-sm">
-            <thead>
-              <tr class="bg-gray-50 text-gray-700 text-left">
-                <th class="px-4 py-3">Patient</th>
-                <th class="px-4 py-3">Doctor</th>
-                <th class="px-4 py-3">Time</th>
-                <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Referred By</th> 
-                <th class="px-4 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-    `;
+        let tableHTML = ``;
 
         tableHTML += currentPageAppointments
             .map((app, idx) => {
@@ -2703,43 +2864,40 @@ body.dark .time-slot.selected {
                     statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
                 }
                 return `
-          <tr class="border-b hover:bg-gray-50 transition-colors">
-            <td class="px-4 py-3">
-              <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
-              <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="font-semibold text-blue-700">${doctorName}</div>
-              <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-1">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>${app.dateData?.time || "N/A"}</span>
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              ${statusLabel}
-            </td>
-            <td class="px-4 py-3">
-              <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
-
-            </td>
-            <td class="px-4 py-3 relative">
-              <button class="action-btn text-xl focus:outline-none">...</button>
-              <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
-                <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
-                ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
-                ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
-                ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
-              </div>
-            </td>
-          </tr>
-        `;
+  <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+    <div class="col-span-3">
+      <div class="font-semibold text-gray-900">${app.patientData?.name || "N/A"}</div>
+      <div class="text-xs text-gray-500">${app.patientData?.contact || ""}</div>
+    </div>
+    <div class="col-span-3">
+      <div class="font-semibold text-blue-700">${doctorName}</div>
+      <div class="text-xs text-gray-500">${app.doctorData?.specialty || ""}</div>
+    </div>
+    <div class="col-span-2">
+      <div class="flex items-center gap-1">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>${app.dateData?.time || "N/A"}</span>
+      </div>
+    </div>
+    <div class="col-span-2">
+      ${statusLabel}
+    </div>
+    <div class="col-span-1">
+      <div class="text-gray-700">${app.referralData?.referredBy || "-"}</div>
+    </div>
+    <div class="col-span-1 relative">
+      <button class="action-btn text-xl focus:outline-none">...</button>
+      <div class="action-menu hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
+        <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
+        ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
+        ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
+        ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
+      </div>
+    </div>
+  </div>
+                `;
             })
             .join("");
-
-        tableHTML += `</tbody></table></div>`;
 
         if (totalPages > 1) {
             tableHTML += `
@@ -5594,6 +5752,7 @@ applyTheme(localStorage.getItem("theme") || "light");
         
 
 
+
 <script>
   document.querySelectorAll('.time-slot').forEach(slot => {
     slot.addEventListener('click', () => {
@@ -5604,7 +5763,6 @@ applyTheme(localStorage.getItem("theme") || "light");
     });
   });
 </script>
-
 
 </body>
 </html>
