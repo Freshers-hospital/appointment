@@ -474,10 +474,6 @@ body.dark.accent-teal .section h2   { color: #06b6d4 !important; }
 body.dark.accent-green .section h2  { color: #16a34a !important; }
 body.dark.accent-brown .section h2  { color: #a16207 !important; }
 
-body.dark #overlay h3,
-body.dark #alertMessage {
-  color: #ffffff !important; 
-}
 
 .accent-link {
   color: #1f2937;
@@ -576,7 +572,35 @@ body.dark.accent-teal .accent-link {
   background-color: #14b8a6 !important;
 }
 
-
+  .step-line {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2px;
+    background-color: #e5e7eb; 
+    z-index: 0;
+    left: calc(50% + 20px);  
+    right: -40%;            
+  }
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #9ca3af; 
+    background-color: #1e1e2e; 
+    color: #d1d5db;            
+    z-index: 10;
+    margin: 0 auto;
+  }
+  .stepper-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #9ca3af; /* gray-400 */
+  }
+  
 
  </style>
 </head>
@@ -626,62 +650,51 @@ body.dark.accent-teal .accent-link {
 
     <div class="max-w-6xl mx-auto mt-8" id="stepperContainer">
   <div class="flex items-center justify-between relative">
-    <div class="relative flex justify-between w-full">
 
-      
-      <div class="flex-1 text-center">
-        <div class="relative">
-          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line1"></div>
-          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-               id="step1">1</div>
-        </div>
-        <p class="mt-2 text-sm text-gray-400" id="step1Text">Patient Details</p>
+ 
+    <div class="flex-1 text-center relative">
+      <div class="relative flex items-center justify-center">
+        <div class="stepper-circle" id="step1">1</div>
+        <div class="step-line"></div>
       </div>
-
-      
-      <div class="flex-1 text-center">
-        <div class="relative">
-          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line2Left"></div>
-          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line2Right"></div>
-          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-               id="step2">2</div>
-        </div>
-        <p class="mt-2 text-sm text-gray-400" id="step2Text">Select Doctor</p>
-      </div>
-
-      
-      <div class="flex-1 text-center">
-        <div class="relative">
-          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line3Left"></div>
-          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line3Right"></div>
-          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-               id="step3">3</div>
-        </div>
-        <p class="mt-2 text-sm text-gray-400" id="step3Text">Date & Time</p>
-      </div>
-
-      
-      <div class="flex-1 text-center">
-        <div class="relative">
-          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line4Left"></div>
-          <div class="absolute top-5 left-1/2 w-full h-1 bg-gray-200" id="line4Right"></div>
-          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-               id="step4">4</div>
-        </div>
-        <p class="mt-2 text-sm text-gray-400" id="step4Text">Referral</p>
-      </div>
-
-      
-      <div class="flex-1 text-center">
-        <div class="relative">
-          <div class="absolute top-5 right-1/2 w-full h-1 bg-gray-200" id="line5"></div>
-          <div class="w-10 h-10 bg-white text-gray-400 rounded-full flex items-center justify-center mx-auto relative z-10 border-2 border-gray-200"
-               id="step5">5</div>
-        </div>
-        <p class="mt-2 text-sm text-gray-400" id="step5Text">Confirmation</p>
-      </div>
-
+      <p class="stepper-text" id="step1Text">Patient Details</p>
     </div>
+
+
+    <div class="flex-1 text-center relative">
+      <div class="relative flex items-center justify-center">
+        <div class="stepper-circle" id="step2">2</div>
+        <div class="step-line"></div>
+      </div>
+      <p class="stepper-text" id="step2Text">Select Doctor</p>
+    </div>
+
+ 
+    <div class="flex-1 text-center relative">
+      <div class="relative flex items-center justify-center">
+        <div class="stepper-circle" id="step3">3</div>
+        <div class="step-line"></div>
+      </div>
+      <p class="stepper-text" id="step3Text">Date & Time</p>
+    </div>
+
+
+    <div class="flex-1 text-center relative">
+      <div class="relative flex items-center justify-center">
+        <div class="stepper-circle" id="step4">4</div>
+        <div class="step-line"></div>
+      </div>
+      <p class="stepper-text" id="step4Text">Referral</p>
+    </div>
+
+   
+    <div class="flex-1 text-center relative">
+      <div class="relative flex items-center justify-center">
+        <div class="stepper-circle" id="step5">5</div>
+      </div>
+      <p class="stepper-text" id="step5Text">Confirmation</p>
+    </div>
+
   </div>
 </div>
 
