@@ -2429,13 +2429,17 @@ body.dark .time-slot.selected {
 <div id="successModalOverlay"
     class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
-        <div class="mb-4">
-           
-            <svg class="w-16 h-16 text-green-500 mx-auto" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-        </div>
-        <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
+    
+ <div class="mb-4">
+  <svg class="w-16 h-16 mx-auto" viewBox="0 0 24 24" fill="none">
+   
+    <circle cx="12" cy="12" r="10" fill="#90EE90" /> 
+    
+    <path d="M7.5 12.5l3 3 6-6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div> 
+
+    <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
         <button id="successModalOkBtn"
             class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
     </div>
@@ -5747,21 +5751,18 @@ applyTheme(localStorage.getItem("theme") || "light");
         </script>
         
 
-        
+
+
 <script>
   document.querySelectorAll('.time-slot').forEach(slot => {
     slot.addEventListener('click', () => {
-
+  
       document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-
+     
       slot.classList.add('selected');
     });
   });
 </script>
-
-
-
-
 
 </body>
 </html>
