@@ -573,6 +573,7 @@ body.dark.accent-teal .accent-link {
 }
 
 
+
  </style>
 </head>
 
@@ -615,7 +616,7 @@ body.dark.accent-teal .accent-link {
 </button>
 </div>
 
-    <!-- <div class="max-w-4xl mx-auto mt-8">
+    <div class="max-w-4xl mx-auto mt-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-6" id="pageTitle">Book an Appointment</h2>
     </div>
 
@@ -2705,7 +2706,7 @@ function clearReferralField() {
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // --- Organization Handling ---
+  
     const orgName = localStorage.getItem("orgName") || "MediCare";
     const orgLogo = localStorage.getItem("orgLogo") || "/images/medicare-logo.png";
 
@@ -2715,7 +2716,6 @@ function clearReferralField() {
     if (orgNameEl) orgNameEl.textContent = orgName;
     if (orgLogoEl) orgLogoEl.src = orgLogo;
 
-    // --- Accent Color Handling ---
     const btn = document.getElementById("backToDashboardBtn");
     const accent = localStorage.getItem("accent") || "blue";
 
@@ -2750,7 +2750,6 @@ function clearReferralField() {
     const defaultOrg = { name: "MediCare", logo: "/images/medicare-logo.png" };
     const fallbackOrg = { name: "Unknown Organization", logo: "/images/fallback-logo.png" };
 
-    // orgId ni localStorage nunchi teesukunta
     const orgId = localStorage.getItem("orgId");
 
     if (orgId) {
@@ -2761,8 +2760,8 @@ function clearReferralField() {
         })
         .then(org => {
           document.getElementById("orgName").textContent = org.name;
-          // Logo kuda undali ante
-          // document.getElementById("orgLogo").src = org.logo;
+          
+          document.getElementById("orgLogo").src = org.logo;
         })
         .catch(() => {
           document.getElementById("orgName").textContent = fallbackOrg.name;
