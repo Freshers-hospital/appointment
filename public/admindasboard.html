@@ -421,13 +421,11 @@ body.dark * {
 }
 
 
-/* Dark mode lo logout modal icon bright red ga maintain cheyyadam */
 body.dark #logoutModal svg {
     color: #ef4444 !important;
     stroke: #ef4444 !important;
    
 }
-
 
 
 body.dark .text-gray-500,
@@ -1130,12 +1128,12 @@ body.dark.accent-blue button.bg-black:hover,
 body.dark.accent-blue button.bg-blue-600:hover {
     background-color: #3b82f6 !important;
 }
-
-.dark .svg-accent-blue {
-  color: #3b82f6 !important;
-  stroke: #3b82f6 !important;
+body.dark.accent-blue nav svg,
+body.dark.accent-blue nav svg * {
+    fill: #3b82f6 !important;
+    stroke: #3b82f6 !important;
+    color: #3b82f6 !important;
 }
-
 
 body.dark.accent-blue input:focus,
 body.dark.accent-blue select:focus,
@@ -1163,25 +1161,6 @@ body.dark.accent-green select:focus,
 body.dark.accent-green textarea:focus {
     border-color: #10b981 !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
-}
-/* General select text color */
-.accent-green select, 
-.accent-green option {
-  color: #10b981 !important;
-}
-
-/* When hovering on the select itself */
-.accent-green select:hover {
-  border-color: #10b981 !important;
-  color: #10b981 !important;
-}
-
-/* Dropdown options styling */
-.accent-green select option:checked,
-.accent-green select option:hover,
-.accent-green select option:focus {
-  background-color: #10b981 !important;
-  color: white !important;
 }
 
 
@@ -1326,6 +1305,137 @@ body.dark .flatpickr-day:hover {
 body.dark .text-gray-500,
 body.dark .text-gray-400 {
     color: #94a3b8 !important;
+}
+
+
+
+body.dark.accent-blue select,
+body.dark.accent-blue option:checked {
+    border-color: #3b82f6 !important;
+
+}
+
+body.dark.accent-green select,
+body.dark.accent-green option:checked {
+    border-color: #10b981 !important;
+  
+}
+
+body.dark.accent-brown select,
+body.dark.accent-brown option:checked {
+    border-color: #b55656 !important;
+   
+}
+
+body.dark.accent-purple select,
+body.dark.accent-purple option:checked {
+    border-color: #8b5cf6 !important;
+    
+}
+
+body.dark.accent-orange select,
+body.dark.accent-orange option:checked {
+    border-color: #f59e0b !important;
+ 
+}
+
+body.dark.accent-pink select,
+body.dark.accent-pink option:checked {
+    border-color: #ec4899 !important;
+ 
+}
+
+body.dark.accent-teal select, 
+body.dark.accent-teal option:checked {
+    border-color: #14b8a6 !important;
+   
+}
+
+
+
+
+
+
+
+body.dark .flatpickr-day {
+    color: #f8fafc !important;   
+    font-weight: 700 !important; 
+    background: transparent !important;
+}
+
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #22c55e !important; 
+    color: #ffffff !important;      
+    font-weight: 800 !important;
+}
+
+
+body.dark .flatpickr-day:hover {
+    background: #334155 !important; 
+    color: #ffffff !important;
+}
+
+body.dark .time-slot {
+    background-color: #1e293b !important;  
+    color: #f8fafc !important;            
+    font-weight: 600 !important;
+    border: 1px solid #334155 !important;  
+}
+
+
+
+body.dark .time-slot:hover {
+    background-color: #22c55e !important;  
+    color: #ffffff !important;
+    border-color: #22c55e !important;
+    border-width: 1px !important; 
+}
+
+
+
+body.dark .time-slot:disabled {
+    background-color: #334155 !important;
+    color: #64748b !important;
+}
+
+
+
+
+
+
+
+
+
+
+body.dark #rescheduleModal .calendar-day {
+  color: #000000 !important;   
+  font-weight: 600 !important;  
+  font-size: 15px !important;  
+}
+
+
+body.dark #rescheduleModal .calendar-day.selected {
+  background-color: #22c55e !important;  
+  color: #000000 !important;             
+  font-weight: 700 !important;          
+}
+
+
+body.dark #rescheduleModal .calendar-day:disabled {
+  color: #6b7280 !important;   
+  font-weight: 500 !important;
+}
+
+
+
+
+/* Selected time slot */
+body.dark .time-slot.selected {
+    background-color: #22c55e !important;  /* Green when selected */
+    color: #ffffff !important;
+    border-color: #22c55e !important;
+    font-weight: 600 !important;
 }
 
 
@@ -1538,20 +1648,20 @@ body.dark .text-gray-400 {
   <div class="flex items-center gap-4 mb-4 justify-between">
 
    
-    <div class="relative w-[1200px] h-12 flex items-center">
+    <div class="relative w-[1000px] h-12 flex items-center">
       <img src="/search.webp" alt="Search"
         class="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none" />
       <input type="text" id="searchInput" placeholder="Search"
         class="pl-8 h-full rounded w-full bg-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-900 font-semibold placeholder-gray-500 placeholder:text-lg" />
     </div>
     <div class="flex items-center gap-4">
-      <div class="relative w-[500px] h-12">
+      <div class="relative w-[400px] h-12">
         <select id="filterDropdown"
           class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
       
         </select>
       </div>
-      <div class="relative w-[400px] h-12 flex items-center">
+      <div class="relative w-[300px] h-12 flex items-center">
         <div id="datePickerDisplay"
           class="flex items-center justify-center w-full h-full px-4 rounded bg-white border border-gray-800 cursor-pointer focus:ring-2 focus:ring-gray-400 select-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
@@ -2155,22 +2265,35 @@ body.dark .text-gray-400 {
             </div>
         </div>
 
-        <div id="successModalOverlay"
-            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
-                <div class="mb-4">
-                    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto">
-            <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-</svg>
+    
 
-                    </div>
-                </div>
-                <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
-                <button id="successModalOkBtn"
-                    class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
-            </div>
-        </div>
+
+
+
+<div id="successModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-[400px] min-h-[220px] flex flex-col items-center">
+    
+ <div class="mb-4">
+  <svg class="w-16 h-16 mx-auto" viewBox="0 0 24 24" fill="none">
+   
+    <circle cx="12" cy="12" r="10" fill="#90EE90" /> 
+    
+    <path d="M7.5 12.5l3 3 6-6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div> 
+
+    <div id="successModalMessage" class="text-center text-lg font-semibold mb-6 text-gray-800"></div>
+        <button id="successModalOkBtn"
+            class="w-full py-2 rounded bg-blue-600 text-white text-lg font-bold hover:bg-blue-700 transition-colors duration-200">OK</button>
+    </div>
+</div> 
+
+
+
+
+
+
 
         <div id="availabilityModalOverlay"
             class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -3982,7 +4105,7 @@ body.dark .text-gray-400 {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
-              <th class="px-4 py-3">Referred By</th>
+              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
             </tr>
           </thead>
           <tbody>
@@ -4953,11 +5076,13 @@ body.dark .text-gray-400 {
 <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
   <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-lg w-full max-w-sm text-center">
     <div class="flex justify-center mb-4">
-     <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-200/20">
         <svg xmlns="http://www.w3.org/2000/svg" 
-             class="h-6 w-6 text-red-600 dark:text-red-400 dark:drop-shadow-[0_0_4px_#f87171]"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z" />
+             class="h-6 w-6 text-red-600 dark:text-red-500"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v4M12 17h.01"/>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
         </svg>
       </span>
     </div>
@@ -5518,6 +5643,19 @@ applyTheme(localStorage.getItem("theme") || "light");
             applyAccentColor(savedAccent);
         </script>
         
-        
+
+
+<script>
+  document.querySelectorAll('.time-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+  
+      document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+     
+      slot.classList.add('selected');
+    });
+  });
+</script>
+
+
 </body>
 </html>
