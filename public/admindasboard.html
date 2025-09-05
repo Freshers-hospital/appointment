@@ -1435,9 +1435,9 @@ body.dark #rescheduleModal .calendar-day:disabled {
 
 
 
-/* Selected time slot */
+
 body.dark .time-slot.selected {
-    background-color: #22c55e !important;  /* Green when selected */
+    background-color: #22c55e !important;  
     color: #ffffff !important;
     border-color: #22c55e !important;
     font-weight: 600 !important;
@@ -1591,11 +1591,11 @@ body.dark .time-slot.selected {
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <!-- <script>
+    <script>
         if (!localStorage.getItem("admin_jwt")) {
             window.location.href = "login.html";
         }
-    </script> -->
+    </script>
 
    <nav class="bg-white shadow py-3 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[110px]">
         <div class="flex justify-between items-center w-full">
@@ -5140,7 +5140,7 @@ body.dark .time-slot.selected {
                 if (savedTheme) localStorage.setItem("theme", savedTheme);
                 if (savedAccent) localStorage.setItem("accent", savedAccent);
 
-                // window.location.href = "login.html";
+                window.location.href = "login.html";
             } else {
                 showToast(result.error, 'error');
             }
@@ -5747,20 +5747,20 @@ applyTheme(localStorage.getItem("theme") || "light");
         </script>
         
 
-<!-- ఇతర script tags ఉంటే వాటి తర్వాత -->
+        
 <script>
   document.querySelectorAll('.time-slot').forEach(slot => {
     slot.addEventListener('click', () => {
-      // ఇప్పటికే select అయినదాన్ని తొలగించు
+
       document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-      // కొత్తగా click అయిన slot select అవుతుంది
+
       slot.classList.add('selected');
     });
   });
 </script>
 
 
-   
+
 
 
 </body>
