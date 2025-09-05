@@ -76,3 +76,13 @@ cron.schedule('* * * * *', () => {
   console.log('cron')
   removeDeletedDoctors();
 })
+const organizations = require("./organizations.json");
+
+app.get("/api/organization/:id", (req, res) => {
+  const org = organizations.find(o => o.id === req.params.id);
+  if (org) {
+    res.json(org);
+  } else {
+    res.status(404).json({ message: "Organization not found" });
+  }
+});
