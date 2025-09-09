@@ -200,6 +200,10 @@ router.put("/:id", async (req, res) => {
             return res.json({ message: "Appointment rescheduled", confirmation });
         }
 
+
+
+
+
         if (action === "cancel") {
             confirmation.status = "cancelled";
             await confirmation.save();
@@ -214,6 +218,40 @@ router.put("/:id", async (req, res) => {
                     await patient.save();
                 }
             }
+
+
+
+
+// ✅ NEW Revisit Action
+if (action === "revisit") {
+    if (!date) {
+        return res.status(400).json({ error: "Revisit date is required." });
+    }
+
+    let dateDoc = await DateModel.findOne({ date });
+    if (!dateDoc) {
+        dateDoc = new DateModel({ date, time: "" }); // time optional for revisit
+        await dateDoc.save();
+    }
+
+    confirmation.date = dateDoc._id;
+    confirmation.status = "revisit";
+    await confirmation.save();
+
+    return res.json({ message: "Appointment marked as revisit", confirmation });
+}
+
+res.status(400).json({ error: "Invalid action or missing data" });
+
+
+
+
+
+
+
+
+
+
 
             if (doctorName) {
                 const doctor = await Doctor.findOne({ name: doctorName });
