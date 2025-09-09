@@ -156,7 +156,7 @@
 
     
 @media (max-width: 640px) {
-  /* Navbar */
+  
   .navbar {
     flex-direction: column;
     align-items: flex-start;
@@ -210,25 +210,12 @@
   }
 }
     </style>
-    <!-- <style>
-        /* Example accent and dark classes */
-body.accent-green .form-section h2 { color: #16a34a; }
-body.accent-purple .form-section h2 { color: #8b5cf6; }
-body.accent-orange .form-section h2 { color: #ea580c; }
-/* ... */
-body.dark { background: #192038; color: #dee4ef; }
-/* ... more rules for dark mode and accent classes */
-
-    </style> -->
     <style>
       
 body.dark {
   background: #181928;
   color: #dee4ef;
-}
-
-
-body.dark .bg-white, body.dark .shadow, body.dark .shadow-md, body.dark .shadow-lg {
+}body.dark .bg-white, body.dark .shadow, body.dark .shadow-md, body.dark .shadow-lg {
   background: #23243a !important;
   color: #eaeaff !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
@@ -249,8 +236,6 @@ body.dark .form-section .text-gray-600,
 body.dark .form-section .text-gray-500 {
   color: #b3bed7 !important;
 }
-
-
 body.dark .bg-gray-50 {
   background: #2c2d44 !important;
   color: #e5e7eb !important;
@@ -258,8 +243,6 @@ body.dark .bg-gray-50 {
 body.dark .border-gray-300 {
   border-color: #383a53 !important;
 }
-
-
 body.dark input, body.dark select, body.dark textarea {
   background: #23243a;
   color: #fff;
@@ -272,8 +255,6 @@ body.dark input:focus, body.dark select:focus {
 body.dark ::placeholder {
   color: #a1aacd;
 }
-
-
 body.accent-pink .form-section h2 { color: #160a56 !important; }
 body.accent-pink .form-section h2 { color: #db2777 !important; }
 body.accent-orange .form-section h2 { color: #ea580c !important; }
@@ -281,8 +262,6 @@ body.accent-purple .form-section h2 { color: #8b5cf6 !important; }
 body.accent-teal .form-section h2   { color: #06b6d4 !important; }
 body.accent-green .form-section h2  { color: #16a34a !important; }
 body.accent-brown .form-section h2  { color: #a16207 !important; }
-
-
 .form-section button:not(:disabled),
 button.accent-btn:not(:disabled),
 #confirmBookingBtn:not(:disabled),
@@ -325,8 +304,6 @@ body.accent-brown .form-section button, body.accent-brown #confirmBookingBtn, bo
   background: #a16207 !important;
 }
 body.accent-brown .form-section button:hover { background: #713f12 !important; }
-
-
 #stepperContainer .border-blue-600,
 #stepperContainer .text-blue-600 {
   border-color: #2563eb !important;
@@ -356,7 +333,6 @@ body.accent-brown #stepperContainer .border-blue-600,
 body.accent-brown #stepperContainer .text-blue-600 {
   border-color: #4c2e04 !important; color: #4c2e04 !important;
 }
-
 #stepperContainer .text-blue-600:empty,
 #stepperContainer .text-blue-600:not(:empty) {
   background: transparent !important;
@@ -460,6 +436,7 @@ body.dark #alertMessage,
 body.dark .alert-box #alertMessage {
   color: #fff !important;
 }
+
 
 body.dark.accent-pink .form-section h2  { color: #db2777 !important; }
 body.dark.accent-orange .form-section h2 { color: #ea580c !important; }
@@ -590,7 +567,7 @@ body.dark.accent-teal .accent-link {
     align-items: center;
     justify-content: center;
     border: 2px solid #9ca3af; 
-    background-color: #1e1e2e; 
+    background-color: #f1f7f88c; 
     color: #d1d5db;            
     z-index: 10;
     margin: 0 auto;
@@ -598,9 +575,10 @@ body.dark.accent-teal .accent-link {
   .stepper-text {
     margin-top: 0.5rem;
     font-size: 0.875rem;
-    color: #9ca3af; /* gray-400 */
+    color: #9ca3af;
   }
   
+
 
  </style>
 </head>
@@ -2415,10 +2393,7 @@ body.dark.accent-teal .accent-link {
                         checkReferralForm();
                     }, 1000);
                 }
-
-            
-            
-            }
+             }
         });
 
         function openCancelModal(app) {
@@ -2725,7 +2700,7 @@ function clearReferralField() {
   document.addEventListener("DOMContentLoaded", () => {
   
     const orgName = localStorage.getItem("orgName") || "MediCare";
-    const orgLogo = localStorage.getItem("orgLogo") || "/images/medicare-logo.png";
+    const orgLogo = localStorage.getItem("orgLogo") || "/images/Medicare-Emblem.png";
 
     const orgNameEl = document.getElementById("orgName");
     const orgLogoEl = document.getElementById("orgLogo");
@@ -2764,7 +2739,7 @@ function clearReferralField() {
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const defaultOrg = { name: "MediCare", logo: "/images/medicare-logo.png" };
+    const defaultOrg = { name: "MediCare", logo: "/images/Medicare-Emblem.png" };
     const fallbackOrg = { name: "Unknown Organization", logo: "/images/fallback-logo.png" };
 
     const orgId = localStorage.getItem("orgId");
@@ -2788,7 +2763,7 @@ function clearReferralField() {
     }
   });
 </script>
-
+>
 </body>
 
 </html>

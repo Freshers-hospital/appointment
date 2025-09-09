@@ -1309,7 +1309,7 @@ body.accent-teal:not(.dark) {
   background-color: #f0fdfa !important;
 }
 
-/* Accent color hover effects for select elements */
+
 .accent-select:hover {
     border-color: #3b82f6 !important;
 }
@@ -1342,7 +1342,7 @@ body.accent-brown .accent-select:hover {
     border-color: #a16207 !important;
 }
 
-/* Accent color hover effects for dropdown options */
+
 .accent-select option:hover {
     background-color: #3b82f6 !important;
     color: white !important;
@@ -1383,7 +1383,7 @@ body.accent-brown .accent-select option:hover {
     color: white !important;
 }
 
-/* Custom dropdown styles */
+
 .dropdown-option {
     padding: 12px 16px;
     cursor: pointer;
@@ -1412,7 +1412,7 @@ body.accent-green .dropdown-option:hover {
 }
 
 body.accent-orange .dropdown-option:hover {
-    background-color: #ea580c !important;
+    background-color: #f59e0b  !important;
     color: white !important;
 }
 
@@ -1427,12 +1427,12 @@ body.accent-pink .dropdown-option:hover {
 }
 
 body.accent-teal .dropdown-option:hover {
-    background-color: #06b6d4 !important;
+    background-color: #14b8a6  !important;
     color: white !important;
 }
 
 body.accent-brown .dropdown-option:hover {
-    background-color: #a16207 !important;
+    background-color: #b55656  !important;
     color: white !important;
 }
 
@@ -1596,11 +1596,6 @@ body.dark #rescheduleModal .calendar-day:disabled {
   color: #6b7280 !important;   
   font-weight: 500 !important;
 }
-
-
-
-
-
 body.dark .time-slot.selected {
     background-color: #22c55e !important;  
     color: #ffffff !important;
@@ -1656,13 +1651,6 @@ body.dark.accent-teal option:checked {
     border-color: #14b8a6 !important;
    
 }
-
-
-
-
-
-
-
 body.dark .flatpickr-day {
     color: #f8fafc !important;   
     font-weight: 700 !important; 
@@ -1675,8 +1663,6 @@ body.dark .flatpickr-day.today {
     color: #ffffff !important;      
     font-weight: 800 !important;
 }
-
-
 body.dark .flatpickr-day:hover {
     background: #334155 !important; 
     color: #ffffff !important;
@@ -1688,62 +1674,36 @@ body.dark .time-slot {
     font-weight: 600 !important;
     border: 1px solid #334155 !important;  
 }
-
-
-
 body.dark .time-slot:hover {
     background-color: #22c55e !important;  
     color: #ffffff !important;
     border-color: #22c55e !important;
     border-width: 1px !important; 
 }
-
-
-
 body.dark .time-slot:disabled {
     background-color: #334155 !important;
     color: #64748b !important;
 }
-
-
-
-
-
-
-
-
-
-
 body.dark #rescheduleModal .calendar-day {
   color: #000000 !important;   
   font-weight: 600 !important;  
   font-size: 15px !important;  
 }
-
-
 body.dark #rescheduleModal .calendar-day.selected {
   background-color: #22c55e !important;  
   color: #000000 !important;             
   font-weight: 700 !important;          
 }
-
-
 body.dark #rescheduleModal .calendar-day:disabled {
   color: #6b7280 !important;   
   font-weight: 500 !important;
 }
-
-
-
-
-
 body.dark .time-slot.selected {
     background-color: #22c55e !important;  
     color: #ffffff !important;
     border-color: #22c55e !important;
     font-weight: 600 !important;
 }
-
  body.dark #logoutModal svg {
     color: #ef4444 !important;
     stroke: #ef4444 !important;
@@ -2083,7 +2043,7 @@ body.dark .time-slot.selected {
                         <div id="patientsTab" class="tab-content hidden">
                             <div class="flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 class="text-xl font-semibold">Patients List</h3>
+                                    <h3 class="text-xl font-semibold">Patients List</h3>Appointment 
                                     <p class="text-gray-500">View and manage patient records</p>
                                 </div>
                             </div>
@@ -2850,19 +2810,14 @@ body.dark .time-slot.selected {
                         
                         selectedStatusValue = value;
                         appointmentStatusFilterText.textContent = label;
-                        
                         const dropdown = appointmentStatusFilter.closest('.custom-dropdown');
                         dropdown.classList.remove('open');
                         appointmentStatusFilterMenu.classList.add('hidden');
-                        
-                        // Trigger appointments list update
                         const date = datePicker.value;
                         const searchTerm = searchInput.value.trim();
                         renderAppointmentsList(date, searchTerm, value);
                     }
                 });
-
-                // Close dropdown when clicking outside
                 document.addEventListener('click', function(e) {
                     if (!e.target.closest('.custom-dropdown')) {
                         const dropdown = appointmentStatusFilter.closest('.custom-dropdown');
@@ -5386,7 +5341,7 @@ body.dark .time-slot.selected {
     return urlParams.get(param);
   }
 
-  const fallbackOrg = { name: "medicare", logo: "/images/fallback-logo.png" };
+  const fallbackOrg = { name: "Medicare", logo: "/images/Medicare-Emblem.png" };
 
   const orgId = getQueryParam("org") || localStorage.getItem("orgId");
 
@@ -5412,7 +5367,7 @@ body.dark .time-slot.selected {
   } else {
     
     const savedName = localStorage.getItem("orgName") || "MediCare";
-    const savedLogo = localStorage.getItem("orgLogo") || "/images/medicare-logo.png";
+    const savedLogo = localStorage.getItem("orgLogo") || "/images/Medicare-Emblem.png";
 
     document.getElementById('orgName').textContent = savedName;
     document.getElementById('orgLogo').src = savedLogo;
