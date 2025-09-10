@@ -586,33 +586,33 @@ body.dark.accent-teal .accent-link {
 
 
 
-/* Dark theme calendar day styles */
+
 body.dark .calendar-day {
   background-color: transparent !important;
-  color: #fff !important; /* Unavailable / disabled dates */
+  color: #fff !important; 
 }
 
-/* Available dates → light green circle + black number */
+
 body.dark .calendar-day.bg-green-100,
 body.dark .calendar-day.available {
-  background-color: #bbf7d0 !important; /* Tailwind green-200 (light green) */
-  color: #000 !important; /* Black number inside */
-  border: 2px solid #22c55e !important; /* Green border */
+  background-color: #bbf7d0 !important; 
+  color: #000 !important; 
+  border: 2px solid #22c55e !important; 
 }
 
-/* Hover effect → thicker/darker green */
+
 body.dark .calendar-day.bg-green-100:hover,
 body.dark .calendar-day.available:hover {
-  background-color: #22c55e !important; /* Darker green */
-  color: #fff !important; /* White number on hover */
-  border: 2px solid #15803d !important; /* Thick dark green border */
+  background-color: #22c55e !important; 
+  color: #fff !important; 
+  border: 2px solid #15803d !important;
 }
 
-/* Selected date → strong green circle + white number */
+
 body.dark .calendar-day.selected {
   background-color: #16a34a !important;
   color: #fff !important;
-  border: 2px solid #065f46 !important; /* Even darker border */
+  border: 2px solid #065f46 !important; 
 }
 
 
@@ -1823,6 +1823,7 @@ body.dark .calendar-day.selected {
                 const timeB = b.split(" - ")[0];
                 return convertTo24Hour(timeA) - convertTo24Hour(timeB);
             });
+            
 
             doctorAvailableSlots.forEach((time) => {
                 if (time === "1:00 PM - 2:00 PM") return;
