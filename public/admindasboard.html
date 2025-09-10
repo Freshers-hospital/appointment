@@ -1712,6 +1712,42 @@ body.dark .time-slot.selected {
  }  
 
 
+
+
+
+
+/* Revisit modal calendar day styles */
+body.dark #revisitModal .calendar-day {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+}
+
+body.dark #revisitModal .calendar-day.selected {
+  background-color: #22c55e !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+body.dark #revisitModal .calendar-day:disabled {
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+}
+
+/* Revisit modal time slot styles */
+body.dark #revisitModal .time-slot.selected {
+  background-color: #22c55e !important;
+  color: #ffffff !important;
+  border-color: #22c55e !important;
+  font-weight: 600 !important;
+}
+
+
+
+
+
+
+
     </style>
   
 </head>
@@ -1983,6 +2019,7 @@ body.dark .time-slot.selected {
                                     <div class="dropdown-option" data-value="all">All Appointments</div>
                                     <div class="dropdown-option" data-value="confirmed">Confirmed</div>
                                     <div class="dropdown-option" data-value="rescheduled">Rescheduled</div>
+                                    <div class="dropdown-option" data-value="revisited">Revisited</div>
                                     <div class="dropdown-option" data-value="cancelled">Cancelled</div>
                                 </div>
                             </div>
