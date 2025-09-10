@@ -5,20 +5,18 @@ const Patient = require("../models/patient");
 const Doctor = require("../models/doctor");
 const DateModel = require("../models/date");
 
-// ------------------- CREATE CONFIRMATION -------------------
+
 router.post("/", async (req, res) => {
   try {
     const { patientData, doctorData, dateData, referralData } = req.body;
     console.log("Received data:", { patientData, doctorData, dateData, referralData });
 
-    // Validate doctor
     let doctor = await Doctor.findOne({ name: doctorData.name });
     if (!doctor) {
       return res.status(400).json({ error: "Selected doctor does not exist. Please select an existing doctor." });
     }
     console.log("Found doctor:", doctor.name);
 
-    // Check slot availability
     const existingConfirmations = await Confirmation.find({ doctor: doctor._id }).populate("date");
     const slotTaken = existingConfirmations.some(
       (conf) => conf.date.date === dateData.date && conf.date.time === dateData.time
@@ -27,12 +25,12 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "This time slot is already booked for this doctor." });
     }
 
-    // Save patient
+  
     const patient = new Patient(patientData);
     await patient.save();
     console.log("Patient saved:", patient.name);
 
-    // Save or find date
+   
     let date = await DateModel.findOne({ date: dateData.date, time: dateData.time });
     if (!date) {
       date = new DateModel(dateData);
@@ -40,7 +38,7 @@ router.post("/", async (req, res) => {
     }
     console.log("Date saved:", date.date, date.time);
 
-    // Save confirmation
+    
     const confirmation = new Confirmation({
       patient: patient._id,
       doctor: doctor._id,
@@ -64,7 +62,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ------------------- GET CONFIRMATIONS -------------------
+
 router.get("/", async (req, res) => {
   try {
     const { status } = req.query;
@@ -115,7 +113,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ------------------- GET BOOKED SLOTS -------------------
+
 router.get("/booked-slots", async (req, res) => {
   const { doctorName, date } = req.query;
   try {
@@ -134,7 +132,7 @@ router.get("/booked-slots", async (req, res) => {
   }
 });
 
-// ------------------- UPDATE CONFIRMATION -------------------
+
 router.put("/:id", async (req, res) => {
   try {
     const { action, date, time, patientData, doctorName, referralData } = req.body;
@@ -148,7 +146,7 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "Confirmation not found" });
     }
 
-    // --- RESCHEDULE ---
+
     if (action === "reschedule") {
       if (!date || !time) return res.status(400).json({ error: "Date and time are required for rescheduling." });
 
@@ -176,7 +174,7 @@ router.put("/:id", async (req, res) => {
 
 
 
-// --- REVISIT ---
+
 if (action === "revisit") {
   if (!date || !time) 
     return res.status(400).json({ error: "Date and time are required for revisiting." });
@@ -209,15 +207,6 @@ if (action === "revisit") {
 }
 
 
-
-
-
-
-
-
-
-
-    // --- CANCEL ---
     if (action === "cancel") {
       confirmation.status = "cancelled";
       await confirmation.save();
@@ -226,7 +215,6 @@ if (action === "revisit") {
       return res.json({ message: "Appointment cancelled", confirmation: populated });
     }
 
-    // --- EDIT ---
     if (action === "edit") {
       if (patientData) {
         const patient = await Patient.findById(confirmation.patient);

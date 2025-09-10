@@ -1713,9 +1713,6 @@ body.dark .time-slot.selected {
 
 
 
-
-
-
 /* Revisit modal calendar day styles */
 body.dark #revisitModal .calendar-day {
   color: #000000 !important;
@@ -1748,6 +1745,9 @@ body.dark #revisitModal .time-slot.selected {
 
 
 
+
+
+ 
     </style>
   
 </head>
@@ -2019,7 +2019,7 @@ body.dark #revisitModal .time-slot.selected {
                                     <div class="dropdown-option" data-value="all">All Appointments</div>
                                     <div class="dropdown-option" data-value="confirmed">Confirmed</div>
                                     <div class="dropdown-option" data-value="rescheduled">Rescheduled</div>
-                                    <div class="dropdown-option" data-value="revisited">Revisited</div>
+                                    <div class="dropdown-option" data-value="revisited">Revisit</div>
                                     <div class="dropdown-option" data-value="cancelled">Cancelled</div>
                                 </div>
                             </div>
@@ -4750,7 +4750,7 @@ function renderCalendar(month, year) {
               <th class="px-4 py-3">Contact</th>
               <th class="px-4 py-3">Upcoming Date</th>
               <th class="px-4 py-3">Last Visit</th>
-              <th class="px-4 py-3">Referred By</th> <!-- ✅ New column header -->
+              <th class="px-4 py-3">Referred By</th> 
             </tr>
           </thead>
           <tbody>
@@ -4764,7 +4764,7 @@ function renderCalendar(month, year) {
         <td class="px-4 py-3">${patient.details.contact || "-"}</td>
         <td class="px-4 py-3">${patient.upcomingDateText || "-"}</td>
         <td class="px-4 py-3">${patient.lastVisitText || "-"}</td>
-        <td class="px-4 py-3">${patient.referredBy || "-"}</td> <!-- ✅ Value -->
+        <td class="px-4 py-3">${patient.referredBy || "-"}</td> 
       </tr>
     `).join("");
 
@@ -4779,7 +4779,7 @@ function renderCalendar(month, year) {
 
 
             testPatientsPagination();
-            // Appointment status filter is now handled by custom dropdown above
+            
 
             let currentDoctorForEdit = null;
 
@@ -5030,7 +5030,7 @@ function renderCalendar(month, year) {
                 }
             });
             document.addEventListener("DOMContentLoaded", function () {
-                // Appointment status filter is now handled by custom dropdown above
+                
             });
 
             let currentDoctorForEditProfile = null;
@@ -5281,7 +5281,7 @@ function renderCalendar(month, year) {
 
         <script>
             console.log("[DEBUG] Script loaded at end of HTML");
-            // Appointment status filter is now handled by custom dropdown above
+
         </script>
 
         <script>
