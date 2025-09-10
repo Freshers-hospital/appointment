@@ -15,6 +15,8 @@ const cron = require('node-cron');
 const removeDeletedAdminsFromDb=require("./cron/deletedadmins");
 const confirmationRoutes = require("./routes/confirmationsroutes");
 const removeDeletedDoctors = require("./cron/deleteddoctor");
+const labreportroutes = require("./routes/labreportroute");
+const patientroutes = require("./routes/patientroute");
 
 const doctorsRoutes = require("./routes/doctorsroutes");
 const { router: adminRoutes } = require('./routes/adminroutes');
@@ -32,6 +34,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use("/api/confirmations", confirmationRoutes);
+app.use("/api", labreportroutes);
+app.use("/api", patientroutes);
 
 app.use("/api/doctors", doctorsRoutes);
 app.use("/api/admin", adminRoutes);
@@ -72,7 +76,7 @@ cron.schedule('0 * * * *', () => {
   removeDeletedAdminsFromDb();  
 })
 
-cron.schedule('* * * * *', () => {
+cron.schedule('0 * * * *', () => {
   console.log('cron')
   removeDeletedDoctors();
 })
