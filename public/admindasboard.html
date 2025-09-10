@@ -2019,7 +2019,7 @@ body.dark #revisitModal .time-slot.selected {
                                     <div class="dropdown-option" data-value="all">All Appointments</div>
                                     <div class="dropdown-option" data-value="confirmed">Confirmed</div>
                                     <div class="dropdown-option" data-value="rescheduled">Rescheduled</div>
-                                    <div class="dropdown-option" data-value="revisited">Revisit</div>
+                                    <div class="dropdown-option" data-value="revisited">Revisited</div>
                                     <div class="dropdown-option" data-value="cancelled">Cancelled</div>
                                 </div>
                             </div>
@@ -3133,13 +3133,15 @@ body.dark #revisitModal .time-slot.selected {
                 const doctorName = app.doctorData?.name || "";
                 const isCanceled = app.status === "canceled" || app.status === "cancelled";
                 const isRescheduled = app.status === "rescheduled";
+let statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700">Confirmed</span>`;
+if (isRescheduled) {
+    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800">Rescheduled</span>`;
+} else if (isCanceled) {
+    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
+} else if (app.status === "revisited") {
+    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-200 text-blue-800">Revisited</span>`;
+}
 
-                let statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700">Confirmed</span>`;
-                if (isRescheduled) {
-                    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-800">Rescheduled</span>`;
-                } else if (isCanceled) {
-                    statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-700">Cancelled</span>`;
-                }
                 return `
   <div class="grid grid-cols-12 gap-4 items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
     <div class="col-span-3">
