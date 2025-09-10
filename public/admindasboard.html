@@ -1462,6 +1462,21 @@ body.dark #filterDropdownTrigger {
 body.dark {
   background-color: #111827 !important;
 }
+body.dark .flatpickr-calendar { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-weekdays { background: #0f172a !important; color: #cbd5e1 !important; }
+body.dark .flatpickr-day { color: #e2e8f0 !important; }
+body.dark .flatpickr-day.selected,
+body.dark .flatpickr-day.today {
+    background: #3b82f6 !important;
+    color: white !important;
+}
+body.dark .flatpickr-day:hover {
+    background: #334155 !important;
+}
+body.dark .text-gray-500,
+body.dark .text-gray-400 {
+    color: #94a3b8 !important;
+}
 
 
 
@@ -1744,15 +1759,14 @@ body.dark #revisitModal .time-slot.selected {
         }
     </script>
 
-   <nav class="bg-white shadow py-3 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[110px]">
-        <div class="flex justify-between items-center w-full">
-            <div class="flex items-center">
-                <svg class="w-6 h-6 text-blue-600 dark:text-blue-50 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <h1 class="text-xl font-bold text-blue-600">MediCare</h1>
-            </div>
+  <nav class="bg-white shadow py-3 px-[110px]">
+    <div class="flex justify-between items-center w-full">
+        
+        <div class="flex items-center">
+            <img id="orgLogo" class="w-8 h-8 mr-2" alt="Logo">
+            <h1 id="orgName" class="text-xl font-bold text-blue-600">MediCare</h1>
+        </div>
+
             <div class="flex items-center">
                 <div class="flex items-center gap-2">
                     <div id="userAvatar"
@@ -1950,10 +1964,22 @@ body.dark #revisitModal .time-slot.selected {
     </div>
     <div class="flex items-center gap-4">
       <div class="relative w-[400px] h-12">
-        <select id="filterDropdown"
-          class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400">
-      
-        </select>
+        <div class="custom-dropdown w-full h-full">
+          <div id="filterDropdownTrigger" class="w-full h-full px-4 py-2 border border-gray-800 rounded-md bg-white text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400 accent-select cursor-pointer flex items-center justify-between">
+            <span id="filterDropdownText">All Fields</span>
+            <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div id="filterDropdownMenu" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg z-50 hidden">
+            <div class="dropdown-option" data-value="all">All Fields</div>
+            <div class="dropdown-option" data-value="patient">Patient</div>
+            <div class="dropdown-option" data-value="doctor">Doctor</div>
+            <div class="dropdown-option" data-value="time">Time</div>
+            <div class="dropdown-option" data-value="status">Status</div>
+            <div class="dropdown-option" data-value="referredby">Referred By</div>
+          </div>
+        </div>
       </div>
       <div class="relative w-[300px] h-12 flex items-center">
         <div id="datePickerDisplay"
@@ -2575,7 +2601,7 @@ body.dark #revisitModal .time-slot.selected {
 
                     <div class="bg-gray-50 p-3 rounded-lg shadow-sm">
                         <label class="text-sm font-medium text-gray-600 mb-1 block">Qualification</label>
-                        <input type="text" id="editDoctorQualification" name="qualification"
+                        <input type="text" id="editDoctorQualification" name="qualificatioentColor" stroke-n"
                             class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" />
                     </div>
 
@@ -2724,7 +2750,9 @@ body.dark #revisitModal .time-slot.selected {
             const appointmentsList = document.getElementById("appointmentsList");
             const addBtn = document.getElementById("addBtn");
             const searchInput = document.getElementById("searchInput");
-            const filterDropdown = document.getElementById("filterDropdown");
+            const filterDropdown = document.getElementById("filterDropdownTrigger");
+            const filterDropdownMenu = document.getElementById("filterDropdownMenu");
+            const filterDropdownText = document.getElementById("filterDropdownText");
 
             function getActiveTabId() {
                 const active = document.querySelector('.tab.tab-active');
@@ -2732,7 +2760,7 @@ body.dark #revisitModal .time-slot.selected {
             }
 
             function updateFilterDropdownOptions() {
-                if (!filterDropdown) return;
+                if (!filterDropdownMenu) return;
                 const activeTab = getActiveTabId();
                 let options = [];
                 if (activeTab === 'appointmentsTab') {
@@ -2743,7 +2771,6 @@ body.dark #revisitModal .time-slot.selected {
                         { value: 'time', label: 'Time' },
                         { value: 'status', label: 'Status' },
                         { value: 'referredby', label: 'Referred By' },
-
                     ];
                 } else if (activeTab === 'doctorsTab') {
                     options = [
@@ -2767,8 +2794,10 @@ body.dark #revisitModal .time-slot.selected {
                         { value: 'referredby', label: 'Referred By' },
                     ];
                 }
-                filterDropdown.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+                filterDropdownMenu.innerHTML = options.map(o => `<div class="dropdown-option" data-value="${o.value}">${o.label}</div>`).join('');
             }
+
+            let selectedFieldValue = 'all';
 
             function getSelectedField() {
                 return selectedFieldValue;
@@ -3195,7 +3224,7 @@ body.dark #revisitModal .time-slot.selected {
 
                 const date = document.getElementById("datePicker").value;
                 const searchTerm = document.getElementById("searchInput").value.trim();
-                const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
+                const status = getSelectedStatus();
                 renderAppointmentsList(date, searchTerm, status);
             }
 
@@ -3205,7 +3234,7 @@ body.dark #revisitModal .time-slot.selected {
                 searchTimeout = setTimeout(() => {
                     const currentDate = datePicker.value;
                     const searchTerm = searchInput.value.trim();
-                    const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
+                    const status = getSelectedStatus();
                     console.log("Search term changed:", searchTerm);
                     currentAppointmentsPage = 1;
                     currentPatientsPage = 1;
@@ -3227,7 +3256,7 @@ body.dark #revisitModal .time-slot.selected {
                 if (e.key === "Escape") {
                     searchInput.value = "";
                     const currentDate = datePicker.value;
-                    const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
+                    const status = getSelectedStatus();
                     const activeTab = getActiveTabId();
 
                     if (activeTab === "appointmentsTab") {
@@ -3241,7 +3270,7 @@ body.dark #revisitModal .time-slot.selected {
                 }
             });
 
-            renderAppointmentsList(today, "", document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all");
+            renderAppointmentsList(today, "", getSelectedStatus());
 
             document.addEventListener("click", function (e) {
                 if (e.target.classList.contains("reschedule-btn")) {
@@ -4063,7 +4092,7 @@ function renderCalendar(month, year) {
                     try {
                         const currentDate = datePicker.value;
                         const searchTerm = searchInput.value.trim();
-                        const status = document.getElementById("appointmentStatusFilter") ? document.getElementById("appointmentStatusFilter").value : "all";
+                        const status = getSelectedStatus();
                         await renderAppointmentsList(currentDate, searchTerm, status);
                     } catch (refreshError) {
                         window.location.reload();
@@ -4932,7 +4961,7 @@ function renderCalendar(month, year) {
                         document.getElementById("rescheduleModalOverlay").classList.add("hidden");
 
                         const date = document.getElementById("datePicker").value;
-                        const status = document.getElementById("appointmentStatusFilter").value;
+                        const status = getSelectedStatus();
                         renderAppointmentsList(date, searchInput.value.trim(), status);
                     } else {
                         throw new Error(result.error || "Failed to reschedule appointment");
@@ -4969,7 +4998,7 @@ function renderCalendar(month, year) {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            action: "revist",
+                            action: "revisit",
                             date: newDate,
                             time: newTime,
                         }),
@@ -5553,7 +5582,7 @@ function renderCalendar(month, year) {
 
                 const date = datePicker.value;
                 const searchTerm = searchInput.value.trim();
-                const status = document.getElementById('appointmentStatusFilter') ? document.getElementById('appointmentStatusFilter').value : 'all';
+                const status = getSelectedStatus();
                 updateFilterDropdownOptions();
                 if (activeTab === 'appointmentsTab') {
                     renderAppointmentsList(date, searchTerm, status);
@@ -5614,10 +5643,14 @@ function renderCalendar(month, year) {
             document.getElementById("userAvatar").textContent = getInitials(userName);
             
         </script>
-   <script>
+  <script>
     async function logout() {
         try {
             const token = localStorage.getItem('admin_jwt');                               
+            const orgId = localStorage.getItem('orgId');
+            const savedTheme = localStorage.getItem("theme");
+            const savedAccent = localStorage.getItem("accent");
+
             const res = await fetch("/api/admin/logout", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -5626,13 +5659,8 @@ function renderCalendar(month, year) {
 
             const result = await res.json();
             if (res.ok) {
-               
-                const savedTheme = localStorage.getItem("theme");
-                const savedAccent = localStorage.getItem("accent");
-
                 localStorage.clear();
-
-                
+                if (orgId) localStorage.setItem("orgId", orgId);
                 if (savedTheme) localStorage.setItem("theme", savedTheme);
                 if (savedAccent) localStorage.setItem("accent", savedAccent);
 
