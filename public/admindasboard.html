@@ -3133,6 +3133,7 @@ body.dark #revisitModal .time-slot.selected {
             .map((app, idx) => {
                 const doctorName = app.doctorData?.name || "";
                 const isCanceled = app.status === "canceled" || app.status === "cancelled";
+                const isConfirmed = (app.status || '').toLowerCase() === 'confirmed';
                 const isRescheduled = app.status === "rescheduled";
 let statusLabel = `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-200 text-green-700">Confirmed</span>`;
 if (isRescheduled) {
@@ -3171,7 +3172,8 @@ if (isRescheduled) {
         <a href="#" class="view-details-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>View details</a>
         ${!isCanceled ? `<a href="#" class="edit-appointment-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Edit Appointment</a>` : ""}
         ${!isCanceled ? `<a href="#" class="reschedule-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Reschedule</a>` : ""}
-        ${!isCanceled ? `<a href="#" class="revisit-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Revisit</a>` : ""}
+       ${(!isCanceled && isConfirmed) ? `<a href="#" class="revisit-btn block px-4 py-2 hover:bg-gray-100 text-gray-700" data-appointment='${JSON.stringify(app)}'>Revisit</a>` : ""}
+
         ${!isCanceled ? `<a href="#" class="cancel-btn block px-4 py-2 hover:bg-gray-100 text-red-600" data-appointment='${JSON.stringify(app)}'>Cancel Appointment</a>` : ""}
       </div>
     </div>
