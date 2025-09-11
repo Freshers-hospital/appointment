@@ -4066,13 +4066,13 @@ function renderRescheduleCalendar(app) {
                             btn.classList.add("bg-red-100", "text-red-600", "cursor-not-allowed");
                             btn.disabled = true;
                         } else {
-  btn.onclick = () => {
-  rescheduleSelectedTime = time;            // Save selected time
-  rescheduleSelectedDate = dateStr;         // Save selected date
-  // Deselect all other buttons
-  Array.from(container.children).forEach(b => b.classList.remove("selected", "bg-green500", "text-white"));
-  // Mark clicked button as selected
-  btn.classList.add("selected", "bg-green500", "text-white");
+                            btn.classList.add("bg-green-100", "hover:bg-green-200", "cursor-pointer");
+    btn.onclick = () => {
+    rescheduleSelectedDate = dateStr;
+    selectedDate = dateStr;
+    renderRescheduleTimeSlots(doctorName, dateStr);
+    Array.from(daysGrid.children).forEach(c => c.classList.remove("selected", "bg-green500", "text-white"));
+    btn.classList.add("selected", "bg-green500", "text-white");
 };
 
 
