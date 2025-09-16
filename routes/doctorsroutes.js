@@ -46,7 +46,6 @@ router.post("/", async (req, res) => {
     }
 });
 
-
 router.get("/:doctorId/availability", async (req, res) => {
     const { doctorId } = req.params;
     const { date } = req.query;
@@ -88,7 +87,6 @@ router.post("/:doctorId/availability", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
 
 router.put("/:doctorId", upload.single("photo"), async (req, res) => {
     try {
