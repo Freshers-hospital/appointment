@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab Appointment Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom font style to mimic handwritten look on labels */
+    .handwritten {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen flex items-center justify-center p-4">
+
+  <div class="w-full max-w-4xl border border-black rounded-3xl p-6 space-y-6">
+
+    <!-- Step Indicator -->
+    <div class="flex justify-center items-center space-x-8">
+      <div class="w-10 h-10 rounded-full bg-green-300 flex items-center justify-center font-bold">1</div>
+      <div class="w-10 h-10 rounded-full border border-black flex items-center justify-center font-bold">2</div>
+    </div>
+
+    <!-- Patient Type -->
+    <div class="flex space-x-6 handwritten">
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="patientType" class="form-radio" />
+        <span>new patient</span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="patientType" class="form-radio" />
+        <span>old patient</span>
+      </label>
+    </div>
+
+    <!-- Patient Name -->
+    <input type="text" placeholder="name of patient" 
+           class="border border-black rounded-full w-full px-4 py-2 handwritten" />
+
+    <!-- Age and Gender -->
+    <div class="flex space-x-4">
+      <input type="number" placeholder="age" class="border border-black rounded-full flex-1 px-4 py-2 handwritten" />
+      <input type="text" placeholder="gender" class="border border-black rounded-full flex-1 px-4 py-2 handwritten" />
+    </div>
+
+    <!-- Contact and Referred Doctor -->
+    <div class="flex space-x-4">
+      <input type="tel" placeholder="contact" class="border border-black rounded-full flex-1 px-4 py-2 handwritten" />
+      <input type="text" placeholder="reffered doctor" class="border border-black rounded-full flex-1 px-4 py-2 handwritten" />
+    </div>
+
+    <!-- Select Tests Section -->
+    <div class="border border-black rounded-3xl p-4 handwritten space-y-2">
+      <div class="flex justify-between items-center">
+        <span>select tests :</span>
+        <div class="flex space-x-2">
+          <input type="text" placeholder="search"
+                 class="border border-black rounded-full px-3 py-1 handwritten text-sm"/>
+          <button class="border border-black rounded-full px-4 py-1 handwritten text-sm flex items-center space-x-1">
+            <span>filters</span><span>⬇️</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Table Header -->
+      <div class="grid grid-cols-[40px_1fr_1fr_1fr_1fr] border-b border-black pb-1 text-xs font-semibold handwritten">
+        <div></div>
+        <div>test ID</div>
+        <div>test name</div>
+        <div>time for report generation</div>
+        <div>cost</div>
+      </div>
+
+      <!-- Sample Test Rows -->
+      <div class="grid grid-cols-[40px_1fr_1fr_1fr_1fr] border-b border-black py-1 handwritten items-center">
+        <input type="radio" name="testSelect" class="mx-auto" />
+        <div>001</div>
+        <div>Blood Test</div>
+        <div>24 hrs</div>
+        <div>$50</div>
+      </div>
+      <div class="grid grid-cols-[40px_1fr_1fr_1fr_1fr] border-b border-black py-1 handwritten items-center">
+        <input type="radio" name="testSelect" class="mx-auto" />
+        <div>002</div>
+        <div>Urine Test</div>
+        <div>12 hrs</div>
+        <div>$30</div>
+      </div>
+      <div class="grid grid-cols-[40px_1fr_1fr_1fr_1fr] py-1 handwritten items-center">
+        <input type="radio" name="testSelect" class="mx-auto" />
+        <div>003</div>
+        <div>X-Ray</div>
+        <div>48 hrs</div>
+        <div>$100</div>
+      </div>
+    </div>
+
+    <!-- Upload Prescription -->
+    <div class="border border-black rounded-3xl p-4 handwritten flex items-center justify-center h-28">
+      upload prescription
+      <div class="border border-black rounded-lg w-16 h-16 ml-6"></div>
+    </div>
+
+    <!-- Next Button -->
+    <button class="border border-black rounded-full px-8 py-2 handwritten font-semibold hover:bg-gray-100 transition">
+      next
+    </button>
+
+  </div>
+
+</body>
+</html>

@@ -4491,7 +4491,7 @@ function renderCalendar(month, year) {
                     doctorsList.appendChild(doctorRow);
                 });
 
-                // Setup action menus after rendering - commented out
+              
                 // setupActionMenus();
                 updateDoctorsPagination(totalPages);
             }
@@ -6171,7 +6171,7 @@ function closeRescheduleModal() {
 
 document.getElementById("cancelRescheduleBtn").onclick = closeRescheduleModal;
 
-// ✅ Calendar
+
 function renderRescheduleCalendar(app) {
   const container = document.getElementById("rescheduleCalendarContainer");
   if (!container) return;
@@ -6241,7 +6241,7 @@ function renderRescheduleCalendar(app) {
     }
     container.appendChild(daysGrid);
 
-    // Prev/Next navigation
+    
     const prevMonthStart = new Date(year, month-1, 1);
     const nextMonthStart = new Date(year, month+1,1);
     const btnPrev = document.getElementById("reschedulePrev");
@@ -6265,7 +6265,7 @@ function renderRescheduleCalendar(app) {
   renderCalendar(currentMonth, currentYear);
 }
 
-// ✅ Time Slots
+
 async function renderRescheduleTimeSlots(doctorName, dateStr) {
   const container = document.getElementById("rescheduleTimeSlotsContainer");
   container.innerHTML = '<div class="text-gray-500">Loading time slots...</div>';
@@ -6305,7 +6305,6 @@ async function renderRescheduleTimeSlots(doctorName, dateStr) {
   }
 }
 
-// ✅ Submit
 document.getElementById("rescheduleForm").onsubmit = async function (e) {
   e.preventDefault();
   if (!rescheduleAppointmentData || !rescheduleAppointmentData._id) {
