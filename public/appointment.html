@@ -1822,7 +1822,23 @@ body.dark .calendar-day.selected {
                 const timeB = b.split(" - ")[0];
                 return convertTo24Hour(timeA) - convertTo24Hour(timeB);
             });
-            
+function timeStringToMinutes(timeStr) {
+    let [time, period] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    if (period === 'PM' && hours < 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    return hours * 60 + (minutes || 0);
+}
+function isSlotInLunch(slot, lunchStart, lunchEnd) {
+    const m = timeStringToMinutes;
+    return m(slot) >= m(lunchStart) && m(slot) < m(lunchEnd);
+}
+const lunchStart = "1:00 PM";
+const lunchEnd = "2:00 PM";
+doctorAvailableSlots = doctorAvailableSlots.filter(
+    slot => !isSlotInLunch(slot, lunchStart, lunchEnd)
+);
+
 
             doctorAvailableSlots.forEach((time) => {
                 if (time === "1:00 PM - 2:00 PM") return;
