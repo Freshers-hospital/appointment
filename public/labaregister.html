@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Lab Appointment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <!-- Card Container -->
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl">
+
+    <!-- Stepper -->
+    <div class="flex items-center justify-center mb-6">
+      <div class="flex items-center">
+        <div class="w-8 h-8 flex items-center justify-center rounded-full bg-green-500 text-white font-bold">1</div>
+        <div class="w-16 h-1 bg-gray-300"></div>
+        <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-black font-bold">2</div>
+      </div>
+    </div>
+
+    <!-- Lab Appointment -->
+    <h2 class="text-lg font-bold mb-2">Lab appointment</h2>
+    <div class="flex gap-4 mb-4">
+      <label><input type="radio" name="appt" class="mr-1"> New patient</label>
+      <label><input type="radio" name="appt" class="mr-1"> Old patient</label>
+    </div>
+
+    <!-- Search -->
+    <div class="flex items-center border rounded-lg p-2 mb-4">
+      <input type="text" placeholder="Search for name or ID or contact number of patient" class="flex-1 outline-none">
+      <button class="ml-2">Search</button>
+    </div>
+
+  
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <!-- <input type="text" placeholder="Patient ID" class="border rounded-lg p-2">
+      <input type="text" placeholder="Name" class="border rounded-lg p-2"> -->
+
+      
+      <select id="age" class="border rounded-lg p-2">
+        <option value="">Age</option>
+      </select>
+
+      
+      <select class="border rounded-lg p-2">
+        <option value="">Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="others">Others</option>
+      </select>
+
+      <input type="text" placeholder="Contact" class="border rounded-lg p-2">
+      <input type="text" placeholder="Referred Doctor" class="border rounded-lg p-2">
+    </div>
+
+    
+    <h2 class="text-lg font-bold mb-2">Select tests :</h2>
+    <div class="border rounded-lg p-4 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <input type="text" placeholder="Search" class="flex-1 border rounded-lg p-2">
+        
+        
+        <select class="border rounded-lg p-2">
+          <option value="">Filters</option>
+          <option value="blood">Blood Test</option>
+          <option value="urine">Urine Test</option>
+          <option value="hormone">Hormone Test</option>
+          <option value="biochem">Bio Chemistry</option>
+          <option value="microbio">Micro Biology</option>
+          <option value="hema">Hematology</option>
+          <option value="path">Pathology</option>
+        </select>
+      </div>
+
+      
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border p-2">Select</th>
+            <th class="border p-2">Test ID</th>
+            <th class="border p-2">Test Name</th>
+            <th class="border p-2">Time for Report Generation</th>
+            <th class="border p-2">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border p-2 text-center"><input type="radio" name="test"></td>
+            <td class="border p-2">001</td>
+            <td class="border p-2">Blood Test</td>
+            <td class="border p-2">24 hrs</td>
+            <td class="border p-2"></td>
+          </tr>
+          <tr>
+            <td class="border p-2 text-center"><input type="radio" name="test"></td>
+            <td class="border p-2">002</td>
+            <td class="border p-2">Urine Test</td>
+            <td class="border p-2">12 hrs</td>
+            <td class="border p-2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
+    <h2 class="text-lg font-bold mb-2">Upload prescription</h2>
+    <input type="file" class="border rounded-lg p-2 w-full mb-4">
+
+    
+    <div class="text-right">
+      <button class="bg-blue-600 text-white px-6 py-2 rounded-lg"><a href="appointment.html">Next</button></a>
+    </div>
+  </div>
+
+  <script>
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const ageSelect = document.getElementById("age");
+      for (let i = 1; i <= 100; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i;
+        ageSelect.appendChild(opt);
+      }
+    });
+  </script>
+</body>
+</html>
