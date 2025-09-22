@@ -780,6 +780,11 @@ body.dark .calendar-day.selected {
                             title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9"
                             autocomplete="off" />
                     </div>
+                    <div class="form-group">
+                        <label for="symptoms">Symptoms</label>
+                        <input type="text" id="symptoms" name="symptoms" placeholder="Enter symptoms" />
+                    </div>
+
                 </div>
                 <div class="text-right mt-6">
                     <button type="button" id="patientNextBtn"
@@ -990,6 +995,10 @@ body.dark .calendar-day.selected {
                                         id="confirmPatientBlood"></span></div>
                                 <div><span class="text-gray-500">Gender:</span> <span class="text-gray-800 ml-1"
                                         id="confirmPatientGender"></span></div>
+                                        <div>
+                                     <span class="text-gray-500">Symptoms:</span> 
+                                     <span class="text-gray-800 ml-1" id="confirmPatientSymptoms"></span>
+                                       </div>
                             </div>
                         </div>
                     </div>
@@ -1394,6 +1403,8 @@ body.dark .calendar-day.selected {
                 gender: formData.get("gender"),
                 blood: formData.get("blood"),
                 contact: formData.get("contact"),
+                symptoms: formData.get("symptoms")
+
             };
 
             localStorage.setItem("patientData", JSON.stringify(patientData));
@@ -2203,6 +2214,7 @@ body.dark .calendar-day.selected {
             document.getElementById("confirmPatientGender").textContent = patientData.gender;
             document.getElementById("confirmPatientBlood").textContent = patientData.blood;
             document.getElementById("confirmPatientContact").textContent = patientData.contact;
+            document.getElementById("confirmPatientSymptoms").textContent = patientData.symptoms;
 
     
             const referralInfo = document.getElementById("referralInfo");
