@@ -7,18 +7,23 @@ const dotenv = require("dotenv");
 const nodemailer = require('nodemailer');
 dotenv.config();
 const mongoURI = process.env.DATABASE_URL;
-console.log(mongoURI);
-console.log(typeof (mongoURI));
 const port = process.env.PORT;
 const cron = require('node-cron');
 
-const removeDeletedAdminsFromDb=require("./cron/deletedadmins");
-const confirmationRoutes = require("./routes/confirmationsroutes");
+const removeDeletedAdminsFromDb = require("./cron/deletedadmins");
 const removeDeletedDoctors = require("./cron/deleteddoctor");
 
+// Existing Routes
+const confirmationRoutes = require("./routes/confirmationsroutes");
 const doctorsRoutes = require("./routes/doctorsroutes");
 const { router: adminRoutes } = require('./routes/adminroutes');
 const { router: superadminRoutes } = require('./routes/superadminroutes');
+
+// Lab Routes
+const labAppointmentsRoutes = require("./routes/labappointmentsroutes");
+const patientTestRoutes = require("./routes/patienttestroutes");
+const reportRoutes = require("./routes/reportroutes");
+const labTestRoutes = require("./routes/labtestroutes");
 
 
 const multer = require('multer');
@@ -30,13 +35,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-
+// Route Middlewares
 app.use("/api/confirmations", confirmationRoutes);
-
 app.use("/api/doctors", doctorsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/superadmin", superadminRoutes);
 
+// Lab API Routes
+app.use("/api/labAppointments", labAppointmentsRoutes);
+app.use("/api/patientTests", patientTestRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/labtests", labTestRoutes);
+
+
+//  Test Upload
 app.post('/test-upload', upload.single('photo'), (req, res) => {
   console.log('Test upload file:', req.file);
   if (req.file) {
@@ -46,17 +58,16 @@ app.post('/test-upload', upload.single('photo'), (req, res) => {
   }
 });
 
-
+//  Default Routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
-
 
 app.get("/superadmin", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "superadmin.html"));
 });
 
-
+//  MongoDB + Server Start
 mongoose.connect(mongoURI).then(() => {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
@@ -66,18 +77,19 @@ mongoose.connect(mongoURI).then(() => {
   process.exit(1);
 });
 
+//  Cron Jobs
+cron.schedule('0 * * * *', () => {
+  console.log('cron');
+  removeDeletedAdminsFromDb();  
+});
 
 cron.schedule('0 * * * *', () => {
-  console.log('cron')
-  removeDeletedAdminsFromDb();  
-})
-
-cron.schedule('* * * * *', () => {
-  console.log('cron')
+  console.log('cron');
   removeDeletedDoctors();
-})
-const organizations = require("./organizations.json");
+});
 
+//  Organizations API
+const organizations = require("./organizations.json");
 app.get("/api/organization/:id", (req, res) => {
   const org = organizations.find(o => o.id === req.params.id);
   if (org) {
