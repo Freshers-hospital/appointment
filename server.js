@@ -25,6 +25,9 @@ const patientTestRoutes = require("./routes/patienttestroutes");
 const reportRoutes = require("./routes/reportroutes");
 const labTestRoutes = require("./routes/labtestroutes");
 
+// ✅ Employee Routes
+const employeeRoutes = require("./routes/employeeRoutes");
+
 
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
@@ -40,6 +43,7 @@ app.use("/api/confirmations", confirmationRoutes);
 app.use("/api/doctors", doctorsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/superadmin", superadminRoutes);
+app.use("/api/employees", employeeRoutes);   // <-- ✅ new
 
 // Lab API Routes
 app.use("/api/labAppointments", labAppointmentsRoutes);
@@ -47,10 +51,9 @@ app.use("/api/patientTests", patientTestRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/labtests", labTestRoutes);
 
-
 //  Test Upload
 app.post('/test-upload', upload.single('photo'), (req, res) => {
-  console.log('Test upload file:', req.file);
+  console.log('Test upload file:', req.file);      
   if (req.file) {
     res.send('File uploaded: ' + req.file.path);
   } else {
